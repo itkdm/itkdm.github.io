@@ -852,7 +852,7 @@ footer{
   .nav{ display:none; }
   .hero-landing{
     min-height: 100vh;
-    padding: 24px 0 20px;
+    padding: 12px 0 20px;
   }
   .hero-landing h1{
     font-size: clamp(28px, 6vw, 42px);
