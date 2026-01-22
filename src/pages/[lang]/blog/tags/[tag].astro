@@ -11,22 +11,18 @@ export async function getStaticPaths() {
 	const seenTags = new Set<string>();
 	for (const post of posts) {
 		for (const tag of post.data.tags) {
-			// Use encoded tag in route params so that special characters like "/" don't break routing.
-			// Keep a stable key by combining lang + original tag.
+			// Use raw tag as route param; avoid special characters like "/" in tags themselves.
 			const key = `${post.data.lang}:${tag}`;
 			if (!seenTags.has(key)) {
 				seenTags.add(key);
-				const encodedTag = encodeURIComponent(tag);
-				paths.push({ params: { lang: post.data.lang, tag: encodedTag } });
+				paths.push({ params: { lang: post.data.lang, tag } });
 			}
 		}
 	}
 	return paths;
 }
 
-const { lang, tag: tagParam } = Astro.params as { lang: Lang; tag: string };
-// Decode the tag parameter back to its original form (so "CI%2FCD" → "CI/CD").
-const tag = decodeURIComponent(tagParam);
+const { lang, tag } = Astro.params as { lang: Lang; tag: string };
 const encodedTag = encodeURIComponent(tag);
 const allPosts = await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft);
 const posts = sortBlogPosts(

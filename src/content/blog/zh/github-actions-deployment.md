@@ -1,7 +1,7 @@
 ---
 title: "GitHub Actions 自动化部署实践"
 date: 2024-01-05
-tags: [GitHub Actions, CI/CD, 自动化, DevOps]
+tags: [GitHub Actions, CI-CD, 自动化, DevOps]
 summary: "GitHub Actions 是 GitHub 提供的持续集成和持续部署服务。本文将介绍如何使用 GitHub Actions 实现自动化构建、测试和部署，提高开发效率和代码质量。"
 lang: "zh"
 draft: false
