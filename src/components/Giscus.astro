@@ -1,0 +1,40 @@
+---
+import type { Lang } from '../i18n/config';
+
+const { lang = 'zh' } = Astro.props as { lang?: Lang };
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+
+const isConfigured = !!(repo && repoId && category && categoryId);
+---
+
+{isConfigured ? (
+	<section style="margin-top: 32px;">
+		<script
+			src="https://giscus.app/client.js"
+			data-repo={repo}
+			data-repo-id={repoId}
+			data-category={category}
+			data-category-id={categoryId}
+			data-mapping="pathname"
+			data-strict="0"
+			data-reactions-enabled="1"
+			data-emit-metadata="0"
+			data-input-position="top"
+			data-theme="preferred_color_scheme"
+			data-lang={lang}
+			crossorigin="anonymous"
+			async
+		></script>
+	</section>
+) : (
+	<script is:inline define:vars={{ isConfigured }}>
+		// 仅在控制台输出日志，不显示在页面上
+		if (typeof console !== 'undefined' && !isConfigured) {
+			console.log('[Giscus] 评论功能未启用：缺少必要的环境变量配置');
+			console.log('[Giscus] 需要配置：PUBLIC_GISCUS_REPO, PUBLIC_GISCUS_REPO_ID, PUBLIC_GISCUS_CATEGORY, PUBLIC_GISCUS_CATEGORY_ID');
+		}
+	</script>
+)}

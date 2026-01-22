@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown 预览工具 - 在线 Markdown 编辑器 | itkdm.com</title>
+    <meta name="description" content="免费在线 Markdown 预览工具，实时预览 Markdown 渲染效果。支持常见的 Markdown 语法，方便编写和调试 Markdown 文档，适用于博客写作、文档编写和笔记整理。">
+    <meta name="keywords" content="Markdown预览,Markdown编辑器,Markdown在线工具,Markdown渲染,Markdown语法,Markdown编辑器在线,Markdown预览器,Markdown工具,文档编辑器,博客编辑器">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/markdown-preview.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/markdown-preview.html">
+    <meta property="og:title" content="Markdown 预览工具 - 在线 Markdown 编辑器">
+    <meta property="og:description" content="免费在线 Markdown 预览工具，实时预览 Markdown 渲染效果。支持常见的 Markdown 语法，方便编写和调试 Markdown 文档。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/markdown-preview.html">
+    <meta property="twitter:title" content="Markdown 预览工具 - 在线 Markdown 编辑器">
+    <meta property="twitter:description" content="免费在线 Markdown 预览工具，实时预览 Markdown 渲染效果。支持常见的 Markdown 语法，方便编写和调试 Markdown 文档。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Markdown 预览工具",
+      "description": "免费在线 Markdown 预览工具，实时预览 Markdown 渲染效果",
+      "url": "https://itkdm.com/tools/markdown-preview.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "实时 Markdown 预览",
+        "Markdown 语法支持",
+        "Markdown 编辑器",
+        "文档编写工具",
+        "博客编辑器"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Markdown 预览工具",
+          "item": "https://itkdm.com/tools/markdown-preview.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Markdown 预览工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在左侧输入框中输入 Markdown 文本，右侧会实时显示渲染后的效果。支持标题、列表、代码块、引用、表格、链接、图片等常见 Markdown 语法。输入内容会立即更新预览效果，无需手动刷新。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些 Markdown 语法？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持标题（#）、粗体（**）、斜体（*）、代码块（```）、行内代码（`）、引用（>）、无序列表（-）、有序列表（1.）、链接（[]()）、图片（![]()）、表格（|）等常见 Markdown 语法。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Markdown 内容会被保存吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。所有 Markdown 预览都在您的浏览器本地完成，内容不会上传到服务器，也不会被保存。刷新页面后内容会丢失，建议及时复制保存需要的内容。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以导出渲染后的 HTML 吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "目前工具主要提供实时预览功能。您可以通过浏览器的开发者工具查看渲染后的 HTML 代码，或使用其他 Markdown 转 HTML 工具进行导出。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 Markdown 预览工具",
+      "description": "学习如何使用在线 Markdown 预览工具编写和预览 Markdown 文档",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入 Markdown 文本",
+          "text": "在左侧输入框中输入 Markdown 文本，可以使用标题、列表、代码块、引用、表格等语法"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "实时预览",
+          "text": "右侧会实时显示渲染后的效果，输入内容会立即更新预览，无需手动刷新"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "编辑和调试",
+          "text": "可以随时修改 Markdown 文本，预览效果会同步更新，方便编写和调试文档"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 500px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .preview-panel {
+            width: 100%;
+            min-height: 500px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+        .preview-panel h1, .preview-panel h2, .preview-panel h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        .preview-panel h1 {
+            font-size: 2em;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.3em;
+        }
+        .preview-panel h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3em;
+        }
+        .preview-panel h3 {
+            font-size: 1.25em;
+        }
+        .preview-panel code {
+            background: var(--bg-secondary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: var(--mono);
+            font-size: 0.9em;
+        }
+        .preview-panel pre {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+        .preview-panel pre code {
+            background: transparent;
+            padding: 0;
+        }
+        .preview-panel blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-left: 0;
+            color: var(--text-muted);
+        }
+        .preview-panel table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        .preview-panel table th,
+        .preview-panel table td {
+            border: 1px solid var(--border);
+            padding: 0.5em;
+        }
+        .preview-panel table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        .preview-panel ul, .preview-panel ol {
+            padding-left: 2em;
+        }
+        .preview-panel a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .preview-panel a:hover {
+            text-decoration: underline;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+        /* Tool intro styles */
+        .tool-intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .tool-intro h2 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .tool-intro h2:first-child {
+            margin-top: 0;
+        }
+        .tool-intro p {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .tool-intro ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .tool-intro li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        /* FAQ styles */
+        .tool-faq {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .tool-faq h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        /* Related tools styles */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-tools h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .related-tools > p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .related-tools-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .related-tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .related-tools-list a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .related-tools-list a:hover {
+            text-decoration: underline;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+        .btn-back:hover {
+            background: var(--bg-elev);
+            border-color: var(--border-strong);
+        }
+        @media (max-width: 768px) {
+            .tool-intro,
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">Markdown 预览工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>Markdown 预览工具</h1>
+                <p class="tool-subtitle">实时预览 Markdown 渲染效果</p>
+            </header>
+
+            <!-- Tool Section -->
+            <section class="tool-main">
+            <div class="tool-panel">
+                <div class="tool-panel-header">
+                    <label for="markdown-input">Markdown 源码</label>
+                </div>
+                <textarea id="markdown-input" class="tool-textarea" placeholder="输入 Markdown 文本..."># Markdown 预览工具
+
+这是一个简单的 Markdown 预览工具。
+
+## 功能特性
+
+- **实时预览**：输入即时显示效果
+- **语法支持**：支持常见的 Markdown 语法
+- **代码高亮**：支持代码块显示
+
+## 代码示例
+
+\`\`\`javascript
+function hello() {
+    console.log('Hello, Markdown!');
+}
+\`\`\`
+
+## 引用
+
+> 这是一段引用文本
+
+## 列表
+
+1. 有序列表项 1
+2. 有序列表项 2
+3. 有序列表项 3
+
+- 无序列表项 1
+- 无序列表项 2
+- 无序列表项 3
+
+## 链接和图片
+
+[链接文本](https://example.com)
+
+## 表格
+
+| 列1 | 列2 | 列3 |
+|-----|-----|-----|
+| 数据1 | 数据2 | 数据3 |
+| 数据4 | 数据5 | 数据6 |</textarea>
+                <div class="info-text">支持标题、列表、代码块、引用、表格等常见 Markdown 语法</div>
+            </div>
+
+            <div class="tool-panel">
+                <div class="tool-panel-header">
+                    <label>预览效果</label>
+                </div>
+                <div id="preview-output" class="preview-panel"></div>
+            </div>
+        </div>
+
+            <div class="tool-actions">
+                <button class="btn btn-secondary" id="clear-btn">
+                    <span>清空</span>
+                </button>
+            </div>
+        </section>
+
+        </article>
+    </main>
+
+    <script>
+        const markdownInput = document.getElementById('markdown-input');
+        const previewOutput = document.getElementById('preview-output');
+        const clearBtn = document.getElementById('clear-btn');
+
+        function markdownToHTML(markdown) {
+            let html = markdown;
+
+            // 标题
+            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+            html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+            // 粗体
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+            // 斜体
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+            // 代码块
+            html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+                return `<pre><code>${escapeHTML(code.trim())}</code></pre>`;
+            });
+
+            // 行内代码
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+            // 引用
+            html = html.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+            // 链接
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+            // 图片
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+            // 无序列表
+            html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+            // 有序列表
+            html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, (match) => {
+                if (match.includes('<ul>')) return match;
+                return '<ol>' + match + '</ol>';
+            });
+
+            // 表格
+            html = html.replace(/\|(.+)\|/g, (match) => {
+                const cells = match.split('|').filter(c => c.trim());
+                if (cells.length === 0) return '';
+                const isHeader = html.indexOf(match) < html.indexOf('|-----|');
+                const tag = isHeader ? 'th' : 'td';
+                return '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+            });
+            html = html.replace(/(<tr>.*<\/tr>)/s, '<table>$1</table>');
+
+            // 换行
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = html.replace(/\n/g, '<br>');
+
+            // 段落
+            html = '<p>' + html + '</p>';
+            html = html.replace(/<p><(h[1-6]|ul|ol|table|pre|blockquote)/g, '<$1');
+            html = html.replace(/(<\/(h[1-6]|ul|ol|table|pre|blockquote)>)<\/p>/g, '$1');
+
+            return html;
+        }
+
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function updatePreview() {
+            const markdown = markdownInput.value;
+            previewOutput.innerHTML = markdownToHTML(markdown);
+        }
+
+        function clearAll() {
+            markdownInput.value = '';
+            updatePreview();
+        }
+
+        markdownInput.addEventListener('input', updatePreview);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 初始预览
+        updatePreview();
+    </script>
+</body>
+</html>

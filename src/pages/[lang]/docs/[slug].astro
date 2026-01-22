@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import type { Lang } from '../../../../i18n/config';
+import { SUPPORTED_LANGS } from '../../../../i18n/config';
+
+export async function getStaticPaths() {
+	const docs = await getCollection('docs');
+	return docs.map((doc) => ({
+		params: { lang: doc.data.lang, slug: doc.data.slug ?? doc.slug },
+	}));
+}
+
+const { lang, slug } = Astro.params as { lang: Lang; slug: string };
+const entry =
+	(await getCollection('docs', (doc) => {
+		const docSlug = doc.data.slug ?? doc.slug;
+		return doc.data.lang === lang && docSlug === slug;
+	}))?.[0];
+
+if (!entry) {
+	throw new Error(`Doc not found: ${lang}/${slug}`);
+}
+---
+
+<DocsLayout lang={lang} entry={entry} />

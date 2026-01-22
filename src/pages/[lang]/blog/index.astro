@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../../i18n/config';
+import { SUPPORTED_LANGS } from '../../../i18n/config';
+import { sortBlogPosts } from '../../../lib/blog-sort';
+
+export function getStaticPaths() {
+	return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const posts = sortBlogPosts(
+	(await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft))
+		.map((entry) => {
+			// Use frontmatter slug if available, otherwise extract filename from entry.slug
+			const slug = entry.data.slug ?? entry.slug.split('/').pop() ?? entry.slug;
+			return { ...entry, slug };
+		})
+);
+---
+
+<BaseLayout
+	lang={lang}
+	title={lang === 'zh' ? '博客列表' : 'Blog'}
+	description={lang === 'zh' ? '最新文章' : 'Latest posts'}
+	currentPath={`/${lang}/blog/`}
+>
+	<section class="section">
+		<div class="section-head">
+			<h2>{lang === 'zh' ? '所有文章' : 'All Posts'}</h2>
+			<p class="faint">{lang === 'zh' ? `共 ${posts.length} 篇文章` : `${posts.length} posts`}</p>
+		</div>
+		{posts.length === 0 ? (
+			<p class="faint">{lang === 'zh' ? '暂无文章。' : 'No posts yet.'}</p>
+		) : (
+			<div class="grid grid-3">
+				{posts.map((post) => (
+					<div
+						class="card blog-card"
+						data-slug={post.slug}
+						data-lang={lang}
+						role="link"
+						tabindex="0"
+						aria-label={post.data.title}
+						style="cursor: pointer;"
+					>
+						<div class="badge">Blog</div>
+						<h3>{post.data.title}</h3>
+						<p class="meta">
+							<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
+						</p>
+						<p>{post.data.summary}</p>
+						{post.data.tags.length > 0 && (
+							<div class="blog-tags-container">
+								{post.data.tags.map((tag) => (
+									<a 
+										href={`/${lang}/blog/tags/${encodeURIComponent(tag)}/`} 
+										class="tag"
+										title={lang === 'zh' ? `查看所有「${tag}」标签的文章` : `View all posts tagged "${tag}"`}
+									>
+										{tag}
+									</a>
+								))}
+							</div>
+						)}
+					</div>
+				))}
+			</div>
+		)}
+	</section>
+
+	<script>
+		// 防止标签链接触发卡片链接
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelectorAll('.blog-card[data-slug]').forEach((card) => {
+				const slug = card.dataset.slug;
+				const lang = card.dataset.lang;
+				card.addEventListener('click', (e) => {
+					if (e.target.closest('.blog-tags-container')) {
+						return;
+					}
+					window.location.href = `/${lang}/blog/${slug}/`;
+				});
+				card.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						card.click();
+					}
+				});
+			});
+
+			const tagLinks = document.querySelectorAll('.blog-tags-container .tag');
+			tagLinks.forEach((link) => {
+				link.addEventListener('click', (e) => {
+					e.stopPropagation();
+				});
+			});
+		});
+	</script>
+</BaseLayout>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜色转换工具 - HEX RGB HSL 颜色转换器 | itkdm.com</title>
+    <meta name="description" content="免费在线颜色转换工具，支持 HEX、RGB、HSL 颜色格式相互转换。提供颜色选择器和多种格式输出，适用于 Web 开发、UI 设计和前端开发。">
+    <meta name="keywords" content="颜色转换,HEX转RGB,RGB转HEX,HSL转换,颜色转换器,颜色选择器,颜色工具,Web颜色,前端开发工具,UI设计工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/color-converter.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/color-converter.html">
+    <meta property="og:title" content="颜色转换工具 - HEX RGB HSL 颜色转换器">
+    <meta property="og:description" content="免费在线颜色转换工具，支持 HEX、RGB、HSL 颜色格式相互转换。提供颜色选择器和多种格式输出。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/color-converter.html">
+    <meta property="twitter:title" content="颜色转换工具 - HEX RGB HSL 颜色转换器">
+    <meta property="twitter:description" content="免费在线颜色转换工具，支持 HEX、RGB、HSL 颜色格式相互转换。提供颜色选择器和多种格式输出。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "颜色转换工具",
+      "description": "免费在线颜色转换工具，支持 HEX、RGB、HSL 颜色格式相互转换",
+      "url": "https://itkdm.com/tools/color-converter.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "HEX 颜色转换",
+        "RGB 颜色转换",
+        "HSL 颜色转换",
+        "颜色选择器",
+        "多种格式输出"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "颜色转换工具",
+          "item": "https://itkdm.com/tools/color-converter.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "颜色转换工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使用颜色选择器选择颜色，或在 HEX、RGB、HSL 任一输入框中输入颜色值，工具会自动转换并显示其他格式的颜色值。所有格式会实时同步更新，方便在不同格式之间快速转换。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些颜色格式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持 HEX（十六进制，如 #3b82f6）、RGB（如 rgb(59, 130, 246)）和 HSL（如 hsl(217, 91%, 60%)）三种常见颜色格式。工具会自动识别输入格式并转换为其他格式。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何复制颜色值？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "点击任意颜色格式输入框旁边的复制按钮，即可复制对应格式的颜色值。也可以直接点击输入框中的颜色值进行复制，方便在代码中使用。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "颜色预览如何工作？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "工具会实时显示当前颜色的预览效果，包括颜色块和对应的颜色值。预览会随着颜色值的改变自动更新，帮助您直观地查看颜色效果。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用颜色转换工具",
+      "description": "学习如何使用在线颜色转换工具在不同颜色格式之间转换",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "选择颜色",
+          "text": "使用颜色选择器选择颜色，或在 HEX、RGB、HSL 任一输入框中输入颜色值"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看转换结果",
+          "text": "工具会自动转换并显示其他格式的颜色值，所有格式会实时同步更新"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "复制颜色值",
+          "text": "点击复制按钮复制需要的颜色格式值，方便在代码中使用"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .color-picker-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .color-preview {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .color-input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        .input-group input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .result-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .result-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .result-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .result-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .result-item input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        .result-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn:hover {
+            background: var(--bg-tertiary);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">颜色转换工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>颜色转换工具</h1>
+                <p class="tool-subtitle">在不同颜色格式之间快速转换（HEX、RGB、HSL）</p>
+            </header>
+
+        <div class="color-picker-section">
+            <div class="color-preview" id="color-preview"></div>
+            <div class="color-input-group">
+                <div class="input-group">
+                    <label for="color-picker">颜色选择器</label>
+                    <input type="color" id="color-picker" value="#3b82f6">
+                </div>
+                <div class="input-group">
+                    <label for="hex-input">HEX</label>
+                    <input type="text" id="hex-input" placeholder="#3b82f6" value="#3b82f6">
+                </div>
+                <div class="input-group">
+                    <label for="rgb-input">RGB</label>
+                    <input type="text" id="rgb-input" placeholder="rgb(59, 130, 246)">
+                </div>
+                <div class="input-group">
+                    <label for="hsl-input">HSL</label>
+                    <input type="text" id="hsl-input" placeholder="hsl(217, 91%, 60%)">
+                </div>
+            </div>
+        </div>
+
+        <div class="result-section">
+            <h2>转换结果</h2>
+            <div class="result-grid">
+                <div class="result-item">
+                    <label>HEX</label>
+                    <input type="text" id="result-hex" readonly>
+                </div>
+                <div class="result-item">
+                    <label>RGB</label>
+                    <input type="text" id="result-rgb" readonly>
+                </div>
+                <div class="result-item">
+                    <label>RGBA</label>
+                    <input type="text" id="result-rgba" readonly>
+                </div>
+                <div class="result-item">
+                    <label>HSL</label>
+                    <input type="text" id="result-hsl" readonly>
+                </div>
+                <div class="result-item">
+                    <label>HSLA</label>
+                    <input type="text" id="result-hsla" readonly>
+                </div>
+            </div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const colorPicker = document.getElementById('color-picker');
+        const hexInput = document.getElementById('hex-input');
+        const rgbInput = document.getElementById('rgb-input');
+        const hslInput = document.getElementById('hsl-input');
+        const colorPreview = document.getElementById('color-preview');
+        const resultHex = document.getElementById('result-hex');
+        const resultRgb = document.getElementById('result-rgb');
+        const resultRgba = document.getElementById('result-rgba');
+        const resultHsl = document.getElementById('result-hsl');
+        const resultHsla = document.getElementById('result-hsla');
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+
+        function updateColor(hex) {
+            if (!hex.startsWith('#')) hex = '#' + hex;
+            const rgb = hexToRgb(hex);
+            if (!rgb) return;
+
+            const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+            // 更新预览
+            colorPreview.style.backgroundColor = hex;
+            colorPicker.value = hex;
+
+            // 更新输入框
+            hexInput.value = hex.toUpperCase();
+            rgbInput.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            hslInput.value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+
+            // 更新结果
+            resultHex.value = hex.toUpperCase();
+            resultRgb.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            resultRgba.value = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`;
+            resultHsl.value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+            resultHsla.value = `hsla(${hsl.h}, ${hsl.s}%, ${hsl.l}%, 1)`;
+        }
+
+        function parseRgb(rgbStr) {
+            const match = rgbStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (match) {
+                return {
+                    r: parseInt(match[1]),
+                    g: parseInt(match[2]),
+                    b: parseInt(match[3])
+                };
+            }
+            return null;
+        }
+
+        function parseHsl(hslStr) {
+            const match = hslStr.match(/hsla?\((\d+),\s*(\d+)%,\s*(\d+)%/);
+            if (match) {
+                return {
+                    h: parseInt(match[1]),
+                    s: parseInt(match[2]),
+                    l: parseInt(match[3])
+                };
+            }
+            return null;
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join("");
+        }
+
+        function hslToRgb(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            let r, g, b;
+
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = Math.round(hue2rgb(p, q, h + 1/3) * 255);
+                g = Math.round(hue2rgb(p, q, h) * 255);
+                b = Math.round(hue2rgb(p, q, h - 1/3) * 255);
+            }
+
+            return { r, g, b };
+        }
+
+        colorPicker.addEventListener('input', (e) => {
+            updateColor(e.target.value);
+        });
+
+        hexInput.addEventListener('input', (e) => {
+            const hex = e.target.value.trim();
+            if (/^#?[0-9A-Fa-f]{6}$/.test(hex)) {
+                updateColor(hex);
+            }
+        });
+
+        rgbInput.addEventListener('input', (e) => {
+            const rgb = parseRgb(e.target.value);
+            if (rgb) {
+                const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+                updateColor(hex);
+            }
+        });
+
+        hslInput.addEventListener('input', (e) => {
+            const hsl = parseHsl(e.target.value);
+            if (hsl) {
+                const rgb = hslToRgb(hsl.h, hsl.s, hsl.l);
+                const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+                updateColor(hex);
+            }
+        });
+
+        // 复制功能
+        [resultHex, resultRgb, resultRgba, resultHsl, resultHsla].forEach(input => {
+            input.addEventListener('click', function() {
+                this.select();
+                document.execCommand('copy');
+                const originalValue = this.value;
+                this.value = '已复制！';
+                setTimeout(() => {
+                    this.value = originalValue;
+                }, 1000);
+            });
+        });
+
+        // 初始化
+        updateColor('#3b82f6');
+    </script>
+</body>
+</html>

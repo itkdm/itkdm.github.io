@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本反转工具 - 在线文本反转工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本反转工具，反转文本内容。支持字符反转、行顺序反转、单词反转等多种模式，适用于文本处理、数据转换和内容编辑。">
+    <meta name="keywords" content="文本反转,文本反转工具,字符反转,行反转,单词反转,文本处理工具,文本转换工具,文本编辑工具,文本操作工具,文本工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-reverse.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-reverse.html">
+    <meta property="og:title" content="文本反转工具 - 在线文本反转工具">
+    <meta property="og:description" content="免费在线文本反转工具，反转文本内容。支持字符反转、行顺序反转、单词反转等多种模式。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-reverse.html">
+    <meta property="twitter:title" content="文本反转工具 - 在线文本反转工具">
+    <meta property="twitter:description" content="免费在线文本反转工具，反转文本内容。支持字符反转、行顺序反转、单词反转等多种模式。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本反转工具",
+      "description": "免费在线文本反转工具，反转文本内容",
+      "url": "https://itkdm.com/tools/text-reverse.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "字符反转",
+        "行顺序反转",
+        "单词反转",
+        "文本处理",
+        "数据转换"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本反转工具",
+          "item": "https://itkdm.com/tools/text-reverse.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本反转工具支持哪些反转方式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持多种反转方式，包括字符反转（反转所有字符顺序）、行顺序反转（反转行的顺序）、单词反转（反转单词顺序）等。可以根据需要选择不同的反转模式。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本反转工具",
+      "description": "学习如何使用在线文本反转工具来反转文本内容",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入或粘贴要反转的文本"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择反转方式",
+          "text": "选择反转方式（字符反转、行顺序反转、单词反转等）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看结果",
+          "text": "查看反转结果，可以复制反转后的文本"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .options-group {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .options-group h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本反转工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本反转工具</h1>
+                <p class="tool-subtitle">反转文本内容，支持字符反转、行顺序反转等多种模式</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="input-text">原始文本</label>
+                <textarea id="input-text" class="tool-textarea" placeholder="输入要反转的文本...">第一行
+第二行
+第三行</textarea>
+                <div class="options-group">
+                    <h3>反转模式</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="reverse-mode" value="characters" checked>
+                            反转字符（整个文本字符顺序反转）
+                        </label>
+                        <label>
+                            <input type="radio" name="reverse-mode" value="lines">
+                            反转行顺序（保持每行内容不变）
+                        </label>
+                        <label>
+                            <input type="radio" name="reverse-mode" value="both">
+                            同时反转字符和行顺序
+                        </label>
+                        <label>
+                            <input type="radio" name="reverse-mode" value="words">
+                            反转单词顺序（每行内单词顺序反转）
+                        </label>
+                    </div>
+                </div>
+                <div class="info-text">支持多行文本</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="output-text">反转结果</label>
+                <textarea id="output-text" class="tool-textarea" placeholder="反转结果将显示在这里..." readonly></textarea>
+                <div class="info-text">显示反转后的文本</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="reverse-btn">
+                <span>反转</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const reverseBtn = document.getElementById('reverse-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        function reverseText() {
+            const text = inputText.value;
+            if (!text.trim()) {
+                outputText.value = '';
+                return;
+            }
+
+            const mode = document.querySelector('input[name="reverse-mode"]:checked').value;
+            let result = '';
+
+            switch (mode) {
+                case 'characters':
+                    result = text.split('').reverse().join('');
+                    break;
+                case 'lines':
+                    result = text.split('\n').reverse().join('\n');
+                    break;
+                case 'both':
+                    result = text.split('\n').reverse().map(line => line.split('').reverse().join('')).join('\n');
+                    break;
+                case 'words':
+                    result = text.split('\n').map(line => {
+                        return line.split(/\s+/).reverse().join(' ');
+                    }).join('\n');
+                    break;
+            }
+
+            outputText.value = result;
+        }
+
+        function copyOutput() {
+            const text = outputText.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            inputText.value = '';
+            outputText.value = '';
+        }
+
+        reverseBtn.addEventListener('click', reverseText);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动反转
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', reverseText);
+        });
+
+        // 实时反转
+        inputText.addEventListener('input', reverseText);
+
+        // 初始反转
+        reverseText();
+    </script>
+</body>
+</html>

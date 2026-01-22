@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本排序工具 - 在线文本行排序工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本排序工具，对文本行进行排序。支持按字母顺序、长度、数字等多种排序方式，适用于列表整理、数据排序和内容组织。">
+    <meta name="keywords" content="文本排序,文本排序工具,文本行排序,列表排序,数据排序工具,文本整理工具,排序工具,文本处理工具,列表整理,内容组织">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-sort.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-sort.html">
+    <meta property="og:title" content="文本排序工具 - 在线文本行排序工具">
+    <meta property="og:description" content="免费在线文本排序工具，对文本行进行排序。支持按字母顺序、长度、数字等多种排序方式。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-sort.html">
+    <meta property="twitter:title" content="文本排序工具 - 在线文本行排序工具">
+    <meta property="twitter:description" content="免费在线文本排序工具，对文本行进行排序。支持按字母顺序、长度、数字等多种排序方式。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本排序工具",
+      "description": "免费在线文本排序工具，对文本行进行排序",
+      "url": "https://itkdm.com/tools/text-sort.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "字母顺序排序",
+        "长度排序",
+        "数字排序",
+        "反向排序",
+        "文本整理"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本排序工具",
+          "item": "https://itkdm.com/tools/text-sort.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本排序工具支持哪些排序方式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持多种排序方式，包括按字母顺序排序（升序/降序）、按长度排序、按数字排序、反向排序等。可以满足不同的文本整理需求。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何使用文本排序工具？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入或粘贴要排序的文本（每行一条），选择排序方式（字母顺序、长度、数字等），选择排序方向（升序或降序），点击'排序'按钮即可。支持去除空行和重复行。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本排序工具",
+      "description": "学习如何使用在线文本排序工具来排序文本",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入或粘贴要排序的文本，每行一条"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择排序方式",
+          "text": "选择排序方式（字母顺序、长度、数字等）和排序方向（升序或降序）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "排序文本",
+          "text": "点击'排序'按钮，查看排序结果，可以复制排序后的文本"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .options-group {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .options-group h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .radio-group label,
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"],
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本排序工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本排序工具</h1>
+                <p class="tool-subtitle">对文本行进行排序，支持多种排序方式和选项</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="input-text">原始文本</label>
+                <textarea id="input-text" class="tool-textarea" placeholder="输入要排序的文本...">苹果
+香蕉
+橙子
+葡萄
+西瓜</textarea>
+                <div class="options-group">
+                    <h3>排序选项</h3>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="sort-type" value="alphabetical" checked>
+                            按字母顺序
+                        </label>
+                        <label>
+                            <input type="radio" name="sort-type" value="reverse">
+                            反向排序
+                        </label>
+                        <label>
+                            <input type="radio" name="sort-type" value="length">
+                            按长度排序
+                        </label>
+                        <label>
+                            <input type="radio" name="sort-type" value="numeric">
+                            按数字排序
+                        </label>
+                    </div>
+                    <div class="checkbox-group" style="margin-top: 1rem;">
+                        <label>
+                            <input type="checkbox" id="case-sensitive">
+                            区分大小写
+                        </label>
+                        <label>
+                            <input type="checkbox" id="remove-empty">
+                            移除空行
+                        </label>
+                        <label>
+                            <input type="checkbox" id="trim-lines" checked>
+                            去除首尾空格
+                        </label>
+                    </div>
+                </div>
+                <div class="info-text">每行作为一个独立项进行排序</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="output-text">排序结果</label>
+                <textarea id="output-text" class="tool-textarea" placeholder="排序结果将显示在这里..." readonly></textarea>
+                <div class="info-text">显示排序后的文本</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="sort-btn">
+                <span>排序</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const sortBtn = document.getElementById('sort-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const caseSensitiveCheck = document.getElementById('case-sensitive');
+        const removeEmptyCheck = document.getElementById('remove-empty');
+        const trimLinesCheck = document.getElementById('trim-lines');
+
+        function sortText() {
+            const text = inputText.value;
+            if (!text.trim()) {
+                outputText.value = '';
+                return;
+            }
+
+            const sortType = document.querySelector('input[name="sort-type"]:checked').value;
+            const caseSensitive = caseSensitiveCheck.checked;
+            const removeEmpty = removeEmptyCheck.checked;
+            const trimLines = trimLinesCheck.checked;
+
+            let lines = text.split('\n');
+
+            // 处理每行
+            if (trimLines) {
+                lines = lines.map(line => line.trim());
+            }
+
+            // 移除空行
+            if (removeEmpty) {
+                lines = lines.filter(line => line.trim());
+            }
+
+            // 排序
+            let sorted = [...lines];
+            switch (sortType) {
+                case 'alphabetical':
+                    sorted.sort((a, b) => {
+                        const aVal = caseSensitive ? a : a.toLowerCase();
+                        const bVal = caseSensitive ? b : b.toLowerCase();
+                        return aVal.localeCompare(bVal);
+                    });
+                    break;
+                case 'reverse':
+                    sorted.sort((a, b) => {
+                        const aVal = caseSensitive ? a : a.toLowerCase();
+                        const bVal = caseSensitive ? b : b.toLowerCase();
+                        return bVal.localeCompare(aVal);
+                    });
+                    break;
+                case 'length':
+                    sorted.sort((a, b) => a.length - b.length);
+                    break;
+                case 'numeric':
+                    sorted.sort((a, b) => {
+                        const aNum = parseFloat(a) || 0;
+                        const bNum = parseFloat(b) || 0;
+                        return aNum - bNum;
+                    });
+                    break;
+            }
+
+            outputText.value = sorted.join('\n');
+        }
+
+        function copyOutput() {
+            const text = outputText.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            inputText.value = '';
+            outputText.value = '';
+        }
+
+        sortBtn.addEventListener('click', sortText);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动排序
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', sortText);
+        });
+
+        // 实时排序
+        inputText.addEventListener('input', sortText);
+
+        // 初始排序
+        sortText();
+    </script>
+</body>
+</html>

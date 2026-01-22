@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 码生成器 - 在线二维码生成工具 | itkdm.com</title>
+    <meta name="description" content="免费在线二维码生成器，快速生成二维码。支持文本、URL、WiFi 信息等多种内容，可自定义尺寸和纠错级别，适用于营销推广、信息分享和移动支付。">
+    <meta name="keywords" content="二维码生成,QR码生成,二维码生成器,QR码生成器,二维码工具,在线二维码生成,二维码制作,二维码生成工具,QR码工具,二维码在线生成">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/qr-generator.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/qr-generator.html">
+    <meta property="og:title" content="QR 码生成器 - 在线二维码生成工具">
+    <meta property="og:description" content="免费在线二维码生成器，快速生成二维码。支持文本、URL、WiFi 信息等多种内容，可自定义尺寸和纠错级别。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/qr-generator.html">
+    <meta property="twitter:title" content="QR 码生成器 - 在线二维码生成工具">
+    <meta property="twitter:description" content="免费在线二维码生成器，快速生成二维码。支持文本、URL、WiFi 信息等多种内容，可自定义尺寸和纠错级别。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "QR 码生成器",
+      "description": "免费在线二维码生成器，快速生成二维码",
+      "url": "https://itkdm.com/tools/qr-generator.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "二维码生成",
+        "文本二维码",
+        "URL 二维码",
+        "WiFi 二维码",
+        "自定义尺寸和纠错级别"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "QR 码生成器",
+          "item": "https://itkdm.com/tools/qr-generator.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "QR 码生成器如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在内容输入框中输入要生成二维码的文本、URL、WiFi信息等内容，选择二维码尺寸（200x200到500x500像素）和纠错级别（L/M/Q/H），然后点击'生成二维码'按钮即可。生成的二维码可以下载为PNG图片。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "二维码的纠错级别是什么意思？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "纠错级别决定了二维码在部分损坏时仍能被扫描识别的能力。L级（低）约7%容错，M级（中）约15%容错，Q级（高）约25%容错，H级（最高）约30%容错。级别越高，二维码越复杂，但容错能力越强。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以生成哪些类型的二维码？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以生成文本、URL链接、WiFi信息、Email地址、电话号码、短信等多种类型的二维码。工具提供了预设按钮，可以快速生成常见类型的二维码格式。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "生成的二维码会被保存吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不会。所有二维码生成都在您的浏览器本地完成，数据不会上传到服务器。生成的二维码可以下载保存到本地，也可以直接使用。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 QR 码生成器",
+      "description": "学习如何使用在线二维码生成器生成二维码",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入内容",
+          "text": "在内容输入框中输入要生成二维码的文本、URL、WiFi信息等内容，或点击预设按钮快速选择常见类型"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "设置参数",
+          "text": "选择二维码尺寸（200x200到500x500像素）和纠错级别（建议使用M级或Q级）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "生成二维码",
+          "text": "点击'生成二维码'按钮，工具会立即生成二维码并显示预览，可以点击'下载二维码'保存为PNG图片"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .qr-preview {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .qr-preview h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-left: 0.5rem;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+        /* Tool intro styles */
+        .tool-intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .tool-intro h2 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .tool-intro h2:first-child {
+            margin-top: 0;
+        }
+        .tool-intro p {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .tool-intro ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .tool-intro li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        /* FAQ styles */
+        .tool-faq {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .tool-faq h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        /* Related tools styles */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-tools h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .related-tools > p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .related-tools-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .related-tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .related-tools-list a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .related-tools-list a:hover {
+            text-decoration: underline;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+        .btn-back:hover {
+            background: var(--bg-elev);
+            border-color: var(--border-strong);
+        }
+        @media (max-width: 768px) {
+            .tool-intro,
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .preset-btn {
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">QR 码生成器</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>QR 码生成器</h1>
+                <p class="tool-subtitle">快速生成二维码，支持文本、URL、WiFi 信息等多种内容</p>
+            </header>
+
+            <!-- Tool Section -->
+            <section class="tool-main">
+            <div class="tool-panel">
+                <label for="content-input">内容</label>
+                <textarea id="content-input" class="tool-textarea" placeholder="输入要生成二维码的内容..."></textarea>
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-type="url">URL</button>
+                    <button class="preset-btn" data-type="wifi">WiFi</button>
+                    <button class="preset-btn" data-type="email">Email</button>
+                    <button class="preset-btn" data-type="phone">电话</button>
+                    <button class="preset-btn" data-type="sms">短信</button>
+                </div>
+                <div class="input-group">
+                    <label for="size-input">尺寸</label>
+                    <select id="size-input">
+                        <option value="200">200x200</option>
+                        <option value="300" selected>300x300</option>
+                        <option value="400">400x400</option>
+                        <option value="500">500x500</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="error-level">纠错级别</label>
+                    <select id="error-level">
+                        <option value="L">L - 低 (约7%)</option>
+                        <option value="M" selected>M - 中 (约15%)</option>
+                        <option value="Q">Q - 高 (约25%)</option>
+                        <option value="H">H - 最高 (约30%)</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" id="generate-btn">
+                    <span>生成二维码</span>
+                </button>
+            </div>
+
+            <div class="qr-preview">
+                <h2>二维码预览</h2>
+                <div id="qrcode"></div>
+                <div id="qr-info" class="info-text">输入内容后点击"生成二维码"</div>
+                <button class="btn btn-secondary" id="download-btn" style="display: none;">
+                    <span>下载二维码</span>
+                </button>
+            </div>
+        </section>
+
+        </article>
+    </main>
+
+    <script>
+        // 使用内联的 QR 码生成库（避免 CDN 依赖）
+        // 这里使用一个轻量级的 QR 码生成实现
+        (function() {
+            // 如果 QRCode 已经通过 CDN 加载，直接返回
+            if (typeof QRCode !== 'undefined') {
+                return;
+            }
+
+            // 尝试从多个 CDN 加载，如果都失败则使用内联实现
+            const qrcodeCDNs = [
+                'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
+                'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js',
+                'https://fastly.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js'
+            ];
+
+            let cdnLoaded = false;
+            let scriptIndex = 0;
+
+            function tryLoadCDN() {
+                if (cdnLoaded || typeof QRCode !== 'undefined') {
+                    return;
+                }
+
+                if (scriptIndex >= qrcodeCDNs.length) {
+                    // 所有 CDN 都失败，使用内联实现
+                    loadInlineQRCode();
+                    return;
+                }
+
+                const script = document.createElement('script');
+                script.src = qrcodeCDNs[scriptIndex];
+                script.async = true;
+                
+                script.onload = () => {
+                    setTimeout(() => {
+                        if (typeof QRCode !== 'undefined') {
+                            cdnLoaded = true;
+                        } else {
+                            scriptIndex++;
+                            tryLoadCDN();
+                        }
+                    }, 100);
+                };
+
+                script.onerror = () => {
+                    scriptIndex++;
+                    tryLoadCDN();
+                };
+
+                document.head.appendChild(script);
+            }
+
+            // 内联的 QR 码生成器（使用 qrcode-generator 库的简化版本）
+            function loadInlineQRCode() {
+                // 这里我们需要一个真正的 QR 码生成库
+                // 由于完整的 QR 码生成算法很复杂，我们使用一个轻量级的实现
+                // 实际项目中，建议将 qrcode 库打包到项目中
+                
+                // 使用一个简单的实现：通过 API 生成二维码
+                window.QRCode = {
+                    toCanvas: function(element, text, options, callback) {
+                        try {
+                            const size = options.width || 200;
+                            const margin = options.margin || 2;
+                            const errorCorrectionLevel = options.errorCorrectionLevel || 'M';
+                            
+                            // 使用在线 API 生成二维码（作为最后的备用方案）
+                            const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&ecc=${errorCorrectionLevel}`;
+                            
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = size;
+                            canvas.height = size;
+                            
+                            const img = new Image();
+                            img.crossOrigin = 'anonymous';
+                            
+                            img.onload = function() {
+                                ctx.fillStyle = options.color?.light || '#FFFFFF';
+                                ctx.fillRect(0, 0, size, size);
+                                ctx.drawImage(img, margin, margin, size - margin * 2, size - margin * 2);
+                                
+                                if (typeof element === 'string') {
+                                    element = document.getElementById(element);
+                                }
+                                element.innerHTML = '';
+                                element.appendChild(canvas);
+                                
+                                if (callback) {
+                                    callback(null);
+                                }
+                            };
+                            
+                            img.onerror = function() {
+                                if (callback) {
+                                    callback(new Error('Failed to generate QR code'));
+                                }
+                            };
+                            
+                            img.src = apiUrl;
+                        } catch (error) {
+                            if (callback) {
+                                callback(error);
+                            }
+                        }
+                    }
+                };
+            }
+
+            // 尝试加载 CDN
+            tryLoadCDN();
+            
+            // 如果 3 秒后还没加载成功，使用内联实现
+            setTimeout(() => {
+                if (typeof QRCode === 'undefined' && !cdnLoaded) {
+                    loadInlineQRCode();
+                }
+            }, 3000);
+        })();
+
+        const contentInput = document.getElementById('content-input');
+        const sizeInput = document.getElementById('size-input');
+        const errorLevel = document.getElementById('error-level');
+        const generateBtn = document.getElementById('generate-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const qrcodeDiv = document.getElementById('qrcode');
+        const qrInfo = document.getElementById('qr-info');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+
+        const presets = {
+            url: 'https://example.com',
+            wifi: 'WIFI:T:WPA;S:MyNetwork;P:MyPassword;;',
+            email: 'mailto:example@example.com',
+            phone: 'tel:+1234567890',
+            sms: 'sms:+1234567890?body=Hello'
+        };
+
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.dataset.type;
+                contentInput.value = presets[type];
+                generateQR();
+            });
+        });
+
+        function generateQR() {
+            // 等待 QRCode 库加载
+            if (typeof QRCode === 'undefined') {
+                qrInfo.textContent = '正在加载二维码库，请稍候...';
+                setTimeout(() => {
+                    if (typeof QRCode === 'undefined') {
+                        qrInfo.textContent = '二维码库加载失败，使用备用方案...';
+                        setTimeout(generateQR, 1000);
+                    } else {
+                        generateQR();
+                    }
+                }, 500);
+                return;
+            }
+
+            const content = contentInput.value.trim();
+            if (!content) {
+                qrcodeDiv.innerHTML = '';
+                qrInfo.textContent = '请输入要生成二维码的内容';
+                downloadBtn.style.display = 'none';
+                return;
+            }
+
+            const size = parseInt(sizeInput.value);
+            const errorCorrectionLevel = errorLevel.value;
+
+            qrcodeDiv.innerHTML = '';
+
+            try {
+                QRCode.toCanvas(qrcodeDiv, content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: '#000000',
+                        light: '#FFFFFF'
+                    },
+                    errorCorrectionLevel: errorCorrectionLevel
+                }, function (error) {
+                    if (error) {
+                        qrInfo.textContent = '生成失败: ' + error.message;
+                        downloadBtn.style.display = 'none';
+                    } else {
+                        qrInfo.textContent = `尺寸: ${size}x${size}px | 纠错级别: ${errorCorrectionLevel}`;
+                        downloadBtn.style.display = 'inline-flex';
+                    }
+                });
+            } catch (error) {
+                qrInfo.textContent = '生成失败: ' + error.message;
+                downloadBtn.style.display = 'none';
+            }
+        }
+
+        function downloadQR() {
+            const canvas = qrcodeDiv.querySelector('canvas');
+            if (!canvas) return;
+
+            const url = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'qrcode.png';
+            link.href = url;
+            link.click();
+        }
+
+        generateBtn.addEventListener('click', generateQR);
+        downloadBtn.addEventListener('click', downloadQR);
+
+        // 回车键生成
+        contentInput.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                generateQR();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+---
+/**
+ * 受保护的文档页面示例
+ * 演示如何为文档页面添加密码保护
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PasswordGate from '../../../components/PasswordGate.astro';
+import type { Lang } from '../../../i18n/config';
+import { SUPPORTED_LANGS } from '../../../i18n/config';
+
+export function getStaticPaths() {
+	return SUPPORTED_LANGS.map((lang) => ({
+		params: { lang, slug: 'protected-example' },
+	}));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+
+// 从环境变量读取密码（推荐方式）
+// 如果没有设置环境变量，使用默认密码（仅用于开发）
+const PROTECTED_DOCS_PASSWORD = import.meta.env.PUBLIC_PROTECTED_DOCS_PASSWORD || 'demo_password_123';
+
+const pageTitle = lang === 'zh' ? '受保护的文档示例' : 'Protected Document Example';
+const content = lang === 'zh' 
+	? `# 受保护的文档示例
+
+这是一个需要密码才能访问的文档页面示例。
+
+## 如何使用
+
+1. 在文档的 frontmatter 中添加 \`premium: true\` 标记
+2. 在页面组件中检查该标记
+3. 如果标记为 true，使用 \`PasswordGate\` 组件包裹内容
+
+## 配置密码
+
+在 \`.env\` 文件中设置：
+
+\`\`\`env
+PUBLIC_PROTECTED_DOCS_PASSWORD=your_password_here
+\`\`\`
+
+## 安全提示
+
+- 密码存储在客户端，这是内容保护而非安全保护
+- 适合防止普通用户随意访问
+- 不适合保护敏感数据
+`
+	: `# Protected Document Example
+
+This is an example of a document page that requires a password to access.
+
+## How to Use
+
+1. Add \`premium: true\` to the document's frontmatter
+2. Check this flag in the page component
+3. If the flag is true, wrap the content with \`PasswordGate\` component
+
+## Configure Password
+
+Set in \`.env\` file:
+
+\`\`\`env
+PUBLIC_PROTECTED_DOCS_PASSWORD=your_password_here
+\`\`\`
+
+## Security Notes
+
+- Password is stored on the client side, this is content protection, not security protection
+- Suitable for preventing casual access
+- Not suitable for protecting sensitive data
+`;
+---
+
+<BaseLayout
+	lang={lang}
+	title={`${pageTitle} · 布吉岛`}
+	description={pageTitle}
+	currentPath={`/${lang}/docs/protected-example/`}
+>
+	<PasswordGate
+		password={PROTECTED_DOCS_PASSWORD}
+		lang={lang}
+		storageKey="protected_docs_password"
+		expiresIn={0}
+		useSessionStorage={false}
+		hint={lang === 'zh' ? '关注公众号获取密码以访问此文档' : 'Follow our WeChat account to get the password to access this document'}
+	>
+		<article style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
+			<div set:html={content} />
+		</article>
+	</PasswordGate>
+</BaseLayout>

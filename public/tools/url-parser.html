@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL 解析工具 - 在线 URL 参数解析器 | itkdm.com</title>
+    <meta name="description" content="免费在线 URL 解析工具，解析 URL 的各个组成部分。提取协议、域名、路径、参数等信息，支持查询参数表格展示，适用于 URL 分析、API 调试和 Web 开发。">
+    <meta name="keywords" content="URL解析,URL参数解析,URL解析工具,URL分析工具,URL参数提取,URL解析器,URL工具,Web开发工具,API调试工具,URL分析">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/url-parser.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/url-parser.html">
+    <meta property="og:title" content="URL 解析工具 - 在线 URL 参数解析器">
+    <meta property="og:description" content="免费在线 URL 解析工具，解析 URL 的各个组成部分。提取协议、域名、路径、参数等信息，支持查询参数表格展示。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/url-parser.html">
+    <meta property="twitter:title" content="URL 解析工具 - 在线 URL 参数解析器">
+    <meta property="twitter:description" content="免费在线 URL 解析工具，解析 URL 的各个组成部分。提取协议、域名、路径、参数等信息，支持查询参数表格展示。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "URL 解析工具",
+      "description": "免费在线 URL 解析工具，解析 URL 的各个组成部分",
+      "url": "https://itkdm.com/tools/url-parser.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "URL 解析",
+        "协议提取",
+        "域名提取",
+        "路径提取",
+        "查询参数提取"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "URL 解析工具",
+          "item": "https://itkdm.com/tools/url-parser.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "URL 解析工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入要解析的 URL 地址，点击'解析'按钮，工具会自动解析 URL 的各个组成部分，包括协议、域名、端口、路径、查询参数、锚点等，并以结构化的方式显示。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以解析哪些 URL 信息？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以解析 URL 的所有组成部分，包括协议（http、https）、域名、端口号、路径、查询参数（键值对）、锚点（hash）等。工具会以清晰的格式展示这些信息，方便查看和使用。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 URL 解析工具",
+      "description": "学习如何使用在线 URL 解析工具来解析 URL 地址",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入 URL",
+          "text": "在输入框中输入要解析的 URL 地址"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "解析 URL",
+          "text": "点击'解析'按钮，工具会自动解析 URL 的各个组成部分"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看结果",
+          "text": "查看解析结果，包括协议、域名、路径、查询参数等信息"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .result-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .result-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .result-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .result-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .result-item input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .result-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .params-section {
+            margin-top: 1.5rem;
+        }
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .params-table th,
+        .params-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.875rem;
+        }
+        .params-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        .params-table td {
+            font-family: var(--mono);
+        }
+        .error-message {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: color-mix(in srgb, #ff4444 16%, transparent);
+            border: 1px solid #ff4444;
+            border-radius: 6px;
+            color: #ff4444;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">URL 解析工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>URL 解析工具</h1>
+                <p class="tool-subtitle">解析 URL 的各个组成部分，提取协议、域名、路径、参数等信息</p>
+            </header>
+
+        <div class="input-group">
+            <label for="url-input">输入 URL</label>
+            <input type="text" id="url-input" placeholder="例如: https://example.com/path?key=value&name=test#section" value="https://example.com/path?key=value&name=test#section">
+            <div class="error-message" id="error-message"></div>
+            <div class="info-text">支持完整的 URL 或相对路径</div>
+        </div>
+
+        <div class="result-section">
+            <h2>解析结果</h2>
+            <div class="result-grid" id="result-grid">
+                <div class="result-item">
+                    <label>协议</label>
+                    <input type="text" id="protocol" readonly>
+                </div>
+                <div class="result-item">
+                    <label>主机名</label>
+                    <input type="text" id="hostname" readonly>
+                </div>
+                <div class="result-item">
+                    <label>端口</label>
+                    <input type="text" id="port" readonly>
+                </div>
+                <div class="result-item">
+                    <label>路径</label>
+                    <input type="text" id="pathname" readonly>
+                </div>
+                <div class="result-item">
+                    <label>查询字符串</label>
+                    <input type="text" id="search" readonly>
+                </div>
+                <div class="result-item">
+                    <label>哈希</label>
+                    <input type="text" id="hash" readonly>
+                </div>
+                <div class="result-item">
+                    <label>完整 URL</label>
+                    <input type="text" id="href" readonly>
+                </div>
+                <div class="result-item">
+                    <label>源</label>
+                    <input type="text" id="origin" readonly>
+                </div>
+            </div>
+
+            <div class="params-section">
+                <h3 style="margin: 1.5rem 0 1rem 0; font-size: 1rem;">查询参数</h3>
+                <table class="params-table" id="params-table">
+                    <thead>
+                        <tr>
+                            <th>参数名</th>
+                            <th>参数值</th>
+                        </tr>
+                    </thead>
+                    <tbody id="params-body">
+                        <tr>
+                            <td colspan="2" style="text-align: center; color: var(--text-muted);">暂无查询参数</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const urlInput = document.getElementById('url-input');
+        const errorMessage = document.getElementById('error-message');
+        const resultFields = {
+            protocol: document.getElementById('protocol'),
+            hostname: document.getElementById('hostname'),
+            port: document.getElementById('port'),
+            pathname: document.getElementById('pathname'),
+            search: document.getElementById('search'),
+            hash: document.getElementById('hash'),
+            href: document.getElementById('href'),
+            origin: document.getElementById('origin')
+        };
+        const paramsBody = document.getElementById('params-body');
+
+        function parseURL() {
+            const urlString = urlInput.value.trim();
+            if (!urlString) {
+                Object.values(resultFields).forEach(field => field.value = '');
+                paramsBody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">暂无查询参数</td></tr>';
+                errorMessage.classList.remove('show');
+                return;
+            }
+
+            try {
+                // 如果 URL 不包含协议，尝试添加 https://
+                let urlToParse = urlString;
+                if (!urlString.match(/^[a-zA-Z][a-zA-Z\d+\-.]*:/)) {
+                    urlToParse = 'https://' + urlString;
+                }
+
+                const url = new URL(urlToParse);
+
+                resultFields.protocol.value = url.protocol.replace(':', '');
+                resultFields.hostname.value = url.hostname;
+                resultFields.port.value = url.port || (url.protocol === 'https:' ? '443' : url.protocol === 'http:' ? '80' : '');
+                resultFields.pathname.value = url.pathname;
+                resultFields.search.value = url.search;
+                resultFields.hash.value = url.hash;
+                resultFields.href.value = url.href;
+                resultFields.origin.value = url.origin;
+
+                // 解析查询参数
+                const params = new URLSearchParams(url.search);
+                if (params.toString()) {
+                    paramsBody.innerHTML = '';
+                    params.forEach((value, key) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${escapeHTML(key)}</td>
+                            <td>${escapeHTML(value)}</td>
+                        `;
+                        paramsBody.appendChild(row);
+                    });
+                } else {
+                    paramsBody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">暂无查询参数</td></tr>';
+                }
+
+                errorMessage.classList.remove('show');
+            } catch (e) {
+                errorMessage.textContent = 'URL 解析失败: ' + e.message;
+                errorMessage.classList.add('show');
+                Object.values(resultFields).forEach(field => field.value = '');
+                paramsBody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">暂无查询参数</td></tr>';
+            }
+        }
+
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 复制功能
+        Object.values(resultFields).forEach(input => {
+            input.addEventListener('click', function() {
+                if (this.value) {
+                    this.select();
+                    document.execCommand('copy');
+                    const originalValue = this.value;
+                    this.value = '已复制！';
+                    setTimeout(() => {
+                        this.value = originalValue;
+                    }, 1000);
+                }
+            });
+        });
+
+        urlInput.addEventListener('input', parseURL);
+
+        // 初始解析
+        parseURL();
+    </script>
+</body>
+</html>

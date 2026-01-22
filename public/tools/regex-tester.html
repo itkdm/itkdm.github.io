@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式测试工具 - 在线正则表达式调试器 | itkdm.com</title>
+    <meta name="description" content="免费在线正则表达式测试工具，实时测试和调试正则表达式。查看匹配结果，支持多种标志和预设模式，适用于文本处理、数据验证和编程开发。">
+    <meta name="keywords" content="正则表达式测试,正则表达式工具,正则表达式在线,正则表达式调试,正则表达式验证,Regex测试,Regex工具,正则匹配,文本匹配,编程工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/regex-tester.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/regex-tester.html">
+    <meta property="og:title" content="正则表达式测试工具 - 在线正则表达式调试器">
+    <meta property="og:description" content="免费在线正则表达式测试工具，实时测试和调试正则表达式。查看匹配结果，支持多种标志和预设模式。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/regex-tester.html">
+    <meta property="twitter:title" content="正则表达式测试工具 - 在线正则表达式调试器">
+    <meta property="twitter:description" content="免费在线正则表达式测试工具，实时测试和调试正则表达式。查看匹配结果，支持多种标志和预设模式。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "正则表达式测试工具",
+      "description": "免费在线正则表达式测试工具，实时测试和调试正则表达式",
+      "url": "https://itkdm.com/tools/regex-tester.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "正则表达式测试",
+        "实时匹配结果",
+        "多种标志支持",
+        "预设模式",
+        "正则表达式调试"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "正则表达式测试工具",
+          "item": "https://itkdm.com/tools/regex-tester.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "正则表达式测试工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在正则表达式输入框中输入正则表达式模式，在测试文本框中输入要测试的文本，工具会实时显示匹配结果。可以选择不同的标志（如 g、i、m 等）来修改匹配行为，也可以使用预设模式快速测试常见场景。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些正则表达式标志？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持常见的正则表达式标志：g（全局匹配）、i（忽略大小写）、m（多行模式）、s（点号匹配换行符）、u（Unicode 模式）、y（粘性匹配）。可以组合使用多个标志来满足不同的匹配需求。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何测试邮箱、URL 等常见模式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "工具提供了预设模式按钮，包括匹配数字、字母、邮箱、URL 等常见模式。点击预设按钮可以快速填充对应的正则表达式，然后输入测试文本即可查看匹配结果。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "匹配结果如何显示？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "匹配结果会以高亮方式显示在测试文本中，匹配的文本会被标记出来。同时会显示匹配数量、匹配详情（包括匹配文本、位置、分组等），帮助您更好地理解和调试正则表达式。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用正则表达式测试工具",
+      "description": "学习如何使用在线正则表达式测试工具来测试和调试正则表达式",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入正则表达式",
+          "text": "在正则表达式输入框中输入要测试的正则表达式模式，或点击预设模式按钮快速选择常见模式"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择标志",
+          "text": "根据需要选择正则表达式标志（g、i、m 等）来修改匹配行为"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "输入测试文本",
+          "text": "在测试文本框中输入要测试的文本内容"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看匹配结果",
+          "text": "工具会实时显示匹配结果，包括匹配数量、匹配详情和高亮显示，帮助您调试和优化正则表达式"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        .input-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .result-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--text);
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .match-highlight {
+            background: color-mix(in srgb, var(--accent) 30%, transparent);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .match-group {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+        .error-message {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: color-mix(in srgb, #ff4444 16%, transparent);
+            border: 1px solid #ff4444;
+            border-radius: 6px;
+            color: #ff4444;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .preset-regex {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .preset-btn {
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">正则表达式测试工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>正则表达式测试工具</h1>
+                <p class="tool-subtitle">测试和调试正则表达式，实时查看匹配结果</p>
+            </header>
+
+        <div class="tool-section">
+            <h2>正则表达式</h2>
+            <div class="input-group">
+                <label for="regex-input">正则表达式</label>
+                <input type="text" id="regex-input" placeholder="例如: /hello\s+world/gi" value="">
+                <div class="preset-regex">
+                    <button class="preset-btn" data-regex="\d+">匹配数字</button>
+                    <button class="preset-btn" data-regex="[a-zA-Z]+">匹配字母</button>
+                    <button class="preset-btn" data-regex="\w+@\w+\.\w+">匹配邮箱</button>
+                    <button class="preset-btn" data-regex="https?://[^\s]+">匹配URL</button>
+                    <button class="preset-btn" data-regex="1[3-9]\d{9}">匹配手机号</button>
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="flag-g">全局匹配 (g)
+                </label>
+                <label>
+                    <input type="checkbox" id="flag-i">忽略大小写 (i)
+                </label>
+                <label>
+                    <input type="checkbox" id="flag-m">多行匹配 (m)
+                </label>
+                <label>
+                    <input type="checkbox" id="flag-s">点号匹配换行 (s)
+                </label>
+            </div>
+            <div class="error-message" id="regex-error"></div>
+        </div>
+
+        <div class="tool-section">
+            <h2>测试文本</h2>
+            <div class="input-group">
+                <label for="test-text">输入要测试的文本</label>
+                <textarea id="test-text" placeholder="在这里输入要测试的文本...">Hello world!
+This is a test.
+Email: test@example.com
+Phone: 13812345678
+URL: https://example.com</textarea>
+            </div>
+        </div>
+
+        <div class="tool-section">
+            <h2>匹配结果</h2>
+            <div class="result-box" id="match-result">输入正则表达式和测试文本后，匹配结果将显示在这里...</div>
+            <div class="info-text" id="match-info"></div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const regexInput = document.getElementById('regex-input');
+        const testText = document.getElementById('test-text');
+        const matchResult = document.getElementById('match-result');
+        const matchInfo = document.getElementById('match-info');
+        const regexError = document.getElementById('regex-error');
+        const flagG = document.getElementById('flag-g');
+        const flagI = document.getElementById('flag-i');
+        const flagM = document.getElementById('flag-m');
+        const flagS = document.getElementById('flag-s');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+
+        function showError(message) {
+            regexError.textContent = message;
+            regexError.classList.add('show');
+            setTimeout(() => {
+                regexError.classList.remove('show');
+            }, 5000);
+        }
+
+        function testRegex() {
+            const regexStr = regexInput.value.trim();
+            const text = testText.value;
+
+            if (!regexStr) {
+                matchResult.textContent = '请输入正则表达式';
+                matchInfo.textContent = '';
+                return;
+            }
+
+            if (!text) {
+                matchResult.textContent = '请输入测试文本';
+                matchInfo.textContent = '';
+                return;
+            }
+
+            // 构建标志
+            let flags = '';
+            if (flagG.checked) flags += 'g';
+            if (flagI.checked) flags += 'i';
+            if (flagM.checked) flags += 'm';
+            if (flagS.checked) flags += 's';
+
+            try {
+                // 处理正则表达式（移除前后的斜杠）
+                let pattern = regexStr;
+                if (pattern.startsWith('/') && pattern.endsWith('/')) {
+                    pattern = pattern.slice(1, -1);
+                }
+
+                const regex = new RegExp(pattern, flags);
+                const matches = [...text.matchAll(new RegExp(pattern, flags + 'g'))];
+
+                if (matches.length === 0) {
+                    matchResult.textContent = '没有找到匹配项';
+                    matchInfo.textContent = '匹配数量: 0';
+                } else {
+                    // 高亮显示匹配项
+                    let highlightedText = text;
+                    const sortedMatches = matches.sort((a, b) => b.index - a.index);
+                    
+                    sortedMatches.forEach(match => {
+                        const start = match.index;
+                        const end = start + match[0].length;
+                        const before = highlightedText.substring(0, start);
+                        const matchText = highlightedText.substring(start, end);
+                        const after = highlightedText.substring(end);
+                        highlightedText = before + `<span class="match-highlight">${matchText}</span>` + after;
+                    });
+
+                    matchResult.innerHTML = highlightedText;
+
+                    // 显示匹配详情
+                    let info = `匹配数量: ${matches.length}\n\n`;
+                    matches.forEach((match, index) => {
+                        info += `匹配 ${index + 1}:\n`;
+                        info += `  位置: ${match.index}-${match.index + match[0].length}\n`;
+                        info += `  内容: "${match[0]}"\n`;
+                        if (match.length > 1) {
+                            info += `  捕获组:\n`;
+                            for (let i = 1; i < match.length; i++) {
+                                info += `    [${i}]: "${match[i] || '(空)'}"\n`;
+                            }
+                        }
+                        info += '\n';
+                    });
+
+                    matchInfo.textContent = info;
+                }
+            } catch (e) {
+                showError('正则表达式错误: ' + e.message);
+                matchResult.textContent = '正则表达式有误，请检查语法';
+                matchInfo.textContent = '';
+            }
+        }
+
+        // 预设正则表达式
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                regexInput.value = btn.dataset.regex;
+                testRegex();
+            });
+        });
+
+        // 实时测试
+        regexInput.addEventListener('input', testRegex);
+        testText.addEventListener('input', testRegex);
+        flagG.addEventListener('change', testRegex);
+        flagI.addEventListener('change', testRegex);
+        flagM.addEventListener('change', testRegex);
+        flagS.addEventListener('change', testRegex);
+
+        // 初始测试
+        testRegex();
+    </script>
+</body>
+</html>

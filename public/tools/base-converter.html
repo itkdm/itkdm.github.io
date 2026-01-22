@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进制转换工具 - 在线二进制八进制十六进制转换器 | itkdm.com</title>
+    <meta name="description" content="免费在线进制转换工具，支持二进制、八进制、十进制、十六进制相互转换。快速进行进制转换，适用于编程开发、计算机科学和数字系统学习。">
+    <meta name="keywords" content="进制转换,二进制转换,八进制转换,十六进制转换,进制转换工具,二进制转十六进制,十六进制转二进制,编程工具,计算机工具,数字转换">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/base-converter.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/base-converter.html">
+    <meta property="og:title" content="进制转换工具 - 在线二进制八进制十六进制转换器">
+    <meta property="og:description" content="免费在线进制转换工具，支持二进制、八进制、十进制、十六进制相互转换。快速进行进制转换。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/base-converter.html">
+    <meta property="twitter:title" content="进制转换工具 - 在线二进制八进制十六进制转换器">
+    <meta property="twitter:description" content="免费在线进制转换工具，支持二进制、八进制、十进制、十六进制相互转换。快速进行进制转换。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "进制转换工具",
+      "description": "免费在线进制转换工具，支持二进制、八进制、十进制、十六进制相互转换",
+      "url": "https://itkdm.com/tools/base-converter.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "二进制转换",
+        "八进制转换",
+        "十进制转换",
+        "十六进制转换",
+        "编程工具"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "进制转换工具",
+          "item": "https://itkdm.com/tools/base-converter.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "进制转换工具支持哪些进制？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持二进制（2进制）、八进制（8进制）、十进制（10进制）和十六进制（16进制）之间的相互转换。输入一个进制的数值，工具会自动转换为其他进制格式。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何使用进制转换工具？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入要转换的数值，选择数值的进制（二进制、八进制、十进制或十六进制），工具会自动显示其他进制的转换结果。支持实时转换，输入后立即显示结果。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用进制转换工具",
+      "description": "学习如何使用在线进制转换工具来转换不同进制的数值",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入数值",
+          "text": "在输入框中输入要转换的数值"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择进制",
+          "text": "选择数值的进制（二进制、八进制、十进制或十六进制）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看结果",
+          "text": "工具会自动显示其他进制的转换结果"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .converter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .converter-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .converter-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .converter-item input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: var(--mono);
+        }
+        .converter-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .info-text {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .error-message {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: color-mix(in srgb, #ff4444 16%, transparent);
+            border: 1px solid #ff4444;
+            border-radius: 4px;
+            color: #ff4444;
+            font-size: 0.75rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">进制转换工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>进制转换工具</h1>
+                <p class="tool-subtitle">在二进制、八进制、十进制、十六进制之间快速转换</p>
+            </header>
+
+        <div class="converter-grid">
+            <div class="converter-item">
+                <label>二进制 (2)</label>
+                <input type="text" id="binary" placeholder="例如: 1010">
+                <div class="error-message" id="binary-error"></div>
+            </div>
+            <div class="converter-item">
+                <label>八进制 (8)</label>
+                <input type="text" id="octal" placeholder="例如: 12">
+                <div class="error-message" id="octal-error"></div>
+            </div>
+            <div class="converter-item">
+                <label>十进制 (10)</label>
+                <input type="text" id="decimal" placeholder="例如: 10">
+                <div class="error-message" id="decimal-error"></div>
+            </div>
+            <div class="converter-item">
+                <label>十六进制 (16)</label>
+                <input type="text" id="hexadecimal" placeholder="例如: A">
+                <div class="error-message" id="hex-error"></div>
+            </div>
+        </div>
+
+        <div class="info-text">
+            输入任意进制的数字，其他进制会自动转换。支持负数（使用补码表示）。
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputs = {
+            binary: document.getElementById('binary'),
+            octal: document.getElementById('octal'),
+            decimal: document.getElementById('decimal'),
+            hexadecimal: document.getElementById('hexadecimal')
+        };
+
+        const errors = {
+            binary: document.getElementById('binary-error'),
+            octal: document.getElementById('octal-error'),
+            decimal: document.getElementById('decimal-error'),
+            hex: document.getElementById('hex-error')
+        };
+
+        let updating = false;
+
+        function showError(inputName, message) {
+            errors[inputName].textContent = message;
+            errors[inputName].classList.add('show');
+            setTimeout(() => {
+                errors[inputName].classList.remove('show');
+            }, 3000);
+        }
+
+        function parseNumber(value, base) {
+            if (!value.trim()) return null;
+            
+            // 处理负数
+            const isNegative = value.startsWith('-');
+            const absValue = isNegative ? value.slice(1) : value;
+            
+            try {
+                const num = parseInt(absValue, base);
+                if (isNaN(num)) throw new Error('无效的数字');
+                return isNegative ? -num : num;
+            } catch (e) {
+                throw new Error('格式错误');
+            }
+        }
+
+        function updateAll(value, sourceBase, sourceInput) {
+            if (updating) return;
+            updating = true;
+
+            try {
+                const num = parseNumber(value, sourceBase);
+                
+                if (num === null) {
+                    // 清空所有输入
+                    Object.values(inputs).forEach(input => {
+                        if (input !== sourceInput) input.value = '';
+                    });
+                    updating = false;
+                    return;
+                }
+
+                // 转换为不同进制
+                if (sourceInput !== inputs.binary) {
+                    inputs.binary.value = num >= 0 
+                        ? num.toString(2) 
+                        : '-' + (-num).toString(2);
+                }
+                if (sourceInput !== inputs.octal) {
+                    inputs.octal.value = num >= 0 
+                        ? num.toString(8) 
+                        : '-' + (-num).toString(8);
+                }
+                if (sourceInput !== inputs.decimal) {
+                    inputs.decimal.value = num.toString(10);
+                }
+                if (sourceInput !== inputs.hexadecimal) {
+                    inputs.hexadecimal.value = num >= 0 
+                        ? num.toString(16).toUpperCase() 
+                        : '-' + (-num).toString(16).toUpperCase();
+                }
+
+                // 清除错误
+                Object.values(errors).forEach(err => err.classList.remove('show'));
+            } catch (e) {
+                showError(sourceInput.id.replace('-error', ''), e.message);
+            }
+
+            updating = false;
+        }
+
+        inputs.binary.addEventListener('input', (e) => {
+            updateAll(e.target.value, 2, e.target);
+        });
+
+        inputs.octal.addEventListener('input', (e) => {
+            updateAll(e.target.value, 8, e.target);
+        });
+
+        inputs.decimal.addEventListener('input', (e) => {
+            updateAll(e.target.value, 10, e.target);
+        });
+
+        inputs.hexadecimal.addEventListener('input', (e) => {
+            updateAll(e.target.value, 16, e.target);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+{
+  "updatedAt": "2026-01-22T07:18:00.826Z",
+  "tools": [
+    {
+      "id": "side-lying-monitor",
+      "name": "侧躺监测（枕边哨）",
+      "nameEn": "Side Lying Monitor",
+      "description": "智能侧躺监测与健康提醒应用",
+      "descriptionEn": "Smart side-lying monitoring and health reminder app",
+      "icon": "📱",
+      "platform": "Android",
+      "order": 1,
+      "sources": [
+        {
+          "type": "direct",
+          "name": "直接下载（阿里云OSS）",
+          "url": "https://example.com/releases/app-v1.0.0.apk",
+          "size": 15728640,
+          "platform": "android",
+          "arch": "universal"
+        },
+        {
+          "type": "baidu",
+          "name": "百度网盘",
+          "url": "https://pan.baidu.com/s/xxxxxxxx",
+          "code": "1234",
+          "platform": "android"
+        },
+        {
+          "type": "quark",
+          "name": "夸克网盘",
+          "url": "https://pan.quark.cn/s/xxxxxxxx",
+          "platform": "android"
+        }
+      ]
+    },
+    {
+      "id": "example-direct-download",
+      "name": "示例应用 - 直接下载",
+      "nameEn": "Example App - Direct Download",
+      "description": "这是一个仅使用直接下载链接的示例，适用于 CDN、OSS 等场景",
+      "descriptionEn": "This is an example that only uses direct download links, suitable for CDN, OSS scenarios",
+      "icon": "💾",
+      "platform": "Windows",
+      "order": 3,
+      "sources": [
+        {
+          "type": "direct",
+          "name": "Windows 64位",
+          "url": "https://example.com/releases/app-windows-x64.exe",
+          "size": 52428800,
+          "platform": "windows",
+          "arch": "x86_64"
+        },
+        {
+          "type": "direct",
+          "name": "Windows 32位",
+          "url": "https://example.com/releases/app-windows-x86.exe",
+          "size": 41943040,
+          "platform": "windows",
+          "arch": "x86"
+        },
+        {
+          "type": "direct",
+          "name": "macOS Intel",
+          "url": "https://example.com/releases/app-macos-intel.dmg",
+          "size": 62914560,
+          "platform": "mac",
+          "arch": "x86_64"
+        },
+        {
+          "type": "direct",
+          "name": "macOS Apple Silicon",
+          "url": "https://example.com/releases/app-macos-arm64.dmg",
+          "size": 57671680,
+          "platform": "mac",
+          "arch": "arm64"
+        },
+        {
+          "type": "direct",
+          "name": "Linux 通用版本",
+          "url": "https://example.com/releases/app-linux.tar.gz",
+          "size": 36700160,
+          "platform": "linux",
+          "arch": "universal"
+        }
+      ]
+    },
+    {
+      "id": "example-cloud-disk",
+      "name": "示例应用 - 网盘下载",
+      "nameEn": "Example App - Cloud Disk",
+      "description": "这是一个仅使用网盘链接的示例，适用于大文件分享场景",
+      "descriptionEn": "This is an example that only uses cloud disk links, suitable for large file sharing scenarios",
+      "icon": "☁️",
+      "platform": "Cross Platform",
+      "order": 4,
+      "sources": [
+        {
+          "type": "baidu",
+          "name": "百度网盘",
+          "url": "https://pan.baidu.com/s/1example123456",
+          "code": "abcd",
+          "platform": "android"
+        },
+        {
+          "type": "quark",
+          "name": "夸克网盘",
+          "url": "https://pan.quark.cn/s/example123456",
+          "platform": "android"
+        },
+        {
+          "type": "aliyun",
+          "name": "阿里云盘",
+          "url": "https://www.aliyundrive.com/s/example123456",
+          "code": "1234",
+          "platform": "android"
+        },
+        {
+          "type": "other",
+          "name": "蓝奏云",
+          "url": "https://example.lanzou.com/example123456",
+          "platform": "android"
+        }
+      ]
+    },
+    {
+      "id": "example-mixed",
+      "name": "示例应用 - 混合下载源",
+      "nameEn": "Example App - Mixed Sources",
+      "description": "这是一个混合使用多种下载源的完整示例",
+      "descriptionEn": "This is a complete example that mixes multiple download sources",
+      "icon": "🎯",
+      "platform": "iOS",
+      "order": 5,
+      "sources": [
+        {
+          "type": "direct",
+          "name": "App Store 直链",
+          "url": "https://apps.apple.com/app/id1234567890",
+          "platform": "ios"
+        },
+        {
+          "type": "direct",
+          "name": "TestFlight 测试版",
+          "url": "https://testflight.apple.com/join/example123",
+          "platform": "ios"
+        },
+        {
+          "type": "baidu",
+          "name": "百度网盘（IPA文件）",
+          "url": "https://pan.baidu.com/s/example123",
+          "code": "test",
+          "platform": "ios"
+        },
+        {
+          "type": "quark",
+          "name": "夸克网盘（IPA文件）",
+          "url": "https://pan.quark.cn/s/example123",
+          "platform": "ios"
+        }
+      ]
+    },
+    {
+      "id": "example-single-direct",
+      "name": "示例应用 - 单一直载",
+      "nameEn": "Example App - Single Direct Download",
+      "description": "这是一个只有一个直接下载链接的简单示例",
+      "descriptionEn": "This is a simple example with only one direct download link",
+      "icon": "📦",
+      "platform": "Cross Platform",
+      "order": 7,
+      "sources": [
+        {
+          "type": "direct",
+          "name": "直接下载",
+          "url": "https://example.com/releases/app-latest.zip",
+          "size": 10485760,
+          "platform": "universal",
+          "arch": "universal"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本对比工具 - 在线文本差异对比工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本对比工具，对比两段文本的差异。高亮显示新增、删除和未变化的内容，支持行级对比，适用于代码审查、文档对比和文本校对。">
+    <meta name="keywords" content="文本对比,文本差异对比,文本比较工具,文本diff工具,文本差异检测,代码对比工具,文档对比工具,文本校对工具,差异对比,文本比对">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-diff.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-diff.html">
+    <meta property="og:title" content="文本对比工具 - 在线文本差异对比工具">
+    <meta property="og:description" content="免费在线文本对比工具，对比两段文本的差异。高亮显示新增、删除和未变化的内容，支持行级对比。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-diff.html">
+    <meta property="twitter:title" content="文本对比工具 - 在线文本差异对比工具">
+    <meta property="twitter:description" content="免费在线文本对比工具，对比两段文本的差异。高亮显示新增、删除和未变化的内容，支持行级对比。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本对比工具",
+      "description": "免费在线文本对比工具，对比两段文本的差异",
+      "url": "https://itkdm.com/tools/text-diff.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "文本差异对比",
+        "行级对比",
+        "高亮显示差异",
+        "新增删除标记",
+        "文本校对工具"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本对比工具",
+          "item": "https://itkdm.com/tools/text-diff.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本对比工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在左侧输入框中输入原始文本，在右侧输入框中输入对比文本，工具会自动对比两段文本的差异，高亮显示新增、删除和修改的内容。支持行级对比，方便查看文本变化。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "对比结果如何显示？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "对比结果会以不同颜色高亮显示：新增的内容用绿色标记，删除的内容用红色标记，修改的内容会同时显示删除和新增。每行会显示行号，方便定位差异位置。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些文本格式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持纯文本对比，包括中文、英文、数字和特殊字符。工具会按行进行对比，适合对比代码、文档、配置文件等文本内容。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本对比工具",
+      "description": "学习如何使用在线文本对比工具来对比两段文本的差异",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入原始文本",
+          "text": "在左侧输入框中输入或粘贴原始文本内容"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "输入对比文本",
+          "text": "在右侧输入框中输入或粘贴要对比的文本内容"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看对比结果",
+          "text": "工具会自动对比两段文本，高亮显示新增、删除和修改的内容，方便查看文本差异"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .diff-result {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .diff-result h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .diff-content {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .diff-added {
+            background: color-mix(in srgb, #00aa00 20%, transparent);
+            color: #00aa00;
+        }
+        .diff-removed {
+            background: color-mix(in srgb, #ff4444 20%, transparent);
+            color: #ff4444;
+            text-decoration: line-through;
+        }
+        .diff-unchanged {
+            color: var(--text);
+        }
+        .diff-stats {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .diff-stats span {
+            margin-right: 1.5rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本对比工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本对比工具</h1>
+                <p class="tool-subtitle">对比两段文本的差异，高亮显示新增、删除和未变化的内容</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="text1-input">文本 1（原始文本）</label>
+                <textarea id="text1-input" class="tool-textarea" placeholder="输入第一段文本...">Hello world!
+This is a test.
+Line 3
+Line 4</textarea>
+                <div class="info-text">左侧显示为原始文本</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="text2-input">文本 2（对比文本）</label>
+                <textarea id="text2-input" class="tool-textarea" placeholder="输入第二段文本...">Hello world!
+This is a modified test.
+Line 3
+Line 5</textarea>
+                <div class="info-text">右侧显示为对比文本</div>
+            </div>
+        </div>
+
+        <div class="diff-result">
+            <h2>对比结果</h2>
+            <div class="diff-content" id="diff-content">输入两段文本后，差异将显示在这里...</div>
+            <div class="diff-stats" id="diff-stats"></div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const text1Input = document.getElementById('text1-input');
+        const text2Input = document.getElementById('text2-input');
+        const diffContent = document.getElementById('diff-content');
+        const diffStats = document.getElementById('diff-stats');
+
+        function diffText(text1, text2) {
+            const lines1 = text1.split('\n');
+            const lines2 = text2.split('\n');
+            
+            // 简单的行级对比算法
+            const result = [];
+            let added = 0;
+            let removed = 0;
+            let unchanged = 0;
+
+            const maxLen = Math.max(lines1.length, lines2.length);
+            
+            for (let i = 0; i < maxLen; i++) {
+                const line1 = lines1[i];
+                const line2 = lines2[i];
+
+                if (line1 === undefined) {
+                    // 只在 text2 中存在（新增）
+                    result.push({ type: 'added', text: line2 });
+                    added++;
+                } else if (line2 === undefined) {
+                    // 只在 text1 中存在（删除）
+                    result.push({ type: 'removed', text: line1 });
+                    removed++;
+                } else if (line1 === line2) {
+                    // 相同
+                    result.push({ type: 'unchanged', text: line1 });
+                    unchanged++;
+                } else {
+                    // 不同，先标记删除，再标记新增
+                    result.push({ type: 'removed', text: line1 });
+                    result.push({ type: 'added', text: line2 });
+                    removed++;
+                    added++;
+                }
+            }
+
+            return { result, stats: { added, removed, unchanged } };
+        }
+
+        function renderDiff(diffResult) {
+            if (!diffResult.result.length) {
+                diffContent.textContent = '两段文本完全相同';
+                diffStats.textContent = '';
+                return;
+            }
+
+            let html = '';
+            diffResult.result.forEach(item => {
+                const className = `diff-${item.type}`;
+                const prefix = item.type === 'added' ? '+ ' : item.type === 'removed' ? '- ' : '  ';
+                html += `<span class="${className}">${escapeHTML(prefix + item.text)}</span>\n`;
+            });
+
+            diffContent.innerHTML = html;
+
+            const stats = diffResult.stats;
+            diffStats.innerHTML = `
+                <span><strong>新增:</strong> ${stats.added} 行</span>
+                <span><strong>删除:</strong> ${stats.removed} 行</span>
+                <span><strong>未变化:</strong> ${stats.unchanged} 行</span>
+            `;
+        }
+
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function updateDiff() {
+            const text1 = text1Input.value;
+            const text2 = text2Input.value;
+
+            if (!text1 && !text2) {
+                diffContent.textContent = '请输入要对比的文本';
+                diffStats.textContent = '';
+                return;
+            }
+
+            const diffResult = diffText(text1, text2);
+            renderDiff(diffResult);
+        }
+
+        text1Input.addEventListener('input', updateDiff);
+        text2Input.addEventListener('input', updateDiff);
+
+        // 初始对比
+        updateDiff();
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本替换工具 - 在线批量文本替换工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本替换工具，批量查找和替换文本内容。支持正则表达式和多种替换选项，适用于批量文本处理、代码重构和内容编辑。">
+    <meta name="keywords" content="文本替换,批量替换,查找替换,正则替换,文本替换工具,批量文本处理,文本编辑工具,代码重构工具,文本处理工具,正则表达式替换">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-replace.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-replace.html">
+    <meta property="og:title" content="文本替换工具 - 在线批量文本替换工具">
+    <meta property="og:description" content="免费在线文本替换工具，批量查找和替换文本内容。支持正则表达式和多种替换选项。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-replace.html">
+    <meta property="twitter:title" content="文本替换工具 - 在线批量文本替换工具">
+    <meta property="twitter:description" content="免费在线文本替换工具，批量查找和替换文本内容。支持正则表达式和多种替换选项。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本替换工具",
+      "description": "免费在线文本替换工具，批量查找和替换文本内容",
+      "url": "https://itkdm.com/tools/text-replace.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "批量文本替换",
+        "正则表达式替换",
+        "查找替换",
+        "文本处理",
+        "代码重构"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本替换工具",
+          "item": "https://itkdm.com/tools/text-replace.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本替换工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入或粘贴要处理的文本，在'查找'输入框中输入要查找的内容，在'替换为'输入框中输入替换内容，选择是否使用正则表达式，点击'替换'或'全部替换'按钮即可。支持批量替换和正则表达式替换。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持正则表达式吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持。可以选择使用正则表达式模式进行查找和替换，支持复杂的模式匹配和替换规则，适合批量处理和代码重构等场景。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本替换工具",
+      "description": "学习如何使用在线文本替换工具来查找和替换文本",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入或粘贴要处理的文本"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "设置查找和替换",
+          "text": "在'查找'输入框中输入要查找的内容，在'替换为'输入框中输入替换内容，选择是否使用正则表达式"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "执行替换",
+          "text": "点击'替换'按钮替换第一个匹配项，或点击'全部替换'按钮替换所有匹配项，查看替换结果"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .options-group {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .options-group h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .stats {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本替换工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本替换工具</h1>
+                <p class="tool-subtitle">批量查找和替换文本内容，支持正则表达式和多种选项</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="input-text">原始文本</label>
+                <textarea id="input-text" class="tool-textarea" placeholder="输入要替换的文本...">Hello World
+Hello JavaScript
+Hello Python</textarea>
+                <div class="input-group">
+                    <label for="find-input">查找内容</label>
+                    <input type="text" id="find-input" placeholder="输入要查找的文本..." value="Hello">
+                </div>
+                <div class="input-group">
+                    <label for="replace-input">替换为</label>
+                    <input type="text" id="replace-input" placeholder="输入替换后的文本..." value="Hi">
+                </div>
+                <div class="options-group">
+                    <h3>替换选项</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="case-sensitive">
+                            区分大小写
+                        </label>
+                        <label>
+                            <input type="checkbox" id="use-regex">
+                            使用正则表达式
+                        </label>
+                        <label>
+                            <input type="checkbox" id="replace-all" checked>
+                            替换所有匹配项
+                        </label>
+                    </div>
+                </div>
+                <div class="info-text">支持普通文本和正则表达式替换</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="output-text">替换结果</label>
+                <textarea id="output-text" class="tool-textarea" placeholder="替换结果将显示在这里..." readonly></textarea>
+                <div class="stats" id="stats"></div>
+                <div class="info-text">显示替换后的文本和统计信息</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="replace-btn">
+                <span>替换</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputText = document.getElementById('input-text');
+        const findInput = document.getElementById('find-input');
+        const replaceInput = document.getElementById('replace-input');
+        const outputText = document.getElementById('output-text');
+        const replaceBtn = document.getElementById('replace-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const stats = document.getElementById('stats');
+        const caseSensitiveCheck = document.getElementById('case-sensitive');
+        const useRegexCheck = document.getElementById('use-regex');
+        const replaceAllCheck = document.getElementById('replace-all');
+
+        function replaceText() {
+            const text = inputText.value;
+            const find = findInput.value;
+            const replace = replaceInput.value;
+
+            if (!text.trim() || !find.trim()) {
+                outputText.value = '';
+                stats.textContent = '';
+                return;
+            }
+
+            try {
+                let result = text;
+                let count = 0;
+
+                if (useRegexCheck.checked) {
+                    const flags = caseSensitiveCheck.checked ? 'g' : 'gi';
+                    const regex = new RegExp(find, flags);
+                    const matches = text.match(regex);
+                    count = matches ? matches.length : 0;
+
+                    if (replaceAllCheck.checked) {
+                        result = text.replace(regex, replace);
+                    } else {
+                        result = text.replace(regex, replace);
+                        count = Math.min(count, 1);
+                    }
+                } else {
+                    const flags = caseSensitiveCheck.checked ? 'g' : 'gi';
+                    const regex = new RegExp(escapeRegex(find), flags);
+                    const matches = text.match(regex);
+                    count = matches ? matches.length : 0;
+
+                    if (replaceAllCheck.checked) {
+                        result = text.replace(regex, replace);
+                    } else {
+                        result = text.replace(regex, replace);
+                        count = Math.min(count, 1);
+                    }
+                }
+
+                outputText.value = result;
+                stats.textContent = `已替换 ${count} 处`;
+            } catch (e) {
+                outputText.value = '替换失败: ' + e.message;
+                stats.textContent = '';
+            }
+        }
+
+        function escapeRegex(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function copyOutput() {
+            const text = outputText.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            inputText.value = '';
+            findInput.value = '';
+            replaceInput.value = '';
+            outputText.value = '';
+            stats.textContent = '';
+        }
+
+        replaceBtn.addEventListener('click', replaceText);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动替换
+        [findInput, replaceInput, caseSensitiveCheck, useRegexCheck, replaceAllCheck].forEach(input => {
+            input.addEventListener('input', replaceText);
+            if (input.type === 'checkbox') {
+                input.addEventListener('change', replaceText);
+            }
+        });
+
+        // 实时替换
+        inputText.addEventListener('input', replaceText);
+
+        // 初始替换
+        replaceText();
+    </script>
+</body>
+</html>

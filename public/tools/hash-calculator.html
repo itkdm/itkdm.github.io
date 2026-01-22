@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash 计算器 - MD5 SHA 哈希值计算工具 | itkdm.com</title>
+    <meta name="description" content="免费在线 Hash 计算器，支持 MD5、SHA1、SHA256、SHA512 等多种哈希算法。快速计算文本和文件的哈希值，适用于数据校验、密码加密和文件完整性验证。">
+    <meta name="keywords" content="Hash计算器,MD5计算,SHA计算,哈希值计算,MD5工具,SHA工具,哈希工具,文件哈希,数据校验,密码加密工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/hash-calculator.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/hash-calculator.html">
+    <meta property="og:title" content="Hash 计算器 - MD5 SHA 哈希值计算工具">
+    <meta property="og:description" content="免费在线 Hash 计算器，支持 MD5、SHA1、SHA256、SHA512 等多种哈希算法。快速计算文本和文件的哈希值。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/hash-calculator.html">
+    <meta property="twitter:title" content="Hash 计算器 - MD5 SHA 哈希值计算工具">
+    <meta property="twitter:description" content="免费在线 Hash 计算器，支持 MD5、SHA1、SHA256、SHA512 等多种哈希算法。快速计算文本和文件的哈希值。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Hash 计算器",
+      "description": "免费在线 Hash 计算器，支持 MD5、SHA1、SHA256、SHA512 等多种哈希算法",
+      "url": "https://itkdm.com/tools/hash-calculator.html",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "MD5 哈希计算",
+        "SHA1 哈希计算",
+        "SHA256 哈希计算",
+        "SHA512 哈希计算",
+        "文件哈希计算"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Hash 计算器",
+          "item": "https://itkdm.com/tools/hash-calculator.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hash 计算器如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入要计算 Hash 的文本内容，工具会自动计算并显示 MD5、SHA1、SHA256、SHA512、SHA3-256、SHA3-512 等多种哈希值。点击任意哈希值即可复制到剪贴板。所有计算都在浏览器本地完成，数据安全可靠。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MD5 和 SHA 有什么区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MD5 是128位哈希算法，SHA1 是160位，SHA256 是256位，SHA512 是512位。SHA 系列算法比 MD5 更安全，抗碰撞能力更强。MD5 已被认为不够安全，不建议用于密码加密，但仍可用于数据校验。SHA256 和 SHA512 是目前推荐使用的安全哈希算法。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hash 值有什么用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hash 值常用于数据完整性校验、文件验证、密码存储、数字签名等场景。通过比较文件的 Hash 值可以验证文件是否被篡改，在密码存储中使用 Hash 值可以保护原始密码不被泄露。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持文件 Hash 计算吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本工具目前支持文本内容的 Hash 计算。对于文件 Hash 计算，您可以将文件内容读取为文本后进行计算，或者使用专门的文件 Hash 工具。文本 Hash 计算适用于密码、密钥、数据校验等场景。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 Hash 计算器",
+      "description": "学习如何使用在线 Hash 计算器计算文本的多种哈希值",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入要计算 Hash 的文本内容，支持任意文本"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看结果",
+          "text": "工具会自动计算并显示 MD5、SHA1、SHA256、SHA512、SHA3-256、SHA3-512 等多种哈希值"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "复制哈希值",
+          "text": "点击任意哈希值输入框即可自动复制该哈希值到剪贴板"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/crypto-js.js"></script>
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .hash-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .hash-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .hash-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .hash-item input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .hash-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+        /* Tool intro styles */
+        .tool-intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .tool-intro h2 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .tool-intro h2:first-child {
+            margin-top: 0;
+        }
+        .tool-intro p {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .tool-intro ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .tool-intro li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        /* FAQ styles */
+        .tool-faq {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .tool-faq h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        /* Related tools styles */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-tools h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .related-tools > p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .related-tools-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .related-tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .related-tools-list a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .related-tools-list a:hover {
+            text-decoration: underline;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+        .btn-back:hover {
+            background: var(--bg-elev);
+            border-color: var(--border-strong);
+        }
+        @media (max-width: 768px) {
+            .tool-intro,
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">Hash 计算器</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>Hash 计算器</h1>
+                <p class="tool-subtitle">计算文本的多种 Hash 值（MD5、SHA1、SHA256、SHA512 等）</p>
+            </header>
+
+            <!-- Tool Section -->
+            <section class="tool-section">
+                <h2>输入文本</h2>
+                <div class="input-group">
+                    <label for="text-input">文本内容</label>
+                    <textarea id="text-input" placeholder="输入要计算 Hash 的文本..."></textarea>
+                    <div class="info-text">支持任意文本内容</div>
+                </div>
+            </section>
+
+            <section class="tool-section">
+                <h2>Hash 结果</h2>
+                <div class="hash-results" id="hash-results">
+                    <div class="hash-item">
+                        <label>MD5</label>
+                        <input type="text" id="md5-result" readonly>
+                    </div>
+                    <div class="hash-item">
+                        <label>SHA1</label>
+                        <input type="text" id="sha1-result" readonly>
+                    </div>
+                    <div class="hash-item">
+                        <label>SHA256</label>
+                        <input type="text" id="sha256-result" readonly>
+                    </div>
+                    <div class="hash-item">
+                        <label>SHA512</label>
+                        <input type="text" id="sha512-result" readonly>
+                    </div>
+                    <div class="hash-item">
+                        <label>SHA3-256</label>
+                        <input type="text" id="sha3-256-result" readonly>
+                    </div>
+                    <div class="hash-item">
+                        <label>SHA3-512</label>
+                        <input type="text" id="sha3-512-result" readonly>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <script>
+        const textInput = document.getElementById('text-input');
+        const hashResults = {
+            md5: document.getElementById('md5-result'),
+            sha1: document.getElementById('sha1-result'),
+            sha256: document.getElementById('sha256-result'),
+            sha512: document.getElementById('sha512-result'),
+            sha3_256: document.getElementById('sha3-256-result'),
+            sha3_512: document.getElementById('sha3-512-result')
+        };
+
+        function calculateHashes() {
+            const text = textInput.value;
+            
+            if (!text.trim()) {
+                Object.values(hashResults).forEach(input => {
+                    input.value = '';
+                });
+                return;
+            }
+
+            try {
+                hashResults.md5.value = CryptoJS.MD5(text).toString();
+                hashResults.sha1.value = CryptoJS.SHA1(text).toString();
+                hashResults.sha256.value = CryptoJS.SHA256(text).toString();
+                hashResults.sha512.value = CryptoJS.SHA512(text).toString();
+                hashResults.sha3_256.value = CryptoJS.SHA3(text, { outputLength: 256 }).toString();
+                hashResults.sha3_512.value = CryptoJS.SHA3(text, { outputLength: 512 }).toString();
+            } catch (e) {
+                console.error('Hash calculation error:', e);
+            }
+        }
+
+        // 复制功能
+        Object.values(hashResults).forEach(input => {
+            input.addEventListener('click', function() {
+                this.select();
+                document.execCommand('copy');
+                const originalValue = this.value;
+                this.value = '已复制！';
+                setTimeout(() => {
+                    this.value = originalValue;
+                }, 1000);
+            });
+        });
+
+        textInput.addEventListener('input', calculateHashes);
+
+        // 初始计算
+        calculateHashes();
+    </script>
+</body>
+</html>

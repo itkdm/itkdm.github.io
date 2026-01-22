@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { sortBlogPosts } from '../../lib/blog-sort';
+import { sortTools } from '../../lib/tools-sort';
+
+const lang = 'en';
+const posts = sortBlogPosts(
+	await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft)
+);
+// Home rule: show 3 cards max, first prefers pinned post with priority = 9999, rest are newest
+const pinnedPost = posts.find((post) => (post.data.priority ?? 0) === 9999);
+const latestPosts = pinnedPost
+	? [pinnedPost, ...posts.filter((p) => p !== pinnedPost).slice(0, 2)]
+	: posts.slice(0, 3);
+const docs = await getCollection('docs', (entry) => entry.data.lang === lang);
+const projects = (await getCollection('projects', (entry) => entry.data.lang === lang && entry.data.featured !== false)).sort(
+	(a, b) => {
+		if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+		return a.data.title.localeCompare(b.data.title);
+	}
+);
+const tools = sortTools(
+	await getCollection('tools', (entry) => entry.data.lang === lang && entry.data.featured !== false)
+);
+---
+
+<BaseLayout lang={lang} title="Bu Ji Dao · Home" description="Unified blog + docs + downloads with Astro" currentPath="/en/">
+	<section class="hero-landing">
+		<div class="hero-landing-inner">
+			<div>
+				<h1>Welcome to my Bu Ji Dao, I'm Bu Ji Dao!</h1>
+				<p class="hero-lead">Make boring interesting, simplify complexity, solve problems!</p>
+			</div>
+			<div class="hero-actions">
+				<a class="btn btn-primary" href="/en/blog/">
+					<span class="dot"></span>
+					<span>Read the blog</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<h2>Latest posts</h2>
+		{latestPosts.length === 0 ? (
+			<p>No posts yet.</p>
+		) : (
+			<div class="grid grid-3">
+				{latestPosts.map((post) => {
+					const postSlug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
+					return (
+						<a class="card blog-card" href={`/en/blog/${postSlug}/`}>
+							<div class="badge">Blog</div>
+							<h3>{post.data.title}</h3>
+							<p class="meta">
+								<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
+								{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+							</p>
+							<p>{post.data.summary}</p>
+						</a>
+					);
+				})}
+			</div>
+		)}
+	</section>
+
+	<section class="section">
+		<h2>Docs</h2>
+		<p class="meta">Docs entries: {docs.length}</p>
+		<a class="badge" href="/en/docs/">View docs</a>
+	</section>
+
+	<section class="section">
+		<h2>Projects</h2>
+		{projects.length === 0 ? (
+			<p>No projects yet.</p>
+		) : (
+			<div class="grid grid-3">
+				{projects.slice(0, 3).map((project) => {
+					const projectSlug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
+					return (
+						<a class="card" href={`/en/projects/${projectSlug}/`}>
+							<div class="badge">Projects</div>
+							<div class="card-doc-header">
+								<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
+							</div>
+							<p>{project.data.summary}</p>
+							{project.data.tags.length > 0 && <p class="meta">{project.data.tags.join(' · ')}</p>}
+						</a>
+					);
+				})}
+			</div>
+		)}
+	</section>
+
+	<section class="section">
+		<h2>Tools</h2>
+		{tools.length === 0 ? (
+			<p>No tools yet.</p>
+		) : (
+			<div class="grid grid-3">
+				{tools.slice(0, 3).map((tool) => (
+					<div class="card">
+						<div class="badge">Tools</div>
+						<div class="card-doc-header">
+							<h3>{tool.data.icon ? `${tool.data.icon} ${tool.data.name}` : tool.data.name}</h3>
+						</div>
+						<p>{tool.data.summary}</p>
+						<div class="card-tool-action">
+							<a href={tool.data.homepage} class="btn btn-primary" target={tool.data.homepage.startsWith('http') ? '_blank' : undefined} rel={tool.data.homepage.startsWith('http') ? 'noreferrer' : undefined}>
+								<span class="dot"></span>
+								<span>Open Tool</span>
+							</a>
+						</div>
+					</div>
+				))}
+			</div>
+		)}
+	</section>
+
+</BaseLayout>

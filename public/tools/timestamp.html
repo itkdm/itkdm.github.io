@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间戳转换工具 - Unix 时间戳在线转换器 | itkdm.com</title>
+    <meta name="description" content="免费在线时间戳转换工具，支持 Unix 时间戳和日期时间相互转换。支持秒级和毫秒级时间戳转换，适用于 API 开发、数据库操作和日志分析。">
+    <meta name="keywords" content="时间戳转换,Unix时间戳,时间戳转日期,日期转时间戳,时间戳工具,时间戳在线转换,Unix时间戳转换器,毫秒时间戳,秒时间戳,时间转换工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/timestamp.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/timestamp.html">
+    <meta property="og:title" content="时间戳转换工具 - Unix 时间戳在线转换器">
+    <meta property="og:description" content="免费在线时间戳转换工具，支持 Unix 时间戳和日期时间相互转换。支持秒级和毫秒级时间戳转换。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/timestamp.html">
+    <meta property="twitter:title" content="时间戳转换工具 - Unix 时间戳在线转换器">
+    <meta property="twitter:description" content="免费在线时间戳转换工具，支持 Unix 时间戳和日期时间相互转换。支持秒级和毫秒级时间戳转换。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "时间戳转换工具",
+      "description": "免费在线时间戳转换工具，支持 Unix 时间戳和日期时间相互转换",
+      "url": "https://itkdm.com/tools/timestamp.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "Unix 时间戳转换",
+        "日期时间转换",
+        "秒级时间戳",
+        "毫秒级时间戳",
+        "多时区支持"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "时间戳转换工具",
+          "item": "https://itkdm.com/tools/timestamp.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "时间戳转换工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在'时间戳转日期'部分输入 Unix 时间戳（秒级10位或毫秒级13位），点击'转换为日期'即可查看对应的日期时间。在'日期转时间戳'部分选择日期和时间，点击'转换为时间戳'即可获得对应的时间戳。工具支持实时转换，操作简单快捷。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Unix 时间戳是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unix 时间戳是从 1970年1月1日 00:00:00 UTC 开始到现在的秒数（或毫秒数）。它是计算机系统中常用的时间表示方式，广泛应用于编程开发、数据库存储、API 接口等领域。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "秒级时间戳和毫秒级时间戳有什么区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "秒级时间戳是10位数字，表示从1970年1月1日开始的秒数。毫秒级时间戳是13位数字，表示从1970年1月1日开始的毫秒数，精度更高。本工具支持两种格式的自动识别和转换。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "时间戳转换支持哪些时区？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本工具默认使用本地时区进行转换，同时显示 UTC 时间和 ISO 格式。时间戳本身是 UTC 时间，转换为日期时会根据您的浏览器时区设置显示对应的本地时间。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用时间戳转换工具",
+      "description": "学习如何使用在线时间戳转换工具进行 Unix 时间戳和日期时间的相互转换",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "时间戳转日期",
+          "text": "在'时间戳转日期'输入框中输入 Unix 时间戳（10位秒级或13位毫秒级），点击'转换为日期'按钮即可查看对应的日期时间"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "日期转时间戳",
+          "text": "在'日期转时间戳'部分选择日期和时间，点击'转换为时间戳'按钮即可获得对应的时间戳（秒级和毫秒级）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看当前时间",
+          "text": "工具会自动显示当前时间的时间戳和日期时间，方便您快速参考"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .result-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--text);
+            word-break: break-all;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-left: 0.5rem;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .current-time {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+        /* Tool intro styles */
+        .tool-intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .tool-intro h2 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .tool-intro h2:first-child {
+            margin-top: 0;
+        }
+        .tool-intro p {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .tool-intro ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .tool-intro li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        /* FAQ styles */
+        .tool-faq {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .tool-faq h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        /* Related tools styles */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-tools h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .related-tools > p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .related-tools-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .related-tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .related-tools-list a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .related-tools-list a:hover {
+            text-decoration: underline;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+        .btn-back:hover {
+            background: var(--bg-elev);
+            border-color: var(--border-strong);
+        }
+        @media (max-width: 768px) {
+            .tool-intro,
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">时间戳转换工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>时间戳转换工具</h1>
+                <p class="tool-subtitle">在 Unix 时间戳和日期时间之间快速转换</p>
+            </header>
+
+            <!-- Tool Section -->
+            <section class="tool-section">
+                <h2>时间戳转日期</h2>
+                <div class="input-group">
+                    <label for="timestamp-input">Unix 时间戳（秒）</label>
+                    <input type="text" id="timestamp-input" placeholder="例如: 1704067200">
+                    <div class="info-text">支持秒级时间戳（10位）和毫秒级时间戳（13位）</div>
+                </div>
+                <button class="btn btn-primary" id="convert-to-date-btn">转换为日期</button>
+                <div class="result-box" id="date-result" style="display: none;"></div>
+            </section>
+
+            <section class="tool-section">
+                <h2>日期转时间戳</h2>
+                <div class="input-group">
+                    <label for="date-input">日期时间</label>
+                    <input type="datetime-local" id="date-input">
+                    <div class="info-text">选择日期和时间，将自动转换为时间戳</div>
+                </div>
+                <button class="btn btn-primary" id="convert-to-timestamp-btn">转换为时间戳</button>
+                <div class="result-box" id="timestamp-result" style="display: none;"></div>
+            </section>
+
+            <section class="tool-section">
+                <h2>当前时间</h2>
+                <div class="current-time">
+                    <div><strong>当前时间戳（秒）:</strong> <span id="current-timestamp"></span></div>
+                    <div><strong>当前时间戳（毫秒）:</strong> <span id="current-timestamp-ms"></span></div>
+                    <div><strong>当前日期时间:</strong> <span id="current-datetime"></span></div>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <script>
+        const timestampInput = document.getElementById('timestamp-input');
+        const dateInput = document.getElementById('date-input');
+        const convertToDateBtn = document.getElementById('convert-to-date-btn');
+        const convertToTimestampBtn = document.getElementById('convert-to-timestamp-btn');
+        const dateResult = document.getElementById('date-result');
+        const timestampResult = document.getElementById('timestamp-result');
+        const currentTimestamp = document.getElementById('current-timestamp');
+        const currentTimestampMs = document.getElementById('current-timestamp-ms');
+        const currentDatetime = document.getElementById('current-datetime');
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const ts = Math.floor(now.getTime() / 1000);
+            const tsMs = now.getTime();
+            const datetime = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            currentTimestamp.textContent = ts;
+            currentTimestampMs.textContent = tsMs;
+            currentDatetime.textContent = datetime;
+        }
+
+        function convertToDate() {
+            const timestamp = timestampInput.value.trim();
+            if (!timestamp) {
+                dateResult.style.display = 'none';
+                return;
+            }
+
+            let ts = parseInt(timestamp);
+            if (isNaN(ts)) {
+                dateResult.textContent = '错误: 无效的时间戳';
+                dateResult.style.display = 'block';
+                return;
+            }
+
+            // 如果是13位数字，说明是毫秒级时间戳
+            if (timestamp.length === 13) {
+                ts = Math.floor(ts / 1000);
+            }
+
+            const date = new Date(ts * 1000);
+            const formatted = date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            dateResult.innerHTML = `
+                <strong>日期时间:</strong> ${formatted}<br>
+                <strong>ISO 格式:</strong> ${date.toISOString()}<br>
+                <strong>UTC 时间:</strong> ${date.toUTCString()}
+            `;
+            dateResult.style.display = 'block';
+        }
+
+        function convertToTimestamp() {
+            const dateValue = dateInput.value;
+            if (!dateValue) {
+                timestampResult.style.display = 'none';
+                return;
+            }
+
+            const date = new Date(dateValue);
+            const ts = Math.floor(date.getTime() / 1000);
+            const tsMs = date.getTime();
+
+            timestampResult.innerHTML = `
+                <strong>时间戳（秒）:</strong> ${ts}<br>
+                <strong>时间戳（毫秒）:</strong> ${tsMs}
+            `;
+            timestampResult.style.display = 'block';
+        }
+
+        convertToDateBtn.addEventListener('click', convertToDate);
+        convertToTimestampBtn.addEventListener('click', convertToTimestamp);
+
+        timestampInput.addEventListener('input', convertToDate);
+        dateInput.addEventListener('input', convertToTimestamp);
+
+        // 初始化当前时间并每秒更新
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+
+        // 设置当前时间为默认值
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        dateInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+    </script>
+</body>
+</html>

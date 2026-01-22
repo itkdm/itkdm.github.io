@@ -1,0 +1,743 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Lang } from '../../i18n/config';
+import { SUPPORTED_LANGS } from '../../i18n/config';
+
+export function getStaticPaths() {
+	return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<BaseLayout
+	lang={lang}
+	title={lang === 'zh' ? '搜索' : 'Search'}
+	description={lang === 'zh' ? '全文搜索 - 搜索博客、文档、项目和工具' : 'Full-text search - Search blog, docs, projects, and tools'}
+	currentPath={`/${lang}/search/`}
+>
+	<section class="search-section">
+		<div class="search-header">
+			<h1>{lang === 'zh' ? '搜索' : 'Search'}</h1>
+			<p class="search-subtitle">
+				{lang === 'zh'
+					? '搜索所有内容：博客文章、文档、项目、工具和下载'
+					: 'Search all content: blog posts, docs, projects, tools, and downloads'}
+			</p>
+		</div>
+		<div id="search" class="search-container"></div>
+	</section>
+</BaseLayout>
+
+
+<style>
+	.search-section {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	.search-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.search-header h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		margin-bottom: 0.75rem;
+		letter-spacing: -0.03em;
+		background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.search-subtitle {
+		font-size: 1.125rem;
+		color: var(--text-muted);
+		margin: 0;
+		line-height: 1.6;
+	}
+
+	.search-container {
+		min-height: 400px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+	}
+
+	/* Pagefind UI 样式定制 */
+	:global([data-pagefind-ui]) {
+		--pagefind-ui-scale: 1;
+		--pagefind-ui-primary: var(--primary);
+		--pagefind-ui-text: var(--text);
+		--pagefind-ui-background: var(--bg-elev);
+		--pagefind-ui-border: var(--border-strong);
+		--pagefind-ui-border-width: 2px;
+		--pagefind-ui-border-radius: var(--radius-md);
+		--pagefind-ui-font: inherit;
+	}
+
+	/* 搜索输入框容器 - 确保水平居中 */
+	:global([data-pagefind-ui] .pagefind-ui__search-input-wrapper) {
+		position: relative;
+		margin: 0 auto 2rem auto !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		width: 100% !important;
+		max-width: 800px !important;
+		text-align: center !important;
+	}
+
+	/* 搜索输入框样式 - 与工具页面保持一致，使用更高优先级覆盖 Pagefind 默认样式 */
+	/* 使用更具体的选择器确保优先级 */
+	.search-section :global([data-pagefind-ui] input[type="search"]),
+	.search-section :global([data-pagefind-ui] input[type="text"]),
+	.search-section :global([data-pagefind-ui] .pagefind-ui__search-input),
+	:global(body [data-pagefind-ui] input[type="search"]),
+	:global(body [data-pagefind-ui] input[type="text"]),
+	:global(body [data-pagefind-ui] .pagefind-ui__search-input) {
+		width: 100% !important;
+		max-width: 800px !important;
+		padding: 0.75rem 1rem !important;
+		padding-left: 2.5rem !important;
+		border: 1px solid var(--border) !important;
+		border-radius: 8px !important;
+		background: var(--bg) !important;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235B6470' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E") !important;
+		background-repeat: no-repeat !important;
+		background-position: 0.75rem center !important;
+		background-size: 1rem !important;
+		color: var(--text) !important;
+		font-size: 0.95rem !important;
+		font-family: inherit !important;
+		transition: all 0.2s !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+		height: auto !important;
+		min-height: auto !important;
+	}
+
+	.search-section :global([data-pagefind-ui] input[type="search"]:focus),
+	.search-section :global([data-pagefind-ui] input[type="text"]:focus),
+	.search-section :global([data-pagefind-ui] .pagefind-ui__search-input:focus),
+	:global(body [data-pagefind-ui] input[type="search"]:focus),
+	:global(body [data-pagefind-ui] input[type="text"]:focus),
+	:global(body [data-pagefind-ui] .pagefind-ui__search-input:focus) {
+		outline: none !important;
+		border-color: var(--accent) !important;
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent) !important;
+	}
+
+	/* 隐藏清除按钮 - 使用更强的选择器 */
+	:global([data-pagefind-ui] button),
+	:global([data-pagefind-ui] button[type="button"]),
+	:global([data-pagefind-ui] .pagefind-ui__search-clear),
+	:global([data-pagefind-ui] button.pagefind-ui__search-clear),
+	:global([data-pagefind-ui] .pagefind-ui__search-input-wrapper button),
+	:global(body [data-pagefind-ui] button),
+	:global(body [data-pagefind-ui] button[type="button"]),
+	:global(body [data-pagefind-ui] .pagefind-ui__search-clear) {
+		display: none !important;
+		visibility: hidden !important;
+		opacity: 0 !important;
+		width: 0 !important;
+		height: 0 !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		border: none !important;
+		position: absolute !important;
+		left: -9999px !important;
+		pointer-events: none !important;
+		z-index: -1 !important;
+	}
+
+	/* 搜索结果区域 */
+	:global([data-pagefind-ui] .pagefind-ui__results-area) {
+		margin-top: 2.5rem;
+	}
+
+	/* 结果统计 */
+	:global([data-pagefind-ui] .pagefind-ui__message) {
+		text-align: center;
+		color: var(--text-muted);
+		padding: 2rem 1rem;
+		font-size: 0.9375rem;
+	}
+
+	/* 单个搜索结果卡片 */
+	:global([data-pagefind-ui] .pagefind-ui__result) {
+		padding: 1.75rem;
+		margin-bottom: 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		background: var(--bg-elev);
+		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: var(--shadow-1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result::before) {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 3px;
+		background: var(--primary);
+		opacity: 0;
+		transition: opacity 0.25s ease;
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result:hover) {
+		border-color: var(--primary);
+		box-shadow: var(--shadow-2);
+		transform: translateY(-2px);
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result:hover::before) {
+		opacity: 1;
+	}
+
+	/* 结果标题链接 */
+	:global([data-pagefind-ui] .pagefind-ui__result-link) {
+		font-size: 1.375rem;
+		font-weight: 600;
+		color: var(--text);
+		text-decoration: none;
+		margin-bottom: 0.75rem;
+		display: block;
+		line-height: 1.4;
+		transition: color 0.2s ease;
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result-link:hover) {
+		color: var(--primary);
+		text-decoration: none;
+	}
+
+	/* 结果摘要 */
+	:global([data-pagefind-ui] .pagefind-ui__result-excerpt) {
+		color: var(--text-muted);
+		margin-top: 0.5rem;
+		line-height: 1.7;
+		font-size: 0.9375rem;
+	}
+
+	/* 高亮文本 */
+	:global([data-pagefind-ui] .pagefind-ui__result-excerpt mark) {
+		background: var(--primary-soft);
+		color: var(--primary);
+		padding: 0.125rem 0.25rem;
+		border-radius: 3px;
+		font-weight: 500;
+	}
+
+	/* 子结果 */
+	:global([data-pagefind-ui] .pagefind-ui__result-sub) {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--border);
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result-sub-link) {
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+
+	:global([data-pagefind-ui] .pagefind-ui__result-sub-link:hover) {
+		color: var(--primary);
+	}
+
+	/* 加载状态 */
+	:global([data-pagefind-ui] .pagefind-ui__drawer) {
+		background: var(--bg-elev);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-2);
+	}
+
+	/* 响应式设计 */
+	@media (max-width: 768px) {
+		.search-section {
+			padding: 2rem 1rem;
+		}
+
+		.search-header h1 {
+			font-size: 2.25rem;
+		}
+
+		.search-subtitle {
+			font-size: 1rem;
+		}
+
+		.search-section :global([data-pagefind-ui] input[type="search"]),
+		.search-section :global([data-pagefind-ui] .pagefind-ui__search-input) {
+			padding: 0.875rem 1rem !important;
+			padding-left: 2.5rem !important;
+			font-size: 0.9rem !important;
+			max-width: 100% !important;
+		}
+
+		:global([data-pagefind-ui] .pagefind-ui__result) {
+			padding: 1.25rem;
+		}
+
+		:global([data-pagefind-ui] .pagefind-ui__result-link) {
+			font-size: 1.25rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.search-header h1 {
+			font-size: 1.875rem;
+		}
+	}
+</style>
+
+<script is:inline>
+	// 加载 Pagefind UI（运行时动态加载，避免 Vite 在开发模式下解析）
+	(function() {
+		const searchEl = document.getElementById('search');
+		if (!searchEl) return;
+
+		const isZh = document.documentElement.lang === 'zh';
+
+		// 动态加载 Pagefind UI（使用运行时字符串，避免 Vite 构建时解析）
+		const pagefindPath = '/pagefind/pagefind-ui.js';
+		
+		// 显示开发模式提示的辅助函数
+		function showDevModeMessage() {
+			if (searchEl) {
+				searchEl.innerHTML = `
+					<div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+						<p style="margin-bottom: 1rem;">${isZh 
+							? '搜索功能在开发模式下不可用。请运行构建命令后预览。' 
+							: 'Search functionality is not available in development mode. Please run the build command and preview.'}</p>
+						<p style="font-size: 0.9rem; color: var(--text-faint);">${isZh 
+							? '运行命令：npm run build && npm run preview' 
+							: 'Run command: npm run build && npm run preview'}</p>
+					</div>
+				`;
+			}
+		}
+		
+		// 直接尝试加载 Pagefind UI（pagefind-ui.js 不是 ES 模块，而是将 PagefindUI 注册到 window 的脚本）
+		function loadPagefindUI() {
+		return new Promise((resolve, reject) => {
+			// 如果已经加载过，直接使用
+			if (window.PagefindUI) {
+				resolve(window.PagefindUI);
+				return;
+			}
+			
+			// 创建 script 标签加载脚本（不使用 type="module"）
+			const script = document.createElement('script');
+			script.src = pagefindPath;
+			script.async = true;
+			
+			script.onload = () => {
+				if (window.PagefindUI) {
+					resolve(window.PagefindUI);
+				} else {
+					reject(new Error('PagefindUI not found on window after script load'));
+				}
+			};
+			
+			script.onerror = () => {
+				reject(new Error('Failed to load Pagefind UI script'));
+			};
+			
+			document.head.appendChild(script);
+			
+			// 10秒超时
+			setTimeout(() => {
+				if (!window.PagefindUI) {
+					reject(new Error('Pagefind loading timeout'));
+				}
+			}, 10000);
+		});
+	}
+	
+	// 注入自定义样式，覆盖 Pagefind UI 默认样式
+	function injectCustomStyles() {
+		// 如果已经注入过，先移除旧的
+		const existingStyle = document.getElementById('pagefind-custom-override');
+		if (existingStyle) {
+			existingStyle.remove();
+		}
+		
+		const style = document.createElement('style');
+		style.id = 'pagefind-custom-override';
+		style.textContent = `
+			[data-pagefind-ui] input[type="search"],
+			[data-pagefind-ui] input[type="text"],
+			[data-pagefind-ui] .pagefind-ui__search-input {
+				width: 100% !important;
+				max-width: 800px !important;
+				padding: 0.75rem 1rem !important;
+				padding-left: 2.5rem !important;
+				border: 1px solid var(--border) !important;
+				border-radius: 8px !important;
+				background: var(--bg) !important;
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235B6470' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E") !important;
+				background-repeat: no-repeat !important;
+				background-position: 0.75rem center !important;
+				background-size: 1rem !important;
+				color: var(--text) !important;
+				font-size: 0.95rem !important;
+				font-family: inherit !important;
+				transition: all 0.2s !important;
+				box-shadow: none !important;
+				margin: 0 !important;
+				height: auto !important;
+			}
+			[data-pagefind-ui] input[type="search"]:focus,
+			[data-pagefind-ui] input[type="text"]:focus,
+			[data-pagefind-ui] .pagefind-ui__search-input:focus {
+				outline: none !important;
+				border-color: var(--accent) !important;
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent) !important;
+			}
+			[data-pagefind-ui] .pagefind-ui__search-input-wrapper {
+				display: flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				margin: 0 auto 2rem auto !important;
+				width: 100% !important;
+				max-width: 800px !important;
+				text-align: center !important;
+				left: 50% !important;
+				transform: translateX(-50%) !important;
+				position: relative !important;
+			}
+			[data-pagefind-ui] button,
+			[data-pagefind-ui] button[type="button"],
+			[data-pagefind-ui] .pagefind-ui__search-clear,
+			[data-pagefind-ui] button.pagefind-ui__search-clear,
+			[data-pagefind-ui] .pagefind-ui__search-input-wrapper button,
+			body [data-pagefind-ui] button,
+			body [data-pagefind-ui] button[type="button"] {
+				display: none !important;
+				visibility: hidden !important;
+				opacity: 0 !important;
+				width: 0 !important;
+				height: 0 !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				border: none !important;
+				position: absolute !important;
+				left: -9999px !important;
+				pointer-events: none !important;
+				z-index: -1 !important;
+			}
+			@media (max-width: 768px) {
+				[data-pagefind-ui] input[type="search"],
+				[data-pagefind-ui] input[type="text"],
+				[data-pagefind-ui] .pagefind-ui__search-input {
+					max-width: 100% !important;
+					padding: 0.875rem 1rem !important;
+					padding-left: 2.5rem !important;
+					font-size: 0.9rem !important;
+				}
+			}
+		`;
+		// 确保样式在最后加载
+		document.head.appendChild(style);
+		// 再次追加以确保优先级
+		setTimeout(() => {
+			if (document.getElementById('pagefind-custom-override')) {
+				document.head.appendChild(style.cloneNode(true));
+			}
+		}, 100);
+	}
+
+	// 初始化搜索功能
+	function initSearch(PagefindUI) {
+		try {
+			// 在初始化前就注入样式
+			injectCustomStyles();
+			
+			const search = new PagefindUI({
+				element: '#search',
+				baseUrl: '/',
+				translations: {
+					placeholder: isZh ? '搜索...' : 'Search...',
+				},
+				showImages: false,
+				showSubResults: true,
+			});
+
+			// 初始化后立即再次注入样式，确保覆盖
+			setTimeout(() => {
+				injectCustomStyles();
+			}, 0);
+
+			// 删除所有按钮的函数
+			const deleteAllButtons = () => {
+				// 尝试多种选择器找到所有可能的按钮
+				const selectors = [
+					'[data-pagefind-ui] button',
+					'[data-pagefind-ui] button[type="button"]',
+					'[data-pagefind-ui] .pagefind-ui__search-clear',
+					'[data-pagefind-ui] button.pagefind-ui__search-clear',
+					'[data-pagefind-ui] .pagefind-ui__search-input-wrapper button',
+					'#search button',
+					'.pagefind-ui__search-input-wrapper button'
+				];
+
+				selectors.forEach(selector => {
+					try {
+						const buttons = document.querySelectorAll(selector);
+						buttons.forEach(btn => {
+							if (btn && btn.parentNode) {
+								btn.remove();
+							}
+						});
+					} catch (e) {
+						// 忽略选择器错误
+					}
+				});
+			};
+
+			// 立即尝试删除按钮
+			deleteAllButtons();
+			
+			// 延迟删除，确保按钮已经创建
+			setTimeout(deleteAllButtons, 0);
+			setTimeout(deleteAllButtons, 50);
+			setTimeout(deleteAllButtons, 100);
+			setTimeout(deleteAllButtons, 200);
+			setTimeout(deleteAllButtons, 500);
+
+				// 页面加载后自动聚焦搜索框，并支持 URL 参数
+				const urlParams = new URLSearchParams(window.location.search);
+				const query = urlParams.get('q');
+
+				const focusSearchInput = () => {
+					const searchInput = document.querySelector('[data-pagefind-ui] input');
+					if (searchInput) {
+						// 如果有 URL 参数，填充到搜索框
+						if (query) {
+							searchInput.value = query;
+							searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+						}
+						// 自动聚焦搜索框
+						searchInput.focus();
+						return true;
+					}
+					return false;
+				};
+
+
+				// 强制应用搜索框样式（覆盖 Pagefind UI 默认样式）
+				const applySearchInputStyles = () => {
+					injectCustomStyles();
+					
+					// 尝试多种选择器
+					const selectors = [
+						'[data-pagefind-ui] input[type="search"]',
+						'[data-pagefind-ui] input[type="text"]',
+						'[data-pagefind-ui] .pagefind-ui__search-input',
+						'[data-pagefind-ui] input',
+						'#search input'
+					];
+					
+					let searchInput = null;
+					for (const selector of selectors) {
+						searchInput = document.querySelector(selector);
+						if (searchInput) {
+							break;
+						}
+					}
+					
+					if (searchInput) {
+						// 直接设置内联样式，确保最高优先级
+						searchInput.setAttribute('style', `
+							width: 100% !important;
+							max-width: 800px !important;
+							padding: 0.75rem 1rem !important;
+							padding-left: 2.5rem !important;
+							border: 1px solid var(--border) !important;
+							border-radius: 8px !important;
+							background: var(--bg) !important;
+							background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235B6470' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E") !important;
+							background-repeat: no-repeat !important;
+							background-position: 0.75rem center !important;
+							background-size: 1rem !important;
+							color: var(--text) !important;
+							font-size: 0.95rem !important;
+							font-family: inherit !important;
+							transition: all 0.2s !important;
+							box-shadow: none !important;
+							margin: 0 !important;
+							height: auto !important;
+						`);
+						return true;
+					}
+					return false;
+				};
+
+				// 应用样式并聚焦
+				const applyStylesAndFocus = () => {
+					injectCustomStyles();
+					const applied = applySearchInputStyles();
+					if (applied) {
+						// 延迟聚焦，确保样式已应用
+						setTimeout(() => {
+							focusSearchInput();
+						}, 10);
+						return true;
+					}
+					return false;
+				};
+
+				// 使用 requestAnimationFrame 确保在渲染后应用样式
+				requestAnimationFrame(() => {
+					applyStylesAndFocus();
+					// 多次尝试，确保样式持续应用
+					setTimeout(() => applyStylesAndFocus(), 50);
+					setTimeout(() => applyStylesAndFocus(), 200);
+					setTimeout(() => applyStylesAndFocus(), 500);
+				});
+
+				// 立即尝试应用样式和聚焦
+				if (!applyStylesAndFocus()) {
+					let attempts = 0;
+					const maxAttempts = 50; // 最多尝试5秒（50 * 100ms）
+					const interval = setInterval(() => {
+						if (applyStylesAndFocus() || attempts >= maxAttempts) {
+							clearInterval(interval);
+						}
+						attempts++;
+					}, 100);
+				}
+
+				// 删除按钮的函数
+				const deleteButtons = () => {
+					const selectors = [
+						'[data-pagefind-ui] button',
+						'[data-pagefind-ui] button[type="button"]',
+						'[data-pagefind-ui] .pagefind-ui__search-clear',
+						'[data-pagefind-ui] button.pagefind-ui__search-clear',
+						'[data-pagefind-ui] .pagefind-ui__search-input-wrapper button',
+						'#search button',
+						'.pagefind-ui__search-input-wrapper button'
+					];
+
+					selectors.forEach(selector => {
+						try {
+							const buttons = document.querySelectorAll(selector);
+							buttons.forEach(btn => {
+								if (btn && btn.parentNode) {
+									btn.remove();
+								}
+							});
+						} catch (e) {
+							// 忽略选择器错误
+						}
+					});
+				};
+
+				// 监听 DOM 变化，一旦发现按钮立即删除
+				const observer = new MutationObserver((mutations) => {
+					injectCustomStyles();
+					applySearchInputStyles();
+					
+					// 检查是否有新添加的按钮
+					mutations.forEach(mutation => {
+						mutation.addedNodes.forEach(node => {
+							if (node.nodeType === 1) { // Element node
+								// 检查节点本身是否是按钮
+								if (node.tagName === 'BUTTON') {
+									node.remove();
+								}
+								// 检查节点内的按钮
+								if (node.querySelectorAll) {
+									const buttons = node.querySelectorAll('button');
+									buttons.forEach(btn => btn.remove());
+								}
+							}
+						});
+					});
+					
+					// 持续删除所有按钮
+					deleteButtons();
+				});
+				
+				const searchContainer = document.querySelector('[data-pagefind-ui]') || document.getElementById('search');
+				if (searchContainer) {
+					observer.observe(searchContainer, {
+						childList: true,
+						subtree: true,
+						attributes: false
+					});
+				}
+
+				// 立即删除按钮
+				deleteButtons();
+
+				// 持续监控并应用样式，并删除按钮
+				const styleInterval = setInterval(() => {
+					applySearchInputStyles();
+					deleteButtons(); // 持续删除按钮
+					
+					// 确保搜索框容器水平居中
+					const wrapper = document.querySelector('[data-pagefind-ui] .pagefind-ui__search-input-wrapper');
+					if (wrapper) {
+						wrapper.style.setProperty('margin', '0 auto 2rem auto', 'important');
+						wrapper.style.setProperty('max-width', '800px', 'important');
+						wrapper.style.setProperty('width', '100%', 'important');
+						wrapper.style.setProperty('display', 'flex', 'important');
+						wrapper.style.setProperty('justify-content', 'center', 'important');
+						wrapper.style.setProperty('align-items', 'center', 'important');
+						wrapper.style.setProperty('text-align', 'center', 'important');
+					}
+					
+					// 确保搜索框本身也在容器中居中
+					const searchInput = document.querySelector('[data-pagefind-ui] input[type="search"], [data-pagefind-ui] input[type="text"], [data-pagefind-ui] .pagefind-ui__search-input');
+					if (searchInput && wrapper) {
+						searchInput.style.setProperty('margin', '0 auto', 'important');
+					}
+				}, 500);
+
+				// 监听 focus 事件，确保聚焦时的样式
+				document.addEventListener('focusin', (e) => {
+					const target = e.target;
+					if (target && (target.matches('[data-pagefind-ui] input[type="search"]') || target.matches('[data-pagefind-ui] input[type="text"]') || target.matches('[data-pagefind-ui] .pagefind-ui__search-input'))) {
+						target.style.setProperty('border-color', 'var(--accent)', 'important');
+						target.style.setProperty('box-shadow', '0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent)', 'important');
+						target.style.setProperty('outline', 'none', 'important');
+					}
+				});
+
+				document.addEventListener('focusout', (e) => {
+					const target = e.target;
+					if (target && (target.matches('[data-pagefind-ui] input[type="search"]') || target.matches('[data-pagefind-ui] input[type="text"]') || target.matches('[data-pagefind-ui] .pagefind-ui__search-input'))) {
+						target.style.setProperty('border-color', 'var(--border)', 'important');
+						target.style.setProperty('box-shadow', 'none', 'important');
+					}
+				});
+			} catch (err) {
+				console.error('Failed to initialize Pagefind UI:', err);
+				showDevModeMessage();
+			}
+		}
+		
+		// 直接尝试加载 Pagefind UI
+		loadPagefindUI()
+		.then((PagefindUI) => {
+			initSearch(PagefindUI);
+		})
+		.catch((err) => {
+			console.error('Failed to load Pagefind UI:', err);
+			showDevModeMessage();
+		});
+	})();
+</script>

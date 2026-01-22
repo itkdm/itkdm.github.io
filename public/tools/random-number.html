@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机数生成器 - 在线随机数字生成工具 | itkdm.com</title>
+    <meta name="description" content="免费在线随机数生成器，生成指定范围内的随机数字。支持自定义范围和批量生成，适用于抽奖、测试数据生成和随机选择。">
+    <meta name="keywords" content="随机数生成,随机数字生成,随机数生成器,随机数工具,随机数生成工具,抽奖工具,测试数据生成,随机选择工具,随机数,数字生成器">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/random-number.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/random-number.html">
+    <meta property="og:title" content="随机数生成器 - 在线随机数字生成工具">
+    <meta property="og:description" content="免费在线随机数生成器，生成指定范围内的随机数字。支持自定义范围和批量生成。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/random-number.html">
+    <meta property="twitter:title" content="随机数生成器 - 在线随机数字生成工具">
+    <meta property="twitter:description" content="免费在线随机数生成器，生成指定范围内的随机数字。支持自定义范围和批量生成。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "随机数生成器",
+      "description": "免费在线随机数生成器，生成指定范围内的随机数字",
+      "url": "https://itkdm.com/tools/random-number.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "随机数生成",
+        "自定义范围",
+        "批量生成",
+        "抽奖工具",
+        "测试数据生成"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "随机数生成器",
+          "item": "https://itkdm.com/tools/random-number.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "随机数生成器如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "设置最小值和最大值范围，选择是否仅生成整数，设置生成数量（最多1000个），选择是否允许重复，然后点击'生成随机数'按钮即可。工具会显示统计信息（数量、最小值、最大值、平均值）和生成的随机数列表。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以生成小数吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。取消勾选'仅生成整数'选项，即可生成浮点数。浮点数会保留6位小数精度，满足大多数使用场景的需求。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "生成的随机数会重复吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "默认情况下允许重复。如果取消勾选'允许重复'选项，工具会尝试生成不重复的随机数，但当范围较小时可能无法生成足够数量的不重复数字。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "可以用于抽奖吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以。设置合适的范围（如1到参与人数），选择仅生成整数，设置生成数量为1，取消允许重复，即可用于抽奖。工具会显示统计信息，方便验证结果的随机性。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用随机数生成器",
+      "description": "学习如何使用在线随机数生成器生成指定范围内的随机数字",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "设置范围",
+          "text": "输入最小值和最大值，确定随机数的生成范围"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择类型",
+          "text": "选择是否仅生成整数，或允许生成浮点数"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "设置数量",
+          "text": "输入需要生成的随机数数量（最多1000个），选择是否允许重复"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "生成随机数",
+          "text": "点击'生成随机数'按钮，工具会显示统计信息和生成的随机数列表，可以点击'复制'按钮复制单个随机数"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .range-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .range-group input[type="range"] {
+            flex: 1;
+        }
+        .range-value {
+            min-width: 80px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent);
+            font-family: var(--mono);
+        }
+        .number-list {
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .number-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .number-item code {
+            flex: 1;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .stats {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .stats span {
+            margin-right: 1.5rem;
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">随机数生成器</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>随机数生成器</h1>
+                <p class="tool-subtitle">生成指定范围内的随机数，支持整数和浮点数</p>
+            </header>
+
+        <div class="tool-section">
+            <h2>生成选项</h2>
+            <div class="input-group">
+                <label for="min-input">最小值</label>
+                <input type="number" id="min-input" value="1" step="any">
+            </div>
+            <div class="input-group">
+                <label for="max-input">最大值</label>
+                <input type="number" id="max-input" value="100" step="any">
+            </div>
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" id="integer-only" checked>
+                    仅生成整数
+                </label>
+            </div>
+            <div class="input-group">
+                <label for="count-input">生成数量</label>
+                <input type="number" id="count-input" value="10" min="1" max="1000">
+                <div class="info-text">一次最多生成 1000 个随机数</div>
+            </div>
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" id="allow-duplicates" checked>
+                    允许重复
+                </label>
+            </div>
+            <button class="btn btn-primary" id="generate-btn">
+                <span>生成随机数</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+
+        <div class="tool-section">
+            <h2>生成的随机数</h2>
+            <div class="stats" id="stats" style="display: none;"></div>
+            <div class="number-list" id="number-list"></div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const minInput = document.getElementById('min-input');
+        const maxInput = document.getElementById('max-input');
+        const integerOnlyCheck = document.getElementById('integer-only');
+        const countInput = document.getElementById('count-input');
+        const allowDuplicatesCheck = document.getElementById('allow-duplicates');
+        const generateBtn = document.getElementById('generate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const numberList = document.getElementById('number-list');
+        const stats = document.getElementById('stats');
+
+        function generateRandomNumbers() {
+            const min = parseFloat(minInput.value) || 0;
+            const max = parseFloat(maxInput.value) || 100;
+            const count = parseInt(countInput.value) || 10;
+            const countLimit = Math.min(Math.max(1, count), 1000);
+            const isInteger = integerOnlyCheck.checked;
+            const allowDuplicates = allowDuplicatesCheck.checked;
+
+            if (min >= max) {
+                numberList.innerHTML = '<div style="color: #ff4444;">最小值必须小于最大值</div>';
+                stats.style.display = 'none';
+                return;
+            }
+
+            const numbers = [];
+            const seen = new Set();
+
+            while (numbers.length < countLimit) {
+                let num;
+                if (isInteger) {
+                    num = Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
+                } else {
+                    num = Math.random() * (max - min) + min;
+                    num = Math.round(num * 1000000) / 1000000; // 保留6位小数
+                }
+
+                if (!allowDuplicates && seen.has(num)) {
+                    if (seen.size >= (max - min + (isInteger ? 1 : 0))) {
+                        break; // 无法生成更多不重复的数字
+                    }
+                    continue;
+                }
+
+                numbers.push(num);
+                seen.add(num);
+            }
+
+            // 显示统计信息
+            if (numbers.length > 0) {
+                const sorted = [...numbers].sort((a, b) => a - b);
+                const minVal = sorted[0];
+                const maxVal = sorted[sorted.length - 1];
+                const sum = numbers.reduce((a, b) => a + b, 0);
+                const avg = sum / numbers.length;
+
+                stats.innerHTML = `
+                    <span><strong>数量:</strong> ${numbers.length}</span>
+                    <span><strong>最小值:</strong> ${minVal}</span>
+                    <span><strong>最大值:</strong> ${maxVal}</span>
+                    <span><strong>平均值:</strong> ${avg.toFixed(2)}</span>
+                `;
+                stats.style.display = 'block';
+            } else {
+                stats.style.display = 'none';
+            }
+
+            // 显示数字列表
+            numberList.innerHTML = numbers.map((num, index) => `
+                <div class="number-item">
+                    <code>${num}</code>
+                    <button class="btn btn-secondary copy-btn" data-number="${num}">复制</button>
+                </div>
+            `).join('');
+
+            // 绑定复制按钮
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(btn.dataset.number).then(() => {
+                        btn.textContent = '已复制';
+                        setTimeout(() => {
+                            btn.textContent = '复制';
+                        }, 2000);
+                    });
+                });
+            });
+        }
+
+        function clearAll() {
+            numberList.innerHTML = '';
+            stats.style.display = 'none';
+        }
+
+        generateBtn.addEventListener('click', generateRandomNumbers);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 回车键生成
+        [minInput, maxInput, countInput].forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    generateRandomNumbers();
+                }
+            });
+        });
+
+        // 初始生成
+        generateRandomNumbers();
+    </script>
+</body>
+</html>

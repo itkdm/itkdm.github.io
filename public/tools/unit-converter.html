@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单位转换器 - 在线单位换算工具 | itkdm.com</title>
+    <meta name="description" content="免费在线单位转换器，支持长度、重量、体积、温度、面积、速度等多种单位转换。快速进行单位换算，适用于日常生活、工程计算和科学计算。">
+    <meta name="keywords" content="单位转换,单位换算,长度转换,重量转换,体积转换,温度转换,单位转换器,单位换算工具,换算工具,单位换算器">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/unit-converter.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/unit-converter.html">
+    <meta property="og:title" content="单位转换器 - 在线单位换算工具">
+    <meta property="og:description" content="免费在线单位转换器，支持长度、重量、体积、温度、面积、速度等多种单位转换。快速进行单位换算。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/unit-converter.html">
+    <meta property="twitter:title" content="单位转换器 - 在线单位换算工具">
+    <meta property="twitter:description" content="免费在线单位转换器，支持长度、重量、体积、温度、面积、速度等多种单位转换。快速进行单位换算。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "单位转换器",
+      "description": "免费在线单位转换器，支持长度、重量、体积、温度、面积、速度等多种单位转换",
+      "url": "https://itkdm.com/tools/unit-converter.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "长度转换",
+        "重量转换",
+        "体积转换",
+        "温度转换",
+        "面积和速度转换"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "单位转换器",
+          "item": "https://itkdm.com/tools/unit-converter.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "单位转换器支持哪些单位类型？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持多种单位类型转换，包括长度（米、千米、英尺、英寸、英里等）、重量（千克、克、磅、盎司等）、体积（升、毫升、加仑、立方厘米等）、温度（摄氏度、华氏度、开尔文）、面积（平方米、平方千米、平方英尺、英亩等）和速度（米/秒、千米/小时、英里/小时等）。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何使用单位转换器？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "选择要转换的单位类型（长度、重量、体积等），在输入框中输入数值，选择原始单位和目标单位，工具会自动显示转换结果。支持实时转换，输入数值后立即显示结果。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "转换精度如何？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "工具使用精确的转换公式进行计算，转换结果会保留适当的小数位数，确保转换精度。支持科学计数法显示大数值和小数值。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用单位转换器",
+      "description": "学习如何使用在线单位转换器来转换不同单位",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "选择单位类型",
+          "text": "选择要转换的单位类型，如长度、重量、体积、温度等"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "输入数值",
+          "text": "在输入框中输入要转换的数值"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择单位",
+          "text": "选择原始单位和目标单位"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看结果",
+          "text": "工具会自动显示转换结果，可以复制结果使用"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .tab-btn:hover {
+            color: var(--text);
+        }
+        .converter-section {
+            display: none;
+        }
+        .converter-section.active {
+            display: block;
+        }
+        .converter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .converter-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .converter-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .converter-item input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: var(--mono);
+        }
+        .converter-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .info-text {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">单位转换器</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>单位转换器</h1>
+                <p class="tool-subtitle">在不同单位之间快速转换，支持长度、重量、温度、面积、体积等</p>
+            </header>
+
+        <div class="category-tabs">
+            <button class="tab-btn active" data-category="length">长度</button>
+            <button class="tab-btn" data-category="weight">重量</button>
+            <button class="tab-btn" data-category="temperature">温度</button>
+            <button class="tab-btn" data-category="area">面积</button>
+            <button class="tab-btn" data-category="volume">体积</button>
+        </div>
+
+        <!-- 长度转换 -->
+        <div class="converter-section active" id="length-section">
+            <div class="converter-grid">
+                <div class="converter-item">
+                    <label>毫米 (mm)</label>
+                    <input type="number" id="length-mm" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>厘米 (cm)</label>
+                    <input type="number" id="length-cm" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>米 (m)</label>
+                    <input type="number" id="length-m" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>千米 (km)</label>
+                    <input type="number" id="length-km" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>英寸 (in)</label>
+                    <input type="number" id="length-in" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>英尺 (ft)</label>
+                    <input type="number" id="length-ft" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>码 (yd)</label>
+                    <input type="number" id="length-yd" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>英里 (mi)</label>
+                    <input type="number" id="length-mi" value="0" step="any">
+                </div>
+            </div>
+        </div>
+
+        <!-- 重量转换 -->
+        <div class="converter-section" id="weight-section">
+            <div class="converter-grid">
+                <div class="converter-item">
+                    <label>克 (g)</label>
+                    <input type="number" id="weight-g" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>千克 (kg)</label>
+                    <input type="number" id="weight-kg" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>吨 (t)</label>
+                    <input type="number" id="weight-t" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>盎司 (oz)</label>
+                    <input type="number" id="weight-oz" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>磅 (lb)</label>
+                    <input type="number" id="weight-lb" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>英石 (st)</label>
+                    <input type="number" id="weight-st" value="0" step="any">
+                </div>
+            </div>
+        </div>
+
+        <!-- 温度转换 -->
+        <div class="converter-section" id="temperature-section">
+            <div class="converter-grid">
+                <div class="converter-item">
+                    <label>摄氏度 (°C)</label>
+                    <input type="number" id="temp-c" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>华氏度 (°F)</label>
+                    <input type="number" id="temp-f" value="32" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>开尔文 (K)</label>
+                    <input type="number" id="temp-k" value="273.15" step="any">
+                </div>
+            </div>
+        </div>
+
+        <!-- 面积转换 -->
+        <div class="converter-section" id="area-section">
+            <div class="converter-grid">
+                <div class="converter-item">
+                    <label>平方米 (m²)</label>
+                    <input type="number" id="area-m2" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>平方千米 (km²)</label>
+                    <input type="number" id="area-km2" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>公顷 (ha)</label>
+                    <input type="number" id="area-ha" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>平方英尺 (ft²)</label>
+                    <input type="number" id="area-ft2" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>平方码 (yd²)</label>
+                    <input type="number" id="area-yd2" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>英亩 (ac)</label>
+                    <input type="number" id="area-ac" value="0" step="any">
+                </div>
+            </div>
+        </div>
+
+        <!-- 体积转换 -->
+        <div class="converter-section" id="volume-section">
+            <div class="converter-grid">
+                <div class="converter-item">
+                    <label>毫升 (ml)</label>
+                    <input type="number" id="volume-ml" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>升 (L)</label>
+                    <input type="number" id="volume-l" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>立方米 (m³)</label>
+                    <input type="number" id="volume-m3" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>立方英寸 (in³)</label>
+                    <input type="number" id="volume-in3" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>立方英尺 (ft³)</label>
+                    <input type="number" id="volume-ft3" value="0" step="any">
+                </div>
+                <div class="converter-item">
+                    <label>加仑 (gal)</label>
+                    <input type="number" id="volume-gal" value="0" step="any">
+                </div>
+            </div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        // 转换系数定义
+        const conversions = {
+            length: {
+                mm: 1,
+                cm: 10,
+                m: 1000,
+                km: 1000000,
+                in: 25.4,
+                ft: 304.8,
+                yd: 914.4,
+                mi: 1609344
+            },
+            weight: {
+                g: 1,
+                kg: 1000,
+                t: 1000000,
+                oz: 28.3495,
+                lb: 453.592,
+                st: 6350.29
+            },
+            area: {
+                m2: 1,
+                km2: 1000000,
+                ha: 10000,
+                ft2: 0.092903,
+                yd2: 0.836127,
+                ac: 4046.86
+            },
+            volume: {
+                ml: 1,
+                l: 1000,
+                m3: 1000000,
+                in3: 16.3871,
+                ft3: 28316.8,
+                gal: 3785.41
+            }
+        };
+
+        // 温度转换函数
+        function celsiusToFahrenheit(c) {
+            return (c * 9/5) + 32;
+        }
+        function fahrenheitToCelsius(f) {
+            return (f - 32) * 5/9;
+        }
+        function celsiusToKelvin(c) {
+            return c + 273.15;
+        }
+        function kelvinToCelsius(k) {
+            return k - 273.15;
+        }
+
+        // 标签切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.converter-section');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                tabBtns.forEach(b => b.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`${category}-section`).classList.add('active');
+            });
+        });
+
+        // 长度转换
+        function updateLength(value, unit) {
+            const baseValue = value * conversions.length[unit];
+            document.getElementById('length-mm').value = (baseValue / conversions.length.mm).toFixed(6);
+            document.getElementById('length-cm').value = (baseValue / conversions.length.cm).toFixed(6);
+            document.getElementById('length-m').value = (baseValue / conversions.length.m).toFixed(6);
+            document.getElementById('length-km').value = (baseValue / conversions.length.km).toFixed(6);
+            document.getElementById('length-in').value = (baseValue / conversions.length.in).toFixed(6);
+            document.getElementById('length-ft').value = (baseValue / conversions.length.ft).toFixed(6);
+            document.getElementById('length-yd').value = (baseValue / conversions.length.yd).toFixed(6);
+            document.getElementById('length-mi').value = (baseValue / conversions.length.mi).toFixed(6);
+        }
+
+        Object.keys(conversions.length).forEach(unit => {
+            const input = document.getElementById(`length-${unit}`);
+            input.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value) || 0;
+                updateLength(value, unit);
+            });
+        });
+
+        // 重量转换
+        function updateWeight(value, unit) {
+            const baseValue = value * conversions.weight[unit];
+            Object.keys(conversions.weight).forEach(u => {
+                document.getElementById(`weight-${u}`).value = (baseValue / conversions.weight[u]).toFixed(6);
+            });
+        }
+
+        Object.keys(conversions.weight).forEach(unit => {
+            const input = document.getElementById(`weight-${unit}`);
+            input.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value) || 0;
+                updateWeight(value, unit);
+            });
+        });
+
+        // 温度转换
+        function updateTemperature(value, unit) {
+            let c, f, k;
+            if (unit === 'c') {
+                c = value;
+                f = celsiusToFahrenheit(c);
+                k = celsiusToKelvin(c);
+            } else if (unit === 'f') {
+                f = value;
+                c = fahrenheitToCelsius(f);
+                k = celsiusToKelvin(c);
+            } else if (unit === 'k') {
+                k = value;
+                c = kelvinToCelsius(k);
+                f = celsiusToFahrenheit(c);
+            }
+            document.getElementById('temp-c').value = c.toFixed(2);
+            document.getElementById('temp-f').value = f.toFixed(2);
+            document.getElementById('temp-k').value = k.toFixed(2);
+        }
+
+        ['c', 'f', 'k'].forEach(unit => {
+            const input = document.getElementById(`temp-${unit}`);
+            input.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value) || 0;
+                updateTemperature(value, unit);
+            });
+        });
+
+        // 面积转换
+        function updateArea(value, unit) {
+            const baseValue = value * conversions.area[unit];
+            Object.keys(conversions.area).forEach(u => {
+                document.getElementById(`area-${u}`).value = (baseValue / conversions.area[u]).toFixed(6);
+            });
+        }
+
+        Object.keys(conversions.area).forEach(unit => {
+            const input = document.getElementById(`area-${unit}`);
+            input.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value) || 0;
+                updateArea(value, unit);
+            });
+        });
+
+        // 体积转换
+        function updateVolume(value, unit) {
+            const baseValue = value * conversions.volume[unit];
+            Object.keys(conversions.volume).forEach(u => {
+                document.getElementById(`volume-${u}`).value = (baseValue / conversions.volume[u]).toFixed(6);
+            });
+        }
+
+        Object.keys(conversions.volume).forEach(unit => {
+            const input = document.getElementById(`volume-${unit}`);
+            input.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value) || 0;
+                updateVolume(value, unit);
+            });
+        });
+    </script>
+</body>
+</html>

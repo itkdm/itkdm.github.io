@@ -1,0 +1,865 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { Lang } from '../i18n/config';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import { getSidebar } from '../lib/sidebar';
+
+const { lang = 'zh', entry } = Astro.props as {
+	lang: Lang;
+	entry: CollectionEntry<'docs'>;
+};
+
+const sidebar = await getSidebar(lang);
+const currentSlug = entry.data.slug ?? entry.slug;
+const topic = entry.data.topic ?? entry.data.title;
+const site = Astro.site?.href ?? 'https://itkdm.com';
+const canonical = new URL(`/${lang}/docs/${currentSlug}/`, site).href;
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'TechArticle',
+	headline: entry.data.title,
+	description: entry.data.summary ?? entry.data.title,
+	inLanguage: lang,
+	mainEntityOfPage: canonical,
+	url: canonical,
+	dateModified: entry.data.updated ? entry.data.updated.toISOString() : undefined,
+	publisher: {
+		'@type': 'Organization',
+		name: '布吉岛',
+		logo: {
+			'@type': 'ImageObject',
+			url: new URL('/logo.jpg', site).href,
+		},
+	},
+};
+// 规范化 section 字段：去除首尾空格，确保一致性
+const sectionName = (entry.data.section || (lang === 'zh' ? '其他' : 'Others')).trim();
+const topicDocs = (await getCollection('docs', (doc) => {
+	const docSlug = doc.data.slug ?? doc.slug;
+	const docTopic = doc.data.topic ?? doc.data.title;
+	return doc.data.lang === lang && docTopic === topic && Boolean(docSlug);
+}))
+	.map((doc) => ({
+		title: doc.data.title,
+		slug: doc.data.slug ?? doc.slug,
+		order: typeof doc.data.order === 'number' ? doc.data.order : 9999,
+	}))
+	.sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+const { Content, headings } = await entry.render();
+---
+
+<BaseLayout
+	lang={lang}
+	title={entry.data.title}
+	description={entry.data.summary ?? entry.data.title}
+	currentPath={`/${lang}/docs/${currentSlug}/`}
+	ogType="article"
+	ogImage="/logo.jpg"
+	jsonLd={jsonLd}
+>
+	<style>
+		.docs-layout {
+			display: grid;
+			grid-template-columns: 260px minmax(0, 1fr) 220px;
+			gap: 24px;
+			align-items: flex-start;
+		}
+		@media (max-width: 1100px) {
+			.docs-layout {
+				grid-template-columns: 240px minmax(0, 1fr);
+			}
+			.docs-right {
+				display: none;
+			}
+		}
+		@media (max-width: 900px) {
+			.docs-layout {
+				grid-template-columns: 1fr;
+			}
+			.docs-sidebar {
+				display: none;
+			}
+		}
+		
+		/* Mobile Sidebar Drawer */
+		.docs-sidebar-overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 998;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			pointer-events: none;
+		}
+		
+		.docs-sidebar-overlay.active {
+			opacity: 1;
+			pointer-events: all;
+		}
+		
+		.docs-sidebar-mobile {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: -100%;
+			width: 280px;
+			max-width: 85vw;
+			height: 100vh;
+			background: var(--bg-elev);
+			border-right: 1px solid var(--border);
+			z-index: 999;
+			box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+			transition: left 0.3s ease;
+			overflow-y: auto;
+		}
+		
+		.docs-sidebar-mobile.active {
+			left: 0;
+		}
+		
+		.docs-sidebar-mobile-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 16px 20px;
+			border-bottom: 1px solid var(--border);
+			position: sticky;
+			top: 0;
+			background: var(--bg-elev);
+			z-index: 1;
+		}
+		
+		.docs-sidebar-mobile-header h3 {
+			margin: 0;
+			font-size: 1rem;
+			color: var(--text);
+		}
+		
+		.docs-sidebar-mobile-close {
+			background: transparent;
+			border: none;
+			color: var(--text-muted);
+			cursor: pointer;
+			padding: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: var(--radius-sm);
+			transition: all 0.2s ease;
+		}
+		
+		.docs-sidebar-mobile-close:hover {
+			background: color-mix(in srgb, var(--bg-soft) 50%, transparent);
+			color: var(--text);
+		}
+		
+		.docs-sidebar-mobile-content {
+			padding: 12px 0;
+		}
+		
+		.docs-sidebar-mobile-item {
+			display: block;
+			padding: 12px 20px;
+			color: var(--text-muted);
+			text-decoration: none;
+			font-size: 0.95rem;
+			transition: all 0.2s ease;
+			border-left: 3px solid transparent;
+		}
+		
+		.docs-sidebar-mobile-item:hover {
+			background: color-mix(in srgb, var(--bg-soft) 50%, transparent);
+			color: var(--text);
+		}
+		
+		.docs-sidebar-mobile-item[aria-current="page"] {
+			background: color-mix(in srgb, var(--primary-soft) 50%, transparent);
+			color: var(--primary);
+			border-left-color: var(--primary);
+			font-weight: 500;
+		}
+		
+		.docs-sidebar-toggle {
+			display: none;
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			width: 56px;
+			height: 56px;
+			border-radius: 50%;
+			background: var(--primary);
+			color: white;
+			border: none;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			cursor: pointer;
+			z-index: 997;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+		}
+		
+		.docs-sidebar-toggle:hover {
+			background: var(--primary-hover);
+			transform: scale(1.05);
+			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+		}
+		
+		.docs-sidebar-toggle:active {
+			transform: scale(0.95);
+		}
+		
+		@media (max-width: 900px) {
+			.docs-sidebar-overlay,
+			.docs-sidebar-mobile,
+			.docs-sidebar-toggle {
+				display: block;
+			}
+		}
+		.docs-sidebar {
+			position: sticky;
+			top: 90px;
+			align-self: start;
+			background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 14px 12px;
+		}
+		.docs-sidebar h3 {
+			margin: 10px 8px 6px;
+			font-size: 0.95rem;
+			color: var(--text-muted);
+		}
+		.docs-sidebar a {
+			display: block;
+			color: var(--text-muted);
+			text-decoration: none;
+			padding: 6px 10px;
+			border-radius: 10px;
+			font-size: 0.95rem;
+		}
+		.docs-sidebar a[aria-current='page'] {
+			background: color-mix(in srgb, var(--primary-soft) 90%, transparent);
+			color: var(--text);
+		}
+		.docs-toc {
+			margin-top: 18px;
+			padding-top: 10px;
+			border-top: 1px dashed var(--border-soft);
+		}
+		.docs-toc h4 {
+			margin: 0 0 6px;
+			font-size: 0.9rem;
+			color: var(--text-muted);
+		}
+		.docs-toc ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.docs-toc li a {
+			color: var(--text-faint);
+			text-decoration: none;
+			font-size: 0.9rem;
+			padding: 3px 0;
+			display: block;
+		}
+		.docs-article {
+			background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 24px 22px;
+		}
+	.docs-article-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 12px;
+		margin-bottom: 10px;
+	}
+	.docs-article-header h1 {
+		margin: 0 0 6px;
+	}
+		.docs-right {
+			position: sticky;
+			top: 90px;
+			align-self: start;
+			border-radius: 14px;
+			border: 1px solid var(--border);
+			background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+			padding: 14px 12px;
+			font-size: 0.9rem;
+		}
+		.docs-right-title {
+			font-weight: 600;
+			margin-bottom: 8px;
+			color: var(--text-muted);
+		}
+		.docs-right ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		.docs-right li a {
+			display: block;
+			text-decoration: none;
+			color: var(--text-faint);
+			padding: 4px 6px;
+			border-radius: 8px;
+		}
+		.docs-right li a:hover {
+			background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+			color: var(--text);
+		}
+	</style>
+	<!-- Mobile Sidebar Overlay -->
+	<div class="docs-sidebar-overlay" id="docsSidebarOverlay"></div>
+	
+	<!-- Mobile Sidebar Drawer -->
+	<aside class="docs-sidebar-mobile" id="docsSidebarMobile">
+		<div class="docs-sidebar-mobile-header">
+			<h3>{topic}</h3>
+			<button class="docs-sidebar-mobile-close" id="docsSidebarMobileClose" type="button" aria-label={lang === 'zh' ? '关闭' : 'Close'}>
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+		<div class="docs-sidebar-mobile-content">
+			{topicDocs.map((item) => (
+				<a
+					href={`/${lang}/docs/${item.slug}/`}
+					class="docs-sidebar-mobile-item"
+					aria-current={item.slug === currentSlug ? 'page' : undefined}
+				>
+					{item.title}
+				</a>
+			))}
+		</div>
+	</aside>
+
+	<!-- Floating Menu Button (Mobile Only) -->
+	<button class="docs-sidebar-toggle" id="docsSidebarToggle" type="button" aria-label={lang === 'zh' ? '打开目录' : 'Open menu'}>
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<line x1="3" y1="12" x2="21" y2="12"></line>
+			<line x1="3" y1="6" x2="21" y2="6"></line>
+			<line x1="3" y1="18" x2="21" y2="18"></line>
+		</svg>
+	</button>
+
+	<div class="docs-layout">
+		<aside class="docs-sidebar">
+			<h3 style="margin-top: 4px">{topic}</h3>
+			{topicDocs.map((item) => (
+				<a
+					href={`/${lang}/docs/${item.slug}/`}
+					aria-current={item.slug === currentSlug ? 'page' : undefined}
+				>
+					{item.title}
+				</a>
+			))}
+		</aside>
+		<article class="docs-article">
+			<div class="docs-article-header">
+				<h1>{entry.data.title}</h1>
+				<a
+					class="docs-back-btn"
+					href={`/${lang}/docs/#${encodeURIComponent(sectionName)}`}
+					onclick="if (history.length > 1) { history.back(); return false; }"
+				>
+					{lang === 'zh' ? '返回' : 'Back'}
+				</a>
+			</div>
+			<Content />
+		</article>
+		<aside class="docs-right">
+			<div class="docs-right-title">{lang === 'zh' ? '文档分类' : 'Categories'}</div>
+			<ul>
+				{sidebar.map((section) => (
+					<li>
+						<a href={`/${lang}/docs/#${encodeURIComponent(section.section)}`}>
+							{section.section}
+						</a>
+					</li>
+				))}
+			</ul>
+
+			{headings.length > 0 && (
+				<div class="docs-toc">
+					<div class="docs-right-title" style="margin-top: 14px">
+						{lang === 'zh' ? '本页目录' : 'On this page'}
+					</div>
+					<ul>
+						{headings.map((h) => (
+							<li>
+								<a href={`#${h.slug}`}>{h.text}</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+		</aside>
+	</div>
+
+	<script define:vars={{ lang }}>
+		// Add macOS-style code blocks with line numbers and copy button
+		// Preserves Shiki syntax highlighting structure
+		// Also handles theme-aware syntax highlighting by removing inline styles
+		(function() {
+			const isZh = lang === 'zh';
+			const copyText = isZh ? '复制' : 'Copy';
+			const copiedText = isZh ? '已复制!' : 'Copied!';
+			
+			// Function to apply theme-aware syntax highlighting
+			// Removes ALL inline color styles and replaces with CSS variables
+			function applyThemeAwareHighlighting() {
+				const codeBlocks = document.querySelectorAll('.docs-article pre code, article pre code, .code-block-wrapper pre code');
+				
+				codeBlocks.forEach((codeBlock) => {
+					// Find all elements with inline color styles (spans, code, etc.)
+					const coloredElements = codeBlock.querySelectorAll('[style*="color"]');
+					coloredElements.forEach((el) => {
+						// Skip if already processed
+						if (el.hasAttribute('data-token-type')) {
+							return;
+						}
+						const inlineStyle = el.getAttribute('style') || '';
+						
+						// Extract color value (RGB, hex, or named)
+						const colorMatch = inlineStyle.match(/color:\s*(rgb\([^)]+\)|#[0-9a-fA-F]{3,6}|[a-zA-Z]+)/i);
+						
+						if (colorMatch) {
+							const colorValue = colorMatch[1];
+							let rgbValues = null;
+							
+							// Convert to RGB for matching
+							if (colorValue.startsWith('rgb(')) {
+								const rgbMatch = colorValue.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+								if (rgbMatch) {
+									rgbValues = {
+										r: parseInt(rgbMatch[1]),
+										g: parseInt(rgbMatch[2]),
+										b: parseInt(rgbMatch[3])
+									};
+								}
+							} else if (colorValue.startsWith('#')) {
+								// Convert hex to RGB
+								const hex = colorValue.slice(1);
+								const r = parseInt(hex.slice(0, 2), 16);
+								const g = parseInt(hex.slice(2, 4), 16);
+								const b = parseInt(hex.slice(4, 6), 16);
+								rgbValues = { r, g, b };
+							}
+							
+							if (rgbValues) {
+								// Determine token type based on color similarity
+								const tokenType = classifyColor(rgbValues.r, rgbValues.g, rgbValues.b);
+								
+								// Remove color from inline style
+								const newStyle = inlineStyle
+									.replace(/color:\s*(rgb\([^)]+\)|#[0-9a-fA-F]{3,6}|[a-zA-Z]+)\s*;?/gi, '')
+									.trim();
+								
+								if (newStyle) {
+									el.setAttribute('style', newStyle);
+								} else {
+									el.removeAttribute('style');
+								}
+								
+								// Add data attribute for CSS targeting
+								el.setAttribute('data-token-type', tokenType);
+							}
+						}
+					});
+				});
+			}
+			
+			// Classify color into token type based on RGB values
+			function classifyColor(r, g, b) {
+				// Calculate color characteristics
+				const max = Math.max(r, g, b);
+				const min = Math.min(r, g, b);
+				const delta = max - min;
+				const lightness = (max + min) / 2;
+				
+				// Purple/Magenta (Keywords) - high red and blue, low green
+				if (r > 120 && b > 120 && g < r && g < b) {
+					return 'keyword';
+				}
+				
+				// Orange/Red (Strings) - high red, medium green, low blue
+				if (r > 150 && g > 100 && g < r && b < 150) {
+					return 'string';
+				}
+				
+				// Green (Comments) - high green, low red and blue
+				if (g > 100 && r < 150 && b < 150) {
+					return 'comment';
+				}
+				
+				// Yellow (Functions) - high red and green, low blue
+				if (r > 200 && g > 200 && b < 200) {
+					return 'function';
+				}
+				
+				// Light Green (Numbers) - balanced green and blue
+				if (g > 150 && b > 100 && r < 200) {
+					return 'number';
+				}
+				
+				// Light Blue/Cyan (Variables) - high blue and green, low red
+				if (b > 200 && g > 150 && r < 200) {
+					return 'variable';
+				}
+				
+				// Teal (Types) - balanced blue and green
+				if (b > 150 && g > 150 && r < 150) {
+					return 'type';
+				}
+				
+				// Blue (Constants) - high blue, low red and green
+				if (b > 150 && r < 150 && g < 150) {
+					return 'constant';
+				}
+				
+				// Red/Pink (Regex) - high red, low green
+				if (r > 180 && g < 150 && b < 150) {
+					return 'regex';
+				}
+				
+				// Default to text color
+				return 'text';
+			}
+			
+			// Wait for content to be rendered
+			function processCodeBlocks() {
+				const codeBlocks = document.querySelectorAll('.docs-article pre code, article pre code');
+				
+				codeBlocks.forEach((codeBlock) => {
+					// Skip if already wrapped
+					if (codeBlock.closest('.code-block-wrapper')) {
+						return;
+					}
+					
+					const pre = codeBlock.parentElement;
+					if (pre.tagName !== 'PRE') return;
+					
+					// Get original code text for copying
+					const originalText = codeBlock.textContent || '';
+					
+					// Create wrapper
+					const wrapper = document.createElement('div');
+					wrapper.className = 'code-block-wrapper';
+					
+					// Create header with window controls and copy button
+					const header = document.createElement('div');
+					header.className = 'code-block-header';
+					
+					// Window controls (macOS style)
+					const windowControls = document.createElement('div');
+					windowControls.className = 'code-window-controls';
+					windowControls.innerHTML = `
+						<span class="code-window-dot red"></span>
+						<span class="code-window-dot yellow"></span>
+						<span class="code-window-dot green"></span>
+					`;
+					
+					// Copy button
+					const copyBtn = document.createElement('button');
+					copyBtn.className = 'code-copy-btn';
+					copyBtn.type = 'button';
+					copyBtn.setAttribute('aria-label', 'Copy code');
+					copyBtn.innerHTML = `
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+						</svg>
+						<span>${copyText}</span>
+					`;
+					
+					// Copy functionality
+					copyBtn.addEventListener('click', async () => {
+						const text = originalText;
+						
+						try {
+							await navigator.clipboard.writeText(text);
+							copyBtn.classList.add('copied');
+							copyBtn.querySelector('span').textContent = copiedText;
+							
+							setTimeout(() => {
+								copyBtn.classList.remove('copied');
+								copyBtn.querySelector('span').textContent = copyText;
+							}, 2000);
+						} catch (err) {
+							// Fallback for older browsers
+							const textarea = document.createElement('textarea');
+							textarea.value = text;
+							textarea.style.position = 'fixed';
+							textarea.style.opacity = '0';
+							document.body.appendChild(textarea);
+							textarea.select();
+							try {
+								document.execCommand('copy');
+								copyBtn.classList.add('copied');
+								copyBtn.querySelector('span').textContent = copiedText;
+								setTimeout(() => {
+									copyBtn.classList.remove('copied');
+									copyBtn.querySelector('span').textContent = copyText;
+								}, 2000);
+							} catch (e) {
+								console.error('Failed to copy:', e);
+							}
+							document.body.removeChild(textarea);
+						}
+					});
+					
+					// Assemble header
+					header.appendChild(windowControls);
+					header.appendChild(copyBtn);
+					
+					// Create new pre and code elements
+					const newPre = document.createElement('pre');
+					const newCode = document.createElement('code');
+					
+					// Preserve language class if exists
+					if (codeBlock.className) {
+						newCode.className = codeBlock.className;
+					}
+					
+					// Check if Shiki has syntax highlighting (has span elements)
+					const hasShikiHighlighting = codeBlock.querySelector('span') !== null;
+					
+					// Process code content - handle both Shiki highlighted and plain code
+					const textLines = originalText.split('\n');
+					
+					if (hasShikiHighlighting) {
+						// Shiki has syntax highlighting - preserve HTML structure while adding line numbers
+						// Clone the code block to work with
+						const clone = codeBlock.cloneNode(true);
+						
+						// Process all nodes and split by line breaks
+						const lines = [];
+						let currentLine = [];
+						
+						const walkNodes = (node) => {
+							if (node.nodeType === Node.TEXT_NODE) {
+								const text = node.textContent;
+								const parts = text.split('\n');
+								
+								for (let i = 0; i < parts.length; i++) {
+									if (parts[i]) {
+										currentLine.push(document.createTextNode(parts[i]));
+									}
+									if (i < parts.length - 1) {
+										// End of line
+										lines.push([...currentLine]);
+										currentLine = [];
+									}
+								}
+							} else if (node.nodeType === Node.ELEMENT_NODE) {
+								if (node.tagName === 'BR') {
+									// Line break
+									lines.push([...currentLine]);
+									currentLine = [];
+								} else {
+									// Clone element and process children
+									const cloned = node.cloneNode(false);
+									const savedLine = [...currentLine];
+									currentLine = [];
+									
+									// Process children
+									for (let child = node.firstChild; child; child = child.nextSibling) {
+										walkNodes(child);
+									}
+									
+									// Add accumulated children to cloned element
+									currentLine.forEach(n => cloned.appendChild(n));
+									currentLine = savedLine;
+									currentLine.push(cloned);
+								}
+							}
+						};
+						
+						// Process all nodes
+						for (let child = clone.firstChild; child; child = child.nextSibling) {
+							walkNodes(child);
+						}
+						
+						// Add last line
+						if (currentLine.length > 0) {
+							lines.push(currentLine);
+						}
+						
+						// Create line divs
+						lines.forEach((lineNodes) => {
+							const lineDiv = document.createElement('div');
+							lineDiv.className = 'code-line';
+							lineNodes.forEach(n => lineDiv.appendChild(n));
+							newCode.appendChild(lineDiv);
+						});
+						
+						// Fallback if no lines created
+						if (newCode.children.length === 0) {
+							textLines.forEach((lineText) => {
+								const lineDiv = document.createElement('div');
+								lineDiv.className = 'code-line';
+								lineDiv.textContent = lineText;
+								newCode.appendChild(lineDiv);
+							});
+						}
+					} else {
+						// No syntax highlighting, just add line numbers
+						textLines.forEach((lineText) => {
+							const lineDiv = document.createElement('div');
+							lineDiv.className = 'code-line';
+							lineDiv.textContent = lineText;
+							newCode.appendChild(lineDiv);
+						});
+					}
+					
+					newPre.appendChild(newCode);
+					
+					// Wrap everything
+					wrapper.appendChild(header);
+					wrapper.appendChild(newPre);
+					
+					// Replace original pre with new wrapper
+					pre.parentNode.replaceChild(wrapper, pre);
+				});
+				
+				// Apply theme-aware highlighting after processing code blocks
+				setTimeout(applyThemeAwareHighlighting, 50);
+			}
+			
+			// Run immediately to prevent FOUC
+			// Apply highlighting as early as possible
+			function initCodeHighlighting() {
+				processCodeBlocks();
+				// Apply highlighting immediately, then again after a short delay
+				applyThemeAwareHighlighting();
+				setTimeout(applyThemeAwareHighlighting, 50);
+			}
+			
+			// Run immediately and also on DOMContentLoaded
+			if (document.readyState === 'loading') {
+				// Run as early as possible
+				initCodeHighlighting();
+				document.addEventListener('DOMContentLoaded', () => {
+					initCodeHighlighting();
+				});
+			} else {
+				initCodeHighlighting();
+			}
+			
+			// Also run after a short delay to catch dynamically loaded content
+			setTimeout(() => {
+				processCodeBlocks();
+				setTimeout(applyThemeAwareHighlighting, 100);
+			}, 100);
+			
+			// Listen for theme changes and reapply highlighting
+			// Watch body element for data-theme changes
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+						// Theme changed - reapply highlighting after a short delay
+						setTimeout(() => {
+							applyThemeAwareHighlighting();
+						}, 50);
+					}
+				});
+			});
+			
+			// Observe body element for theme attribute changes
+			if (document.body) {
+				observer.observe(document.body, {
+					attributes: true,
+					attributeFilter: ['data-theme']
+				});
+			}
+			
+			// Also listen to theme button clicks directly for immediate response
+			const themeBtn = document.getElementById('themeBtn');
+			if (themeBtn) {
+				// Use capture phase to run before other handlers
+				themeBtn.addEventListener('click', () => {
+					setTimeout(() => {
+						applyThemeAwareHighlighting();
+					}, 100);
+				}, true);
+			}
+			
+			// Fallback: periodically check for new code blocks (for dynamic content)
+			setInterval(() => {
+				const codeBlocks = document.querySelectorAll('.docs-article pre code, article pre code, .code-block-wrapper pre code');
+				let needsUpdate = false;
+				codeBlocks.forEach((codeBlock) => {
+					const hasInlineColors = codeBlock.querySelector('[style*="color"]:not([data-token-type])');
+					if (hasInlineColors) {
+						needsUpdate = true;
+					}
+				});
+				if (needsUpdate) {
+					applyThemeAwareHighlighting();
+				}
+			}, 1000);
+		})();
+
+		// Mobile sidebar toggle
+		(function() {
+			const toggleBtn = document.getElementById('docsSidebarToggle');
+			const sidebar = document.getElementById('docsSidebarMobile');
+			const overlay = document.getElementById('docsSidebarOverlay');
+			const closeBtn = document.getElementById('docsSidebarMobileClose');
+
+			function openSidebar() {
+				if (sidebar) sidebar.classList.add('active');
+				if (overlay) overlay.classList.add('active');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeSidebar() {
+				if (sidebar) sidebar.classList.remove('active');
+				if (overlay) overlay.classList.remove('active');
+				document.body.style.overflow = '';
+			}
+
+			if (toggleBtn) {
+				toggleBtn.addEventListener('click', openSidebar);
+			}
+
+			if (closeBtn) {
+				closeBtn.addEventListener('click', closeSidebar);
+			}
+
+			if (overlay) {
+				overlay.addEventListener('click', closeSidebar);
+			}
+
+			// Close sidebar when clicking on a menu item
+			if (sidebar) {
+				const menuItems = sidebar.querySelectorAll('.docs-sidebar-mobile-item');
+				menuItems.forEach(item => {
+					item.addEventListener('click', () => {
+						setTimeout(closeSidebar, 100);
+					});
+				});
+			}
+
+			// Close sidebar on escape key
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && sidebar && sidebar.classList.contains('active')) {
+					closeSidebar();
+				}
+			});
+		})();
+	</script>
+</BaseLayout>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本统计工具 - 在线文本字数统计和词频分析工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本统计工具，统计文本的字数、字符数、行数等信息，并分析词频。支持中英文混合文本，适用于写作统计、内容分析和文本分析。">
+    <meta name="keywords" content="文本统计,字数统计,字符统计,词频分析,文本分析工具,字数统计工具,文本字数统计,词频统计,文本分析,写作统计工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-stats.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-stats.html">
+    <meta property="og:title" content="文本统计工具 - 在线文本字数统计和词频分析工具">
+    <meta property="og:description" content="免费在线文本统计工具，统计文本的字数、字符数、行数等信息，并分析词频。支持中英文混合文本。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-stats.html">
+    <meta property="twitter:title" content="文本统计工具 - 在线文本字数统计和词频分析工具">
+    <meta property="twitter:description" content="免费在线文本统计工具，统计文本的字数、字符数、行数等信息，并分析词频。支持中英文混合文本。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本统计工具",
+      "description": "免费在线文本统计工具，统计文本的字数、字符数、行数等信息，并分析词频",
+      "url": "https://itkdm.com/tools/text-stats.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "字数统计",
+        "字符统计",
+        "行数统计",
+        "词频分析",
+        "中英文混合文本支持"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本统计工具",
+          "item": "https://itkdm.com/tools/text-stats.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本统计工具可以统计哪些信息？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以统计文本的字数、字符数（包括空格）、字符数（不含空格）、行数、段落数、平均每行字数、平均每段字数等信息。同时还会分析词频，显示最常用的词语及其出现次数。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持中英文混合文本吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "完全支持。工具可以准确统计中英文混合文本的字数、字符数和词频。对于中文文本，会按字符统计；对于英文文本，会按单词统计。词频分析会同时显示中文词语和英文单词。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "词频分析如何工作？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "工具会自动分析文本中所有词语的出现频率，按出现次数从高到低排序显示。词频分析支持中英文混合文本，可以帮助您了解文本的关键词和内容重点。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "统计数据会实时更新吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "是的。当您在文本框中输入或修改文本时，所有统计数据会实时更新，包括字数、字符数、行数、段落数和词频分析结果，无需手动刷新。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本统计工具",
+      "description": "学习如何使用在线文本统计工具来统计文本信息和分析词频",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在文本输入框中粘贴或输入要统计的文本内容"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "查看统计信息",
+          "text": "工具会实时显示字数、字符数、行数、段落数等统计信息"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "分析词频",
+          "text": "查看词频分析结果，了解文本中最常用的词语及其出现次数"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .stats-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .stats-panel h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .stat-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .stat-item label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .stat-item .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            font-family: var(--mono);
+        }
+        .stat-item .unit {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-left: 0.25rem;
+        }
+        .word-frequency {
+            margin-top: 1.5rem;
+        }
+        .word-frequency h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+        }
+        .word-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .word-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .word-item:last-child {
+            border-bottom: none;
+        }
+        .word-item span {
+            font-family: var(--mono);
+            font-size: 0.875rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本统计工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本统计工具</h1>
+                <p class="tool-subtitle">统计文本的字数、字符数、行数等信息，并分析词频</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="text-input">输入文本</label>
+                <textarea id="text-input" class="tool-textarea" placeholder="在这里输入要统计的文本..."></textarea>
+                <div class="info-text">支持中文、英文和混合文本</div>
+            </div>
+
+            <div class="stats-panel">
+                <h2>统计结果</h2>
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stat-item">
+                        <label>字符数（含空格）</label>
+                        <div><span class="value" id="chars-with-spaces">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>字符数（不含空格）</label>
+                        <div><span class="value" id="chars-without-spaces">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>字数</label>
+                        <div><span class="value" id="words">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>行数</label>
+                        <div><span class="value" id="lines">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>段落数</label>
+                        <div><span class="value" id="paragraphs">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>中文字符</label>
+                        <div><span class="value" id="chinese-chars">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>英文字符</label>
+                        <div><span class="value" id="english-chars">0</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <label>数字</label>
+                        <div><span class="value" id="numbers">0</span></div>
+                    </div>
+                </div>
+
+                <div class="word-frequency">
+                    <h3>词频统计（Top 20）</h3>
+                    <div class="word-list" id="word-list">输入文本后，词频统计将显示在这里...</div>
+                </div>
+            </div>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const textInput = document.getElementById('text-input');
+        const statsGrid = document.getElementById('stats-grid');
+        const wordList = document.getElementById('word-list');
+
+        function countChinese(text) {
+            return (text.match(/[\u4e00-\u9fa5]/g) || []).length;
+        }
+
+        function countEnglish(text) {
+            return (text.match(/[a-zA-Z]/g) || []).length;
+        }
+
+        function countNumbers(text) {
+            return (text.match(/[0-9]/g) || []).length;
+        }
+
+        function countWords(text) {
+            // 中文字符算作一个词，英文单词按空格和标点分割
+            const chineseWords = (text.match(/[\u4e00-\u9fa5]+/g) || []).length;
+            const englishWords = text.trim() 
+                ? text.split(/[\s\p{P}]+/u).filter(w => /[a-zA-Z]/.test(w)).length 
+                : 0;
+            return chineseWords + englishWords;
+        }
+
+        function getWordFrequency(text) {
+            const words = {};
+            
+            // 中文词（单个字符）
+            const chineseMatches = text.match(/[\u4e00-\u9fa5]/g) || [];
+            chineseMatches.forEach(char => {
+                words[char] = (words[char] || 0) + 1;
+            });
+
+            // 英文单词
+            const englishWords = text.toLowerCase().match(/[a-z]+/g) || [];
+            englishWords.forEach(word => {
+                if (word.length > 1) { // 忽略单字符
+                    words[word] = (words[word] || 0) + 1;
+                }
+            });
+
+            // 排序并返回前20
+            return Object.entries(words)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 20);
+        }
+
+        function updateStats() {
+            const text = textInput.value;
+            
+            const charsWithSpaces = text.length;
+            const charsWithoutSpaces = text.replace(/\s/g, '').length;
+            const words = countWords(text);
+            const lines = text.split('\n').length;
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length;
+            const chineseChars = countChinese(text);
+            const englishChars = countEnglish(text);
+            const numbers = countNumbers(text);
+
+            document.getElementById('chars-with-spaces').textContent = charsWithSpaces;
+            document.getElementById('chars-without-spaces').textContent = charsWithoutSpaces;
+            document.getElementById('words').textContent = words;
+            document.getElementById('lines').textContent = lines;
+            document.getElementById('paragraphs').textContent = paragraphs;
+            document.getElementById('chinese-chars').textContent = chineseChars;
+            document.getElementById('english-chars').textContent = englishChars;
+            document.getElementById('numbers').textContent = numbers;
+
+            // 词频统计
+            if (text.trim()) {
+                const frequency = getWordFrequency(text);
+                if (frequency.length > 0) {
+                    wordList.innerHTML = frequency.map(([word, count]) => `
+                        <div class="word-item">
+                            <span>${word}</span>
+                            <span>${count}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    wordList.textContent = '暂无词频数据';
+                }
+            } else {
+                wordList.textContent = '输入文本后，词频统计将显示在这里...';
+            }
+        }
+
+        textInput.addEventListener('input', updateStats);
+
+        // 初始统计
+        updateStats();
+    </script>
+</body>
+</html>

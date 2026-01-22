@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本提取工具 - 在线文本信息提取工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本提取工具，从文本中提取邮箱、URL、电话号码、数字、IP 地址、话题标签等信息。支持多选提取和统计信息，适用于数据挖掘、信息提取和内容分析。">
+    <meta name="keywords" content="文本提取,信息提取,邮箱提取,URL提取,电话提取,IP提取,文本提取工具,数据提取工具,信息提取工具,文本分析工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-extract.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-extract.html">
+    <meta property="og:title" content="文本提取工具 - 在线文本信息提取工具">
+    <meta property="og:description" content="免费在线文本提取工具，从文本中提取邮箱、URL、电话号码、数字、IP 地址、话题标签等信息。支持多选提取和统计信息。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-extract.html">
+    <meta property="twitter:title" content="文本提取工具 - 在线文本信息提取工具">
+    <meta property="twitter:description" content="免费在线文本提取工具，从文本中提取邮箱、URL、电话号码、数字、IP 地址、话题标签等信息。支持多选提取和统计信息。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本提取工具",
+      "description": "免费在线文本提取工具，从文本中提取邮箱、URL、电话号码、数字、IP 地址、话题标签等信息",
+      "url": "https://itkdm.com/tools/text-extract.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "邮箱提取",
+        "URL 提取",
+        "电话提取",
+        "数字提取",
+        "IP 地址提取"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本提取工具",
+          "item": "https://itkdm.com/tools/text-extract.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本提取工具可以提取哪些信息？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可以提取多种信息，包括邮箱地址、URL 链接、电话号码、数字、IP 地址、话题标签（#）、提及（@）等。工具使用正则表达式自动识别和提取这些信息。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何使用文本提取工具？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入或粘贴包含要提取信息的文本，选择要提取的信息类型（邮箱、URL、电话等），点击'提取'按钮，工具会自动提取并显示结果列表，可以复制提取的结果。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本提取工具",
+      "description": "学习如何使用在线文本提取工具来提取文本中的特定信息",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入或粘贴包含要提取信息的文本"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择提取类型",
+          "text": "选择要提取的信息类型（邮箱、URL、电话、数字、IP 地址等）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "提取信息",
+          "text": "点击'提取'按钮，查看提取结果列表，可以复制提取的信息"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .extract-options {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .extract-options h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .stats {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .stats span {
+            margin-right: 1.5rem;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本提取工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本提取工具</h1>
+            <p>从文本中提取邮箱、URL、电话号码、数字等信息</p>
+        </div>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="input-text">原始文本</label>
+                <textarea id="input-text" class="tool-textarea" placeholder="输入要提取的文本...">联系我：example@email.com
+访问 https://example.com 了解更多
+电话：138-1234-5678
+价格：$99.99 或 ¥699</textarea>
+                <div class="extract-options">
+                    <h3>提取选项</h3>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-email" checked>
+                                邮箱地址
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-url" checked>
+                                URL 链接
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-phone">
+                                电话号码
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-numbers">
+                                数字
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-ip">
+                                IP 地址
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="extract-hashtags">
+                                话题标签 (#tag)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-text">选择要提取的内容类型</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="output-text">提取结果</label>
+                <textarea id="output-text" class="tool-textarea" placeholder="提取结果将显示在这里..." readonly></textarea>
+                <div class="stats" id="stats"></div>
+                <div class="info-text">显示提取到的内容</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="extract-btn">
+                <span>提取</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const extractBtn = document.getElementById('extract-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const stats = document.getElementById('stats');
+
+        const extractors = {
+            email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+            url: /https?:\/\/[^\s]+/g,
+            phone: /1[3-9]\d{9}|(\d{3,4}[-.\s]?)?\d{7,8}/g,
+            numbers: /-?\d+\.?\d*/g,
+            ip: /\b(?:\d{1,3}\.){3}\d{1,3}\b/g,
+            hashtags: /#\w+/g
+        };
+
+        function extractText() {
+            const text = inputText.value;
+            if (!text.trim()) {
+                outputText.value = '';
+                stats.textContent = '';
+                return;
+            }
+
+            const results = [];
+            const counts = {};
+
+            Object.keys(extractors).forEach(key => {
+                const checkbox = document.getElementById(`extract-${key}`);
+                if (checkbox.checked) {
+                    const matches = text.match(extractors[key]);
+                    if (matches) {
+                        counts[key] = matches.length;
+                        results.push(...matches);
+                    } else {
+                        counts[key] = 0;
+                    }
+                }
+            });
+
+            // 去重
+            const uniqueResults = [...new Set(results)];
+            outputText.value = uniqueResults.join('\n');
+
+            // 显示统计
+            const statsText = Object.entries(counts)
+                .filter(([key, count]) => count > 0)
+                .map(([key, count]) => {
+                    const labels = {
+                        email: '邮箱',
+                        url: 'URL',
+                        phone: '电话',
+                        numbers: '数字',
+                        ip: 'IP',
+                        hashtags: '标签'
+                    };
+                    return `${labels[key]}: ${count}`;
+                })
+                .join(' | ');
+
+            stats.textContent = statsText || '未找到匹配项';
+        }
+
+        function copyOutput() {
+            const text = outputText.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            inputText.value = '';
+            outputText.value = '';
+            stats.textContent = '';
+        }
+
+        extractBtn.addEventListener('click', extractText);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动提取
+        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', extractText);
+        });
+
+        // 实时提取
+        inputText.addEventListener('input', extractText);
+
+        // 初始提取
+        extractText();
+    </script>
+</body>
+</html>

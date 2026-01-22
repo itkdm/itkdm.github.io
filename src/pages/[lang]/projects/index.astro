@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../../i18n/config';
+import { SUPPORTED_LANGS } from '../../../i18n/config';
+
+export function getStaticPaths() {
+	return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const projects = (await getCollection('projects', (entry) => entry.data.lang === lang)).sort((a, b) => {
+	if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+	return a.data.title.localeCompare(b.data.title);
+});
+---
+
+<BaseLayout
+	lang={lang}
+	title={lang === 'zh' ? '项目' : 'Projects'}
+	description={lang === 'zh' ? '个人开源项目与作品集' : 'Personal open-source projects and work'}
+	currentPath={`/${lang}/projects/`}
+>
+	<h1>{lang === 'zh' ? '项目列表' : 'Projects'}</h1>
+	{projects.length === 0 ? (
+		<p>{lang === 'zh' ? '暂无项目，敬请期待。' : 'No projects yet.'}</p>
+	) : (
+		<div class="grid grid-3">
+			{projects.map((project) => {
+				const projectSlug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
+				return (
+					<div class="card project-card" data-slug={projectSlug} data-lang={lang} style="cursor: pointer;">
+						<div class="badge">{lang === 'zh' ? '项目' : 'Project'}</div>
+						<div class="card-doc-header">
+							<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
+						</div>
+						<p>{project.data.summary}</p>
+						{project.data.tags.length > 0 && <p class="meta">{project.data.tags.join(' · ')}</p>}
+						<div class="project-actions" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px;">
+							<span 
+								class="btn"
+								data-repo={project.data.repo}
+								style="padding: 6px 10px; font-size: 12px; cursor: pointer;"
+							>
+								{lang === 'zh' ? 'GitHub' : 'GitHub'}
+							</span>
+							{project.data.demo && (
+								<span 
+									class="btn"
+									data-demo={project.data.demo}
+									style="padding: 6px 10px; font-size: 12px; cursor: pointer;"
+								>
+									{lang === 'zh' ? '在线演示' : 'Demo'}
+								</span>
+							)}
+						</div>
+					</div>
+				);
+			})}
+		</div>
+		<style>
+			.project-card .btn {
+				/* 去掉按钮的位移动画，只保留颜色相关的过渡 */
+				transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+			}
+
+			.project-card .btn:hover {
+				/* 不要有上下浮动等动态效果 */
+				transform: none;
+				box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+				/* 仅文字颜色变化 */
+				color: var(--primary);
+				border-color: var(--primary-soft);
+			}
+		</style>
+		<script>
+			document.querySelectorAll('.project-card').forEach(card => {
+				const slug = card.dataset.slug;
+				const lang = card.dataset.lang;
+				
+				// 点击卡片跳转到详情页
+				card.addEventListener('click', (e) => {
+					// 如果点击的是按钮区域，不跳转
+					if (e.target.closest('.project-actions')) {
+						return;
+					}
+					window.location.href = `/${lang}/projects/${slug}/`;
+				});
+				
+				// 处理 GitHub 按钮点击
+				const repoBtn = card.querySelector('[data-repo]');
+				if (repoBtn) {
+					repoBtn.addEventListener('click', (e) => {
+						e.stopPropagation();
+						window.open(repoBtn.dataset.repo, '_blank');
+					});
+				}
+				
+				// 处理 Demo 按钮点击
+				const demoBtn = card.querySelector('[data-demo]');
+				if (demoBtn) {
+					demoBtn.addEventListener('click', (e) => {
+						e.stopPropagation();
+						window.open(demoBtn.dataset.demo, '_blank');
+					});
+				}
+			});
+		</script>
+	)}
+</BaseLayout>

@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../../i18n/config';
+import { SUPPORTED_LANGS } from '../../../i18n/config';
+import { sortTools } from '../../../lib/tools-sort';
+
+export function getStaticPaths() {
+	return SUPPORTED_LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const tools = sortTools(
+	await getCollection('tools', (entry) => entry.data.lang === lang)
+);
+---
+
+<BaseLayout
+	lang={lang}
+	title={lang === 'zh' ? '工具' : 'Tools'}
+	description={lang === 'zh' ? '工具集合与下载入口' : 'Tools catalogue'}
+	currentPath={`/${lang}/tools/`}
+>
+	<h1>{lang === 'zh' ? '工具列表' : 'Tools'}</h1>
+	
+	{tools.length === 0 ? (
+		<p>{lang === 'zh' ? '暂无工具条目。' : 'No tools yet.'}</p>
+	) : (
+		<>
+			<div class="tools-search-container">
+				<input 
+					type="text" 
+					id="tools-search-input" 
+					class="tools-search-input"
+					placeholder={lang === 'zh' ? '搜索工具...' : 'Search tools...'}
+					autocomplete="off"
+				/>
+				<span class="tools-search-count" id="tools-search-count"></span>
+			</div>
+			
+			<div class="grid grid-3" id="tools-grid">
+				{tools.map((tool) => {
+					const searchText = `${tool.data.name} ${tool.data.summary} ${(tool.data.tags || []).join(' ')} ${tool.data.icon || ''}`.toLowerCase();
+					return (
+						<div class="card tool-card" data-search={searchText}>
+							<div class="badge">{lang === 'zh' ? '工具' : 'Tool'}</div>
+							<div class="card-doc-header">
+								<h3>{tool.data.icon ? `${tool.data.icon} ${tool.data.name}` : tool.data.name}</h3>
+							</div>
+							<p>{tool.data.summary}</p>
+							<div class="card-tool-action">
+								<a href={tool.data.homepage} class="btn btn-secondary" target={tool.data.homepage.startsWith('http') ? '_blank' : undefined} rel={tool.data.homepage.startsWith('http') ? 'noreferrer' : undefined}>
+									<span>{lang === 'zh' ? '进入使用' : 'Open Tool'}</span>
+								</a>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+			
+			<div class="tools-no-results" id="tools-no-results" style="display: none;">
+				<p>{lang === 'zh' ? '未找到匹配的工具' : 'No matching tools found'}</p>
+			</div>
+		</>
+	)}
+</BaseLayout>
+
+<style>
+	.tools-search-container {
+		position: relative;
+		margin-bottom: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
+	
+	.tools-search-input {
+		width: 100%;
+		max-width: 500px;
+		padding: 0.75rem 1rem;
+		padding-left: 2.5rem;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		background: var(--bg);
+		color: var(--text);
+		font-size: 0.95rem;
+		transition: all 0.2s;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235B6470' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: 0.75rem center;
+		background-size: 1rem;
+	}
+	
+	.tools-search-input:focus {
+		outline: none;
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+	}
+	
+	.tools-search-count {
+		font-size: 0.875rem;
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+	
+	#tools-grid {
+		gap: 24px;
+	}
+	
+	.tool-card {
+		transition: opacity 0.2s, transform 0.2s;
+	}
+	
+	.tool-card.hidden {
+		display: none;
+	}
+	
+	.card-tool-action .btn {
+		background: color-mix(in srgb, var(--bg-elev) 60%, transparent);
+		border-color: var(--border);
+		color: var(--text);
+		font-weight: 500;
+		box-shadow: none;
+	}
+	
+	.card-tool-action .btn:hover {
+		background: color-mix(in srgb, var(--bg-elev) 80%, transparent);
+		border-color: var(--border-strong);
+		transform: none;
+		box-shadow: none;
+	}
+	
+	.tools-no-results {
+		text-align: center;
+		padding: 3rem 1rem;
+		color: var(--text-muted);
+	}
+	
+	@media (max-width: 768px) {
+		.tools-search-container {
+			flex-direction: column;
+			align-items: center;
+		}
+		
+		.tools-search-input {
+			max-width: 100%;
+		}
+		
+		.tools-search-count {
+			text-align: center;
+		}
+	}
+</style>
+
+<script>
+	(function() {
+		const searchInput = document.getElementById('tools-search-input');
+		const toolsGrid = document.getElementById('tools-grid');
+		const noResults = document.getElementById('tools-no-results');
+		const searchCount = document.getElementById('tools-search-count');
+		
+		if (!searchInput || !toolsGrid) return;
+		
+		const toolCards = Array.from(document.querySelectorAll('.tool-card'));
+		const totalCount = toolCards.length;
+		
+		function updateSearchCount(count) {
+			if (searchCount) {
+				searchCount.textContent = `${count} / ${totalCount}`;
+			}
+		}
+		
+		function performSearch() {
+			const query = searchInput.value.trim().toLowerCase();
+			let visibleCount = 0;
+			
+			if (!query) {
+				toolCards.forEach(card => {
+					card.classList.remove('hidden');
+					visibleCount++;
+				});
+				if (noResults) noResults.style.display = 'none';
+				updateSearchCount(visibleCount);
+				return;
+			}
+			
+			toolCards.forEach(card => {
+				const searchText = card.getAttribute('data-search') || '';
+				
+				if (searchText.includes(query)) {
+					card.classList.remove('hidden');
+					visibleCount++;
+				} else {
+					card.classList.add('hidden');
+				}
+			});
+			
+			if (noResults) {
+				noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+			}
+			
+			updateSearchCount(visibleCount);
+		}
+		
+		searchInput.addEventListener('input', performSearch);
+		
+		// 初始显示总数
+		updateSearchCount(totalCount);
+	})();
+</script>

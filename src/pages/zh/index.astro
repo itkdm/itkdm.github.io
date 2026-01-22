@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { sortBlogPosts } from '../../lib/blog-sort';
+import { sortTools } from '../../lib/tools-sort';
+
+const lang = 'zh';
+const posts = sortBlogPosts(
+	await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft)
+);
+// 首页规则：最多展示 3 篇，第 1 个优先选 priority = 9999 的置顶，其余用最新
+const pinnedPost = posts.find((post) => (post.data.priority ?? 0) === 9999);
+const latestPosts = pinnedPost
+	? [pinnedPost, ...posts.filter((p) => p !== pinnedPost).slice(0, 2)]
+	: posts.slice(0, 3);
+
+const docs = await getCollection('docs', (entry) => entry.data.lang === lang);
+const projects = (await getCollection('projects', (entry) => entry.data.lang === lang && entry.data.featured !== false)).sort(
+	(a, b) => {
+		if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+		return a.data.title.localeCompare(b.data.title);
+	}
+);
+const tools = sortTools(
+	await getCollection('tools', (entry) => entry.data.lang === lang && entry.data.featured !== false)
+);
+
+// 首页文档概览：只展示入门 / 服务端 / 数据库 三个大类
+const docSectionConfigs = [
+	{
+		section: '入门',
+		description: '快速了解本站文档结构与基础信息，适合第一次来布吉岛的你。',
+	},
+	{
+		section: '服务端',
+		description: 'Java / Rust / Go / Python 等服务端语言的系列教程，从概览到进阶。',
+	},
+	{
+		section: '数据库',
+		description: 'MySQL / PostgreSQL / Redis 的核心概念与实践建议，侧重入门与选型。',
+	},
+];
+
+const docOverviewCards = docSectionConfigs
+	.map((cfg) => {
+		// 使用更宽松的匹配，处理可能的空格或编码问题
+		// 规范化处理：去除首尾空格，确保一致性
+		const cfgSection = cfg.section.trim();
+		const matchingDocs = docs.filter((doc) => {
+			const docSection = (doc.data.section || '').trim();
+			return docSection === cfgSection;
+		});
+		const count = matchingDocs.length;
+		return { ...cfg, count };
+	})
+	// 即使没有文档，也显示分类（保持分类结构稳定）
+	// 但如果确实没有文档，可以在UI上显示"暂无文档"
+	.map((item) => ({ ...item, count: item.count || 0 }));
+---
+
+<BaseLayout lang={lang} title="布吉岛 · 主页" description="博客 + 文档 + 下载中心的统一 Astro 方案" currentPath="/zh/">
+	<section class="hero-landing">
+		<div class="hero-landing-inner">
+			<div>
+				<h1>欢迎来到布吉岛！</h1>
+				<p class="hero-lead">把无聊做有趣，把复杂讲清楚，把问题解决！</p>
+			</div>
+			<div class="hero-actions">
+				<a class="btn btn-primary" href="/zh/blog/">
+					<span class="dot"></span>
+					<span>浏览文章</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<h2>最新文章</h2>
+		{latestPosts.length === 0 ? (
+			<p>还没有文章，稍后添加。</p>
+		) : (
+			<div class="grid grid-3">
+				{latestPosts.map((post) => {
+					const postSlug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
+					return (
+						<a class="card blog-card" href={`/zh/blog/${postSlug}/`}>
+							<div class="badge">Blog</div>
+							<h3>{post.data.title}</h3>
+							<p class="meta">
+								<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
+								{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+							</p>
+							<p>{post.data.summary}</p>
+						</a>
+					);
+				})}
+			</div>
+		)}
+	</section>
+
+	<section class="section">
+		<h2>文档</h2>
+		{docOverviewCards.length > 0 ? (
+			<div class="grid grid-3">
+				{docOverviewCards.map((item) => (
+					<a
+						class="card"
+						href={`/zh/docs/#${encodeURIComponent(item.section)}`}
+					>
+						<div class="badge">Docs</div>
+						<div class="card-doc-header">
+							<h3>{item.section}</h3>
+							<span class="card-doc-count">共 {item.count} 篇</span>
+						</div>
+						<p>{item.description}</p>
+					</a>
+				))}
+			</div>
+		) : (
+			<p>暂无文档，敬请期待。</p>
+		)}
+	</section>
+
+	<section class="section">
+		<h2>项目</h2>
+		{projects.length === 0 ? (
+			<p>暂无项目，敬请期待。</p>
+		) : (
+			<div class="grid grid-3">
+				{projects.slice(0, 3).map((project) => {
+					const projectSlug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
+					return (
+						<a class="card" href={`/zh/projects/${projectSlug}/`}>
+							<div class="badge">Projects</div>
+							<div class="card-doc-header">
+								<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
+							</div>
+							<p>{project.data.summary}</p>
+							{project.data.tags.length > 0 && <p class="meta">{project.data.tags.join(' · ')}</p>}
+						</a>
+					);
+				})}
+			</div>
+		)}
+	</section>
+
+	<section class="section">
+		<h2>工具</h2>
+		{tools.length === 0 ? (
+			<p>暂无工具条目。</p>
+		) : (
+			<div class="grid grid-3">
+				{tools.slice(0, 3).map((tool) => (
+					<div class="card">
+						<div class="badge">Tools</div>
+						<div class="card-doc-header">
+							<h3>{tool.data.icon ? `${tool.data.icon} ${tool.data.name}` : tool.data.name}</h3>
+						</div>
+						<p>{tool.data.summary}</p>
+						<div class="card-tool-action">
+							<a href={tool.data.homepage} class="btn btn-primary" target={tool.data.homepage.startsWith('http') ? '_blank' : undefined} rel={tool.data.homepage.startsWith('http') ? 'noreferrer' : undefined}>
+								<span class="dot"></span>
+								<span>进入使用</span>
+							</a>
+						</div>
+					</div>
+				))}
+			</div>
+		)}
+	</section>
+
+</BaseLayout>

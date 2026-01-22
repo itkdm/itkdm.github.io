@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本去重工具 - 在线文本去重复工具 | itkdm.com</title>
+    <meta name="description" content="免费在线文本去重工具，快速去除文本中的重复行和重复内容。支持按行去重和按内容去重，适用于数据清洗、列表整理和内容处理。">
+    <meta name="keywords" content="文本去重,去重复,文本去重工具,重复内容去除,数据去重,列表去重,文本处理工具,数据清洗工具,内容去重,文本整理工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/text-dedupe.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/text-dedupe.html">
+    <meta property="og:title" content="文本去重工具 - 在线文本去重复工具">
+    <meta property="og:description" content="免费在线文本去重工具，快速去除文本中的重复行和重复内容。支持按行去重和按内容去重。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/text-dedupe.html">
+    <meta property="twitter:title" content="文本去重工具 - 在线文本去重复工具">
+    <meta property="twitter:description" content="免费在线文本去重工具，快速去除文本中的重复行和重复内容。支持按行去重和按内容去重。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "文本去重工具",
+      "description": "免费在线文本去重工具，快速去除文本中的重复行和重复内容",
+      "url": "https://itkdm.com/tools/text-dedupe.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "文本去重",
+        "重复行去除",
+        "重复内容去除",
+        "数据清洗",
+        "列表整理"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "文本去重工具",
+          "item": "https://itkdm.com/tools/text-dedupe.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "文本去重工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中输入或粘贴要处理的文本（每行一条），选择去重模式（去除重复行、去除重复内容等），点击'去重'按钮，工具会自动去除重复内容并显示结果。支持保留第一个或最后一个重复项。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些去重模式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持多种去重模式，包括去除完全重复的行、去除重复的内容（忽略大小写）、去除空行等。可以根据需要选择不同的去重模式。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用文本去重工具",
+      "description": "学习如何使用在线文本去重工具来去除重复内容",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入文本",
+          "text": "在输入框中输入或粘贴要处理的文本，每行一条"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择去重模式",
+          "text": "选择去重模式（去除重复行、去除重复内容等）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "执行去重",
+          "text": "点击'去重'按钮，查看去重结果，可以复制去重后的文本"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .options-group {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .options-group h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .stats {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .stats span {
+            margin-right: 1.5rem;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">文本去重工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>文本去重工具</h1>
+            <p>去除文本中的重复行或重复内容，支持多种去重模式</p>
+        </div>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="input-text">原始文本</label>
+                <textarea id="input-text" class="tool-textarea" placeholder="输入要去重的文本...">苹果
+香蕉
+苹果
+橙子
+香蕉
+葡萄</textarea>
+                <div class="options-group">
+                    <h3>去重选项</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="radio" name="mode" value="line" checked>
+                            按行去重（保留第一次出现）
+                        </label>
+                        <label>
+                            <input type="radio" name="mode" value="line-reverse">
+                            按行去重（保留最后一次出现）
+                        </label>
+                        <label>
+                            <input type="checkbox" id="trim-lines" checked>
+                            去除每行首尾空格
+                        </label>
+                        <label>
+                            <input type="checkbox" id="case-sensitive" checked>
+                            区分大小写
+                        </label>
+                        <label>
+                            <input type="checkbox" id="preserve-order">
+                            保持原有顺序
+                        </label>
+                    </div>
+                </div>
+                <div class="info-text">支持多行文本，每行作为一个独立项</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="output-text">去重结果</label>
+                <textarea id="output-text" class="tool-textarea" placeholder="去重结果将显示在这里..." readonly></textarea>
+                <div class="stats" id="stats"></div>
+                <div class="info-text">显示去重后的文本和统计信息</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="dedupe-btn">
+                <span>去重</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const dedupeBtn = document.getElementById('dedupe-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const stats = document.getElementById('stats');
+        const trimLinesCheck = document.getElementById('trim-lines');
+        const caseSensitiveCheck = document.getElementById('case-sensitive');
+        const preserveOrderCheck = document.getElementById('preserve-order');
+
+        function dedupe() {
+            const text = inputText.value;
+            if (!text.trim()) {
+                outputText.value = '';
+                stats.textContent = '';
+                return;
+            }
+
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const trimLines = trimLinesCheck.checked;
+            const caseSensitive = caseSensitiveCheck.checked;
+            const preserveOrder = preserveOrderCheck.checked;
+
+            let lines = text.split('\n');
+            const originalCount = lines.length;
+
+            // 处理每行
+            if (trimLines) {
+                lines = lines.map(line => line.trim());
+            }
+
+            // 去重
+            let result;
+            if (preserveOrder) {
+                // 保持顺序的去重
+                const seen = new Set();
+                result = [];
+                lines.forEach(line => {
+                    const key = caseSensitive ? line : line.toLowerCase();
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        result.push(line);
+                    } else if (mode === 'line-reverse') {
+                        // 更新为最后一次出现
+                        const index = result.findIndex(r => 
+                            (caseSensitive ? r : r.toLowerCase()) === key
+                        );
+                        if (index !== -1) {
+                            result[index] = line;
+                        }
+                    }
+                });
+            } else {
+                // 使用 Set 去重
+                const seen = new Set();
+                result = [];
+                const processLines = mode === 'line-reverse' ? [...lines].reverse() : lines;
+                
+                processLines.forEach(line => {
+                    const key = caseSensitive ? line : line.toLowerCase();
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        result.push(line);
+                    }
+                });
+
+                if (mode === 'line-reverse') {
+                    result.reverse();
+                }
+            }
+
+            outputText.value = result.join('\n');
+            
+            const uniqueCount = result.length;
+            const removedCount = originalCount - uniqueCount;
+            stats.innerHTML = `
+                <span><strong>原始行数:</strong> ${originalCount}</span>
+                <span><strong>去重后:</strong> ${uniqueCount}</span>
+                <span><strong>已删除:</strong> ${removedCount}</span>
+            `;
+        }
+
+        function copyOutput() {
+            const text = outputText.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            inputText.value = '';
+            outputText.value = '';
+            stats.textContent = '';
+        }
+
+        dedupeBtn.addEventListener('click', dedupe);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动去重
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', dedupe);
+        });
+
+        // 实时去重
+        inputText.addEventListener('input', dedupe);
+
+        // 初始去重
+        dedupe();
+    </script>
+</body>
+</html>

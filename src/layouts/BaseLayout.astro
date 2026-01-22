@@ -1,0 +1,181 @@
+---
+import type { Lang } from '../i18n/config';
+import { LANG_LABELS } from '../i18n/config';
+
+const {
+	lang = 'zh',
+	title = '布吉岛',
+	description = '',
+	currentPath = '',
+	ogType,
+	ogImage,
+	jsonLd,
+} = Astro.props as {
+	lang?: Lang;
+	title?: string;
+	description?: string;
+	currentPath?: string;
+	ogType?: 'website' | 'article';
+	ogImage?: string; // absolute or relative URL
+	jsonLd?: unknown; // JSON-LD object (will be stringified)
+};
+
+const brandName = LANG_LABELS[lang].brandName;
+
+const otherLang = lang === 'zh' ? 'en' : 'zh';
+const site = Astro.site?.href ?? 'https://itkdm.com';
+const canonical = new URL(currentPath || '/', site).href;
+const resolvedOgType = ogType ?? 'website';
+const resolvedOgImage = new URL(ogImage || '/logo.jpg', site).href;
+const altPath =
+	currentPath?.startsWith(`/${lang}/`) && currentPath !== '/'
+		? currentPath.replace(/^\/zh/, '/en').replace(/^\/en/, '/zh')
+		: `/${otherLang}/`;
+const navItems = [
+	{ href: `/${lang}/`, label: lang === 'zh' ? '首页' : 'Home' },
+	{ href: `/${lang}/blog/`, label: 'Blog' },
+	{ href: `/${lang}/docs/`, label: lang === 'zh' ? '文档' : 'Docs' },
+	{ href: `/${lang}/projects/`, label: lang === 'zh' ? '项目' : 'Projects' },
+	{ href: `/${lang}/tools/`, label: lang === 'zh' ? '工具' : 'Tools' },
+	{ href: `/${lang}/downloads/`, label: lang === 'zh' ? '下载' : 'Downloads' },
+	{ href: `/${lang}/search/`, label: lang === 'zh' ? '搜索' : 'Search' },
+];
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>{title} · {brandName}</title>
+		<meta name="description" content={description || (lang === 'zh'
+			? '布吉岛：个人博客、文档、项目与在线工具合集。'
+			: 'Personal site for blogs, docs, projects and online tools.')}
+		/>
+		<link rel="canonical" href={canonical} />
+		<link rel="alternate" href={new URL(altPath, site).href} hrefLang={otherLang} />
+		<link rel="alternate" href={canonical} hrefLang={lang} />
+		<link rel="alternate" href={canonical} hrefLang="x-default" />
+		<meta property="og:type" content={resolvedOgType} />
+		<meta property="og:site_name" content={brandName} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description || (lang === 'zh'
+			? '布吉岛：个人博客、文档、项目与在线工具合集。'
+			: 'Personal site for blogs, docs, projects and online tools.')}
+		/>
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={resolvedOgImage} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description || (lang === 'zh'
+			? '布吉岛：个人博客、文档、项目与在线工具合集。'
+			: 'Personal site for blogs, docs, projects and online tools.')}
+		/>
+		{jsonLd && (
+			<script
+				type="application/ld+json"
+				set:html={JSON.stringify(jsonLd)}
+			/>
+		)}
+		<meta name="theme-color" content="#111827" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="/theme.css" />
+		<script is:inline>
+			// Minimal theme bootstrapping to avoid FOUC
+			(function () {
+				let theme = 'light';
+				try {
+					const saved = localStorage.getItem('site-theme');
+					if (saved === 'dark' || saved === 'light') {
+						theme = saved;
+					} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+						theme = 'dark';
+					}
+				} catch {}
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
+	</head>
+	<body data-theme="light">
+		<div class="page-root">
+			<header class="topbar">
+				<div class="container topbar-inner">
+				<a href={`/${lang}/`} class="brand" aria-label="Site brand">
+					<img src="/logo.jpg" alt={brandName} class="logo" />
+					<div style="font-size:14px;">{brandName}</div>
+				</a>
+
+					<nav class="nav" aria-label="Primary">
+						{navItems.map((item) => (
+							<a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+								{item.label}
+							</a>
+						))}
+					</nav>
+
+					<div class="actions">
+						<button class="btn btn-ghost mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label={lang === 'zh' ? '打开菜单' : 'Open menu'}>
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="3" y1="12" x2="21" y2="12"></line>
+								<line x1="3" y1="6" x2="21" y2="6"></line>
+								<line x1="3" y1="18" x2="21" y2="18"></line>
+							</svg>
+						</button>
+						<button class="btn btn-ghost" id="langBtn" type="button" data-alt-path={altPath}>
+							<span class="dot" style="background:var(--text-faint); box-shadow:none"></span>
+							<span>{lang === 'zh' ? 'EN' : '中文'}</span>
+						</button>
+						<button class="btn btn-ghost" id="themeBtn" type="button">
+							<span class="dot" style="background:var(--text-faint); box-shadow:none"></span>
+							<span>{lang === 'zh' ? '主题' : 'Theme'}</span>
+						</button>
+					</div>
+				</div>
+			</header>
+
+			<!-- Mobile Menu Overlay -->
+			<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+			
+			<!-- Mobile Menu Sidebar -->
+			<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+				<div class="mobile-menu-header">
+					<a href={`/${lang}/`} class="mobile-menu-brand">
+						<img src="/logo.jpg" alt={brandName} class="logo" />
+						<div>{brandName}</div>
+					</a>
+					<button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label={lang === 'zh' ? '关闭菜单' : 'Close menu'}>
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="mobile-menu-items">
+					{navItems.map((item) => (
+						<a 
+							href={item.href} 
+							class="mobile-menu-item"
+							aria-current={currentPath === item.href ? 'page' : undefined}
+						>
+							{item.label}
+						</a>
+					))}
+				</div>
+			</nav>
+			<main class="container">
+				<slot />
+			</main>
+			<footer aria-label="Footer">
+				<div class="container footer-inner">
+					<div>
+						© <span id="year"></span> {brandName}
+						{lang === 'zh' ? ' · 保留所有权利' : ' · All rights reserved.'}
+					</div>
+				</div>
+			</footer>
+		</div>
+
+		<script src="/base-layout.js" defer></script>
+	</body>
+</html>

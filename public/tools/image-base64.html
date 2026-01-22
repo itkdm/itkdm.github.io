@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片 Base64 编码工具 - 在线图片转 Base64 工具 | itkdm.com</title>
+    <meta name="description" content="免费在线图片 Base64 编码工具，将图片转换为 Base64 编码。支持多种图片格式，适用于 Web 开发、CSS 内联图片和 API 开发。">
+    <meta name="keywords" content="图片Base64,图片转Base64,Base64编码,图片编码工具,图片转码工具,Base64图片,图片Base64编码,Web开发工具,图片处理工具,API开发工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/image-base64.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/image-base64.html">
+    <meta property="og:title" content="图片 Base64 编码工具 - 在线图片转 Base64 工具">
+    <meta property="og:description" content="免费在线图片 Base64 编码工具，将图片转换为 Base64 编码。支持多种图片格式。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/image-base64.html">
+    <meta property="twitter:title" content="图片 Base64 编码工具 - 在线图片转 Base64 工具">
+    <meta property="twitter:description" content="免费在线图片 Base64 编码工具，将图片转换为 Base64 编码。支持多种图片格式。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "图片 Base64 编码工具",
+      "description": "免费在线图片 Base64 编码工具，将图片转换为 Base64 编码",
+      "url": "https://itkdm.com/tools/image-base64.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "图片 Base64 编码",
+        "多种图片格式支持",
+        "图片转码",
+        "Web 开发工具",
+        "API 开发工具"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "图片 Base64 编码工具",
+          "item": "https://itkdm.com/tools/image-base64.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "图片 Base64 编码工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "点击'选择图片'按钮或拖拽图片到指定区域，选择要编码的图片文件，工具会自动将图片转换为 Base64 编码。支持 JPG、PNG、GIF、WebP 等常见图片格式。转换完成后可以复制 Base64 编码字符串。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Base64 编码的作用是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Base64 编码可以将图片转换为文本字符串，方便在 HTML、CSS、JSON 等文本格式中直接嵌入图片数据，无需额外的图片文件。常用于 Web 开发、API 开发和移动应用开发。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些图片格式？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持常见的图片格式，包括 JPG、JPEG、PNG、GIF、WebP、BMP 等。工具会自动识别图片格式并生成对应的 Base64 编码。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用图片 Base64 编码工具",
+      "description": "学习如何使用在线图片 Base64 编码工具来转换图片",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "选择图片",
+          "text": "点击'选择图片'按钮或拖拽图片到指定区域，选择要编码的图片文件"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "等待转换",
+          "text": "工具会自动将图片转换为 Base64 编码，显示预览和编码结果"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "复制编码",
+          "text": "点击复制按钮复制 Base64 编码字符串，可以在代码中使用"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+        .upload-area.dragover {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+        }
+        .upload-area input[type="file"] {
+            display: none;
+        }
+        .image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid var(--border);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            resize: vertical;
+            word-break: break-all;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .image-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        .image-info span {
+            margin-right: 1rem;
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">图片 Base64 编码工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>图片 Base64 编码工具</h1>
+                <p class="tool-subtitle">将图片转换为 Base64 编码，或从 Base64 编码还原图片</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label>上传图片</label>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="file-input" accept="image/*">
+                    <p>点击或拖拽图片到这里</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        支持 JPG、PNG、GIF、WebP 等格式
+                    </p>
+                </div>
+                <img id="image-preview" class="image-preview" style="display: none;">
+                <div id="image-info" class="image-info" style="display: none;"></div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="base64-output">Base64 编码结果</label>
+                <textarea id="base64-output" class="tool-textarea" placeholder="Base64 编码将显示在这里..." readonly></textarea>
+                <div class="info-text">支持复制 Base64 编码或粘贴 Base64 编码还原图片</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="encode-btn">
+                <span>编码图片</span>
+            </button>
+            <button class="btn btn-primary" id="decode-btn">
+                <span>解码图片</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-btn">
+                <span>复制 Base64</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const imageInfo = document.getElementById('image-info');
+        const base64Output = document.getElementById('base64-output');
+        const encodeBtn = document.getElementById('encode-btn');
+        const decodeBtn = document.getElementById('decode-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('image/')) {
+                fileInput.files = files;
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64 = e.target.result;
+                base64Output.value = base64;
+                
+                imagePreview.src = base64;
+                imagePreview.style.display = 'block';
+                
+                const sizeKB = (file.size / 1024).toFixed(2);
+                imageInfo.innerHTML = `
+                    <span><strong>文件名:</strong> ${file.name}</span>
+                    <span><strong>大小:</strong> ${sizeKB} KB</span>
+                    <span><strong>类型:</strong> ${file.type}</span>
+                `;
+                imageInfo.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function encodeImage() {
+            if (fileInput.files.length === 0) {
+                alert('请先选择图片文件');
+                return;
+            }
+            handleFile(fileInput.files[0]);
+        }
+
+        function decodeImage() {
+            const base64 = base64Output.value.trim();
+            if (!base64) {
+                alert('请输入 Base64 编码');
+                return;
+            }
+
+            try {
+                // 检查是否是有效的 Base64 图片编码
+                if (!base64.startsWith('data:image/')) {
+                    // 如果不是 data URL 格式，尝试添加前缀
+                    const base64Data = base64.includes(',') ? base64.split(',')[1] : base64;
+                    // 尝试检测图片类型
+                    const header = base64Data.substring(0, 20);
+                    let mimeType = 'image/png';
+                    if (header.startsWith('/9j/')) mimeType = 'image/jpeg';
+                    else if (header.startsWith('iVBORw0KGgo')) mimeType = 'image/png';
+                    else if (header.startsWith('R0lGOD')) mimeType = 'image/gif';
+                    else if (header.startsWith('UklGR')) mimeType = 'image/webp';
+                    
+                    imagePreview.src = `data:${mimeType};base64,${base64Data}`;
+                } else {
+                    imagePreview.src = base64;
+                }
+                
+                imagePreview.style.display = 'block';
+                imageInfo.style.display = 'none';
+            } catch (e) {
+                alert('Base64 编码无效: ' + e.message);
+            }
+        }
+
+        function copyBase64() {
+            const text = base64Output.value;
+            if (!text.trim()) {
+                alert('没有可复制的内容');
+                return;
+            }
+            navigator.clipboard.writeText(text).then(() => {
+                copyBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyBtn.textContent = '复制 Base64';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            fileInput.value = '';
+            base64Output.value = '';
+            imagePreview.style.display = 'none';
+            imageInfo.style.display = 'none';
+        }
+
+        encodeBtn.addEventListener('click', encodeImage);
+        decodeBtn.addEventListener('click', decodeImage);
+        copyBtn.addEventListener('click', copyBase64);
+        clearBtn.addEventListener('click', clearAll);
+    </script>
+</body>
+</html>

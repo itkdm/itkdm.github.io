@@ -1,0 +1,506 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朋友圈截图生成 - 模拟微信朋友圈截图 | 在线工具</title>
+    <meta name="description" content="纯前端朋友圈截图生成工具，支持纯文字、分享链接、单图、九宫格，可自定义头像、点赞、评论。生成结果仅限个人合理使用。">
+    <meta name="keywords" content="朋友圈截图,微信截图,朋友圈生成,截图工具">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        :root { --wms-acc: #0d9488; --wms-card: var(--bg-elev, #1e293b); --wms-border: var(--border, #334155); --wms-text: var(--text, #e2e8f0); --wms-muted: var(--text-muted, #94a3b8); }
+        .wms-wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+        .wms-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .wms-sub { color: var(--wms-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .wms-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 900px) { .wms-grid { grid-template-columns: 380px 1fr; } }
+        .wms-panel { background: var(--wms-card); border: 1px solid var(--wms-border); border-radius: 12px; padding: 1.25rem; }
+        .wms-panel h3 { font-size: 0.95rem; margin: 0 0 0.75rem; color: var(--wms-muted); font-weight: 600; }
+        .wms-field { margin-bottom: 1rem; }
+        .wms-field:last-child { margin-bottom: 0; }
+        .wms-field label { display: block; font-size: 0.8rem; color: var(--wms-muted); margin-bottom: 0.35rem; }
+        .wms-field input[type="text"], .wms-field input[type="number"], .wms-field input[type="date"],
+        .wms-field textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--wms-border); border-radius: 8px; background: var(--bg, #0f172a); color: var(--wms-text); font-size: 0.9rem; box-sizing: border-box; }
+        .wms-field textarea { min-height: 80px; resize: vertical; }
+        .wms-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; }
+        .wms-row .wms-field { flex: 1; min-width: 100px; }
+        .wms-radio-group { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+        .wms-radio { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; font-size: 0.85rem; }
+        .wms-radio input { margin: 0; }
+        .wms-chk { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .wms-chk input { margin: 0; }
+        .wms-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; cursor: pointer; border: none; transition: opacity 0.2s; }
+        .wms-btn-prim { background: var(--wms-acc); color: #fff; }
+        .wms-btn-prim:hover { opacity: 0.9; }
+        .wms-btn-sec { background: var(--wms-border); color: var(--wms-text); }
+        .wms-btn-sec:hover { opacity: 0.85; }
+        .wms-btn-sm { padding: 0.35rem 0.65rem; font-size: 0.8rem; }
+        .wms-upload { border: 2px dashed var(--wms-border); border-radius: 8px; padding: 0.75rem; text-align: center; cursor: pointer; font-size: 0.85rem; color: var(--wms-muted); }
+        .wms-upload:hover { border-color: var(--wms-acc); color: var(--wms-acc); }
+        .wms-upload input { display: none; }
+        .wms-preview-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .wms-nine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .wms-nine .wms-upload { padding: 0.5rem; }
+        .wms-comment-list { max-height: 180px; overflow-y: auto; margin-bottom: 0.75rem; font-size: 0.8rem; }
+        .wms-comment-item { padding: 0.5rem; border-bottom: 1px solid var(--wms-border); display: flex; justify-content: space-between; align-items: start; gap: 0.5rem; }
+        .wms-comment-item span:first-child { color: var(--wms-muted); }
+        .wms-gen { width: 100%; padding: 0.85rem; font-size: 1rem; margin-top: 1rem; }
+        .wms-result { margin-top: 1rem; text-align: center; }
+        .wms-result img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--wms-border); }
+        .wms-result .wms-btn { margin-top: 0.75rem; }
+        /* 假朋友圈 - 用于 html2canvas，样式需接近微信 */
+        #fakeWechatMoment { position: fixed; left: 100%; top: 0; width: 1080px; background: #fff; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif; }
+        #fakeWechatMoment.iosStyle { font-family: "SF Pro SC", "PingFang SC", "Helvetica Neue", sans-serif; }
+        #fakeWechatMoment .topBar, #fakeWechatMoment .topBarIos { width: 100%; height: 72px; background: #303030; color: #fff; font-size: 34px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-sizing: border-box; }
+        #fakeWechatMoment .topBarIos { padding: 52px 128px 0; font-size: 40px; font-weight: 900; }
+        #fakeWechatMoment .topBarCustom { display: none; width: 100%; }
+        #fakeWechatMoment .topBarCustom img { width: 100%; display: block; }
+        #fakeWechatMoment .header { width: 100%; height: 132px; padding: 0 40px; box-sizing: border-box; background: #303030; font-size: 48px; font-weight: bold; color: #fff; display: flex; align-items: center; }
+        #fakeWechatMoment .main { margin: 0 33px; padding-bottom: 20px; }
+        #fakeWechatMoment .avatarOut { display: inline-block; width: 116px; height: 116px; background: #f1f1f1; vertical-align: top; }
+        #fakeWechatMoment .avatarIn { width: 104px; height: 104px; position: relative; left: 6px; top: 6px; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        #fakeWechatMoment .content { display: inline-block; width: calc(100% - 143px); margin-left: 22px; vertical-align: top; }
+        #fakeWechatMoment .name { color: #576b95; font-size: 40px; font-weight: bold; }
+        #fakeWechatMoment .text { font-size: 36px; line-height: 1.25; margin-top: 11px; }
+        #fakeWechatMoment .article { display: flex; align-items: center; background: #ececec; margin-top: 36px; height: 170px; }
+        #fakeWechatMoment .articleIcon { width: 138px; height: 138px; margin-left: 16px; flex-shrink: 0; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        #fakeWechatMoment .articleTitle { margin-left: 32px; font-size: 36px; flex: 1; max-width: 700px; overflow: hidden; }
+        #fakeWechatMoment .singleImage { margin-top: 28px; }
+        #fakeWechatMoment .singleImage img { max-width: 550px; max-height: 550px; display: block; }
+        #fakeWechatMoment .multiImage { margin-top: 28px; }
+        #fakeWechatMoment .multiImageBox { width: 265px; height: 265px; display: inline-block; margin: 0 8px 8px 0; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        #fakeWechatMoment .info { color: #808080; font-size: 32px; margin-top: 20px; }
+        #fakeWechatMoment .like, #fakeWechatMoment .comment { background: #eee; width: 100%; font-size: 0; }
+        #fakeWechatMoment .likeAvatarList { display: inline-block; margin-left: 60px; vertical-align: top; }
+        #fakeWechatMoment .likeAvatar { width: 84px; height: 84px; margin: 17px 17px 0 0; display: inline-block; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        #fakeWechatMoment .commentItem { padding: 22px 0; }
+        #fakeWechatMoment .commentAvatar { width: 88px; height: 88px; display: inline-block; vertical-align: top; background-size: cover; background-position: center; background-repeat: no-repeat; }
+        #fakeWechatMoment .commentBody { display: inline-block; margin-left: 12px; width: calc(100% - 100px); vertical-align: top; }
+        #fakeWechatMoment .commentName { color: #576b95; font-size: 34px; }
+        #fakeWechatMoment .commentTime { color: #808080; font-size: 34px; float: right; }
+        #fakeWechatMoment .commentText { font-size: 39px; line-height: 1.25; color: #454545; margin-top: 15px; }
+        #fakeWechatMoment .footer { width: 100%; height: 132px; border-top: 2px solid #d8d8d8; background: #f5f5f5; display: flex; align-items: center; justify-content: center; gap: 22px; }
+        #fakeWechatMoment .footer .commentInput { flex: 1; max-width: 760px; height: 88px; border-bottom: 2px solid #5ec838; font-size: 40px; color: #bbb; padding: 0 24px; display: flex; align-items: center; }
+        #fakeWechatMoment.whiteUI .topBar, #fakeWechatMoment.whiteUI .topBarIos, #fakeWechatMoment.whiteUI .header { background: #efefef; color: #181818; }
+        #fakeWechatMoment.whiteUI .avatarOut { background: transparent; }
+        #fakeWechatMoment.whiteUI .avatarIn { left: 0; top: 0; width: 116px; height: 116px; }
+        #fakeWechatMoment.whiteUI .footer { border-top-color: #bfbfbf; background: #f7f7f7; }
+        #fakeWechatMoment .topBarIcon { height: 36px; width: auto; margin: 0 2px; }
+        #fakeWechatMoment .emoticon { width: 1.25em; height: 1.25em; display: inline-block; vertical-align: text-top; }
+    </style>
+</head>
+<body>
+    <div class="wms-wrap">
+        <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom:1rem;">
+            <ol>
+                <li><a href="/zh/">首页</a></li>
+                <li><a href="/zh/tools/">工具</a></li>
+                <li>朋友圈截图生成</li>
+            </ol>
+        </nav>
+        <h1 class="wms-title">朋友圈截图生成</h1>
+        <p class="wms-sub">填写内容后点击生成，可保存为图片。仅限个人合理使用，请勿用于造谣、营销等违规用途。</p>
+
+        <div class="wms-grid">
+            <aside class="wms-panel">
+                <h3>基本信息</h3>
+                <div class="wms-field">
+                    <label>用户名</label>
+                    <input type="text" id="configName" placeholder="显示的名字" value="微信用户">
+                </div>
+                <div class="wms-field">
+                    <label>头像</label>
+                    <div class="wms-row" style="align-items:center;">
+                        <div id="avatarPreview" class="avatar-prev" style="width:56px;height:56px;border-radius:50%;background:#e2e8f0;background-size:cover;background-position:center;"></div>
+                        <label class="wms-btn wms-btn-sec wms-btn-sm">选择图片<input type="file" id="configAvatar" accept="image/*" style="display:none"></label>
+                    </div>
+                </div>
+                <div class="wms-field">
+                    <label>正文</label>
+                    <textarea id="configText" placeholder="朋友圈文字内容，支持换行。可输入 #话题# 或 URL 会显示为蓝色">今天天气不错～</textarea>
+                </div>
+
+                <h3 style="margin-top:1.25rem;">截图类型</h3>
+                <div class="wms-radio-group">
+                    <label class="wms-radio"><input type="radio" name="momentType" value="text" checked> 纯文字</label>
+                    <label class="wms-radio"><input type="radio" name="momentType" value="article"> 分享网页/文章</label>
+                    <label class="wms-radio"><input type="radio" name="momentType" value="single"> 单张图片</label>
+                    <label class="wms-radio"><input type="radio" name="momentType" value="multi"> 九宫格</label>
+                </div>
+
+                <div id="configArticle" class="wms-field" style="display:none;">
+                    <label>文章标题</label>
+                    <input type="text" id="configArticleTitle" placeholder="分享的文章标题" value="文章标题">
+                    <label style="margin-top:0.5rem;">封面图</label>
+                    <label class="wms-upload"><input type="file" id="configArticleIcon" accept="image/*"> 上传封面</label>
+                </div>
+                <div id="configSingle" class="wms-field" style="display:none;">
+                    <label class="wms-upload"><input type="file" id="configSetSingleImage" accept="image/*"> 上传图片</label>
+                    <button type="button" class="wms-btn wms-btn-sec wms-btn-sm" id="addPlayIconBtn" style="margin-top:0.5rem;">添加视频播放图标</button>
+                </div>
+                <div id="configMulti" style="display:none;">
+                    <p style="font-size:0.8rem;color:var(--wms-muted);margin-bottom:0.5rem;">按 1～9 顺序上传，四张图会自动排成 2×2</p>
+                    <div class="wms-nine">
+                        <label class="wms-upload" id="upl1"><input type="file" data-idx="1" accept="image/*"> 1</label>
+                        <label class="wms-upload" id="upl2"><input type="file" data-idx="2" accept="image/*"> 2</label>
+                        <label class="wms-upload" id="upl3"><input type="file" data-idx="3" accept="image/*"> 3</label>
+                        <label class="wms-upload" id="upl4"><input type="file" data-idx="4" accept="image/*"> 4</label>
+                        <label class="wms-upload" id="upl5"><input type="file" data-idx="5" accept="image/*"> 5</label>
+                        <label class="wms-upload" id="upl6"><input type="file" data-idx="6" accept="image/*"> 6</label>
+                        <label class="wms-upload" id="upl7"><input type="file" data-idx="7" accept="image/*"> 7</label>
+                        <label class="wms-upload" id="upl8"><input type="file" data-idx="8" accept="image/*"> 8</label>
+                        <label class="wms-upload" id="upl9"><input type="file" data-idx="9" accept="image/*"> 9</label>
+                    </div>
+                    <button type="button" class="wms-btn wms-btn-sec wms-btn-sm" id="clearMultiBtn" style="margin-top:0.5rem;">清空全部</button>
+                </div>
+
+                <div class="wms-field" style="margin-top:1rem;">
+                    <label>定位</label>
+                    <input type="text" id="configLocation" placeholder="选填">
+                </div>
+                <div class="wms-field">
+                    <label>转发出处</label>
+                    <input type="text" id="configApp" placeholder="如：视频号 · 某某 会显示为蓝色">
+                </div>
+
+                <div class="wms-row">
+                    <div class="wms-field"><label>发布日期</label><input type="date" id="configPostDate"></div>
+                    <div class="wms-field"><label>时</label><input type="number" id="configPostTimeHour" min="0" max="23" placeholder="时"></div>
+                    <div class="wms-field"><label>分</label><input type="number" id="configPostTimeMinute" min="0" max="59" placeholder="分"></div>
+                </div>
+                <div class="wms-row">
+                    <div class="wms-field"><label>截图日期</label><input type="date" id="configScreenshotDate"></div>
+                    <div class="wms-field"><label>时</label><input type="number" id="configScreenshotTimeHour" min="0" max="23"></div>
+                    <div class="wms-field"><label>分</label><input type="number" id="configScreenshotTimeMinute" min="0" max="59"></div>
+                </div>
+                <div class="wms-row">
+                    <div class="wms-field"><label>点赞数</label><input type="number" id="configLike" min="0" value="5"></div>
+                    <div class="wms-field"><label>图片高度(px)</label><input type="number" id="configHeight" min="800" value="1920"></div>
+                </div>
+
+                <h3 style="margin-top:1.25rem;">评论</h3>
+                <label class="wms-chk"><input type="checkbox" id="configShowComment"> 显示评论</label>
+                <div id="configCommentBlock" style="display:none;">
+                    <div class="wms-comment-list" id="configCommentList"></div>
+                    <div class="wms-row" style="gap:0.5rem;">
+                        <button type="button" class="wms-btn wms-btn-sec wms-btn-sm" id="addCommentBtn">添加</button>
+                        <button type="button" class="wms-btn wms-btn-sec wms-btn-sm" id="removeCommentBtn">删除最后一条</button>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:1.25rem;">通知栏</h3>
+                <label class="wms-chk"><input type="checkbox" id="configTopBarAppIcons"> 显示 APP 图标</label>
+                <label class="wms-chk"><input type="checkbox" id="configTopBarStatusIcons" checked> 随机信号与电量</label>
+                <label class="wms-chk"><input type="checkbox" id="configTopBarIos"> 使用 iOS 样式</label>
+                <label class="wms-chk"><input type="checkbox" id="configTopBarCustom"> 自定义通知栏图</label>
+                <div id="configTopBarCustomBlock" class="wms-field" style="display:none;"><label class="wms-upload"><input type="file" id="configTopBarCustomImage" accept="image/*"> 选择图片</label></div>
+
+                <h3 style="margin-top:1.25rem;">其他</h3>
+                <label class="wms-chk"><input type="checkbox" id="configUIWhite"> 7.0+ 白色界面</label>
+                <label class="wms-chk"><input type="checkbox" id="configFirstAvatar"> 第一个点赞头像固定为自己</label>
+
+                <button type="button" class="wms-btn wms-btn-prim wms-gen" id="generateBtn">生成截图</button>
+            </aside>
+
+            <div class="wms-panel">
+                <h3>生成结果</h3>
+                <div id="resultArea" class="wms-result" style="display:none;">
+                    <img id="generatedImg" alt="生成的截图" />
+                    <div><a id="saveLink" class="wms-btn wms-btn-prim" download="moment.png">保存图片</a></div>
+                </div>
+                <div id="resultPlaceholder" style="color:var(--wms-muted);font-size:0.9rem;">配置完成后点击「生成截图」，图片将显示在此处。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 离屏渲染用的假朋友圈 DOM -->
+    <div id="fakeWechatMoment" style="display:none; left:100%;">
+        <div class="topBar" id="topBar">
+            <div id="topBarAppIcons"></div>
+            <div style="flex:1"></div>
+            <img id="topBarIconWifi" class="topBarIcon" alt="">
+            <img id="topBarIconSignal" class="topBarIcon" alt="">
+            <img id="topBarIconBattery" class="topBarIcon" alt="">
+            <span id="topBarTime"></span>
+        </div>
+        <div class="topBarIos" id="topBarIos" style="display:none;">
+            <span id="topBarTimeIos"></span>
+            <div style="flex:1"></div>
+            <img id="topBarIconIos" class="topBarIcon" alt="">
+        </div>
+        <div class="topBarCustom" id="topBarCustom"><img id="topBarCustomImage" alt=""></div>
+        <div class="header" id="header">
+            <svg width="28" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            <div style="flex:1;text-align:center">详情</div>
+            <svg width="28" height="48" viewBox="0 0 24 24" fill="currentColor" style="transform:scaleX(-1)"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+        </div>
+        <div class="main">
+            <div style="height:30px"></div>
+            <div class="avatarOut"><div class="avatarIn" id="avatar"></div></div>
+            <div class="content">
+                <div class="name" id="name"></div>
+                <div style="height:11px"></div>
+                <div class="text" id="text"></div>
+                <div class="article" id="article" style="display:none;">
+                    <div class="articleIcon" id="articleIcon"></div>
+                    <div class="articleTitle" id="articleTitle"></div>
+                </div>
+                <div class="singleImage" id="singleImage" style="display:none;"><img id="singleImg" src="" alt=""></div>
+                <div class="multiImage" id="multiImage" style="display:none;">
+                    <div class="multiImageBox" id="img1"></div><div class="multiImageBox" id="img2"></div><div class="multiImageBox" id="img3"></div>
+                    <div class="multiImageBox" id="img4"></div><div class="multiImageBox" id="img5"></div><div class="multiImageBox" id="img6"></div>
+                    <div class="multiImageBox" id="img7"></div><div class="multiImageBox" id="img8"></div><div class="multiImageBox" id="img9"></div>
+                </div>
+                <div style="height:20px"></div>
+                <div class="info">
+                    <span id="location" style="display:none;"></span>
+                    <div style="height:20px"></div>
+                    <span id="time"></span>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='%23576b95'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E" style="vertical-align:middle;width:40px;height:40px;" alt="">
+                </div>
+                <div class="like" id="like">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23576b95' style='vertical-align:top;margin-left:30px;margin-top:43px'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E" alt="" style="position:relative;left:30px;top:43px;display:inline-block;">
+                    <div class="likeAvatarList" id="likeAvatarList"></div>
+                    <div style="height:17px"></div>
+                </div>
+                <div class="comment" id="comment" style="margin-top:1px;">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23576b95' style='vertical-align:top;margin-left:30px;margin-top:45px'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z'/%3E%3C/svg%3E" alt="" style="position:relative;left:30px;top:45px;display:inline-block;">
+                    <div class="likeAvatarList" id="commentList"></div>
+                </div>
+            </div>
+            <div class="footer" id="footer">
+                <div class="commentInput">评论</div>
+                <div style="width:22px"></div>
+                <svg width="88" height="88" viewBox="0 0 24 24" fill="#ccc"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-8c0 1.93-1.57 3.5-3.5 3.5S8.5 13.93 8.5 12s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5zm-7 0c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5-3.5 1.57-3.5 3.5z"/></svg>
+                <div style="width:40px"></div>
+                <div style="border:2px solid #dcdcdc;border-radius:7px;font-size:36px;color:#dcdcdc;width:122px;height:88px;display:flex;align-items:center;justify-content:center;">发送</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+(function(){
+    var emoticon = [];
+    try { fetch('https://cdn.jsdelivr.net/gh/TransparentLC/WechatMomentScreenshot@master/emoticon.json').then(function(r){return r.json();}).then(function(d){ emoticon = d || []; }); } catch(e){}
+
+    var DEFAULT_AVATAR = 'data:image/png;base64,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';
+
+    var BUILTIN_AVATARS = [
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%237dd3fc"/%3E%3Ccircle cx="50" cy="38" r="12" fill="%23fff"/%3E%3Cellipse cx="50" cy="72" rx="20" ry="14" fill="%23fff"/%3E%3C/svg%3E',
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23f9a8d4"/%3E%3Ccircle cx="50" cy="38" r="12" fill="%23fff"/%3E%3Cellipse cx="50" cy="72" rx="20" ry="14" fill="%23fff"/%3E%3C/svg%3E',
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%2386efac"/%3E%3Ccircle cx="50" cy="38" r="12" fill="%23fff"/%3E%3Cellipse cx="50" cy="72" rx="20" ry="14" fill="%23fff"/%3E%3C/svg%3E',
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23fcd34d"/%3E%3Ccircle cx="50" cy="38" r="12" fill="%23fff"/%3E%3Cellipse cx="50" cy="72" rx="20" ry="14" fill="%23fff"/%3E%3C/svg%3E',
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%23c4b5fd"/%3E%3Ccircle cx="50" cy="38" r="12" fill="%23fff"/%3E%3Cellipse cx="50" cy="72" rx="20" ry="14" fill="%23fff"/%3E%3C/svg%3E'
+    ];
+
+    var avatarFile = null;
+    var commentList = [];
+
+    function $(id){ return document.getElementById(id); }
+    function on(id, ev, fn){ var e=$(id); if(e)e.addEventListener(ev,fn); }
+
+    function emoticonReplace(text){
+        text = (text||'').replace(/\r?\n/g, '<br>');
+        for(var i=0;i<emoticon.length;i++){
+            var x=emoticon[i];
+            if(x&&x.name&&x.URL) text=text.replace(new RegExp(x.name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'), '<img class="emoticon" src="'+x.URL+'" alt="">');
+        }
+        return text;
+    }
+
+    function getTimeString(currentDate, specificDate){
+        var cd=new Date(currentDate.getTime()-currentDate.getTimezoneOffset()*6e4-(currentDate.getTime()-currentDate.getTimezoneOffset()*6e4)%864e5);
+        var sd=new Date(specificDate.getTime()-specificDate.getTimezoneOffset()*6e4-(specificDate.getTime()-specificDate.getTimezoneOffset()*6e4)%864e5);
+        var h=(specificDate.getHours()<10?'0':'')+specificDate.getHours();
+        var m=(specificDate.getMinutes()<10?'0':'')+specificDate.getMinutes();
+        if(cd.getTime()===sd.getTime()) return h+':'+m;
+        if(cd.getTime()-sd.getTime()===864e5) return '昨天 '+h+':'+m;
+        return specificDate.getFullYear()+'年'+(specificDate.getMonth()+1)+'月'+specificDate.getDate()+'日 '+h+':'+m;
+    }
+
+    function randomName(){
+        var a=["王","李","张","刘","陈","杨","黄","赵","周","吴"];
+        var b=["明","华","强","磊","军","洋","勇","艳","杰","涛"];
+        return a[Math.floor(Math.random()*a.length)]+b[Math.floor(Math.random()*b.length)];
+    }
+
+    // 类型切换
+    document.querySelectorAll('input[name="momentType"]').forEach(function(r){
+        r.addEventListener('change', function(){
+            var v=this.value;
+            $('configArticle').style.display=v==='article'?'block':'none';
+            $('configSingle').style.display=v==='single'?'block':'none';
+            $('configMulti').style.display=v==='multi'?'block':'none';
+        });
+    });
+    $('configShowComment').addEventListener('change', function(){ $('configCommentBlock').style.display=this.checked?'block':'none'; });
+    $('configTopBarCustom').addEventListener('change', function(){ $('configTopBarCustomBlock').style.display=this.checked?'block':'none'; });
+
+    // 头像
+    on('configAvatar','change',function(){
+        var f=this.files[0]; if(!f)return;
+        avatarFile=f;
+        var u=URL.createObjectURL(f);
+        $('avatarPreview').style.backgroundImage='url('+u+')';
+        $('avatar').style.backgroundImage='url('+u+')';
+    });
+
+    // 从 localStorage 恢复
+    try{
+        var cfg=JSON.parse(localStorage.getItem('wms_config')||'{}');
+        var av=localStorage.getItem('wms_avatar');
+        if(cfg.name)$('configName').value=cfg.name;
+        if(cfg.text)$('configText').value=cfg.text;
+        if(cfg.location)$('configLocation').value=cfg.location;
+        if(cfg.app)$('configApp').value=cfg.app;
+        if(cfg.articleTitle)$('configArticleTitle').value=cfg.articleTitle;
+        if(cfg.height)$('configHeight').value=cfg.height;
+        if(av){ $('avatarPreview').style.backgroundImage='url('+av+')'; $('avatar').style.backgroundImage='url('+av+')'; }
+        else { $('avatar').style.backgroundImage='url('+DEFAULT_AVATAR+')'; $('avatarPreview').style.backgroundImage='url('+DEFAULT_AVATAR+')'; }
+    }catch(e){ $('avatar').style.backgroundImage='url('+DEFAULT_AVATAR+')'; $('avatarPreview').style.backgroundImage='url('+DEFAULT_AVATAR+')'; }
+
+    // 分享/单图/九宫格
+    on('configArticleIcon','change',function(){ var f=this.files[0]; if(f) $('articleIcon').style.backgroundImage='url('+URL.createObjectURL(f)+')'; });
+    on('configSetSingleImage','change',function(){ var f=this.files[0]; if(f) $('singleImg').src=URL.createObjectURL(f); });
+    document.querySelectorAll('#configMulti input[type="file"]').forEach(function(inp){
+        inp.addEventListener('change',function(){ var f=this.files[0]; if(f) $('img'+this.dataset.idx).style.backgroundImage='url('+URL.createObjectURL(f)+')'; });
+    });
+    on('clearMultiBtn','click',function(){ for(var i=1;i<=9;i++) $('img'+i).style.backgroundImage=''; });
+    on('addPlayIconBtn','click',function(){
+        var s=$('singleImg').src; if(!s||s===''){ alert('请先上传一张图片'); return; }
+        var playB64='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAZlBMVEUAAAAAAADV1dX19fX4+Pj8/PzNzc2goKBAQEDy8vLLy8u/v7/d3d1qamrr6+vw8PDk5OTd3d3n5+eKiorW1tbw8PDt7e3h4eHm5uba2trq6ur09PTn5+exsbHl5eXi4uLj4+P///+1KpiJAAAAIXRSTlMzAJnY5fIUZkDJjYBKTZvMsqWNWSa6rFuOS7/Ie3NrNkgRMr3KAAAD0UlEQVR42uSX2ZaqMBBFq0EyGcBGRtuh+f+fvHRKBG3xUlTwpc+DspaS7JzUkMDHEonvY1ZqnbZOqdZldvwWi4YiA4iq1lH7VJGuKxIFHcAmYfsfhYnF//oHqMqonaWorPwD5MmmJWiT5V4BbPFodBoEUsoYOsXdQxCkj5tTWG8Ajb5b3MFIeCppDnc26cYLgB1Pn5o9vNTehGMEywbIv0a+GwUzpMYMXzkLQGRDaO9imK14NyRMJpYD2M1t440CklQwvGuXAiS3IbawQNsbQiKWAFzC3vxAwSKpIOqj50IHOPcv7xQsltr1izhTAZLefQksyU2/DSQA0Ve+TwVMqc++Mor5ACK8GncCDzpF10AQ8wCG+cMYvCgOe4J5APn1/zvwpt00AUyu34BHmUkCmJp/C161nSIAxvwMgmmAgjY/naB4DZBQ56cTJK8AzvT56QTnaYBLRI9/ei5ElykAERLyn1EPwimABH+GFYVLTJ4DWDQohhUV4ybbZwACG+cJVtUJm7x4ApBh/4WVhd05+w2QI5qClaXQ6PwXAJ7/JawuifeFRwBLy0B+LtoHAO0yQMEbpFwm6HuAxlEF8BYFbrLmDkBTI5Afh3oMYOk9iN+V7AigcAbA2+QsKAaAnBEBjCjIbwAZLQWk8pMI2Q1gQynC2wgvTPxasOkBKmfIzC6493JljN0o1RWgpBwDguHWyD4YlFcAtyGGAsA3wbiwQwAsAooCwDdBYSlwAAnuABEATWDuQeIA3KOhAfBNMG7ZPwDCjbSnAfBNwGwSHUCFZZgKMJjAKcdVB1D/PByWA7ThHpbo0HaqPwA7sWEALOwiBnsyYBWQVAC+CRIrAWAMAhmAbwJGITRuBWwANIEehQ0cf75SOgDfhLTtdIQa36UC8E3AkWoo+QCDAjJACRqTgA2ASmNiGmjPAG1kqAApA4BngsTwx+OYR4A22lKOZYCf/gAIhq4HEPx5gH/d20EKwjAURVGsGThScdj9L1Twg5MqNDTJ+WlXUGia/Lx3b80n8IuQ/4Z8I+JbMT+M+HHMB5LPSFbcSOaHUj6W+4sJv5rxyym/nvOAIiKah4locoRUPKbzQSWPaiOsfrqw+nJHcX2ewoJXNr60GlzbRXOZq7jk1e3I8nqNFZCtvvcAA0c4PMTCMZ4RINPtL8gUzyiUKy3M5nE+DzR6pNNDrRzr7QQ2LzvB5niDjmj3HHC7x/u94OAVj2aSy/qVXObTfJqKTg1Ur+WI6jWv7OZ1v43weK0VHs+gfP6UXstWei3dpNdYC69a7fds4nMG9TuD/N5B/38D8Sl28Qj+OSkAAAAASUVORK5CYII=';
+        var img=new Image(); img.onload=function(){
+            var c=document.createElement('canvas'); c.width=img.width; c.height=img.height;
+            var ctx=c.getContext('2d'); ctx.drawImage(img,0,0);
+            var p=new Image(); p.onload=function(){ ctx.drawImage(p, c.width/2-c.width/8, c.height/2-c.width/8, c.width/4, c.width/4); $('singleImg').src=c.toDataURL('image/png'); }; p.src=playB64;
+        }; img.src=s;
+    });
+
+    // 评论
+    on('addCommentBtn','click',function(){
+        var name=prompt('评论者名字', randomName()); if(name==null)return;
+        var content=prompt('评论内容',''); if(content==null)return;
+        var reply=prompt('回复给（选填，如：张三）','');
+        var av=BUILTIN_AVATARS[Math.floor(Math.random()*BUILTIN_AVATARS.length)];
+        commentList.push({avatar:av,name:name,content:content,reply:reply||'',date:new Date()});
+        var tr=document.createElement('div'); tr.className='wms-comment-item';
+        tr.innerHTML='<span>'+name+(reply?' (回复'+reply+')':'')+'</span><span>'+content+'</span>';
+        $('configCommentList').appendChild(tr);
+    });
+    on('removeCommentBtn','click',function(){
+        if(commentList.length){ commentList.pop(); $('configCommentList').lastChild.remove(); }
+    });
+
+    // 自定义顶栏
+    on('configTopBarCustomImage','change',function(){ var f=this.files[0]; if(f) $('topBarCustomImage').src=URL.createObjectURL(f); });
+
+    // 初始化日期时间
+    var now=new Date();
+    $('configPostDate').valueAsDate=now; $('configScreenshotDate').valueAsDate=now;
+    $('configPostTimeHour').value=now.getHours(); $('configPostTimeMinute').value=now.getMinutes();
+    $('configScreenshotTimeHour').value=now.getHours(); $('configScreenshotTimeMinute').value=now.getMinutes();
+
+    // 生成
+    on('generateBtn','click',function(){
+        if(typeof html2canvas==='undefined'){ alert('请稍候，脚本加载中…'); return; }
+        $('generateBtn').disabled=true;
+        $('generateBtn').textContent='生成中...';
+        var type=document.querySelector('input[name="momentType"]:checked').value;
+        var useWhite=$('configUIWhite').checked;
+
+        $('fakeWechatMoment').style.display='block';
+        $('fakeWechatMoment').className=''; if(useWhite)$('fakeWechatMoment').classList.add('whiteUI'); if($('configTopBarIos').checked)$('fakeWechatMoment').classList.add('iosStyle');
+
+        $('name').textContent=$('configName').value;
+        var rawText=$('configText').value;
+        $('text').innerHTML=emoticonReplace(rawText.replace(/((?:^|\s)#\S+(?:$|\s))/gm,'<span style="color:#576b95">$1</span>').replace(/(https?:\/\/[^\s]+)/g,'<span style="color:#576b95">$1</span>'));
+
+        $('article').style.display=type==='article'?'flex':'none';
+        $('singleImage').style.display=type==='single'?'block':'none';
+        $('multiImage').style.display=type==='multi'?'block':'none';
+        if(type==='article'){ $('articleTitle').textContent=$('configArticleTitle').value; }
+        if(type==='multi'){
+            var cnt=0; for(var i=9;i>=1;i--){ if($('img'+i).style.backgroundImage){ cnt=i; break; } }
+            if(cnt===4){
+                $('img5').style.backgroundImage=$('img4').style.backgroundImage;
+                $('img4').style.backgroundImage=$('img3').style.backgroundImage;
+                $('img3').style.backgroundImage=''; cnt=5;
+            }
+            for(var i=1;i<=9;i++){ $('img'+i).style.display=i<=cnt?'inline-block':'none'; }
+        }
+
+        var loc=$('configLocation').value.trim();
+        $('location').style.display=loc?'inline':'none'; $('location').textContent=loc;
+
+        var postD=new Date($('configPostDate').value); postD.setHours(parseInt($('configPostTimeHour').value)||0, parseInt($('configPostTimeMinute').value)||0);
+        var shotD=new Date($('configScreenshotDate').value); shotD.setHours(parseInt($('configScreenshotTimeHour').value)||0, parseInt($('configScreenshotTimeMinute').value)||0);
+        $('time').innerHTML=getTimeString(shotD,postD);
+        var app=$('configApp').value.trim();
+        if(app){ if(/视频号\s*·\s*(.+)/.test(app)) $('time').innerHTML+=' <span style="color:#576b95">视频号 · '+RegExp.$1+'</span>'; else $('time').innerHTML+=' '+app; }
+
+        $('topBar').style.display='none'; $('topBarIos').style.display='none'; $('topBarCustom').style.display='none';
+        if($('configTopBarCustom').checked){ var tf=$('configTopBarCustomImage').files[0]; if(tf) $('topBarCustomImage').src=URL.createObjectURL(tf); $('topBarCustom').style.display='block'; }
+        else if($('configTopBarIos').checked){ $('topBarIos').style.display='flex'; $('topBarTimeIos').textContent=((shotD.getHours()<10?'0':'')+shotD.getHours())+':'+((shotD.getMinutes()<10?'0':'')+shotD.getMinutes()); $('topBarIconIos').src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"%3E%3Cpath d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.7 2.06 7.3 2.06 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.88 9.14 5 13z"/%3E%3C/svg%3E'; }
+        else {
+            $('topBar').style.display='flex';
+            $('topBarTime').textContent=((shotD.getHours()<10?'0':'')+shotD.getHours())+':'+((shotD.getMinutes()<10?'0':'')+shotD.getMinutes());
+            var w=$('configTopBarStatusIcons').checked?['2','3','4'][Math.floor(Math.random()*3)]:'4';
+            var b=$('configTopBarStatusIcons').checked?['3','4','full'][Math.floor(Math.random()*3)]:'full';
+            $('topBarIconWifi').src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"%3E%3Cpath d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.7 2.06 7.3 2.06 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.88 9.14 5 13z"/%3E%3C/svg%3E';
+            $('topBarIconSignal').src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"%3E%3Cpath d="M2 22h20V2L2 22z"/%3E%3C/svg%3E';
+            $('topBarIconBattery').src='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"%3E%3Cpath d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/%3E%3C/svg%3E';
+            $('topBarAppIcons').innerHTML='';
+            if($('configTopBarAppIcons').checked){ $('topBarAppIcons').innerHTML='<img class="topBarIcon" src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'currentColor\'%3E%3Cpath d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\'/%3E%3C/svg%3E" alt="">'; }
+        }
+
+        var likeNum=parseInt($('configLike').value)||0;
+        $('like').style.display=likeNum?'block':'none';
+        $('likeAvatarList').innerHTML='';
+        var avPool=BUILTIN_AVATARS.slice();
+        var myAv=$('avatar').style.backgroundImage.replace(/url\(["']?([^"')]+)["']?\)/,'$1');
+        if(myAv) avPool.push(myAv);
+        for(var i=0;i<likeNum;i++){
+            var src; if(i===0&&$('configFirstAvatar').checked) src=myAv; else src=avPool[Math.floor(Math.random()*avPool.length)]||myAv;
+            var d=document.createElement('div'); d.className='likeAvatar'; d.style.backgroundImage='url('+src+')'; $('likeAvatarList').appendChild(d);
+        }
+
+        $('commentList').innerHTML='';
+        if($('configShowComment').checked&&commentList.length){
+            $('comment').style.display='block';
+            for(var i=0;i<commentList.length;i++){
+                var c=commentList[i];
+                var html='<div class="commentItem"><div class="commentAvatar" style="background-image:url('+c.avatar+')"></div><div class="commentBody"><span class="commentName">'+c.name+'</span><span class="commentTime">'+getTimeString(shotD,c.date)+'</span><div class="commentText">'+(c.reply?'回复<span style="color:#576b95">'+c.reply+'</span>: ':'')+emoticonReplace(c.content)+'</div></div></div>';
+                $('commentList').innerHTML+=html;
+            }
+        }else{
+            $('comment').style.display='none';
+        }
+
+        var height=parseInt($('configHeight').value,10)||1920;
+        $('fakeWechatMoment').style.height=height+'px';
+
+        html2canvas($('fakeWechatMoment'),{useCORS:true,scale:1})
+            .then(function(canvas){
+                var dataUrl=canvas.toDataURL('image/png');
+                $('generatedImg').src=dataUrl;
+                $('saveLink').href=dataUrl;
+                $('saveLink').download=(+new Date())+'.png';
+                $('resultArea').style.display='block';
+                $('resultPlaceholder').style.display='none';
+                var cfg={name:$('configName').value,text:$('configText').value,location:$('configLocation').value,app:$('configApp').value,articleTitle:$('configArticleTitle').value,height:$('configHeight').value};
+                try{localStorage.setItem('wms_config',JSON.stringify(cfg));}catch(e){}
+                if(avatarFile){var rd=new FileReader();rd.onload=function(){try{localStorage.setItem('wms_avatar',rd.result);}catch(e){}};rd.readAsDataURL(avatarFile);}
+            })
+            .catch(function(err){alert('生成失败：'+(err&&err.message?err.message:String(err)));})
+            .finally(function(){
+                $('generateBtn').disabled=false;
+                $('generateBtn').textContent='生成截图';
+                $('fakeWechatMoment').style.display='none';
+            });
+    });
+})();
+</script>
+</body>
+</html>

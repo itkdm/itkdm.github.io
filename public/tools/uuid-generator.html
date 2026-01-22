@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UUID 生成器 - 在线 UUID v4 生成工具 | itkdm.com</title>
+    <meta name="description" content="免费在线 UUID 生成器，快速生成 UUID（通用唯一标识符）。支持 UUID v4 格式，可自定义格式和批量生成，适用于数据库主键、API 开发和唯一标识符生成。">
+    <meta name="keywords" content="UUID生成器,UUID生成,UUID工具,UUID在线生成,UUID v4,唯一标识符生成,GUID生成,随机ID生成,数据库主键,API开发工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/uuid-generator.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/uuid-generator.html">
+    <meta property="og:title" content="UUID 生成器 - 在线 UUID v4 生成工具">
+    <meta property="og:description" content="免费在线 UUID 生成器，快速生成 UUID（通用唯一标识符）。支持 UUID v4 格式，可自定义格式和批量生成。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/uuid-generator.html">
+    <meta property="twitter:title" content="UUID 生成器 - 在线 UUID v4 生成工具">
+    <meta property="twitter:description" content="免费在线 UUID 生成器，快速生成 UUID（通用唯一标识符）。支持 UUID v4 格式，可自定义格式和批量生成。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "UUID 生成器",
+      "description": "免费在线 UUID 生成器，快速生成 UUID（通用唯一标识符）",
+      "url": "https://itkdm.com/tools/uuid-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "UUID v4 生成",
+        "批量 UUID 生成",
+        "自定义格式",
+        "唯一标识符生成",
+        "随机ID生成"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "UUID 生成器",
+          "item": "https://itkdm.com/tools/uuid-generator.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "UUID 生成器如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "设置生成数量（最多100个），选择是否使用大写字母和是否包含连字符（标准格式），然后点击'生成 UUID'按钮即可生成 UUID。生成的 UUID 可以单独复制使用。所有生成都在浏览器本地完成，数据安全可靠。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "什么是 UUID？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UUID（Universally Unique Identifier）是通用唯一标识符，是一个128位的标识符，用于在分布式系统中唯一标识信息。UUID v4 使用随机数生成，确保全球唯一性，广泛应用于数据库主键、API 接口、分布式系统等领域。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UUID v4 和其他版本有什么区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UUID 有多个版本，v4 是随机生成的版本，不包含时间戳或 MAC 地址信息，具有最好的隐私性。本工具生成的是 UUID v4 格式，符合 RFC 4122 标准，可以安全地用于各种应用场景。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UUID 会重复吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "理论上 UUID v4 有 2^122 种可能，重复的概率极低，可以认为是唯一的。在实际应用中，UUID v4 的碰撞概率可以忽略不计，完全可以满足唯一标识符的需求。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 UUID 生成器",
+      "description": "学习如何使用在线 UUID 生成器生成唯一标识符",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "设置生成数量",
+          "text": "在'生成数量'输入框中输入需要生成的 UUID 数量（最多100个）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择格式选项",
+          "text": "选择是否使用大写字母和是否包含连字符（标准格式包含连字符）"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "生成 UUID",
+          "text": "点击'生成 UUID'按钮，工具会生成指定数量的 UUID，点击'复制'按钮即可复制单个 UUID"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .uuid-list {
+            margin-top: 1rem;
+        }
+        .uuid-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .uuid-item code {
+            flex: 1;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--text);
+            word-break: break-all;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+        /* Tool intro styles */
+        .tool-intro {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .tool-intro h2 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .tool-intro h2:first-child {
+            margin-top: 0;
+        }
+        .tool-intro p {
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .tool-intro ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .tool-intro li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        /* FAQ styles */
+        .tool-faq {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .tool-faq h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            padding: 1.5rem;
+            background: var(--bg-soft);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .faq-item h3 {
+            font-size: 1.125rem;
+            margin: 0 0 0.75rem 0;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        /* Related tools styles */
+        .related-tools {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-tools h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .related-tools > p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .related-tools-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .related-tools-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .related-tools-list a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .related-tools-list a:hover {
+            text-decoration: underline;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+        .btn-back:hover {
+            background: var(--bg-elev);
+            border-color: var(--border-strong);
+        }
+        @media (max-width: 768px) {
+            .tool-intro,
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">UUID 生成器</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>UUID 生成器</h1>
+                <p class="tool-subtitle">快速生成 UUID（通用唯一标识符），支持 UUID v4 格式</p>
+            </header>
+
+            <!-- Tool Section -->
+            <section class="tool-section">
+                <h2>生成选项</h2>
+                <div class="input-group">
+                    <label for="count-input">生成数量</label>
+                    <input type="number" id="count-input" value="1" min="1" max="100">
+                    <div class="info-text">一次最多生成 100 个 UUID</div>
+                </div>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="uppercase" checked>
+                        大写字母
+                    </label>
+                    <label>
+                        <input type="checkbox" id="hyphens">
+                        包含连字符（标准格式）
+                    </label>
+                </div>
+                <button class="btn btn-primary" id="generate-btn">
+                    <span>生成 UUID</span>
+                </button>
+                <button class="btn btn-secondary" id="clear-btn">
+                    <span>清空</span>
+                </button>
+            </section>
+
+            <section class="tool-section">
+                <h2>生成的 UUID</h2>
+                <div class="uuid-list" id="uuid-list"></div>
+            </section>
+
+        </article>
+    </main>
+
+    <script>
+        const countInput = document.getElementById('count-input');
+        const uppercaseCheck = document.getElementById('uppercase');
+        const hyphensCheck = document.getElementById('hyphens');
+        const generateBtn = document.getElementById('generate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const uuidList = document.getElementById('uuid-list');
+
+        function generateUUID() {
+            // UUID v4 生成算法
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function formatUUID(uuid, uppercase, hyphens) {
+            let formatted = uuid;
+            if (!hyphens) {
+                formatted = formatted.replace(/-/g, '');
+            }
+            if (uppercase) {
+                formatted = formatted.toUpperCase();
+            }
+            return formatted;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // 显示复制成功提示
+            }).catch(() => {
+                alert('复制失败，请手动复制');
+            });
+        }
+
+        function generateUUIDs() {
+            const count = parseInt(countInput.value) || 1;
+            const countLimit = Math.min(Math.max(1, count), 100);
+            const uppercase = uppercaseCheck.checked;
+            const hyphens = hyphensCheck.checked;
+
+            uuidList.innerHTML = '';
+
+            for (let i = 0; i < countLimit; i++) {
+                const uuid = generateUUID();
+                const formatted = formatUUID(uuid, uppercase, hyphens);
+
+                const item = document.createElement('div');
+                item.className = 'uuid-item';
+                item.innerHTML = `
+                    <code>${formatted}</code>
+                    <button class="btn btn-secondary copy-btn" data-uuid="${formatted}">复制</button>
+                `;
+                uuidList.appendChild(item);
+            }
+
+            // 绑定复制按钮
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    copyToClipboard(btn.dataset.uuid);
+                    btn.textContent = '已复制';
+                    setTimeout(() => {
+                        btn.textContent = '复制';
+                    }, 2000);
+                });
+            });
+        }
+
+        function clearAll() {
+            uuidList.innerHTML = '';
+        }
+
+        generateBtn.addEventListener('click', generateUUIDs);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 回车键生成
+        countInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                generateUUIDs();
+            }
+        });
+
+        // 初始生成一个
+        generateUUIDs();
+    </script>
+</body>
+</html>

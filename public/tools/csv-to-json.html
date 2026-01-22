@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV 转 JSON 工具 - 在线 CSV JSON 转换器 | itkdm.com</title>
+    <meta name="description" content="免费在线 CSV 转 JSON 工具，快速将 CSV 数据转换为 JSON 格式。支持自定义分隔符和表头处理，适用于数据处理、API 开发和数据转换。">
+    <meta name="keywords" content="CSV转JSON,CSV转换,CSV转JSON工具,CSV转换工具,数据转换工具,CSV工具,JSON转换,数据处理工具,数据格式转换,API开发工具">
+    <meta name="author" content="itkdm.com">
+    <link rel="canonical" href="https://itkdm.com/tools/csv-to-json.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itkdm.com/tools/csv-to-json.html">
+    <meta property="og:title" content="CSV 转 JSON 工具 - 在线 CSV JSON 转换器">
+    <meta property="og:description" content="免费在线 CSV 转 JSON 工具，快速将 CSV 数据转换为 JSON 格式。支持自定义分隔符和表头处理。">
+    <meta property="og:site_name" content="itkdm.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://itkdm.com/tools/csv-to-json.html">
+    <meta property="twitter:title" content="CSV 转 JSON 工具 - 在线 CSV JSON 转换器">
+    <meta property="twitter:description" content="免费在线 CSV 转 JSON 工具，快速将 CSV 数据转换为 JSON 格式。支持自定义分隔符和表头处理。">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CSV 转 JSON 工具",
+      "description": "免费在线 CSV 转 JSON 工具，快速将 CSV 数据转换为 JSON 格式",
+      "url": "https://itkdm.com/tools/csv-to-json.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "CSV 转 JSON",
+        "自定义分隔符",
+        "表头处理",
+        "数据转换",
+        "API 开发工具"
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://itkdm.com/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "工具",
+          "item": "https://itkdm.com/zh/tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "CSV 转 JSON 工具",
+          "item": "https://itkdm.com/tools/csv-to-json.html"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "CSV 转 JSON 工具如何使用？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在输入框中粘贴或输入 CSV 数据，选择分隔符（逗号、分号、制表符等），选择是否使用第一行作为表头，点击'转换'按钮即可将 CSV 数据转换为 JSON 格式。支持自定义分隔符和表头处理。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "支持哪些分隔符？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "支持常见的 CSV 分隔符，包括逗号（,）、分号（;）、制表符（Tab）等。如果 CSV 文件使用其他分隔符，可以手动输入自定义分隔符。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何处理表头？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "如果 CSV 第一行是表头，可以选择'使用第一行作为键'选项，转换后的 JSON 对象会使用表头作为键名。如果不选择此选项，转换后的 JSON 数组会使用数字索引。"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "如何使用 CSV 转 JSON 工具",
+      "description": "学习如何使用在线 CSV 转 JSON 工具来转换数据格式",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "输入 CSV 数据",
+          "text": "在输入框中粘贴或输入 CSV 格式的数据"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "选择分隔符",
+          "text": "选择 CSV 数据使用的分隔符（逗号、分号、制表符等），或输入自定义分隔符"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "设置表头选项",
+          "text": "如果 CSV 第一行是表头，选择'使用第一行作为键'选项"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "转换数据",
+          "text": "点击'转换'按钮，工具会将 CSV 数据转换为 JSON 格式，可以点击复制按钮复制结果"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .tool-header {
+            margin-bottom: 2rem;
+        }
+        .tool-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+        .tool-header p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .tool-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .tool-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-panel label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .tool-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .tool-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+        }
+        .options-group {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .options-group h3 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .input-group {
+            margin-bottom: 0.75rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+        .error-message {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: color-mix(in srgb, #ff4444 16%, transparent);
+            border: 1px solid #ff4444;
+            border-radius: 6px;
+            color: #ff4444;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .info-text {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* Breadcrumb styles */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        .breadcrumb span {
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <main class="tool-container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="面包屑导航" class="breadcrumb">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/">
+                        <span itemprop="name">首页</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="https://itkdm.com/zh/tools/">
+                        <span itemprop="name">工具</span>
+                    </a>
+                    <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">CSV 转 JSON 工具</span>
+                    <meta itemprop="position" content="3" />
+                </li>
+            </ol>
+        </nav>
+
+        <article>
+            <header class="tool-header">
+                <h1>CSV 转 JSON 工具</h1>
+                <p class="tool-subtitle">将 CSV 格式数据转换为 JSON 格式，支持自定义分隔符和选项</p>
+            </header>
+
+        <div class="tool-main">
+            <div class="tool-panel">
+                <label for="csv-input">CSV 数据</label>
+                <textarea id="csv-input" class="tool-textarea" placeholder="输入 CSV 数据...">姓名,年龄,城市
+张三,25,北京
+李四,30,上海
+王五,28,广州</textarea>
+                <div class="options-group">
+                    <h3>转换选项</h3>
+                    <div class="input-group">
+                        <label for="delimiter-input">分隔符</label>
+                        <input type="text" id="delimiter-input" value="," placeholder="例如: , 或 ;">
+                    </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="first-row-header" checked>
+                            第一行作为表头
+                        </label>
+                        <label>
+                            <input type="checkbox" id="trim-whitespace" checked>
+                            去除首尾空格
+                        </label>
+                    </div>
+                </div>
+                <div class="info-text">支持逗号、分号、制表符等分隔符</div>
+            </div>
+
+            <div class="tool-panel">
+                <label for="json-output">JSON 结果</label>
+                <textarea id="json-output" class="tool-textarea" placeholder="JSON 结果将显示在这里..." readonly></textarea>
+                <div class="error-message" id="error-message"></div>
+                <div class="info-text">格式化后的 JSON 数据</div>
+            </div>
+        </div>
+
+        <div class="tool-actions">
+            <button class="btn btn-primary" id="convert-btn">
+                <span>转换为 JSON</span>
+            </button>
+            <button class="btn btn-secondary" id="copy-output-btn">
+                <span>复制结果</span>
+            </button>
+            <button class="btn btn-secondary" id="clear-btn">
+                <span>清空</span>
+            </button>
+        </div>
+        </article>
+    </main>
+
+    <script>
+        const csvInput = document.getElementById('csv-input');
+        const jsonOutput = document.getElementById('json-output');
+        const delimiterInput = document.getElementById('delimiter-input');
+        const firstRowHeaderCheck = document.getElementById('first-row-header');
+        const trimWhitespaceCheck = document.getElementById('trim-whitespace');
+        const convertBtn = document.getElementById('convert-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const errorMessage = document.getElementById('error-message');
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        function csvToJson() {
+            const csv = csvInput.value.trim();
+            if (!csv) {
+                jsonOutput.value = '';
+                errorMessage.classList.remove('show');
+                return;
+            }
+
+            try {
+                const delimiter = delimiterInput.value || ',';
+                const lines = csv.split('\n').filter(line => line.trim());
+                if (lines.length === 0) {
+                    showError('CSV 数据为空');
+                    return;
+                }
+
+                const useHeader = firstRowHeaderCheck.checked;
+                const trimWhitespace = trimWhitespaceCheck.checked;
+
+                let headers = [];
+                if (useHeader) {
+                    headers = lines[0].split(delimiter).map(h => trimWhitespace ? h.trim() : h);
+                }
+
+                const result = [];
+                const startIndex = useHeader ? 1 : 0;
+
+                for (let i = startIndex; i < lines.length; i++) {
+                    const values = lines[i].split(delimiter);
+                    const obj = {};
+
+                    if (useHeader) {
+                        headers.forEach((header, index) => {
+                            let value = values[index] || '';
+                            if (trimWhitespace) {
+                                value = value.trim();
+                            }
+                            obj[header] = value;
+                        });
+                    } else {
+                        values.forEach((value, index) => {
+                            obj[`column${index + 1}`] = trimWhitespace ? value.trim() : value;
+                        });
+                    }
+
+                    result.push(obj);
+                }
+
+                jsonOutput.value = JSON.stringify(result, null, 2);
+                errorMessage.classList.remove('show');
+            } catch (e) {
+                showError('转换失败: ' + e.message);
+                jsonOutput.value = '';
+            }
+        }
+
+        function copyOutput() {
+            const text = jsonOutput.value;
+            if (!text.trim()) return;
+            navigator.clipboard.writeText(text).then(() => {
+                copyOutputBtn.textContent = '已复制！';
+                setTimeout(() => {
+                    copyOutputBtn.textContent = '复制结果';
+                }, 2000);
+            });
+        }
+
+        function clearAll() {
+            csvInput.value = '';
+            jsonOutput.value = '';
+            errorMessage.classList.remove('show');
+        }
+
+        convertBtn.addEventListener('click', csvToJson);
+        copyOutputBtn.addEventListener('click', copyOutput);
+        clearBtn.addEventListener('click', clearAll);
+
+        // 选项变化时自动转换
+        delimiterInput.addEventListener('input', csvToJson);
+        firstRowHeaderCheck.addEventListener('change', csvToJson);
+        trimWhitespaceCheck.addEventListener('change', csvToJson);
+
+        // 实时转换
+        csvInput.addEventListener('input', csvToJson);
+
+        // 初始转换
+        csvToJson();
+    </script>
+</body>
+</html>
