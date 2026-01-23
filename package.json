@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "prebuild": "node scripts/fetch-releases.mjs",
-    "postbuild": "npx --yes pagefind --site dist"
+    "postbuild": "npx --yes pagefind --site dist && node scripts/push-baidu.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.14",
