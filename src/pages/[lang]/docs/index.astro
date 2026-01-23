@@ -87,10 +87,10 @@ const sections = Array.from(sectionMap.values())
 const zhHomeOrder = ['入门', '服务端', '数据库'];
 const enHomeOrder = ['Getting Started', 'Server-side', 'Database'];
 
-// 先过滤出需要显示的分类（即使没有 featured 文档也要显示）
+// 先过滤出需要显示的分类，但只显示有文档的分类（避免显示空分类）
 const targetSections = lang === 'zh' 
-	? sections.filter((section) => zhHomeOrder.includes(section.section))
-	: sections.filter((section) => enHomeOrder.includes(section.section));
+	? sections.filter((section) => zhHomeOrder.includes(section.section) && section.items.length > 0)
+	: sections.filter((section) => enHomeOrder.includes(section.section) && section.items.length > 0);
 
 // 为每个分类添加 featuredItems，但不过滤掉没有 featured 的分类
 const homeSections = targetSections.map((section) => ({
@@ -254,10 +254,10 @@ const pageDesc =
 
 			if (!buttons.length || !sections.length) return;
 
-			// 当前筛选的分类名称；null 表示“全部分类”
+			// 当前筛选的分类名称；null 表示"全部分类"
 			let currentFilter = null;
 
-			const showAll = () => {
+			let showAll = () => {
 				currentFilter = null;
 				buttons.forEach((btn) => {
 					btn.setAttribute('aria-pressed', 'false');
@@ -267,7 +267,7 @@ const pageDesc =
 				});
 			};
 
-			const setFilter = (sectionName) => {
+			let setFilter = (sectionName) => {
 				currentFilter = sectionName;
 				buttons.forEach((btn) => {
 					const isActive = btn.dataset.section === sectionName;

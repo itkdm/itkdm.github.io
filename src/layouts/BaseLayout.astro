@@ -10,6 +10,8 @@ const {
 	ogType,
 	ogImage,
 	jsonLd,
+	keywords,
+	author,
 } = Astro.props as {
 	lang?: Lang;
 	title?: string;
@@ -18,6 +20,8 @@ const {
 	ogType?: 'website' | 'article';
 	ogImage?: string; // absolute or relative URL
 	jsonLd?: unknown; // JSON-LD object (will be stringified)
+	keywords?: string;
+	author?: string;
 };
 
 const brandName = LANG_LABELS[lang].brandName;
@@ -52,6 +56,9 @@ const navItems = [
 			? '布吉岛：个人博客、文档、项目与在线工具合集。'
 			: 'Personal site for blogs, docs, projects and online tools.')}
 		/>
+		{keywords && <meta name="keywords" content={keywords} />}
+		{author && <meta name="author" content={author} />}
+		<meta name="robots" content="index, follow" />
 		<link rel="canonical" href={canonical} />
 		<link rel="alternate" href={new URL(altPath, site).href} hrefLang={otherLang} />
 		<link rel="alternate" href={canonical} hrefLang={lang} />
@@ -65,12 +72,15 @@ const navItems = [
 		/>
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={resolvedOgImage} />
-		<meta name="twitter:card" content="summary" />
+		<meta property="og:image:alt" content={title} />
+		<meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description || (lang === 'zh'
 			? '布吉岛：个人博客、文档、项目与在线工具合集。'
 			: 'Personal site for blogs, docs, projects and online tools.')}
 		/>
+		<meta name="twitter:image" content={resolvedOgImage} />
 		{jsonLd && (
 			<script
 				type="application/ld+json"

@@ -56,10 +56,54 @@ const docOverviewCards = docSectionConfigs
 	// 即使没有文档，也显示分类（保持分类结构稳定）
 	// 但如果确实没有文档，可以在UI上显示"暂无文档"
 	.map((item) => ({ ...item, count: item.count || 0 }));
+
+// SEO 优化：生成结构化数据
+const site = 'https://itkdm.com';
+const pageTitle = '布吉岛 - 个人博客、文档、项目与在线工具合集';
+const pageDescription = '布吉岛是一个集博客、技术文档、开源项目和在线工具于一体的个人网站。提供 Java、Rust、Go、Python 等服务端语言教程，MySQL、PostgreSQL、Redis 等数据库指南，以及实用的在线工具集合。';
+const pageKeywords = '布吉岛,个人博客,技术文档,编程教程,Java教程,Rust教程,Go教程,Python教程,MySQL,PostgreSQL,Redis,在线工具,开源项目';
+
+// JSON-LD 结构化数据 - WebSite
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: '布吉岛',
+	alternateName: 'Bu Ji Dao',
+	url: site,
+	description: pageDescription,
+	inLanguage: ['zh-CN', 'en'],
+	potentialAction: {
+		'@type': 'SearchAction',
+		target: {
+			'@type': 'EntryPoint',
+			urlTemplate: `${site}/zh/search?q={search_term_string}`,
+		},
+		'query-input': 'required name=search_term_string',
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: '布吉岛',
+		logo: {
+			'@type': 'ImageObject',
+			url: `${site}/logo.jpg`,
+		},
+	},
+};
 ---
 
-<BaseLayout lang={lang} title="布吉岛 · 主页" description="博客 + 文档 + 下载中心的统一 Astro 方案" currentPath="/">
-	<section class="hero-landing">
+<BaseLayout 
+	lang={lang} 
+	title={pageTitle}
+	description={pageDescription}
+	currentPath="/"
+	ogType="website"
+	ogImage="/logo.jpg"
+	jsonLd={jsonLd}
+	keywords={pageKeywords}
+	author="布吉岛"
+>
+	<main>
+	<section class="hero-landing" aria-label="网站介绍">
 		<div class="hero-landing-inner">
 			<div>
 				<h1>欢迎来到布吉岛！</h1>
@@ -83,14 +127,27 @@ const docOverviewCards = docSectionConfigs
 				{latestPosts.map((post) => {
 					const postSlug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
 					return (
-						<a class="card blog-card" href={`/zh/blog/${postSlug}/`}>
+						<a
+							class="card blog-card"
+							href={`/zh/blog/${postSlug}/`}
+							aria-label={`阅读文章：${post.data.title}`}
+							itemscope
+							itemtype="https://schema.org/BlogPosting"
+						>
 							<div class="badge">Blog</div>
-							<h3>{post.data.title}</h3>
+							<h3 itemprop="headline">{post.data.title}</h3>
 							<p class="meta">
-								<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
-								{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+								<time datetime={post.data.date.toISOString()} itemprop="datePublished">
+									{post.data.date.toISOString().slice(0, 10)}
+								</time>
+								{post.data.tags.length > 0 && (
+									<>
+										{' '}
+										· <span itemprop="keywords">{post.data.tags.join(', ')}</span>
+									</>
+								)}
 							</p>
-							<p>{post.data.summary}</p>
+							<p itemprop="description">{post.data.summary}</p>
 						</a>
 					);
 				})}
@@ -168,5 +225,6 @@ const docOverviewCards = docSectionConfigs
 			</div>
 		)}
 	</section>
+	</main>
 
 </BaseLayout>

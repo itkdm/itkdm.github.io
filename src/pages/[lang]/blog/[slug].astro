@@ -34,6 +34,12 @@ const data = entry.data;
 const site = Astro.site?.href ?? 'https://itkdm.com';
 const canonical = new URL(`/${lang}/blog/${slug}/`, site).href;
 const ogImage = data.cover?.src ?? '/logo.jpg';
+// 生成关键词（从标签和标题中提取）
+const keywords = data.tags.length > 0 
+	? `${data.tags.join(', ')}, ${data.title}, 布吉岛, 技术博客`
+	: `${data.title}, 布吉岛, 技术博客`;
+
+// 完善 JSON-LD 结构化数据
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -45,6 +51,11 @@ const jsonLd = {
 	mainEntityOfPage: canonical,
 	url: canonical,
 	image: new URL(ogImage, site).href,
+	author: {
+		'@type': 'Person',
+		name: '布吉岛',
+		url: site,
+	},
 	publisher: {
 		'@type': 'Organization',
 		name: '布吉岛',
@@ -53,6 +64,8 @@ const jsonLd = {
 			url: new URL('/logo.jpg', site).href,
 		},
 	},
+	keywords: data.tags.join(', '),
+	articleSection: data.tags.length > 0 ? data.tags[0] : undefined,
 };
 
 // Find previous and next posts for navigation
