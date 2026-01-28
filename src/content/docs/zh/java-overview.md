@@ -4,7 +4,6 @@ order: 1
 section: "服务端"
 topic: "Java"
 lang: "zh"
-slug: "java-overview"
 summary: "Java 的特点、适用场景与生态简介，帮助你判断何时选择 Java。"
 icon: "☕"
 toc: true

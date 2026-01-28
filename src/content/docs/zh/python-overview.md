@@ -3,7 +3,6 @@ title: "Python 概览"
 order: 30
 section: "服务端"
 lang: "zh"
-slug: "python-overview"
 summary: "语法友好、生态庞大，适合快速交付与数据相关场景。"
 topic: "Python"
 icon: "Py"

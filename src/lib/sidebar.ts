@@ -17,7 +17,7 @@ export async function getSidebar(lang: Lang): Promise<SidebarSection[]> {
 	for (const doc of docs) {
 		// 规范化 section 字段：去除首尾空格，确保一致性
 		const section = (doc.data.section || (lang === 'zh' ? '其他' : 'Others')).trim();
-		const slug = doc.data.slug ?? doc.slug;
+		const slug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
 		const order = typeof doc.data.order === 'number' ? doc.data.order : 9999;
 		const title = doc.data.title;
 

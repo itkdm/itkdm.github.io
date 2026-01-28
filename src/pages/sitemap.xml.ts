@@ -51,7 +51,7 @@ export const GET: APIRoute = async () => {
 		}),
 		// 文档页面
 		...docs.map((doc) => {
-			const rawSlug = doc.data.slug ?? doc.slug;
+			const rawSlug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
 			const docSlug = rawSlug.split('/').pop() ?? rawSlug;
 			return {
 				loc: `${site}/${doc.data.lang}/docs/${docSlug}/`,

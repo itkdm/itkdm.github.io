@@ -3,7 +3,6 @@ title: "MySQL 基础概览"
 order: 1
 section: "数据库"
 lang: "zh"
-slug: "mysql-overview"
 summary: "主流开源关系型数据库，事务、索引与查询优化的入门速览。"
 icon: "🐬"
 topic: "MySQL"

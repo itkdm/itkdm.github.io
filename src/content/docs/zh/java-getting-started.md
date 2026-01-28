@@ -4,7 +4,6 @@ order: 2
 section: "服务端"
 topic: "Java"
 lang: "zh"
-slug: "java-getting-started"
 summary: "安装 JDK、配置环境变量、编译运行第一个 Java 程序的完整步骤。"
 icon: "☕"
 featured: false

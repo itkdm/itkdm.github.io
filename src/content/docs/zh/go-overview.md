@@ -3,7 +3,6 @@ title: "Go 概览"
 order: 20
 section: "服务端"
 lang: "zh"
-slug: "go-overview"
 summary: "语法简洁、并发模型直观，适合云原生与微服务的工程实践。"
 topic: "Go"
 icon: "Go"

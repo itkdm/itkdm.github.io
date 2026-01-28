@@ -4,7 +4,6 @@ order: 3
 section: "服务端"
 topic: "Java"
 lang: "zh"
-slug: "java-syntax-basics"
 summary: "变量、控制流、面向对象三大核心，再加上常用集合与时间 API。"
 icon: "☕"
 featured: false

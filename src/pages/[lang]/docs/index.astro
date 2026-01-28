@@ -51,7 +51,7 @@ const sectionMap = new Map<string, SectionGroup>();
 for (const doc of docs) {
 	// 规范化 section 字段：去除首尾空格，确保一致性
 	const section = (doc.data.section?.trim() || (lang === 'zh' ? '其他' : 'Others'));
-	const slug = doc.data.slug ?? doc.slug;
+	const slug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
 	const order = typeof doc.data.order === 'number' ? doc.data.order : 9999;
 	const title = doc.data.title;
 	const topic = doc.data.topic;
@@ -84,13 +84,18 @@ const sections = Array.from(sectionMap.values())
 // Docs home page: only show featured items as cards.
 // Non-featured docs are still available in the docs detail layout sidebar.
 // 文档首页展示的「全部分类」与右侧导航（根据语言可定制）
-const zhHomeOrder = ['入门', '服务端', '数据库'];
-const enHomeOrder = ['Getting Started', 'Server-side', 'Database'];
+const zhHomeOrder = ['入门', '服务端', '数据库', '算法'];
+const enHomeOrder = ['Getting Started', 'Server-side', 'Database', 'Algorithms'];
 
-// 先过滤出需要显示的分类，但只显示有文档的分类（避免显示空分类）
-const targetSections = lang === 'zh' 
-	? sections.filter((section) => zhHomeOrder.includes(section.section) && section.items.length > 0)
-	: sections.filter((section) => enHomeOrder.includes(section.section) && section.items.length > 0);
+// Docs home page: show all non-empty categories; use order list to prioritize known ones.
+const orderList = lang === 'zh' ? zhHomeOrder : enHomeOrder;
+const getOrderIndex = (name: string) => {
+	const idx = orderList.indexOf(name);
+	return idx === -1 ? orderList.length + 999 : idx;
+};
+// 先过滤出有文档的分类（避免显示空分类），不再硬过滤列表，避免新增分类不显示
+const targetSections = sections.filter((section) => section.items.length > 0);
+
 
 // 为每个分类添加 featuredItems，但不过滤掉没有 featured 的分类
 const homeSections = targetSections.map((section) => ({
@@ -99,30 +104,20 @@ const homeSections = targetSections.map((section) => ({
 }));
 
 // 按配置的顺序排序
-const orderedHomeSections = lang === 'zh'
-	? homeSections.sort(
-			(a, b) =>
-				zhHomeOrder.indexOf(a.section) - zhHomeOrder.indexOf(b.section)
-		)
-	: homeSections.sort(
-			(a, b) =>
-				enHomeOrder.indexOf(a.section) - enHomeOrder.indexOf(b.section)
-		);
+const orderedHomeSections = homeSections.sort(
+	(a, b) =>
+		getOrderIndex(a.section) - getOrderIndex(b.section) ||
+		a.section.localeCompare(b.section)
+);
 
-const navSections =
-	lang === 'zh'
-		? sections
-				.filter((section) => zhHomeOrder.includes(section.section))
-				.sort(
-					(a, b) =>
-						zhHomeOrder.indexOf(a.section) - zhHomeOrder.indexOf(b.section)
-				)
-		: sections
-				.filter((section) => enHomeOrder.includes(section.section))
-				.sort(
-					(a, b) =>
-						enHomeOrder.indexOf(a.section) - enHomeOrder.indexOf(b.section)
-				);
+const navSections = sections
+	.filter((section) => section.items.length > 0)
+	.sort(
+		(a, b) =>
+			getOrderIndex(a.section) - getOrderIndex(b.section) ||
+			a.section.localeCompare(b.section)
+	);
+
 
 const pageTitle = lang === 'zh' ? '文档中心' : 'Docs';
 const pageDesc =
@@ -192,9 +187,9 @@ const pageDesc =
 								{lang === 'zh' ? '返回' : 'Back'}
 							</a>
 						</div>
-						{section.featuredItems.length > 0 ? (
+						{(section.featuredItems.length > 0 ? section.featuredItems : section.items).length > 0 ? (
 							<div class="grid grid-3">
-								{section.featuredItems.map((item) => (
+								{(section.featuredItems.length > 0 ? section.featuredItems : section.items).map((item) => (
 									<a
 										class="card docs-home-card"
 										href={`/${lang}/docs/${item.slug}/`}

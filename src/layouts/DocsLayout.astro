@@ -11,7 +11,7 @@ const { lang = 'zh', entry } = Astro.props as {
 };
 
 const sidebar = await getSidebar(lang);
-const currentSlug = entry.data.slug ?? entry.slug;
+const currentSlug = entry.data.slug ?? entry.slug.split('/').pop() ?? entry.slug;
 const topic = entry.data.topic ?? entry.data.title;
 const site = Astro.site?.href ?? 'https://itkdm.com';
 const canonical = new URL(`/${lang}/docs/${currentSlug}/`, site).href;
@@ -36,13 +36,13 @@ const jsonLd = {
 // 规范化 section 字段：去除首尾空格，确保一致性
 const sectionName = (entry.data.section || (lang === 'zh' ? '其他' : 'Others')).trim();
 const topicDocs = (await getCollection('docs', (doc) => {
-	const docSlug = doc.data.slug ?? doc.slug;
+	const docSlug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
 	const docTopic = doc.data.topic ?? doc.data.title;
 	return doc.data.lang === lang && docTopic === topic && Boolean(docSlug);
 }))
 	.map((doc) => ({
 		title: doc.data.title,
-		slug: doc.data.slug ?? doc.slug,
+		slug: doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug,
 		order: typeof doc.data.order === 'number' ? doc.data.order : 9999,
 	}))
 	.sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
@@ -293,6 +293,15 @@ const { Content, headings } = await entry.render();
 			background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
 			padding: 14px 12px;
 			font-size: 0.9rem;
+		}
+		/* Avoid headings being hidden under fixed/sticky top navigation when jumping via anchors */
+		.docs-article h1,
+		.docs-article h2,
+		.docs-article h3,
+		.docs-article h4,
+		.docs-article h5,
+		.docs-article h6 {
+			scroll-margin-top: 140px;
 		}
 		.docs-right-title {
 			font-weight: 600;
@@ -859,6 +868,87 @@ const { Content, headings } = await entry.render();
 				if (e.key === 'Escape' && sidebar && sidebar.classList.contains('active')) {
 					closeSidebar();
 				}
+			});
+		})();
+
+		// TOC & hash anchor scrolling with offset (account for sticky topbar)
+		(function () {
+			const HEADER_SELECTOR = '.topbar';
+			const SCROLL_OFFSET_FALLBACK = 100;
+
+			function getScrollOffset() {
+				var header = document.querySelector(HEADER_SELECTOR);
+				if (!header) return SCROLL_OFFSET_FALLBACK;
+				var rect = (header.getBoundingClientRect && header.getBoundingClientRect()) || {
+					top: 0,
+					bottom: 0,
+					height: header.offsetHeight || SCROLL_OFFSET_FALLBACK,
+				};
+				// offsetHeight is more stable for fixed/sticky headers
+				var height = header.offsetHeight || rect.height || SCROLL_OFFSET_FALLBACK;
+				// add a small extra gap so 标题不会贴在导航栏下边缘
+				return height + 12;
+			}
+
+			function scrollToId(id, smooth) {
+				if (smooth === void 0) smooth = true;
+				if (!id) return;
+				var target = document.getElementById(id);
+				if (!target) return;
+
+				var offset = getScrollOffset();
+				var rect = target.getBoundingClientRect();
+				var absoluteTop = rect.top + window.scrollY;
+				var top = absoluteTop - offset;
+
+				if ('scrollBehavior' in document.documentElement.style && smooth) {
+					window.scrollTo({ top, behavior: 'smooth' });
+				} else {
+					window.scrollTo(0, top);
+				}
+			}
+
+			// Enhance all in-page anchor links (包括右侧 TOC、正文内链接等)
+			document.addEventListener('click', (event) => {
+				const target = event.target;
+				if (!target) return;
+				const link = target.closest && target.closest('a[href^="#"]');
+				if (!link) return;
+
+				const href = link.getAttribute('href') || '';
+				// 忽略纯 "#" 占位符
+				if (!href || href === '#') return;
+				if (!href.startsWith('#')) return;
+
+				const id = decodeURIComponent(href.slice(1));
+				if (!id) return;
+
+				event.preventDefault();
+
+				// 更新地址栏 hash 但不触发默认锚点滚动
+				if (history.pushState) {
+					const url = new URL(window.location.href);
+					url.hash = `#${encodeURIComponent(id)}`;
+					history.pushState(null, '', url.toString());
+				} else {
+					window.location.hash = `#${encodeURIComponent(id)}`;
+				}
+
+				scrollToId(id, true);
+			}, true);
+
+			function handleInitialHash(source) {
+				if (!window.location.hash) return;
+				const raw = window.location.hash.slice(1);
+				const id = decodeURIComponent(raw);
+				if (!id) return;
+				// 延迟一下等待布局和字体渲染稳定
+				setTimeout(() => scrollToId(id, false), 80);
+			}
+
+			handleInitialHash('load');
+			window.addEventListener('hashchange', () => {
+				handleInitialHash('hashchange');
 			});
 		})();
 	</script>

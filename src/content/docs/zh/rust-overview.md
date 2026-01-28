@@ -3,7 +3,6 @@ title: "Rust 概览"
 order: 10
 section: "服务端"
 lang: "zh"
-slug: "rust-overview"
 summary: "零成本抽象与内存安全并存的系统级语言，适合高性能与高可靠场景。"
 topic: "Rust"
 icon: "🦀"

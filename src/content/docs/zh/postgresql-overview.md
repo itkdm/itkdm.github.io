@@ -3,7 +3,6 @@ title: "PostgreSQL 概览"
 order: 2
 section: "数据库"
 lang: "zh"
-slug: "postgresql-overview"
 summary: "强调标准与扩展性的关系型数据库，支持 JSON/地理数据等丰富特性。"
 icon: "🐘"
 topic: "PostgreSQL"

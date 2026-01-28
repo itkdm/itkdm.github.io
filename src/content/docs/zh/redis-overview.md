@@ -3,7 +3,6 @@ title: "Redis 概览"
 order: 3
 section: "数据库"
 lang: "zh"
-slug: "redis-overview"
 summary: "高性能内存数据库，适合缓存、排行榜、会话和分布式协调。"
 icon: "🧱"
 topic: "Redis"

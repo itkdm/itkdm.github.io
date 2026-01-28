@@ -3,7 +3,6 @@ title: "Overview & IA"
 order: 1
 section: "Getting Started"
 lang: "en"
-slug: "intro"
 toc: true
 updated: 2026-01-13
 featured: true
