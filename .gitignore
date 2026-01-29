@@ -27,3 +27,19 @@ pnpm-debug.log*
 
 # documentation folder (local only)
 doc/
+
+# editor / IDE settings
+.vscode/
+*.code-workspace
+.cursor/
+.agents/
+.claude/
+.codex/
+.continue/
+.opencode/
+
+# OS-specific files
+Thumbs.db
+
+# misc placeholder
+__dummy__
