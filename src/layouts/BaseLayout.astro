@@ -88,6 +88,14 @@ const navItems = [
 				set:html={JSON.stringify(jsonLd)}
 			/>
 		)}
+		{/* Google tag (gtag.js) */}
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-EFHHDPBBYV"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-EFHHDPBBYV');
+		</script>
 		<meta name="theme-color" content="#111827" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="/theme.css" />
