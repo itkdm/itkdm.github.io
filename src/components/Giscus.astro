@@ -8,10 +8,13 @@ const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
 const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
 
 const isConfigured = !!(repo && repoId && category && categoryId);
+
+// 将 lang 转换为 Giscus 支持的语言代码
+const giscusLang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 
 {isConfigured ? (
-	<section style="margin-top: 32px;">
+	<section id="giscus-container" style="margin-top: 32px;">
 		<script
 			src="https://giscus.app/client.js"
 			data-repo={repo}
@@ -24,10 +27,34 @@ const isConfigured = !!(repo && repoId && category && categoryId);
 			data-emit-metadata="0"
 			data-input-position="top"
 			data-theme="preferred_color_scheme"
-			data-lang={lang}
+			data-lang={giscusLang}
+			data-loading="lazy"
 			crossorigin="anonymous"
 			async
 		></script>
+		<script is:inline>
+			// 错误处理和加载状态
+			(function() {
+				const container = document.getElementById('giscus-container');
+				if (!container) return;
+
+				// 监听 Giscus 加载错误
+				window.addEventListener('error', function(e) {
+					if (e.target && e.target.src && e.target.src.includes('giscus.app')) {
+						console.error('[Giscus] 加载失败:', e);
+						container.innerHTML = '<p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px;">评论功能暂时无法加载，请稍后重试或检查网络连接。</p>';
+					}
+				}, true);
+
+				// 检查 Giscus 是否成功加载
+				setTimeout(function() {
+					const giscusFrame = container.querySelector('iframe');
+					if (!giscusFrame) {
+						console.warn('[Giscus] 评论框未加载，可能是 CSP 限制或网络问题');
+					}
+				}, 3000);
+			})();
+		</script>
 	</section>
 ) : (
 	<script is:inline define:vars={{ isConfigured }}>
