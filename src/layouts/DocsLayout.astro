@@ -426,7 +426,12 @@ const { Content, headings } = await entry.render();
 			const isZh = lang === 'zh';
 			const copyText = isZh ? '复制' : 'Copy';
 			const copiedText = isZh ? '已复制!' : 'Copied!';
-			
+			const debugMermaid = true;
+
+			if (debugMermaid) {
+				console.log('[DocsLayout] script bootstrap, lang =', lang);
+			}
+
 			// Function to apply theme-aware syntax highlighting
 			// Removes ALL inline color styles and replaces with CSS variables
 			function applyThemeAwareHighlighting() {
@@ -551,8 +556,39 @@ const { Content, headings } = await entry.render();
 			// Wait for content to be rendered
 			function processCodeBlocks() {
 				const codeBlocks = document.querySelectorAll('.docs-article pre code, article pre code');
+
+				if (debugMermaid) {
+					console.log('[DocsLayout] processCodeBlocks: found', codeBlocks.length, 'code blocks');
+				}
 				
 				codeBlocks.forEach((codeBlock) => {
+					// Skip Mermaid blocks - they are handled separately for diagram rendering
+					const cls = codeBlock.classList || [];
+					if (cls.contains('mermaid-source-code')) {
+						if (debugMermaid) {
+							console.log('[DocsLayout] skip mermaid source code block');
+						}
+						return;
+					}
+
+					const text = (codeBlock.textContent || '').trim();
+					const firstNonEmptyLine =
+						text
+							.split('\n')
+							.map((l) => l.trim())
+							.find((l) => l.length > 0) || '';
+					const looksLikeMermaid =
+						/^((graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey)\b)/.test(
+							firstNonEmptyLine
+						);
+
+					if (cls.contains('language-mermaid') || cls.contains('mermaid') || looksLikeMermaid) {
+						if (debugMermaid) {
+							console.log('[DocsLayout] skip mermaid-like code block; first line =', firstNonEmptyLine);
+						}
+						return;
+					}
+
 					// Skip if already wrapped
 					if (codeBlock.closest('.code-block-wrapper')) {
 						return;
@@ -748,13 +784,144 @@ const { Content, headings } = await entry.render();
 				setTimeout(applyThemeAwareHighlighting, 50);
 			}
 			
+			// Render Mermaid diagrams: show diagram by default, allow toggling source code
+			function setupMermaidDiagrams() {
+				const allCodeBlocks = document.querySelectorAll('.docs-article pre code');
+				const mermaidBlocks = [];
+
+				allCodeBlocks.forEach((codeBlock) => {
+					const cls = codeBlock.classList || [];
+					// 我们已经不再生成源码视图，这里只是防御性判断
+					if (cls.contains('mermaid-source-code')) {
+						return;
+					}
+
+					const text = (codeBlock.textContent || '').trim();
+					const firstNonEmptyLine =
+						text
+							.split('\n')
+							.map((l) => l.trim())
+							.find((l) => l.length > 0) || '';
+					const looksLikeMermaid =
+						/^((graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey)\b)/.test(
+							firstNonEmptyLine
+						);
+
+					if (looksLikeMermaid) {
+						mermaidBlocks.push(codeBlock);
+					}
+				});
+
+				if (debugMermaid) {
+					console.log('[DocsLayout] setupMermaidDiagrams: total code blocks =', allCodeBlocks.length);
+					console.log('[DocsLayout] setupMermaidDiagrams: detected mermaid blocks =', mermaidBlocks.length);
+				}
+
+				if (!mermaidBlocks.length) return;
+
+				mermaidBlocks.forEach((codeBlock, idx) => {
+					if (debugMermaid) {
+						console.log('[DocsLayout] processing mermaid block #', idx);
+					}
+
+					const pre = codeBlock.parentElement;
+					if (!pre || pre.tagName !== 'PRE') return;
+
+					// Avoid processing twice
+					if (pre.dataset.mermaidProcessed === 'true') return;
+					pre.dataset.mermaidProcessed = 'true';
+
+					const raw = codeBlock.textContent || '';
+					const wrapper = document.createElement('div');
+					wrapper.className = 'mermaid-block';
+
+					// Diagram container
+					const diagram = document.createElement('div');
+					diagram.className = 'mermaid';
+					diagram.textContent = raw.trim();
+
+					wrapper.appendChild(diagram);
+
+					pre.parentNode.replaceChild(wrapper, pre);
+				});
+
+				// Lazy-load Mermaid from CDN only when needed
+				function loadMermaid(callback) {
+					if (window.mermaid) {
+						if (debugMermaid) {
+							console.log('[DocsLayout] mermaid already present on window');
+						}
+						callback();
+						return;
+					}
+					const existing = document.querySelector('script[data-mermaid="true"]');
+					if (existing) {
+						if (debugMermaid) {
+							console.log('[DocsLayout] reusing existing mermaid script tag');
+						}
+						existing.addEventListener('load', () => callback(), { once: true });
+						return;
+					}
+					const script = document.createElement('script');
+					script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+					script.async = true;
+					script.dataset.mermaid = 'true';
+					script.addEventListener(
+						'load',
+						() => {
+							if (debugMermaid) {
+								console.log('[DocsLayout] mermaid script loaded');
+							}
+							callback();
+						},
+						{ once: true }
+					);
+					script.addEventListener('error', (e) => {
+						console.error('[DocsLayout] mermaid script load error', e);
+					});
+					if (debugMermaid) {
+						console.log('[DocsLayout] injecting mermaid script', script.src);
+					}
+					document.head.appendChild(script);
+				}
+
+				loadMermaid(() => {
+					try {
+						const theme =
+							document.documentElement.getAttribute('data-theme') === 'dark'
+								? 'dark'
+								: 'default';
+						if (debugMermaid) {
+							console.log('[DocsLayout] initializing mermaid, theme =', theme);
+						}
+						window.mermaid.initialize({
+							startOnLoad: false,
+							theme,
+						});
+						window.mermaid.run({
+							querySelector: '.docs-article .mermaid',
+						});
+					} catch (e) {
+						console.error('[DocsLayout] Mermaid render error:', e);
+					}
+				});
+			}
+
 			// Run immediately to prevent FOUC
 			// Apply highlighting as early as possible
 			function initCodeHighlighting() {
+				if (debugMermaid) {
+					console.log('[DocsLayout] initCodeHighlighting start');
+				}
 				processCodeBlocks();
 				// Apply highlighting immediately, then again after a short delay
 				applyThemeAwareHighlighting();
 				setTimeout(applyThemeAwareHighlighting, 50);
+				// Setup Mermaid (if any blocks exist)
+				setupMermaidDiagrams();
+				if (debugMermaid) {
+					console.log('[DocsLayout] initCodeHighlighting done');
+				}
 			}
 			
 			// Run immediately and also on DOMContentLoaded
@@ -772,6 +939,7 @@ const { Content, headings } = await entry.render();
 			setTimeout(() => {
 				processCodeBlocks();
 				setTimeout(applyThemeAwareHighlighting, 100);
+				setupMermaidDiagrams();
 			}, 100);
 			
 			// Listen for theme changes and reapply highlighting
