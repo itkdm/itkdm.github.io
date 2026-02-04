@@ -7,7 +7,7 @@ lang: "zh"
 slug: "interview-java-collections-arraylist-questions"
 summary: "系统梳理与 ArrayList 相关的高频面试题，从基础用法、扩容机制到并发与源码细节。"
 icon: "❓"
-featured: true
+featured: false
 toc: true
 updated: 2026-02-04
 ---

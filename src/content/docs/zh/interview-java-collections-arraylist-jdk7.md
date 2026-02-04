@@ -7,7 +7,7 @@ lang: "zh"
 slug: "interview-java-collections-arraylist-jdk7"
 summary: "基于 JDK 7 的 ArrayList 源码，配合中文注释，深入理解底层实现细节。"
 icon: "📂"
-featured: true
+featured: false
 toc: true
 updated: 2026-02-04
 ---

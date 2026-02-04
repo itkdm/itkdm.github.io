@@ -7,7 +7,7 @@ lang: "zh"
 slug: "interview-java-collections-arraylist-jdk8"
 summary: "基于 JDK 8 的 ArrayList 源码，配合中文注释，梳理扩容策略、迭代器与 fail-fast 机制等核心实现。"
 icon: "📂"
-featured: true
+featured: false
 toc: true
 updated: 2026-02-04
 ---

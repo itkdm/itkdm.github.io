@@ -7,7 +7,7 @@ lang: "zh"
 slug: "interview-java-collections-arraylist-diff"
 summary: "对比 JDK 7 / 8 / 11 / 21 中 ArrayList 的关键实现差异，帮助在面试中答出“版本相关”的细节。"
 icon: "🧬"
-featured: true
+featured: false
 toc: true
 updated: 2026-02-04
 ---
