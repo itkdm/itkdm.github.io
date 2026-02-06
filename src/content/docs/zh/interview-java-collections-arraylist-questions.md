@@ -1,5 +1,5 @@
 ---
-title: "ArrayList 高频面试题全整理"
+title: "ArrayList 高频面试题"
 order: 35
 section: "面试"
 topic: "Java集合"
