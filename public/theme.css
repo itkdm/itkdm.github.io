@@ -311,9 +311,14 @@ main{
 }
 .hero-landing-inner{
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   display:flex;
   flex-direction:column;
+  align-items: center;
+  text-align: center;
   gap: 22px;
+  transform: translateY(-15vh);
 }
 .hero-landing h1{
   margin: 0 0 18px 0;
@@ -332,12 +337,15 @@ main{
   font-weight: 400;
   letter-spacing: 0.02em;
   max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-actions{
   display:flex;
   flex-wrap:wrap;
   gap: 12px;
   margin-top: 12px;
+  justify-content: center;
 }
 .hero-meta{
   display:flex;
@@ -853,6 +861,9 @@ footer{
   .hero-landing{
     min-height: 100vh;
     padding: 12px 0 20px;
+  }
+  .hero-landing-inner{
+    transform: translateY(-15vh);
   }
   .hero-landing h1{
     font-size: clamp(28px, 6vw, 42px);
