@@ -1,33 +1,25 @@
-import fs from 'fs';
-import path from 'path';
-import http from 'http';
+import fs from 'node:fs';
+import path from 'node:path';
+import https from 'node:https';
 
-// 百度主动推送接口（来自用户提供的配置）
-// 说明文档：https://ziyuan.baidu.com/linksubmit/index
-const BAIDU_PUSH_URL =
-	'http://data.zz.baidu.com/urls?site=https://www.itkdm.com&token=mvYi4iIQNvhCVpCc';
+const DEFAULT_BAIDU_PUSH_ENDPOINT = 'https://data.zz.baidu.com/urls';
+const BAIDU_PUSH_ENDPOINT =
+	process.env.BAIDU_PUSH_ENDPOINT?.trim() || DEFAULT_BAIDU_PUSH_ENDPOINT;
+const BAIDU_PUSH_SITE = process.env.BAIDU_PUSH_SITE?.trim();
+const BAIDU_PUSH_TOKEN = process.env.BAIDU_PUSH_TOKEN?.trim();
 
 /**
  * 调用百度主动推送 API
  * @param {string[]} urls 要推送的完整 URL 列表
+ * @param {URL} apiUrl 推送接口 URL（已带 site 和 token 参数）
  */
-function pushToBaidu(urls) {
-	return new Promise((resolve, reject) => {
-		if (!urls.length) {
-			console.log('[baidu-push] 没有可推送的 URL，跳过。');
-			return resolve();
-		}
-
-		console.log(
-			`[baidu-push] 准备向百度推送 ${urls.length} 个 URL（来自 sitemap.xml）...`
-		);
-
+function pushToBaidu(urls, apiUrl) {
+	return new Promise((resolve) => {
 		const body = urls.join('\n');
-		const url = new URL(BAIDU_PUSH_URL);
-
 		const options = {
-			hostname: url.hostname,
-			path: url.pathname + url.search,
+			hostname: apiUrl.hostname,
+			port: apiUrl.port || 443,
+			path: apiUrl.pathname + apiUrl.search,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'text/plain',
@@ -35,7 +27,7 @@ function pushToBaidu(urls) {
 			},
 		};
 
-		const req = http.request(options, (res) => {
+		const req = https.request(options, (res) => {
 			let data = '';
 			res.on('data', (chunk) => {
 				data += chunk;
@@ -59,6 +51,19 @@ function pushToBaidu(urls) {
 	});
 }
 
+/**
+ * 从 URL 列表推断站点 origin
+ * @param {string[]} urls
+ * @returns {string}
+ */
+function inferSiteFromUrls(urls) {
+	try {
+		return new URL(urls[0]).origin;
+	} catch {
+		return '';
+	}
+}
+
 async function main() {
 	try {
 		const sitemapPath = path.join(process.cwd(), 'dist', 'sitemap.xml');
@@ -79,13 +84,32 @@ async function main() {
 			return;
 		}
 
-		await pushToBaidu(urls);
+		const site = BAIDU_PUSH_SITE || inferSiteFromUrls(urls);
+		if (!site) {
+			console.warn('[baidu-push] 无法确定 site 参数，已跳过百度推送。');
+			return;
+		}
+
+		if (!BAIDU_PUSH_TOKEN) {
+			console.warn(
+				'[baidu-push] 未设置 BAIDU_PUSH_TOKEN，已跳过百度推送（构建不受影响）。'
+			);
+			return;
+		}
+
+		const apiUrl = new URL(BAIDU_PUSH_ENDPOINT);
+		apiUrl.searchParams.set('site', site);
+		apiUrl.searchParams.set('token', BAIDU_PUSH_TOKEN);
+
+		console.log(
+			`[baidu-push] 准备向百度推送 ${urls.length} 个 URL（site=${site}）...`
+		);
+		await pushToBaidu(urls, apiUrl);
 	} catch (err) {
 		console.error('[baidu-push] 执行过程中出错：', err);
 		// 不抛出，让构建继续完成
 	}
 }
 
-// 直接执行
 main();
 

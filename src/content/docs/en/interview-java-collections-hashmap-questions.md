@@ -4,7 +4,6 @@ order: 36
 section: "Interview"
 topic: "Java Collections"
 lang: "en"
-slug: "interview-java-collections-hashmap-questions"
 summary: "A structured list of common HashMap interview questions: fundamentals, internals, resizing/treeification, concurrency pitfalls, and JDK 7 vs JDK 8 differences."
 icon: "❓"
 featured: false

@@ -4,7 +4,6 @@ order: 34
 section: "面试"
 topic: "Java集合"
 lang: "zh"
-slug: "interview-java-collections-hashmap"
 summary: "基于 JDK HashMap 源码，结合中文注释，系统梳理哈希表底层结构、hash 扰动函数、扩容与树化机制、fail-fast 迭代器等核心实现。"
 icon: "📂"
 featured: false

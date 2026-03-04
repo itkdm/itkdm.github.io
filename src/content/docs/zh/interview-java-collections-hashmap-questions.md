@@ -4,7 +4,6 @@ order: 36
 section: "面试"
 topic: "Java集合"
 lang: "zh"
-slug: "interview-java-collections-hashmap-questions"
 summary: "系统梳理与 HashMap 相关的高频面试题，从基础特性、底层结构、扩容与树化机制，到并发与 JDK 版本差异。"
 icon: "❓"
 featured: false

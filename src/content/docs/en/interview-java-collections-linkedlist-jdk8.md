@@ -4,7 +4,6 @@ order: 33
 section: "Interview"
 topic: "Java Collections"
 lang: "en"
-slug: "interview-java-collections-linkedlist-jdk8"
 summary: "JDK 8 LinkedList source for reference; focus on node linking, index access, fail-fast iterators, serialization, and the spliterator."
 icon: "📂"
 featured: false
@@ -1283,4 +1282,3 @@ public class LinkedList<E>
 
 }
 ```
-

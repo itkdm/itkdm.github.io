@@ -4,7 +4,6 @@ order: 34
 section: "Interview"
 topic: "Java Collections"
 lang: "en"
-slug: "interview-java-collections-hashmap"
 summary: "A source-based walkthrough of HashMap: hash spreading, bucket indexing, resizing (lo/hi split), treeification, and fail-fast iterators. The embedded source is the same Chinese-annotated JDK 8 version as the Chinese page."
 icon: "📂"
 featured: false

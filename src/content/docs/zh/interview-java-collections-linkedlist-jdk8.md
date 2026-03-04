@@ -6,7 +6,6 @@ order: 33
 section: "面试"
 topic: "Java集合"
 lang: "zh"
-slug: "interview-java-collections-linkedlist-jdk8"
 summary: "基于 JDK 8 的 LinkedList 源码，配合中文注释，梳理链表节点链接、按索引定位、迭代器 fail-fast、序列化与 Spliterator 等核心实现。"
 icon: "📂"
 featured: false

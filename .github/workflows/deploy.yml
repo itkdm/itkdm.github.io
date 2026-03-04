@@ -30,23 +30,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Fetch Releases (optional)
-        run: node scripts/fetch-releases.mjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_REPOS: ${{ vars.RELEASE_REPOS }}
-
       - name: Build
         run: npm run build
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Giscus 评论配置（从 GitHub Secrets 读取）
           PUBLIC_GISCUS_REPO: ${{ secrets.PUBLIC_GISCUS_REPO }}
           PUBLIC_GISCUS_REPO_ID: ${{ secrets.PUBLIC_GISCUS_REPO_ID }}
           PUBLIC_GISCUS_CATEGORY: ${{ secrets.PUBLIC_GISCUS_CATEGORY }}
           PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.PUBLIC_GISCUS_CATEGORY_ID }}
-
-      - name: Pagefind index
-        run: npx pagefind --site dist
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+          BAIDU_PUSH_SITE: ${{ vars.BAIDU_PUSH_SITE }}
+          BAIDU_PUSH_ENDPOINT: ${{ vars.BAIDU_PUSH_ENDPOINT }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

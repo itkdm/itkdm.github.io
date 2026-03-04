@@ -33,6 +33,20 @@ npm run preview
 构建后会自动运行 Pagefind：
 - `package.json` 中 `postbuild`：`npx pagefind --site dist`
 
+## 🔔 百度主动推送（可选）
+
+`postbuild` 会尝试执行 `scripts/push-baidu.mjs`，但仅在设置了 token 时才推送：
+
+```env
+BAIDU_PUSH_TOKEN=your_token_here
+# 可选：默认会从 dist/sitemap.xml 自动推断站点域名
+BAIDU_PUSH_SITE=https://itkdm.com
+# 可选：默认 https://data.zz.baidu.com/urls
+BAIDU_PUSH_ENDPOINT=https://data.zz.baidu.com/urls
+```
+
+未设置 `BAIDU_PUSH_TOKEN` 时会自动跳过，不影响构建成功。
+
 ## 🧩 内容维护（如何新增内容）
 
 内容都在 `src/content/` 下按类型与语言分目录：

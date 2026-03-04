@@ -359,18 +359,38 @@ async function fetchReleases() {
 		
 		tools.sort((a, b) => a.order - b.order);
 
+		let previousPayload = null;
+		if (fs.existsSync(outFile)) {
+			try {
+				previousPayload = JSON.parse(fs.readFileSync(outFile, 'utf8'));
+			} catch {
+				previousPayload = null;
+			}
+		}
+
+		const toolsChanged =
+			JSON.stringify(previousPayload?.tools ?? null) !== JSON.stringify(tools);
 		const payload = {
-			updatedAt: new Date().toISOString(),
+			updatedAt: toolsChanged
+				? new Date().toISOString()
+				: previousPayload?.updatedAt || new Date().toISOString(),
 			tools,
 		};
+		const nextContent = JSON.stringify(payload, null, 2);
 
 		// 确保目录存在
 		fs.mkdirSync(path.dirname(outFile), { recursive: true });
 		
-		// 写入文件
-		fs.writeFileSync(outFile, JSON.stringify(payload, null, 2));
-		
-		console.log(`✓ Successfully wrote ${tools.length} download items to ${outFile}`);
+		// 仅在内容变化时写入，避免每次构建都改动工作区
+		const currentContent = fs.existsSync(outFile)
+			? fs.readFileSync(outFile, 'utf8')
+			: null;
+		if (currentContent === nextContent) {
+			console.log(`✓ No release changes detected (${tools.length} items), keeping existing ${outFile}`);
+		} else {
+			fs.writeFileSync(outFile, nextContent);
+			console.log(`✓ Successfully wrote ${tools.length} download items to ${outFile}`);
+		}
 		
 		if (errors.length > 0) {
 			console.warn(`\n⚠ ${errors.length} error(s) occurred during processing:`);
