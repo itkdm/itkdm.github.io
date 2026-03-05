@@ -7,7 +7,7 @@ lang: "zh"
 slug: "message-queue-core-concepts"
 summary: "深入理解消息队列的核心概念：生产者消费者、队列与主题、消费组、ACK 确认、幂等性、死信队列、顺序消息等。"
 icon: "🧠"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-05
 ---

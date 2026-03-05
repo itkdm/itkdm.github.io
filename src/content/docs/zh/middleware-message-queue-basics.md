@@ -7,7 +7,7 @@ lang: "zh"
 slug: "message-queue-basics"
 summary: "消息队列（Message Queue）是分布式系统中的核心中间件，用于解耦、削峰、异步通信。本文介绍消息队列的核心功能和常见产品。"
 icon: "📦"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-05
 ---

@@ -7,7 +7,7 @@ lang: "zh"
 slug: "message-queue-products-comparison"
 summary: "全面对比 RabbitMQ、Kafka、RocketMQ、Pulsar、Redis Streams 五大主流消息队列，包含特点、适用场景、典型案例和选型建议。"
 icon: "⚖️"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-05
 ---
