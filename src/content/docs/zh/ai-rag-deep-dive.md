@@ -1,6 +1,6 @@
 ---
 title: "RAG 技术详解：检索增强生成"
-order: 2
+order: 6
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

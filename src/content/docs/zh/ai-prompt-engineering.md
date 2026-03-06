@@ -1,6 +1,6 @@
 ---
 title: "Prompt 工程入门：如何写好提示词"
-order: 14
+order: 5
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

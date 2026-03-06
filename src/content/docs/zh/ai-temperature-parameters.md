@@ -1,6 +1,6 @@
 ---
 title: "Temperature 参数详解：控制 AI 的创造性"
-order: 13
+order: 4
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

@@ -1,6 +1,6 @@
 ---
 title: "AI 技术概览：从入门到面试"
-order: 1
+order: 0
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

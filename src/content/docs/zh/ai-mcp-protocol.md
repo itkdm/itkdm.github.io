@@ -1,6 +1,6 @@
 ---
 title: "MCP 协议解析：模型上下文协议"
-order: 3
+order: 7
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

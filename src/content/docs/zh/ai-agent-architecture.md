@@ -1,6 +1,6 @@
 ---
 title: "AI Agent 技术：智能体架构详解"
-order: 4
+order: 8
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

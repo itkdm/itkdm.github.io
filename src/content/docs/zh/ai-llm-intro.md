@@ -1,6 +1,6 @@
 ---
 title: "LLM 大语言模型详解：从 Transformer 到应用"
-order: 10
+order: 1
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

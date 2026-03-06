@@ -1,6 +1,6 @@
 ---
 title: "上下文窗口详解：大模型的'记忆力'"
-order: 12
+order: 3
 section: "AI"
 topic: "AI 技术"
 lang: "zh"

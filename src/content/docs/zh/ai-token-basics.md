@@ -1,6 +1,6 @@
 ---
 title: "Token 机制详解：大模型的文本处理单位"
-order: 11
+order: 2
 section: "AI"
 topic: "AI 技术"
 lang: "zh"
