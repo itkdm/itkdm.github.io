@@ -2,7 +2,7 @@
 title: "Prompt 工程入门：如何写好提示词"
 order: 14
 section: "AI"
-topic: "AI 基础"
+topic: "AI 技术"
 lang: "zh"
 slug: "ai-prompt-engineering"
 summary: "系统讲解 Prompt 工程的核心技巧、常用模式和实战案例，提升与大模型的交互效果。"

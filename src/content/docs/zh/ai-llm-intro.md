@@ -2,7 +2,7 @@
 title: "LLM 大语言模型详解：从 Transformer 到应用"
 order: 10
 section: "AI"
-topic: "AI 基础"
+topic: "AI 技术"
 lang: "zh"
 slug: "ai-llm-intro"
 summary: "深入讲解 LLM 大语言模型的工作原理、Transformer 架构、训练流程和主流模型对比。"

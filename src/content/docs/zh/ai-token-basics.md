@@ -2,7 +2,7 @@
 title: "Token 机制详解：大模型的文本处理单位"
 order: 11
 section: "AI"
-topic: "AI 基础"
+topic: "AI 技术"
 lang: "zh"
 slug: "ai-token-basics"
 summary: "深入讲解 Token 的概念、计数规则、计费方式，以及 Token 对成本和性能的影响。"

@@ -2,7 +2,7 @@
 title: "上下文窗口详解：大模型的'记忆力'"
 order: 12
 section: "AI"
-topic: "AI 基础"
+topic: "AI 技术"
 lang: "zh"
 slug: "ai-context-window"
 summary: "深入讲解上下文窗口的概念、技术实现、优化方案，以及长上下文应用场景。"

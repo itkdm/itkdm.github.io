@@ -2,7 +2,7 @@
 title: "Temperature 参数详解：控制 AI 的创造性"
 order: 13
 section: "AI"
-topic: "AI 基础"
+topic: "AI 技术"
 lang: "zh"
 slug: "ai-temperature-parameters"
 summary: "深入讲解 Temperature、Top-P 等采样参数的原理、设置建议和实际效果对比。"
