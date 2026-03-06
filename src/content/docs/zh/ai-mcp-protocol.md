@@ -292,17 +292,20 @@ async def call_tool(name, args):
 
 ## 四、MCP 生态与现状
 
-### 4.1 官方维护的 MCP Server
+### 4.1 官方维护的 MCP Server（2026 年）
 
-| Server | 功能 | 状态 |
-|--------|------|------|
-| `filesystem` | 文件系统访问 | ✅ 稳定 |
-| `postgres` | PostgreSQL 数据库 | ✅ 稳定 |
-| `github` | GitHub API | ✅ 稳定 |
-| `slack` | Slack 消息 | ✅ 稳定 |
-| `git` | Git 操作 | ✅ 稳定 |
-| `puppeteer` | 浏览器自动化 | 🧪 实验 |
-| `memory` | 向量记忆存储 | 🧪 实验 |
+| Server | 功能 | 状态 | 更新时间 |
+|--------|------|------|---------|
+| `filesystem` | 文件系统访问 | ✅ 稳定 | 2024-11 |
+| `postgres` | PostgreSQL 数据库 | ✅ 稳定 | 2024-11 |
+| `github` | GitHub API | ✅ 稳定 | 2024-11 |
+| `slack` | Slack 消息 | ✅ 稳定 | 2024-11 |
+| `git` | Git 操作 | ✅ 稳定 | 2024-11 |
+| `puppeteer` | 浏览器自动化 | 🧪 实验 | 2024-11 |
+| `memory` | 向量记忆存储 | 🧪 实验 | 2024-11 |
+| `notion` | Notion API | ✅ 新增 | 2025-03 |
+| `linear` | Linear 项目管理 | ✅ 新增 | 2025-03 |
+| `bigquery` | Google BigQuery | ✅ 新增 | 2025-06 |
 
 ### 4.2 社区生态
 
