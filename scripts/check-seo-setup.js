@@ -49,21 +49,36 @@ const checks = [
   },
 ];
 
-const verificationFiles = [
+const verificationChecks = [
+  {
+    name: '百度验证 Meta 标签',
+    type: 'meta',
+    pattern: /baidu-site-verification/,
+    description: '百度搜索资源平台验证（通过 Meta 标签）'
+  },
+  {
+    name: 'Google Analytics',
+    type: 'script',
+    pattern: /gtag/,
+    description: 'Google Analytics 4（可自动验证 Search Console）'
+  },
   {
     name: '百度验证文件',
+    type: 'file',
     pattern: /baidu_verify_.*\.html/,
-    description: '百度搜索资源平台验证文件'
+    description: '百度搜索资源平台验证文件（可选）'
   },
   {
     name: 'Google 验证文件',
+    type: 'file',
     pattern: /google.*\.html/,
-    description: 'Google Search Console 验证文件'
+    description: 'Google Search Console 验证文件（可选）'
   },
   {
     name: 'Bing 验证文件',
+    type: 'file',
     pattern: /BingSiteAuth\.xml/,
-    description: 'Bing Webmaster Tools 验证文件'
+    description: 'Bing Webmaster Tools 验证文件（可选）'
   }
 ];
 
@@ -186,20 +201,39 @@ async function main() {
     }
   }
   
-  // 检查验证文件（可选）
-  console.log('\n📋 检查搜索引擎验证文件（可选）...\n');
+  // 检查验证配置（包括 Meta 标签和文件）
+  console.log('\n📋 检查搜索引擎验证配置...\n');
   
+  // 检查首页 HTML 中的 Meta 标签和脚本
+  const homepageCheck = await checkUrl(SITE_URL, 200);
+  if (homepageCheck.success && homepageCheck.content) {
+    for (const vc of verificationChecks) {
+      if (vc.type === 'meta' || vc.type === 'script') {
+        // 简化 HTML 后检查
+        const simpleContent = homepageCheck.content.replace(/\s+/g, ' ');
+        if (vc.pattern.test(simpleContent)) {
+          console.log(`✅ ${vc.name}: 已配置（页面源码）`);
+        } else {
+          console.log(`⏳ ${vc.name}: 未检测到 - ${vc.description}`);
+        }
+      }
+    }
+  }
+  
+  // 检查 public 目录中的验证文件
   const publicDir = '/root/.openclaw/workspace/itkdm.github.io/public/';
   import('fs').then(({ readFileSync, readdirSync }) => {
     try {
       const files = readdirSync(publicDir);
       
-      for (const vf of verificationFiles) {
-        const found = files.filter(f => vf.pattern.test(f));
-        if (found.length > 0) {
-          console.log(`✅ ${vf.name}: 已配置 (${found.join(', ')})`);
-        } else {
-          console.log(`⏳ ${vf.name}: 未配置 - ${vf.description}`);
+      for (const vc of verificationChecks) {
+        if (vc.type === 'file') {
+          const found = files.filter(f => vc.pattern.test(f));
+          if (found.length > 0) {
+            console.log(`✅ ${vc.name}: 已配置 (${found.join(', ')})`);
+          } else {
+            console.log(`⏳ ${vc.name}: 未配置（可选）- ${vc.description}`);
+          }
         }
       }
     } catch (err) {
