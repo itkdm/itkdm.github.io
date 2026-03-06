@@ -7,7 +7,6 @@ lang: "zh"
 draft: false
 priority: 5
 ---
-
 GitHub 热榜，被一个"纸片人"项目占领了。
 
 不是手办，是 AI。

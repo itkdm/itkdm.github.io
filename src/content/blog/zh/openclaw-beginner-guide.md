@@ -7,7 +7,6 @@ lang: "zh"
 draft: false
 priority: 5
 ---
-
 你是不是也想过：要是有个 AI 助手，能帮我盯着服务器、自动整理资料、定时提醒重要事情，该多好？
 
 **OpenClaw 就是干这个的。**

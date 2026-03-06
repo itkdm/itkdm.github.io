@@ -7,7 +7,6 @@ lang: "zh"
 draft: false
 priority: 5
 ---
-
 OpenClaw 正在变成「工作伙伴」。
 
 它不再只是回答你的问题，而是开始**主动观察、主动学习、主动建议**——
