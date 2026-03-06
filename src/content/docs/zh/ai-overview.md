@@ -72,11 +72,27 @@ updated: 2026-03-06
 
 ## 本专栏文章导航
 
+### 基础概念（必读）
+
 | 文章 | 难度 | 适合人群 |
 |------|------|---------|
-| [AI 技术概览](./ai-overview.md) | ⭐ | 所有人，入门必读 |
+| [LLM 大语言模型详解](./ai-llm-intro.md) | ⭐⭐ | 所有人，理解 AI 原理 |
+| [Token 机制详解](./ai-token-basics.md) | ⭐ | 开发者，控制成本 |
+| [上下文窗口详解](./ai-context-window.md) | ⭐⭐ | 所有人，选择模型 |
+| [Prompt 工程](./ai-prompt-engineering.md) | ⭐⭐ | 所有人，提升效果 |
+| [Temperature 参数详解](./ai-temperature-parameters.md) | ⭐ | 开发者，调优输出 |
+
+### 核心技术
+
+| 文章 | 难度 | 适合人群 |
+|------|------|---------|
 | [RAG 技术详解](./ai-rag-deep-dive.md) | ⭐⭐⭐ | 后端/全栈，想构建知识库 |
 | [MCP 协议解析](./ai-mcp-protocol.md) | ⭐⭐⭐ | 架构师/技术负责人 |
+
+### 应用架构
+
+| 文章 | 难度 | 适合人群 |
+|------|------|---------|
 | [AI Agent 技术](./ai-agent-architecture.md) | ⭐⭐⭐⭐ | 高级开发，想构建智能体 |
 
 ## 怎么用这个专栏学习？
