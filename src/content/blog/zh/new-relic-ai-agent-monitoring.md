@@ -1,3 +1,12 @@
+---
+title: "New Relic 推出 AI Agent 平台：1 次把\"Agent 失控成本\"讲透"
+date: 2026-03-06
+tags: ["AI"]
+summary: "Agent 上线不是\"模型选型\"，而是\"生产系统治理\"。New Relic 这次押注的就是可观测与治理"
+lang: "zh"
+draft: false
+---
+
 # New Relic 推出 AI Agent 平台：1 次把"Agent 失控成本"讲透
 
 > Agent 上线不是"模型选型"，而是"生产系统治理"。New Relic 这次押注的就是可观测与治理
