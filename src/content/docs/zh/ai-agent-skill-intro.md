@@ -363,11 +363,13 @@ class AutonomousResearchSkill:
 
 ## 四、技能的实现框架
 
-### 4.1 LangChain Skills
+### 4.1 LangChain Skills（2026 版）
 
 ```python
 from langchain.agents import tool
+from langchain_core.tools import BaseTool
 
+# 方式 1：用装饰器定义工具（LangChain 0.3.x）
 @tool
 def calculate_bmi(weight: float, height: float) -> str:
     """计算 BMI 指数
@@ -392,8 +394,21 @@ def calculate_bmi(weight: float, height: float) -> str:
     
     return f"BMI: {bmi:.1f}, 建议：{advice}"
 
+# 方式 2：继承 BaseTool 类（更灵活）
+class WeatherTool(BaseTool):
+    name: str = "weather_query"
+    description: str = "查询指定城市的天气"
+    
+    def _run(self, city: str) -> str:
+        # 实现天气查询逻辑
+        return f"{city}今天晴天，25 度"
+    
+    async def _arun(self, city: str) -> str:
+        # 异步实现
+        return await asyncio.to_thread(self._run, city)
+
 # 注册到 Agent
-tools = [calculate_bmi]
+tools = [calculate_bmi, WeatherTool()]
 ```
 
 ### 4.2 AutoGen Skills

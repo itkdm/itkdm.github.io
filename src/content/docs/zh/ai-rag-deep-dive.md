@@ -114,14 +114,14 @@ updated: 2026-03-06
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-### 2.2 关键组件技术选型
+### 2.2 关键组件技术选型（2026 年 3 月）
 
 | 组件 | 开源方案 | 商业方案 | 选择建议 |
 |------|---------|---------|---------|
-| **Embedding 模型** | bge-large-zh, m3e-base | OpenAI text-embedding-3 | 中文场景推荐 bge 系列 |
-| **向量数据库** | Milvus, Chroma, Qdrant | Pinecone, Weaviate | 小规模用 Chroma，大规模用 Milvus |
-| **LLM** | Qwen, ChatGLM | GPT-4, Claude | 根据成本和效果权衡 |
-| **编排框架** | LangChain, LlamaIndex | Dify, Flowise | 快速原型用 Dify，定制开发用 LangChain |
+| **Embedding 模型** | bge-m3, bge-large-zh-v1.5 | OpenAI text-embedding-3 | 中文场景推荐 bge-m3（支持 8K 长度） |
+| **向量数据库** | Milvus 2.4.x, Qdrant 1.12.x, Chroma 0.5.x | Pinecone Serverless, Weaviate 1.25.x | 小规模用 Chroma，大规模用 Milvus/Qdrant |
+| **LLM** | Qwen2.5-72B, DeepSeek-V3 | GPT-4o, Claude 3.7 | 根据成本和效果权衡 |
+| **编排框架** | LangChain 0.3.x, LlamaIndex 0.12.x | Dify 1.0.x, Flowise 2.0.x | 快速原型用 Dify，定制开发用 LangChain |
 
 ### 2.3 文档切片（Chunking）策略
 
@@ -155,18 +155,18 @@ chunk_overlap = 50  # 重叠部分，保持上下文连贯
 
 ## 三、实战：从零搭建 RAG 系统
 
-### 3.1 最小可行方案（100 行代码）
+### 3.1 最小可行方案（100 行代码，2026 版）
 
 ```python
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Chroma
-from langchain.llms import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 
 # 1. 加载文档
-loader = TextLoader("docs.txt")
+loader = TextLoader("docs.txt", encoding='utf-8')
 documents = loader.load()
 
 # 2. 切片
@@ -176,12 +176,12 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 chunks = text_splitter.split_documents(documents)
 
-# 3. 创建向量存储
-embeddings = HuggingFaceEmbeddings(model_name="bge-large-zh")
+# 3. 创建向量存储（2026 推荐：bge-m3）
+embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-m3")
 vectorstore = Chroma.from_documents(chunks, embeddings)
 
 # 4. 创建检索链
-llm = ChatOpenAI(model="gpt-4")
+llm = ChatOpenAI(model="gpt-4o", temperature=0.3)
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     retriever=vectorstore.as_retriever(search_kwargs={"k": 3})

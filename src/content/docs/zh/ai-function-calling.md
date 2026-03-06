@@ -171,7 +171,7 @@ LLM 可能返回：
 
 ## 三、主流平台实现
 
-### 3.1 OpenAI Function Calling
+### 3.1 OpenAI Function Calling（2026 版）
 
 ```python
 from openai import OpenAI
@@ -202,21 +202,23 @@ functions = [
 ]
 
 # 2. 第一次调用（LLM 决定是否调用函数）
+# 2026 年推荐模型：gpt-4o（性价比最高）
 response = client.chat.completions.create(
     model="gpt-4o",
     messages=[
         {"role": "user", "content": "北京天气怎么样？"}
     ],
-    functions=functions,
-    function_call="auto"  # auto: 让 LLM 决定，none: 不调用，required: 必须调用
+    tools=functions,  # 2024 年后改用 tools 参数
+    tool_choice="auto"  # 2024 年后改用 tool_choice
 )
 
 # 3. 检查是否需要调用函数
 message = response.choices[0].message
-if message.function_call:
+if message.tool_calls:
     # 4. 执行函数
-    function_name = message.function_call.name
-    function_args = json.loads(message.function_call.arguments)
+    tool_call = message.tool_calls[0]
+    function_name = tool_call.function.name
+    function_args = json.loads(tool_call.function.arguments)
     
     if function_name == "get_current_weather":
         result = get_weather(
@@ -229,8 +231,8 @@ if message.function_call:
         model="gpt-4o",
         messages=[
             {"role": "user", "content": "北京天气怎么样？"},
-            {"role": "assistant", "content": None, "function_call": message.function_call},
-            {"role": "function", "name": function_name, "content": result}
+            {"role": "assistant", "content": None, "tool_calls": message.tool_calls},
+            {"role": "tool", "tool_call_id": tool_call.id, "content": str(result)}
         ]
     )
     
