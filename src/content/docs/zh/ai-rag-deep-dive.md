@@ -7,7 +7,7 @@ lang: "zh"
 slug: "ai-rag-deep-dive"
 summary: "深入讲解 RAG 技术原理、架构设计、实现方案，附带面试高频考点和参考回答。"
 icon: "📚"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-06
 ---

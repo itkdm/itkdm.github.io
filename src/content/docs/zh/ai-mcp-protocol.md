@@ -7,7 +7,7 @@ lang: "zh"
 slug: "ai-mcp-protocol"
 summary: "深入讲解 MCP（Model Context Protocol）协议原理、架构设计和应用场景，附带面试考点解析。"
 icon: "🔌"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-06
 ---

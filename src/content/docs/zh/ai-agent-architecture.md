@@ -7,7 +7,7 @@ lang: "zh"
 slug: "ai-agent-architecture"
 summary: "深入讲解 AI Agent 的核心架构、设计模式、实现方案，附带面试高频考点和参考回答。"
 icon: "🤖"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-06
 ---
