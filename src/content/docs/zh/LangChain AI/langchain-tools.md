@@ -1,5 +1,15 @@
 ---
 title: Tools（工具）
+order: 4
+section: "LangChain AI"
+topic: "Tools"
+lang: "zh"
+slug: "langchain-tools"
+summary: "Tool 完整指南，涵盖创建工具、访问上下文、ToolNode 使用、错误处理、路由和预构建工具"
+icon: "🛠️"
+featured: true
+toc: true
+updated: 2026-03-07
 ---
 
 Tools 扩展了 [Agents（智能体）](/oss/langchain/agents) 的能力——让它们能够获取实时数据、执行代码、查询外部数据库并在现实世界中采取行动。
