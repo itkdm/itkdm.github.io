@@ -1,19 +1,23 @@
 # LangChain 文档翻译进度
 
-## ✅ 已完成并上线
+## ✅ 已完成并上线（12 篇）
 
 | 文档 | 说明 | 大小 | 上线时间 |
 |------|------|------|----------|
-| langchain-ai-overview.md | LangChain AI 生态总览 | 15KB | 2026-03-07 |
-| langchain-framework-guide.md | LangChain 框架详解 | 16KB | 2026-03-07 |
-| langgraph-workflow-guide.md | LangGraph 工作流详解 | 19KB | 2026-03-07 |
-| langsmith-platform-guide.md | LangSmith 平台详解 | 22KB | 2026-03-07 |
+| langchain-ai-overview.md | 生态总览 | 15KB | 2026-03-07 |
+| langchain-framework-guide.md | 框架详解 | 16KB | 2026-03-07 |
+| langgraph-workflow-guide.md | LangGraph | 19KB | 2026-03-07 |
+| langsmith-platform-guide.md | LangSmith | 22KB | 2026-03-07 |
 | langchain-install.md | 安装指南 | 2.3KB | 2026-03-07 13:49 |
 | langchain-quickstart.md | 快速开始 | 20KB | 2026-03-07 13:49 |
-| langchain-agents.md | Agent 核心概念 | 43KB | 2026-03-07 13:55 |
-| langchain-tools.md | Tool 完整指南 | 25KB | 2026-03-07 13:55 |
+| langchain-agents.md | Agent 详解 | 43KB | 2026-03-07 13:55 |
+| langchain-tools.md | Tool 指南 | 24KB | 2026-03-07 13:55 |
+| **langchain-models.md** | **模型集成** | **73KB** | **2026-03-07 14:02** |
+| **langchain-messages.md** | **消息系统** | **57KB** | **2026-03-07 14:02** |
+| **langchain-rag.md** | **RAG 技术** | **32KB** | **2026-03-07 14:02** |
+| **langchain-retrieval.md** | **检索系统** | **17KB** | **2026-03-07 14:02** |
 
-**总计**: 8 篇，约 162KB
+**总计**: 12 篇，约 340KB
 
 ---
 
@@ -23,38 +27,29 @@
 
 ---
 
-## ⏳ 待翻译（核心 - 优先级 P0）
-
-| 序号 | 文档 | 说明 | 大小 | 优先级 |
-|------|------|------|------|--------|
-| 1 | models.mdx | 模型集成 | 77KB | P0 |
-| 2 | messages.mdx | 消息系统 | 59KB | P0 |
-| 3 | rag.mdx | RAG 技术 | 33KB | P0 |
-| 4 | retrieval.mdx | 检索系统 | 17KB | P0 |
-
 ## ⏳ 待翻译（核心 - 优先级 P1）
 
 | 序号 | 文档 | 说明 | 大小 |
 |------|------|------|------|
-| 5 | structured-output.mdx | 结构化输出 | 44KB |
-| 6 | human-in-the-loop.mdx | 人工介入 | 20KB |
-| 7 | evals.mdx | 评估系统 | 6.9KB |
-| 8 | test.mdx | 测试指南 | 31KB |
-| 9 | memory/short-term.mdx | 短期记忆 | 35KB |
-| 10 | memory/long-term.mdx | 长期记忆 | 10KB |
+| 1 | structured-output.mdx | 结构化输出 | 44KB |
+| 2 | human-in-the-loop.mdx | 人工介入 | 20KB |
+| 3 | evals.mdx | 评估系统 | 6.9KB |
+| 4 | test.mdx | 测试指南 | 31KB |
+| 5 | short-term-memory.mdx | 短期记忆 | 35KB |
+| 6 | long-term-memory.mdx | 长期记忆 | 10KB |
 
 ## ⏳ 待翻译（核心 - 优先级 P2）
 
 | 序号 | 文档 | 说明 | 大小 |
 |------|------|------|------|
-| 11 | deploy.mdx | 部署指南 | 1.2KB |
-| 12 | streaming/overview.mdx | 流式输出 | 44KB |
-| 13 | guardrails.mdx | 防护栏 | 22KB |
-| 14 | knowledge-base.mdx | 知识库 | 26KB |
-| 15 | context-engineering.mdx | 上下文工程 | 66KB |
-| 16 | mcp.mdx | MCP 集成 | 42KB |
-| 17 | sql-agent.mdx | SQL Agent | 29KB |
-| 18 | voice-agent.mdx | 语音 Agent | 28KB |
+| 7 | deploy.mdx | 部署指南 | 1.2KB |
+| 8 | streaming/overview.mdx | 流式输出 | 44KB |
+| 9 | guardrails.mdx | 防护栏 | 22KB |
+| 10 | knowledge-base.mdx | 知识库 | 26KB |
+| 11 | context-engineering.mdx | 上下文工程 | 66KB |
+| 12 | mcp.mdx | MCP 集成 | 42KB |
+| 13 | sql-agent.mdx | SQL Agent | 29KB |
+| 14 | voice-agent.mdx | 语音 Agent | 28KB |
 
 ## ⏳ 待翻译（其他）
 
@@ -69,20 +64,24 @@
 
 ## 📊 统计
 
-- **已完成**: 8 篇（162KB）
-- **待翻译（核心）**: 18 篇（约 520KB）
+- **已完成**: 12 篇（340KB）✅
+- **待翻译（核心 P1）**: 6 篇（约 147KB）
+- **待翻译（核心 P2）**: 8 篇（约 258KB）
 - **待翻译（其他）**: 25+ 篇
 - **总计**: 50+ 篇
+
+**完成度**: 约 24%（核心文档优先）
 
 ---
 
 ## 🎯 下一阶段
 
-继续翻译 P0 优先级文档：
-1. models.mdx（模型集成）- 77KB
-2. messages.mdx（消息系统）- 59KB
-3. rag.mdx（RAG 技术）- 33KB
-4. retrieval.mdx（检索系统）- 17KB
+继续翻译 P1 优先级文档：
+1. structured-output.mdx（结构化输出）
+2. human-in-the-loop.mdx（人工介入）
+3. evals.mdx（评估系统）
+4. test.mdx（测试指南）
+5. memory 相关文档
 
 ---
 
@@ -110,3 +109,11 @@ updated: 2026-03-07
 - 代码示例保持原样
 - 链接保持原样
 - 适当添加中文注释
+
+---
+
+## 📈 进度更新
+
+- 2026-03-07 13:43: 完成第一批（install, quickstart）
+- 2026-03-07 13:55: 完成第二批（agents, tools）
+- 2026-03-07 14:02: 完成第三批（models, messages, rag, retrieval）
