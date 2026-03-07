@@ -1,5 +1,6 @@
 ---
 title: "Go 概览"
+slug: "go-overview"
 order: 20
 section: "服务端"
 lang: "zh"

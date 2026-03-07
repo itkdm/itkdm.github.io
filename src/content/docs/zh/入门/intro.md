@@ -1,5 +1,6 @@
 ---
 title: "概览与信息架构"
+slug: "intro"
 order: 1
 section: "入门"
 lang: "zh"

@@ -1,5 +1,6 @@
 ---
 title: "MySQL 基础概览"
+slug: "mysql-overview"
 order: 1
 section: "数据库"
 lang: "zh"

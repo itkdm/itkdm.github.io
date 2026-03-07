@@ -1,5 +1,6 @@
 ---
 title: "PostgreSQL 概览"
+slug: "postgresql-overview"
 order: 2
 section: "数据库"
 lang: "zh"

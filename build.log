@@ -623,3 +623,296 @@ Search will still work, but will not match across root words.
 
 Finished in 5.638 seconds
 [baidu-push] 未设置 BAIDU_PUSH_TOKEN，已跳过百度推送（构建不受影响）。
+
+> terrestrial-tower@0.0.1 prebuild
+> node scripts/fetch-releases.mjs
+
+Loading download items from Markdown files...
+Found 14 download items
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/example-repo
+Repository not found or has no releases: example/ios-app
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/beta-app
+Repository not found or has no releases: example/example-repo
+✓ No release changes detected (5 items), keeping existing /root/.openclaw/workspace/itkdm.github.io/src/generated/releases.json
+
+> terrestrial-tower@0.0.1 build
+> astro build
+
+12:06:25 [content] Syncing content
+12:06:28 [content] Synced content
+12:06:28 [types] Generated 6.45s
+12:06:28 [build] output: "static"
+12:06:28 [build] mode: "static"
+12:06:28 [build] directory: /root/.openclaw/workspace/itkdm.github.io/dist/
+12:06:28 [build] Collecting build info...
+12:06:28 [build] ✓ Completed in 6.53s.
+12:06:29 [build] Building static entrypoints...
+12:06:51 [vite] ✓ built in 22.28s
+12:06:51 [build] ✓ Completed in 22.34s.
+
+ building client (vite) 
+12:06:52 [vite] transforming...
+12:06:52 [vite] ✓ 6 modules transformed.
+12:06:52 [vite] rendering chunks...
+12:06:52 [vite] ✓ built in 606ms
+
+ generating static routes 
+12:06:52 ▶ src/pages/en/index.astro
+12:06:52   └─ /en/index.html (+309ms) 
+12:06:53 λ src/pages/robots.txt.ts
+12:06:53   └─ /robots.txt (+3ms) 
+12:06:53 λ src/pages/sitemap.xml.ts
+12:06:53   └─ /sitemap.xml (+80ms) 
+12:06:53 ▶ src/pages/zh/index.astro
+12:06:53   └─ /zh/index.html (+96ms) 
+12:06:53 ▶ src/pages/[lang]/blog/archive.astro
+12:06:53   ├─ /zh/blog/archive/index.html (+88ms) 
+12:06:53   └─ /en/blog/archive/index.html (+5ms) 
+12:06:53 ▶ src/pages/[lang]/blog/tags/[tag].astro
+12:06:53   ├─ /en/blog/tags/Astro/index.html (+80ms) 
+12:06:53   ├─ /en/blog/tags/Guide/index.html (+5ms) 
+12:06:53   ├─ /zh/blog/tags/AI/index.html (+8ms) 
+12:06:53   ├─ /zh/blog/tags/工作流，效率工具，Cursor/index.html (+7ms) 
+12:06:53   ├─ /zh/blog/tags/Codex/index.html (+77ms) 
+12:06:53   ├─ /zh/blog/tags/OpenClaw/index.html (+6ms) 
+12:06:53   ├─ /zh/blog/tags/Astro/index.html (+5ms) 
+12:06:53   ├─ /zh/blog/tags/指南/index.html (+8ms) 
+12:06:53   ├─ /zh/blog/tags/站点介绍/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/Agent/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/自动化/index.html (+73ms) 
+12:06:53   ├─ /zh/blog/tags/架构/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/工具推荐/index.html (+5ms) 
+12:06:53   ├─ /en/blog/tags/Frontend/index.html (+6ms) 
+12:06:53   ├─ /en/blog/tags/Static Sites/index.html (+9ms) 
+12:06:53   ├─ /zh/blog/tags/AI 自动化，效率工具，智能代理/index.html (+76ms) 
+12:06:53   ├─ /en/blog/tags/IntelliJ IDEA/index.html (+4ms) 
+12:06:53   ├─ /en/blog/tags/Eclipse/index.html (+6ms) 
+12:06:53   ├─ /en/blog/tags/TODO/index.html (+7ms) 
+12:06:53   ├─ /en/blog/tags/Coding Standards/index.html (+4ms) 
+12:06:53   ├─ /en/blog/tags/Productivity/index.html (+76ms) 
+12:06:53   ├─ /en/blog/tags/GitHub Actions/index.html (+6ms) 
+12:06:53   ├─ /en/blog/tags/CI-CD/index.html (+6ms) 
+12:06:53   ├─ /en/blog/tags/Automation/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/GitHub Actions/index.html (+5ms) 
+12:06:53   ├─ /zh/blog/tags/CI-CD/index.html (+7ms) 
+12:06:53   ├─ /zh/blog/tags/DevOps/index.html (+73ms) 
+12:06:53   ├─ /zh/blog/tags/前端/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/静态网站/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/性能优化/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/VS Code/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/问题排查/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/开发工具/index.html (+4ms) 
+12:06:53   ├─ /zh/blog/tags/Cursor/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/IntelliJ IDEA/index.html (+3ms) 
+12:06:53   ├─ /zh/blog/tags/Eclipse/index.html (+3ms) 
+12:06:54   ├─ /zh/blog/tags/TODO/index.html (+5ms) 
+12:06:54   ├─ /zh/blog/tags/开发规范/index.html (+66ms) 
+12:06:54   ├─ /zh/blog/tags/效率/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/tags/开源项目，虚拟主播，AI 伴侣/index.html (+3ms) 
+12:06:54   ├─ /zh/blog/tags/提示词技巧，谷歌研究，大语言模型/index.html (+3ms) 
+12:06:54   ├─ /zh/blog/tags/GPT/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/tags/AI 自动化，效率工具，智能代理，进阶教程/index.html (+7ms) 
+12:06:54   └─ /zh/blog/tags/AI 助手，自动化，效率工具/index.html (+4ms) 
+12:06:54 ▶ src/pages/[lang]/blog/tags/index.astro
+12:06:54   ├─ /zh/blog/tags/index.html (+5ms) 
+12:06:54   └─ /en/blog/tags/index.html (+65ms) 
+12:06:54 ▶ src/pages/[lang]/blog/[slug].astro
+12:06:54   ├─ /en/blog/welcome/index.html (+10ms) 
+12:06:54   ├─ /zh/blog/ai-workflow-minimal-cost/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/hello-world/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/moltbot-architecture-overview/index.html (+4ms) 
+12:06:54   ├─ /en/blog/astro-build-static-site/index.html (+70ms) 
+12:06:54   ├─ /zh/blog/openclaw-20-usecases/index.html (+6ms) 
+12:06:54   ├─ /en/blog/todo-tags/index.html (+4ms) 
+12:06:54   ├─ /en/blog/github-actions-deployment/index.html (+5ms) 
+12:06:54   ├─ /zh/blog/github-actions-deployment/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/astro-build-static-site/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/vscode-service-worker-error-fix/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/todo-tags/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/2026-ai-side-hustle-trends/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/3-new-ai-tools-march-2026/index.html (+78ms) 
+12:06:54   ├─ /zh/blog/airi-open-source-virtual-companion/index.html (+6ms) 
+12:06:54   ├─ /zh/blog/google-repetition-prompt-technique/index.html (+10ms) 
+12:06:54   ├─ /zh/blog/gpt-5-3-instant-update/index.html (+5ms) 
+12:06:54   ├─ /zh/blog/gpt5-4-upgrade/index.html (+65ms) 
+12:06:54   ├─ /zh/blog/new-relic-ai-agent-monitoring/index.html (+5ms) 
+12:06:54   ├─ /zh/blog/openclaw-20-cases/index.html (+3ms) 
+12:06:54   ├─ /zh/blog/openclaw-50-advanced-cases/index.html (+3ms) 
+12:06:54   ├─ /zh/blog/openclaw-beginner-guide/index.html (+4ms) 
+12:06:54   ├─ /zh/blog/openclaw-skills-guide/index.html (+4ms) 
+12:06:54   └─ /zh/blog/openclaw-cloudflare-bypass/index.html (+5ms) 
+12:06:54 ▶ src/pages/[lang]/blog/index.astro
+12:06:54   ├─ /zh/blog/index.html (+5ms) 
+12:06:54   └─ /en/blog/index.html (+3ms) 
+12:06:54 ▶ src/pages/[lang]/docs/protected-example.astro
+12:06:54   ├─ /zh/docs/protected-example/index.html (+61ms) 
+12:06:54   └─ /en/docs/protected-example/index.html (+3ms) 
+12:06:54 ▶ src/pages/[lang]/docs/[slug].astro
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-121-best-time-to-buy-and-sell-stock/index.html (+22ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-020-valid-parentheses/index.html (+69ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-215-kth-largest-element-in-an-array/index.html (+21ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-295-find-median-from-data-stream/index.html (+8ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-045-jump-game-ii/index.html (+65ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-055-jump-game/index.html (+8ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-084-largest-rectangle-in-histogram/index.html (+10ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-155-min-stack/index.html (+83ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-347-top-k-frequent-elements/index.html (+11ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-394-decode-string/index.html (+7ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-739-daily-temperatures/index.html (+8ms) 
+12:06:54   ├─ /zh/docs/algorithms-leetcode-hot100-overview/index.html (+73ms) 
+12:06:54   ├─ /zh/docs/go-overview/index.html (+7ms) 
+12:06:54   ├─ /zh/docs/interview-java-basics-overview/index.html (+8ms) 
+12:06:54   ├─ /zh/docs/interview-java-basics-compile-vs-interpret/index.html (+15ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-diff/index.html (+67ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-jdk11/index.html (+9ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-jdk21/index.html (+11ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-jdk7/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-jdk8/index.html (+9ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-arraylist-questions/index.html (+64ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-basics/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/interview-real-world-overview/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-hashmap-questions/index.html (+13ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-hashmap/index.html (+82ms) 
+12:06:55   ├─ /zh/docs/interview-java-collections-linkedlist-jdk8/index.html (+12ms) 
+12:06:55   ├─ /zh/docs/intro/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/java-overview/index.html (+71ms) 
+12:06:55   ├─ /zh/docs/java-getting-started/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/java-syntax-basics/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/message-queue-core-concepts/index.html (+7ms) 
+12:06:55   ├─ /zh/docs/message-queue-overview/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/message-queue-basics/index.html (+68ms) 
+12:06:55   ├─ /zh/docs/message-queue-products-comparison/index.html (+10ms) 
+12:06:55   ├─ /zh/docs/postgresql-overview/index.html (+7ms) 
+12:06:55   ├─ /zh/docs/mysql-overview/index.html (+8ms) 
+12:06:55   ├─ /zh/docs/redis-overview/index.html (+7ms) 
+12:06:55   ├─ /zh/docs/rust-overview/index.html (+7ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-215-kth-largest-element-in-an-array/index.html (+69ms) 
+12:06:55   ├─ /zh/docs/python-overview/index.html (+7ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-055-jump-game/index.html (+7ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-020-valid-parentheses/index.html (+8ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-084-largest-rectangle-in-histogram/index.html (+71ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-121-best-time-to-buy-and-sell-stock/index.html (+12ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-295-find-median-from-data-stream/index.html (+91ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-347-top-k-frequent-elements/index.html (+93ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-155-min-stack/index.html (+12ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-394-decode-string/index.html (+87ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-739-daily-temperatures/index.html (+13ms) 
+12:06:55   ├─ /en/docs/algorithms-leetcode-hot100-overview/index.html (+10ms) 
+12:06:55   ├─ /en/docs/interview-java-collections-hashmap-questions/index.html (+83ms) 
+12:06:56   ├─ /en/docs/interview-java-collections-linkedlist-jdk8/index.html (+13ms) 
+12:06:56   ├─ /en/docs/interview-java-collections-hashmap/index.html (+95ms) 
+12:06:56   ├─ /en/docs/interview-java-collections-overview/index.html (+10ms) 
+12:06:56   ├─ /en/docs/interview-real-world-overview/index.html (+8ms) 
+12:06:56   ├─ /en/docs/intro/index.html (+72ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-136-single-number/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-763-partition-labels/index.html (+7ms) 
+12:06:56   ├─ /zh/docs/ai-overview/index.html (+9ms) 
+12:06:56   ├─ /zh/docs/ai-context-window/index.html (+9ms) 
+12:06:56   ├─ /zh/docs/ai-prompt-engineering/index.html (+66ms) 
+12:06:56   ├─ /zh/docs/ai-rag-deep-dive/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/ai-mcp-protocol/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/ai-agent-architecture/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/ai-llm-intro/index.html (+9ms) 
+12:06:56   ├─ /zh/docs/ai-function-calling/index.html (+64ms) 
+12:06:56   ├─ /zh/docs/ai-embedding-vector-search/index.html (+10ms) 
+12:06:56   ├─ /zh/docs/ai-agent-skill-intro/index.html (+11ms) 
+12:06:56   ├─ /zh/docs/ai-temperature-parameters/index.html (+80ms) 
+12:06:56   ├─ /zh/docs/ai-token-basics/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/ai-vector-database-deep-dive/index.html (+9ms) 
+12:06:56   ├─ /zh/docs/ai-workflow-orchestration/index.html (+9ms) 
+12:06:56   ├─ /zh/docs/message-queue-kafka-faq/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-075-sort-colors/index.html (+8ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-070-climbing-stairs/index.html (+63ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-118-pascals-triangle/index.html (+16ms) 
+12:06:56   ├─ /zh/docs/algorithms-leetcode-hot100-169-majority-element/index.html (+83ms) 
+12:06:56   └─ /zh/docs/algorithms-leetcode-hot100-198-house-robber/index.html (+8ms) 
+12:06:56 ▶ src/pages/[lang]/docs/index.astro
+12:06:56   ├─ /zh/docs/index.html (+6ms) 
+12:06:56   └─ /en/docs/index.html (+5ms) 
+12:06:56 ▶ src/pages/[lang]/downloads/index.astro
+12:06:56   ├─ /zh/downloads/index.html (+6ms) 
+12:06:56   └─ /en/downloads/index.html (+4ms) 
+12:06:56 ▶ src/pages/[lang]/password-example.astro
+12:06:56   ├─ /zh/password-example/index.html (+4ms) 
+12:06:56   └─ /en/password-example/index.html (+4ms) 
+12:06:56 ▶ src/pages/[lang]/projects/[slug].astro
+12:06:56   ├─ /zh/projects/side-lying-monitor/index.html (+5ms) 
+12:06:56   ├─ /en/projects/open-lab-components/index.html (+71ms) 
+12:06:56   ├─ /zh/projects/yuketang-export/index.html (+3ms) 
+12:06:56   ├─ /en/projects/yuketang-export/index.html (+3ms) 
+12:06:56   ├─ /en/projects/side-lying-monitor/index.html (+4ms) 
+12:06:56   └─ /zh/projects/open-lab-components/index.html (+3ms) 
+12:06:56 ▶ src/pages/[lang]/projects/index.astro
+12:06:56   ├─ /zh/projects/index.html (+4ms) 
+12:06:56   └─ /en/projects/index.html (+3ms) 
+12:06:57 λ src/pages/[lang]/rss.xml.ts
+12:06:57   ├─ /zh/rss.xml (+13ms) 
+12:06:57   └─ /en/rss.xml (+3ms) 
+12:06:57 ▶ src/pages/[lang]/search.astro
+12:06:57   ├─ /zh/search/index.html (+4ms) 
+12:06:57   └─ /en/search/index.html (+3ms) 
+12:06:57 ▶ src/pages/[lang]/tools/index.astro
+12:06:57   ├─ /zh/tools/index.html (+66ms) 
+12:06:57   └─ /en/tools/index.html (+5ms) 
+12:06:57 ▶ src/pages/index.astro
+12:06:57   └─ /index.html (+9ms) 
+12:06:57 ✓ Completed in 4.50s.
+
+ generating optimized images 
+12:06:57   ▶ /_astro/video-editor-tool.C5upLm5M_1rO96m.webp (reused cache entry) (+7ms) (1/10)
+12:06:57   ▶ /_astro/code-review-tool.DYPsHaLZ_6kElm.webp (reused cache entry) (+9ms) (2/10)
+12:06:57   ▶ /_astro/meeting-assistant-tool.JU6qD5r8_9zeEF.webp (reused cache entry) (+3ms) (3/10)
+12:06:57   ▶ /_astro/airi-open-source-virtual-companion-cover.CJhuw_e0_Z1U21M9.webp (reused cache entry) (+3ms) (4/10)
+12:06:57   ▶ /_astro/google-repetition-prompt-technique-cover.Bhqstl-P_Z1KEkPd.webp (reused cache entry) (+2ms) (5/10)
+12:06:57   ▶ /_astro/gpt-5-3-instant-update-cover.Cr6EsSVX_aamgw.webp (reused cache entry) (+2ms) (6/10)
+12:06:57   ▶ /_astro/gpt5-4-upgrade-cover.E7ZVln5r_1kroFn.webp (reused cache entry) (+3ms) (7/10)
+12:06:57   ▶ /_astro/openclaw-beginner-guide-cover.C-Wue-AP_26A7Xt.webp (reused cache entry) (+2ms) (8/10)
+12:06:57   ▶ /_astro/openclaw-skills-guide-cover.B-mvZzwk_Ler60.webp (reused cache entry) (+2ms) (9/10)
+12:06:57   ▶ /_astro/openclaw-cloudflare-bypass-cover.y2IZX9uO_ZKuBuJ.webp (reused cache entry) (+2ms) (10/10)
+12:06:57 ✓ Completed in 78ms.
+
+12:06:57 [build] 175 page(s) built in 34.87s
+12:06:57 [build] Complete!
+
+> terrestrial-tower@0.0.1 postbuild
+> npx --yes pagefind --site dist && node scripts/push-baidu.mjs
+
+
+Running Pagefind v1.4.0 (Extended)
+Running from: "/root/.openclaw/workspace/itkdm.github.io"
+Source:       "dist"
+Output:       "dist/pagefind"
+
+[Walking source directory]
+Found 203 files matching **/*.{html}
+
+[Parsing files]
+Did not find a data-pagefind-body element on the site.
+↳ Indexing all <body> elements on the site.
+
+[Reading languages]
+Discovered 3 languages: en, zh-cn, zh
+
+[Building search indexes]
+Total: 
+  Indexed 3 languages
+  Indexed 203 pages
+  Indexed 10882 words
+  Indexed 0 filters
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-cn. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-cn. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh. 
+Search will still work, but will not match across root words.
+
+Finished in 6.280 seconds
+[baidu-push] 未设置 BAIDU_PUSH_TOKEN，已跳过百度推送（构建不受影响）。

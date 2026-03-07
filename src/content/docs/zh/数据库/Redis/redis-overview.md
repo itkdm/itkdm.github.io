@@ -1,5 +1,6 @@
 ---
 title: "Redis 概览"
+slug: "redis-overview"
 order: 3
 section: "数据库"
 lang: "zh"

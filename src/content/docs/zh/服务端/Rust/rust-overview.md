@@ -1,5 +1,6 @@
 ---
 title: "Rust 概览"
+slug: "rust-overview"
 order: 10
 section: "服务端"
 lang: "zh"

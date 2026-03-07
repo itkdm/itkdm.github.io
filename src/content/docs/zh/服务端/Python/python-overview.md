@@ -1,5 +1,6 @@
 ---
 title: "Python 概览"
+slug: "python-overview"
 order: 30
 section: "服务端"
 lang: "zh"
