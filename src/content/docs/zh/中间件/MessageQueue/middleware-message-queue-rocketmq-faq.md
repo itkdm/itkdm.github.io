@@ -7,7 +7,7 @@ lang: "zh"
 slug: "message-queue-rocketmq-faq"
 summary: "RocketMQ 高频面试题汇总：使用场景、架构设计、消息类型、顺序消费、消息可靠性、事务消息、消息堆积等核心知识点。"
 icon: "🚀"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-07
 ---
