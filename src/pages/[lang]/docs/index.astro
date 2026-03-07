@@ -26,6 +26,7 @@ const sectionOrderMap: Record<string, number> = {
 	'中间件': 7,
 	'算法': 8,
 	'面试': 9,
+	'LangChain AI': 10,
 	// 英文分类
 	'Getting Started': 1,
 	'Learning Path': 2,
@@ -36,6 +37,7 @@ const sectionOrderMap: Record<string, number> = {
 	'Middleware': 7,
 	'Algorithms': 8,
 	'Interview': 9,
+	'LangChain AI': 10,
 };
 
 type SectionGroup = {
@@ -90,8 +92,8 @@ const sections = Array.from(sectionMap.values())
 // Docs home page: only show featured items as cards.
 // Non-featured docs are still available in the docs detail layout sidebar.
 // 文档首页展示的「全部分类」与右侧导航（根据语言可定制）
-const zhHomeOrder = ['入门', '服务端', '数据库', '中间件', '算法', '面试'];
-const enHomeOrder = ['Getting Started', 'Server-side', 'Database', 'Middleware', 'Algorithms', 'Interview'];
+const zhHomeOrder = ['入门', '服务端', '数据库', '中间件', '算法', '面试', 'LangChain AI'];
+const enHomeOrder = ['Getting Started', 'Server-side', 'Database', 'Middleware', 'Algorithms', 'Interview', 'LangChain AI'];
 
 // Docs home page: show all non-empty categories; use order list to prioritize known ones.
 const orderList = lang === 'zh' ? zhHomeOrder : enHomeOrder;
