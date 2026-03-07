@@ -2,7 +2,7 @@
 title: Human-in-the-Loop（人在回路）
 order: 10
 section: "LangChain AI"
-topic: "LangChain"
+topic: "人工介入"
 lang: "zh"
 slug: "langchain-human-in-the-loop"
 summary: "了解如何使用 Human-in-the-Loop 中间件为 Agent 的 tool calls 添加人工监督，支持批准、编辑或拒绝操作。"

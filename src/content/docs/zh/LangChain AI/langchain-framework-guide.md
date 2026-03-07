@@ -2,7 +2,7 @@
 title: "LangChain 框架详解：构建 LLM 应用的利器"
 order: 2
 section: "LangChain AI"
-topic: "LangChain"
+topic: "框架详解"
 lang: "zh"
 slug: "langchain-framework-guide"
 summary: "LangChain 框架深度解析，涵盖核心概念、组件架构、Agent 系统、工具集成与最佳实践。"

@@ -2,7 +2,7 @@
 title: Runtime
 order: 24
 section: "LangChain AI"
-topic: "LangChain"
+topic: "运行时"
 lang: "zh"
 slug: "langchain-runtime"
 summary: LangChain Agent 的运行时上下文、存储和流式传输

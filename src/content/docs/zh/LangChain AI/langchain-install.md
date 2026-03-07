@@ -2,7 +2,7 @@
 title: 安装 LangChain
 order: 1
 section: 入门指南
-topic: LangChain AI
+topic: "安装指南"
 lang: zh
 slug: /zh/LangChain AI/langchain-install
 summary: 学习如何安装 LangChain Python 和 JavaScript 包，包括核心包和各类集成包。

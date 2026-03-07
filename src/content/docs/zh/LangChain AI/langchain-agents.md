@@ -1,5 +1,15 @@
 ---
 title: Agents（智能体）
+order: 3
+section: "LangChain AI"
+topic: "Agents"
+lang: "zh"
+slug: "langchain-agents"
+summary: "Agent 核心概念详解，涵盖模型配置、Tool 系统、System Prompt、结构化输出、记忆、流式传输等高级功能"
+icon: "🤖"
+featured: true
+toc: true
+updated: 2026-03-07
 ---
 
 Agents（智能体）将语言模型与 [Tools（工具）](/oss/langchain/tools) 结合起来，创建能够推理任务、决定使用哪些工具并迭代地朝着解决方案努力的系统。

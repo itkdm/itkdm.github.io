@@ -2,7 +2,7 @@
 title: Models（模型）
 order: 5
 section: "LangChain AI"
-topic: "LangChain"
+topic: "模型集成"
 lang: "zh"
 slug: "langchain-models"
 summary: "了解如何在 LangChain 中使用 AI 模型，包括基本用法、参数配置、调用方法、工具调用、结构化输出等核心功能。"

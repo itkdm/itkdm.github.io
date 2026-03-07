@@ -2,7 +2,7 @@
 title: Messages（消息）
 order: 6
 section: "LangChain AI"
-topic: "LangChain"
+topic: "消息系统"
 lang: "zh"
 slug: "langchain-messages"
 summary: "了解 LangChain 中的消息类型、内容格式、元数据以及如何在多模态对话中使用消息。"

@@ -2,7 +2,7 @@
 title: LangChain Academy
 order: 27
 section: "LangChain AI"
-topic: "LangChain"
+topic: "学习资源"
 lang: "zh"
 slug: "langchain-academy"
 summary: LangChain 官方学习平台

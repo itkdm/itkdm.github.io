@@ -3,7 +3,7 @@ title: LangSmith 可观测性
 sidebarTitle: 可观测性
 order: 25
 section: "LangChain AI"
-topic: "LangChain"
+topic: "可观测性"
 lang: "zh"
 slug: "langchain-observability"
 summary: 使用 LangSmith 追踪和调试 LangChain Agent

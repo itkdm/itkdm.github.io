@@ -2,7 +2,7 @@
 title: Long-term Memory（长期记忆）
 order: 14
 section: "LangChain AI"
-topic: "LangChain"
+topic: "长期记忆"
 lang: "zh"
 slug: "langchain-long-term-memory"
 summary: "了解如何使用 LangGraph persistence 和 memory store 为 LangChain Agents 实现长期记忆，包括在 tools 中读写记忆。"

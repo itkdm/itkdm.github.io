@@ -2,7 +2,7 @@
 title: Streaming 概述
 order: 16
 section: "LangChain AI"
-topic: "LangChain"
+topic: "流式输出"
 lang: "zh"
 slug: "langchain-streaming"
 summary: 了解如何从 agent 运行中流式传输实时更新

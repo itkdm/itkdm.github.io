@@ -3,7 +3,7 @@ title: 理念
 description: LangChain 的存在是为了成为开始使用 LLM 进行构建的最简单地方，同时也具备灵活性和生产就绪性。
 order: 26
 section: "LangChain AI"
-topic: "LangChain"
+topic: "设计理念"
 lang: "zh"
 slug: "langchain-philosophy"
 summary: LangChain 的核心理念和发展历史

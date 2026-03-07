@@ -2,7 +2,7 @@
 title: 使用 LangChain 构建 RAG Agent
 order: 7
 section: "LangChain AI"
-topic: "LangChain"
+topic: "RAG 技术"
 lang: "zh"
 slug: "langchain-rag"
 summary: "学习如何使用 LangChain 构建检索增强生成（RAG）应用，包括索引、检索和生成的完整流程。"

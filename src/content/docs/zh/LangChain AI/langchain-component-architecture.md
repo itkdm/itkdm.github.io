@@ -2,7 +2,7 @@
 title: 组件架构
 order: 23
 section: "LangChain AI"
-topic: "LangChain"
+topic: "组件架构"
 lang: "zh"
 slug: "langchain-component-architecture"
 summary: LangChain 的组件如何协同工作以创建复杂的 AI 应用

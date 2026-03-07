@@ -2,7 +2,7 @@
 title: 使用 LangChain 构建语义搜索引擎
 order: 18
 section: "LangChain AI"
-topic: "LangChain"
+topic: "知识库"
 lang: "zh"
 slug: "langchain-knowledge-base"
 summary: 学习如何使用 LangChain 构建 PDF 文档的语义搜索引擎

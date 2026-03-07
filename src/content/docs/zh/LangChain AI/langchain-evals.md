@@ -2,7 +2,7 @@
 title: Evaluate Agent Performance（评估 Agent 性能）
 order: 11
 section: "LangChain AI"
-topic: "LangChain"
+topic: "评估系统"
 lang: "zh"
 slug: "langchain-evals"
 summary: "了解如何使用 LangSmith evaluations 和预构建的 evaluators 来评估 Agent 的性能，包括 trajectory match 和 LLM-as-judge。"

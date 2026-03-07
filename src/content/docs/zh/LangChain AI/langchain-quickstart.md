@@ -2,7 +2,7 @@
 title: 快速入门
 order: 2
 section: 入门指南
-topic: LangChain AI
+topic: "快速开始"
 lang: zh
 slug: /zh/LangChain AI/langchain-quickstart
 summary: 从简单设置到功能完整的 AI Agent，只需几分钟即可完成本快速入门指南。

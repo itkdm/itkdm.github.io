@@ -2,7 +2,7 @@
 title: Model Context Protocol (MCP)
 order: 20
 section: "LangChain AI"
-topic: "LangChain"
+topic: "MCP 集成"
 lang: "zh"
 slug: "langchain-mcp"
 summary: 了解如何使用 Model Context Protocol 将外部工具集成到 LangChain agents

@@ -2,7 +2,7 @@
 title: LangSmith 部署
 order: 15
 section: "LangChain AI"
-topic: "LangChain"
+topic: "部署指南"
 lang: "zh"
 slug: "langchain-deploy"
 summary: 了解如何使用 LangSmith 将 LangChain agent 部署到生产环境

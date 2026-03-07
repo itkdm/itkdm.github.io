@@ -2,7 +2,7 @@
 title: Test（测试）
 order: 12
 section: "LangChain AI"
-topic: "LangChain"
+topic: "测试指南"
 lang: "zh"
 slug: "langchain-test"
 summary: "了解如何测试 Agent 应用，包括单元测试、集成测试、trajectory match evaluators 和 LangSmith 集成。"

@@ -2,7 +2,7 @@
 title: Guardrails
 order: 17
 section: "LangChain AI"
-topic: "LangChain"
+topic: "Guardrails"
 lang: "zh"
 slug: "langchain-guardrails"
 summary: 为你的 agents 实现安全检查和内容过滤

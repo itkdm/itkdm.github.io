@@ -2,7 +2,7 @@
 title: 构建 SQL agent
 order: 21
 section: "LangChain AI"
-topic: "LangChain"
+topic: "SQL Agent"
 lang: "zh"
 slug: "langchain-sql-agent"
 summary: 学习如何构建可以使用 LangChain agents 回答 SQL database 问题的 agent

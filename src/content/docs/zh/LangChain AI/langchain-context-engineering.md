@@ -2,7 +2,7 @@
 title: Agents 中的 Context engineering
 order: 19
 section: "LangChain AI"
-topic: "LangChain"
+topic: "上下文工程"
 lang: "zh"
 slug: "langchain-context-engineering"
 summary: 了解如何通过提供正确的上下文和信息来构建可靠的 agents

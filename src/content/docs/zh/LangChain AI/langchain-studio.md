@@ -3,7 +3,7 @@ title: LangSmith Studio
 sidebarTitle: LangSmith Studio
 order: 29
 section: "LangChain AI"
-topic: "LangChain"
+topic: "Studio"
 lang: "zh"
 slug: "langchain-studio"
 summary: LangSmith Studio 本地开发和调试工具

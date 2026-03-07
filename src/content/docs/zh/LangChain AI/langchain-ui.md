@@ -2,7 +2,7 @@
 title: Agent Chat UI
 order: 30
 section: "LangChain AI"
-topic: "LangChain"
+topic: "UI 组件"
 lang: "zh"
 slug: "langchain-ui"
 summary: Agent Chat UI 用于与 LangChain Agent 交互

@@ -2,7 +2,7 @@
 title: Retrieval（检索）
 order: 8
 section: "LangChain AI"
-topic: "LangChain"
+topic: "检索系统"
 lang: "zh"
 slug: "langchain-retrieval"
 summary: "了解检索如何增强 LLM，包括知识库构建、RAG 架构（2-Step RAG、Agentic RAG、Hybrid RAG）以及核心组件。"

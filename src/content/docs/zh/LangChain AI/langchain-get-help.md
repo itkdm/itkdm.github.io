@@ -2,7 +2,7 @@
 title: 获取帮助
 order: 28
 section: "LangChain AI"
-topic: "LangChain"
+topic: "获取帮助"
 lang: "zh"
 slug: "langchain-get-help"
 summary: 连接 LangChain 社区，获取学习资源和支持

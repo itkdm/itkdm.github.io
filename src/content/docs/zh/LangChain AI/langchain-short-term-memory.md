@@ -2,7 +2,7 @@
 title: Short-term Memory（短期记忆）
 order: 13
 section: "LangChain AI"
-topic: "LangChain"
+topic: "短期记忆"
 lang: "zh"
 slug: "langchain-short-term-memory"
 summary: "了解如何为 Agent 添加短期记忆（thread-level persistence），包括消息修剪、删除、总结以及访问和修改记忆的模式。"

@@ -2,7 +2,7 @@
 title: 使用 LangChain 构建 Voice agent
 order: 22
 section: "LangChain AI"
-topic: "LangChain"
+topic: "Voice Agent"
 lang: "zh"
 slug: "langchain-voice-agent"
 summary: 了解如何构建可以进行自然语音对话的 Voice agents
