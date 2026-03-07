@@ -7,7 +7,7 @@ lang: "zh"
 slug: "message-queue-kafka-faq"
 summary: "Kafka 高频面试题汇总：使用场景、队列模型 vs 发布订阅、Partition、副本机制、ISR、消息顺序、不丢失、不重复消费、重试机制等。"
 icon: "🎯"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-07
 ---
