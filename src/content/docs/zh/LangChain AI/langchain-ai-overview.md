@@ -2,7 +2,7 @@
 title: "LangChain AI 生态详解：LangChain、LangGraph、LangSmith 三大核心"
 order: 1
 section: "LangChain AI"
-topic: "LangChain"
+topic: "生态总览"
 lang: "zh"
 slug: "langchain-ai-overview"
 summary: "LangChain AI 生态系统完整指南，涵盖 LangChain 框架、LangGraph 编排引擎、LangSmith 开发平台的定位、核心功能与使用场景。"
