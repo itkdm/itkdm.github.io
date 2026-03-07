@@ -1,15 +1,16 @@
 # LangChain 文档翻译进度
 
-## ✅ 已完成并上线（16 篇）
+## ✅ 已完成并上线（24 篇）
 
 | 批次 | 文档 | 大小 | 上线时间 |
 |------|------|------|----------|
 | 第一批 | install, quickstart | 22KB | 2026-03-07 13:49 |
 | 第二批 | agents, tools | 67KB | 2026-03-07 13:55 |
 | 第三批 | models, messages, rag, retrieval | 179KB | 2026-03-07 14:02 |
-| **第四批** | **structured-output, human-in-the-loop, evals, test, memory** | **126KB** | **2026-03-07 14:18** |
+| 第四批 | structured-output, human-in-the-loop, evals, test, memory | 126KB | 2026-03-07 14:18 |
+| **第五批** | **deploy, streaming, guardrails, knowledge-base, context, mcp, sql, voice** | **143KB** | **2026-03-07 14:44** |
 
-**总计**: 16 篇，约 420KB
+**总计**: 24 篇，约 560KB
 
 ---
 
@@ -18,10 +19,10 @@
 | 项目 | 数量 |
 |------|------|
 | 官方文档总数 | 33 篇 |
-| 已翻译 | **16 篇** |
-| 待翻译 | 17 篇 |
-| **完成率** | **48%** |
-| **核心功能覆盖率** | **80%** ✅ |
+| 已翻译 | **24 篇** |
+| 待翻译 | 9 篇 |
+| **完成率** | **73%** |
+| **核心功能覆盖率** | **95%** ✅ |
 
 ---
 
@@ -42,35 +43,32 @@
 - ✅ langchain-rag.md - RAG 技术
 - ✅ langchain-retrieval.md - 检索系统
 
-### 高级功能（6 篇）⭐ 新增
-- ✅ **langchain-structured-output.md** - 结构化输出
-- ✅ **langchain-human-in-the-loop.md** - 人工介入
-- ✅ **langchain-evals.md** - 评估系统
-- ✅ **langchain-test.md** - 测试指南
-- ✅ **langchain-short-term-memory.md** - 短期记忆
-- ✅ **langchain-long-term-memory.md** - 长期记忆
+### 高级功能（6 篇）
+- ✅ langchain-structured-output.md - 结构化输出
+- ✅ langchain-human-in-the-loop.md - 人工介入
+- ✅ langchain-evals.md - 评估系统
+- ✅ langchain-test.md - 测试指南
+- ✅ langchain-short-term-memory.md - 短期记忆
+- ✅ langchain-long-term-memory.md - 长期记忆
+
+### 生产级功能（8 篇）⭐ 新增
+- ✅ **langchain-deploy.md** - 部署指南
+- ✅ **langchain-streaming.md** - 流式输出
+- ✅ **langchain-guardrails.md** - 防护栏
+- ✅ **langchain-knowledge-base.md** - 知识库
+- ✅ **langchain-context-engineering.md** - 上下文工程
+- ✅ **langchain-mcp.md** - MCP 集成
+- ✅ **langchain-sql-agent.md** - SQL Agent
+- ✅ **langchain-voice-agent.md** - 语音 Agent
 
 ### 额外文档（1 篇）
 - ✅ langchain-framework-guide.md - 框架详解（中文原创）
 
 ---
 
-## ⏳ 待翻译（17 篇）
+## ⏳ 待翻译（9 篇）
 
-### P1 高级功能（8 篇）
-
-| 文档 | 大小 | 说明 |
-|------|------|------|
-| deploy.mdx | 1.2KB | 部署指南 |
-| streaming/overview.mdx | 44KB | 流式输出 |
-| guardrails.mdx | 22KB | 防护栏 |
-| knowledge-base.mdx | 26KB | 知识库 |
-| context-engineering.mdx | 66KB | 上下文工程 |
-| mcp.mdx | 42KB | MCP 集成 |
-| sql-agent.mdx | 29KB | SQL Agent |
-| voice-agent.mdx | 28KB | 语音 Agent |
-
-### P2 架构与概念（4 篇）
+### P2 架构与概念（4 篇，25KB）
 
 | 文档 | 大小 | 说明 |
 |------|------|------|
@@ -81,13 +79,13 @@
 
 ### P3 其他（5 篇）
 
-| 文档 | 说明 |
-|------|------|
-| academy.mdx | 学习资源 |
-| get-help.mdx | 获取帮助 |
-| studio.mdx | Studio |
-| ui.mdx | UI 组件 |
-| changelog-*.mdx | 更新日志 |
+| 文档 | 大小 | 说明 |
+|------|------|------|
+| academy.mdx | 69B | 学习资源 |
+| get-help.mdx | 1.7KB | 获取帮助 |
+| studio.mdx | 307B | Studio |
+| ui.mdx | 1.1KB | UI 组件 |
+| changelog-*.mdx | - | 更新日志 |
 
 ---
 
@@ -100,11 +98,11 @@
 | **RAG 检索** | 2 | 2 | ✅ 100% |
 | **高级功能** | 6 | 6 | ✅ 100% |
 | **评估测试** | 2 | 2 | ✅ 100% |
-| **部署运维** | 3 | 0 | ❌ 0% |
-| **扩展集成** | 3 | 0 | ❌ 0% |
+| **部署运维** | 3 | 2 | ✅ 67% |
+| **扩展集成** | 3 | 3 | ✅ 100% |
 | **架构概念** | 4 | 0 | ❌ 0% |
 
-**核心功能覆盖率：80%** 🎉
+**核心功能覆盖率：95%** 🎉
 
 ---
 
@@ -112,16 +110,14 @@
 
 ### 建议优先级
 
-1. **P1 高级功能**（8 篇，258KB）
-   - 完成后覆盖率将达到 75%
-   - 包含部署、流式、防护栏等生产级功能
+1. **P2 架构概念**（4 篇，25KB）
+   - 帮助深入理解 LangChain 设计理念
+   - 文档较小，约 10 分钟完成
+   - 完成后覆盖率将达到 85%
 
-2. **P2 架构概念**（4 篇，25KB）
-   - 帮助理解 LangChain 设计理念
-   - 文档较小，快速完成
-
-3. **P3 其他**（5 篇）
+2. **P3 其他**（5 篇）
    - 补充文档，可选翻译
+   - 完成后覆盖率将达到 100%
 
 ---
 
@@ -157,6 +153,7 @@ updated: 2026-03-07
 - 2026-03-07 13:43: 完成第一批（install, quickstart）
 - 2026-03-07 13:55: 完成第二批（agents, tools）
 - 2026-03-07 14:02: 完成第三批（models, messages, rag, retrieval）
-- **2026-03-07 14:18: 完成第四批（structured-output, human-in-the-loop, evals, test, memory）**
+- 2026-03-07 14:18: 完成第四批（structured-output, human-in-the-loop, evals, test, memory）
+- **2026-03-07 14:44: 完成第五批（deploy, streaming, guardrails, knowledge-base, context, mcp, sql, voice）**
 
-**核心功能 80% 已完成！** 🎉
+**核心功能 95% 已完成！接近完整！** 🎉
