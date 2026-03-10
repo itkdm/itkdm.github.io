@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-jmeter-param"
 summary: "使用 CSV Data Set Config 实现用户数据模拟和参数化测试。"
 icon: "📊"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---

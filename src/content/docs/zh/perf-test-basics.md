@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-test-basics"
 summary: "理解性能测试的定义、目的、与功能测试的区别，掌握性能测试的核心目标与基本流程。"
 icon: "🔥"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---

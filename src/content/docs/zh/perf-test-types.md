@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-test-types"
 summary: "深入理解基准测试、负载测试、压力测试、稳定性测试、容量测试的区别与应用场景。"
 icon: "📐"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---

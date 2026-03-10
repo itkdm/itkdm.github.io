@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-result-analysis"
 summary: "学会解读压测报告、识别性能瓶颈、输出优化建议的完整方法论。"
 icon: "🔍"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---

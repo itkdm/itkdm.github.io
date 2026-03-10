@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-jmeter-enterprise"
 summary: "JMeter 安装配置、核心结构、创建第一个压测脚本、GUI 与命令行模式。"
 icon: "⚡"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---

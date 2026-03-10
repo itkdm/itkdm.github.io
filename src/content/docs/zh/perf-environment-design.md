@@ -7,7 +7,7 @@ lang: "zh"
 slug: "perf-environment-design"
 summary: "构建贴近生产的压测环境，确保测试结果的有效性。"
 icon: "🏗️"
-featured: true
+featured: false
 toc: true
 updated: 2026-03-10
 ---
