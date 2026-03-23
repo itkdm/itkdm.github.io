@@ -101,16 +101,17 @@ const navItems = [
 			gtag('js', new Date());
 			gtag('config', 'G-EFHHDPBBYV');
 		</script>
-		<meta name="theme-color" content="#111827" />
+		<meta name="theme-color" content="#f7f5f1" id="themeColorMeta" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="/theme.css" />
 		<script is:inline>
 			// Minimal theme bootstrapping to avoid FOUC
 			(function () {
 				let theme = 'light';
+				const supportedThemes = ['light', 'paper', 'dark'];
 				try {
 					const saved = localStorage.getItem('site-theme');
-					if (saved === 'dark' || saved === 'light') {
+					if (supportedThemes.includes(saved)) {
 						theme = saved;
 					} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 						theme = 'dark';
@@ -149,10 +150,11 @@ const navItems = [
 							<span class="dot" style="background:var(--text-faint); box-shadow:none"></span>
 							<span>{lang === 'zh' ? 'EN' : '中文'}</span>
 						</button>
-						<button class="btn btn-ghost" id="themeBtn" type="button">
-							<span class="dot" style="background:var(--text-faint); box-shadow:none"></span>
-							<span>{lang === 'zh' ? '主题' : 'Theme'}</span>
-						</button>
+						<select class="btn theme-select" id="themeSelect" aria-label="Theme select">
+							<option value="light">Original Theme</option>
+							<option value="paper">Paper Yellow</option>
+							<option value="dark">Dark Theme</option>
+						</select>
 					</div>
 				</div>
 			</header>
@@ -194,6 +196,11 @@ const navItems = [
 					<div>
 						© <span id="year"></span> {brandName}
 						{lang === 'zh' ? ' · 保留所有权利' : ' · All rights reserved.'}
+						<div class="footer-icp">
+							{lang === 'zh'
+								? ' · 豫ICP备2025137611号'
+								: ' · ICP: 豫ICP备2025137611号'}
+						</div>
 					</div>
 				</div>
 			</footer>
