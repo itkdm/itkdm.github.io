@@ -999,6 +999,14 @@ footer{
 .footer-icp{
   margin-top: 6px;
 }
+.footer-icp a{
+  color: var(--text-faint);
+  text-decoration: none;
+}
+.footer-icp a:hover{
+  text-decoration: underline;
+  color: var(--text);
+}
 .links{
   display:flex; gap: 12px; flex-wrap:wrap;
   color: var(--text-muted);
