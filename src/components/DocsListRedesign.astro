@@ -1,0 +1,468 @@
+---
+import { getCollection } from 'astro:content';
+import DocsIcon from './DocsIcon.astro';
+
+interface Props {
+	lang: 'zh' | 'en';
+}
+
+const { lang } = Astro.props;
+
+// 1. Fetch and process data
+const docs = (await getCollection('docs', (doc) => doc.data.lang === lang)).sort(
+	(a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
+);
+
+const sectionOrderMap: Record<string, number> = {
+	'入门': 1,
+	'服务端': 2,
+	'数据库': 3,
+	'中间件': 4,
+	'算法': 5,
+	'面试': 6,
+	'LangChain AI': 7,
+	'入门指南': 8,
+	'性能测试': 9,
+	'AI': 10,
+	'Getting Started': 1,
+	'Server-side': 2,
+	'Database': 3,
+	'Middleware': 4,
+	'Algorithms': 5,
+	'Interview': 6,
+    'LangChain AI': 7,
+	'Guides': 8,
+	'Performance Testing': 9,
+	'AI': 10,
+};
+
+type SectionItem = {
+	title: string;
+	topic?: string;
+	slug: string;
+	order: number;
+	summary?: string;
+	icon?: string;
+};
+
+type SectionGroup = {
+	section: string;
+	items: SectionItem[];
+	order: number;
+};
+
+const getSectionOrder = (section: string) =>
+	sectionOrderMap[section] ?? Number.MAX_SAFE_INTEGER;
+
+const sectionMap = new Map<string, SectionGroup>();
+
+for (const doc of docs) {
+	const section = doc.data.section?.trim() || (lang === 'zh' ? '其他' : 'Others');
+	const slug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
+	const order = typeof doc.data.order === 'number' ? doc.data.order : 9999;
+
+	if (!sectionMap.has(section)) {
+		sectionMap.set(section, { section, items: [], order });
+	}
+
+	const group = sectionMap.get(section)!;
+	group.items.push({
+		title: doc.data.title,
+		topic: doc.data.topic,
+		slug,
+		order,
+		summary: doc.data.summary,
+		icon: doc.data.icon,
+	});
+	if (order < group.order) group.order = order;
+}
+
+const orderedHomeSections = Array.from(sectionMap.values())
+	.filter((section) => section.items.length > 0)
+	.map((section) => ({
+		...section,
+		items: [...section.items].sort(
+			(a, b) => a.order - b.order || a.title.localeCompare(b.title, lang === 'zh' ? 'zh-CN' : 'en')
+		),
+	}))
+	.sort(
+		(a, b) =>
+			getSectionOrder(a.section) - getSectionOrder(b.section) ||
+			a.section.localeCompare(b.section, lang === 'zh' ? 'zh-CN' : 'en')
+	);
+
+const labels = {
+    all: lang === 'zh' ? '全部文档' : 'All Docs',
+    select: lang === 'zh' ? '选择分类' : 'Select Category',
+    empty: lang === 'zh' ? '暂无文档' : 'No docs available'
+};
+---
+
+<div class="cyber-docs-layout">
+    
+    {/* SIDEBAR NAVIGATION */}
+    <aside class="docs-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">{labels.select}</div>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-target="all">
+                <span class="nav-icon">::</span>
+                <span class="nav-text">{labels.all}</span>
+            </button>
+            {orderedHomeSections.map((section, index) => (
+                <button class="nav-item" data-target={`section-${index}`}>
+                    <span class="nav-icon">#</span>
+                    <span class="nav-text">{section.section}</span>
+                    <span class="nav-count">{section.items.length}</span>
+                </button>
+            ))}
+        </nav>
+    </aside>
+
+    {/* MAIN CONTENT AREA */}
+    <main class="docs-main">
+        {orderedHomeSections.map((section, index) => (
+            <section class="doc-category-group" id={`section-${index}`}>
+                <div class="category-header">
+                    <h2 class="category-title">
+                        <span class="hash">#</span> {section.section}
+                    </h2>
+                    <div class="category-line"></div>
+                </div>
+
+                <div class="docs-grid">
+                    {section.items.map(item => (
+                        <a href={`/${lang}/docs/${item.slug}/`} class="doc-card">
+                            <div class="card-icon-box">
+                                {item.icon ? <DocsIcon icon={item.icon} /> : <span class="default-icon">/</span>}
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">{item.title}</h3>
+                                {item.summary && <p class="card-summary">{item.summary}</p>}
+                            </div>
+                            <div class="card-hover-elem"></div>
+                        </a>
+                    ))}
+                </div>
+            </section>
+        ))}
+        
+        {orderedHomeSections.length === 0 && (
+            <div class="empty-state">{labels.empty}</div>
+        )}
+    </main>
+
+</div>
+
+<script>
+    // Simple logic to toggle sections
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.doc-category-group');
+
+    navItems.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target');
+
+            // 1. Update Active State
+            navItems.forEach(n => n.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 2. Toggle Sections
+            if (target === 'all') {
+                sections.forEach(sec => (sec as HTMLElement).style.display = 'block');
+            } else {
+                sections.forEach(sec => {
+                    const el = sec as HTMLElement;
+                    if (el.id === target) {
+                        el.style.display = 'block';
+                        // Add a small animation/fade-in class if desired
+                        el.classList.add('fade-in');
+                        setTimeout(() => el.classList.remove('fade-in'), 300);
+                    } else {
+                        el.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Scroll handling:
+            // Since docs-main flows with the page, we need to scroll the window.
+            // But only if the user has scrolled significantly past the start of the content.
+            const main = document.querySelector('.docs-main') as HTMLElement;
+            if (main) {
+                const rect = main.getBoundingClientRect();
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const absoluteTop = rect.top + scrollTop;
+
+                // If currently scrolled below the top of main container
+                if (window.scrollY > absoluteTop - 100) {
+                     window.scrollTo({
+                        top: absoluteTop - 20, // Leave a little breathing room
+                        behavior: 'smooth'
+                     });
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+    /* VARIABLES */
+    :root {
+        --d-sidebar-w: 260px;
+        --d-accent: var(--primary);
+        --d-bg: var(--bg);
+        --d-bg-alt: var(--bg-soft);
+        --d-border: var(--border);
+        --d-card-bg: var(--bg-elev);
+    }
+
+    .cyber-docs-layout {
+        display: flex;
+        min-height: 80vh;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+        gap: 3rem;
+    }
+
+    /* SIDEBAR */
+    .docs-sidebar {
+        width: var(--d-sidebar-w);
+        flex-shrink: 0;
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
+        border-right: 1px dashed var(--d-border);
+        padding-right: 1.5rem;
+    }
+    .sidebar-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--d-accent);
+    }
+    .sidebar-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 800;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: var(--d-accent);
+        letter-spacing: 0.1em;
+    }
+    
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .nav-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.8rem 1rem;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.2s;
+        text-align: left;
+        font-family: inherit;
+    }
+    .nav-item:hover {
+        background: var(--d-bg-alt);
+        color: var(--text);
+    }
+    .nav-item.active {
+        background: var(--d-bg-alt);
+        border-color: var(--d-border);
+        color: var(--d-accent);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .nav-icon {
+        font-family: monospace;
+        opacity: 0.5;
+        margin-right: 0.8rem;
+        width: 12px;
+    }
+    .nav-text { flex-grow: 1; }
+    .nav-count {
+        font-size: 0.75rem;
+        background: rgba(0,0,0,0.05); /* Neutral badge */
+        padding: 2px 8px;
+        border-radius: 10px;
+        opacity: 0.7;
+    }
+    .nav-item.active .nav-count {
+        background: var(--d-accent);
+        color: white;
+        opacity: 1;
+    }
+
+    /* MAIN CONTENT */
+    .docs-main {
+        flex-grow: 1;
+        padding-top: 0.5rem;
+    }
+
+    .doc-category-group {
+        margin-bottom: 5rem; /* Increased spacing */
+        animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .category-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        gap: 1rem;
+    }
+    .category-title {
+        font-size: 1.8rem; /* Larger */
+        margin: 0;
+        color: var(--text);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.02em;
+    }
+    .category-title .hash {
+        color: var(--d-accent);
+        opacity: 0.8;
+        margin-right: 0.8rem;
+        font-size: 1.5rem;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    .category-line {
+        height: 2px; /* Thicker */
+        background: linear-gradient(to right, var(--d-border), transparent); /* Fade out */
+        flex-grow: 1;
+        opacity: 0.6;
+    }
+
+    /* GRID */
+    .docs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem; /* Wider gaps */
+    }
+
+    .doc-card {
+        background: var(--d-card-bg);
+        border: 1px solid var(--d-border);
+        border-left: 3px solid var(--d-border); /* Tech accent border default */
+        border-radius: 4px 12px 12px 12px; /* Tech shape */
+        padding: 1.5rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .doc-card:hover {
+        transform: translateY(-4px) translateX(2px);
+        border-color: var(--d-accent);
+        border-left-color: var(--d-accent);
+        background: linear-gradient(to bottom right, var(--d-card-bg), var(--d-bg-alt));
+        box-shadow: var(--shadow-2);
+    }
+    
+    .card-icon-box {
+        width: 48px; height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--d-accent);
+        background: var(--d-bg-alt);
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+    .doc-card:hover .card-icon-box {
+        background: white;
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .default-icon {
+        font-family: monospace;
+        font-size: 1.8rem;
+        font-weight: 800;
+        opacity: 0.4;
+    }
+
+    .card-content { flex-grow: 1; }
+    
+    .card-title {
+        font-size: 1.2rem;
+        margin: 0 0 0.8rem;
+        color: var(--text);
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+    .doc-card:hover .card-title { color: var(--d-accent); }
+
+
+    .card-summary {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Tech Deco on Card */
+    .card-hover-elem {
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 0; height: 0;
+        border-style: solid;
+        border-width: 0 0 20px 20px;
+        border-color: transparent transparent var(--d-accent) transparent;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+    .doc-card:hover .card-hover-elem { opacity: 0.5; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+        .cyber-docs-layout {
+            flex-direction: column;
+            padding: 1rem;
+            gap: 2rem;
+        }
+        .docs-sidebar {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px dashed var(--d-border);
+            padding-right: 0;
+            padding-bottom: 1rem;
+            position: relative;
+            top: 0;
+        }
+        .sidebar-nav {
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        .nav-item {
+            white-space: nowrap;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--d-border);
+        }
+        .nav-text { margin-right: 0.5rem; }
+        .nav-icon { display: none; }
+    }
+</style>
