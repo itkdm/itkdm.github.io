@@ -25,33 +25,62 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 	{projects.length === 0 ? (
 		<p>{lang === 'zh' ? '暂无项目，敬请期待。' : 'No projects yet.'}</p>
 	) : (
-		<div class="grid grid-3">
+		<div class="blueprint-grid">
 			{projects.map((project) => {
 				const projectSlug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
+				const isFeatured = project.data.featured;
+				
 				return (
-					<div class="card project-card" data-slug={projectSlug} data-lang={lang} style="cursor: pointer;">
-						<div class="badge">{lang === 'zh' ? '项目' : 'Project'}</div>
-						<div class="card-doc-header">
-							<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
+					<div class={`card project-card ${isFeatured ? 'featured' : ''}`} data-slug={projectSlug} data-lang={lang}>
+						{/* Decorators */}
+						<div class="corner-accents"></div>
+						<div class="scan-line"></div>
+						
+						<div class="card-header">
+							<div class="status-indicator">
+								<span class="status-dot"></span>
+								<span class="status-text">{isFeatured ? 'PRIORITY' : 'ACTIVE'}</span>
+							</div>
+							<div class="tech-id">#{projectSlug.substring(0, 6).toUpperCase()}</div>
 						</div>
-						<p>{project.data.summary}</p>
-						{project.data.tags.length > 0 && <p class="meta">{project.data.tags.join(' · ')}</p>}
-						<div class="project-actions" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px;">
-							<span 
-								class="btn"
+						
+						<div class="card-content">
+							<h3 class="project-title">
+								{project.data.icon && <span class="project-icon">{project.data.icon}</span>}
+								{project.data.title}
+							</h3>
+							
+							<p class="description">{project.data.summary}</p>
+							
+							{project.data.tags.length > 0 && (
+								<div class="tech-stack">
+									<div class="tags">
+										<span class="stack-prefix">&gt; STACK:</span>
+										{project.data.tags.map(tag => <span class="tech-tag">{tag}</span>)}
+									</div>
+								</div>
+							)}
+						</div>
+
+						<div class="card-footer project-actions">
+							<button 
+								class="action-btn primary"
 								data-repo={project.data.repo}
-								style="padding: 6px 10px; font-size: 12px; cursor: pointer;"
+								title="View Source Code"
 							>
-								{lang === 'zh' ? 'GitHub' : 'GitHub'}
-							</span>
+								<span class="btn-icon">GH</span>
+								<span class="btn-text">SOURCE</span>
+							</button>
+							
 							{project.data.demo && (
-								<span 
-									class="btn"
+								<button 
+									class="action-btn secondary"
 									data-demo={project.data.demo}
-									style="padding: 6px 10px; font-size: 12px; cursor: pointer;"
+									title="Launch Demo"
 								>
-									{lang === 'zh' ? '在线演示' : 'Demo'}
-								</span>
+									<span class="btn-icon">RUN</span>
+									<span class="btn-text">DEPLOY</span>
+								</button>
 							)}
 						</div>
 					</div>
@@ -59,35 +88,302 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 			})}
 		</div>
 		<style>
-			.project-card .btn {
-				/* 去掉按钮的位移动画，只保留颜色相关的过渡 */
-				transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+			/* 
+			 * THEME: INDUSTRIAL BLUEPRINT 
+			 * CONCEPT: Precision, Engineering, CAD Interface
+			 */
+			
+			.blueprint-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+				gap: 24px;
+				padding: 20px 0;
 			}
 
-			.project-card .btn:hover {
-				/* 不要有上下浮动等动态效果 */
-				transform: none;
-				box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
-				/* 仅文字颜色变化 */
+			/* Card Base */
+			.project-card {
+				position: relative;
+				background: var(--bg-soft);
+				border: 1px solid var(--border-strong);
+				border-radius: 4px; /* Industrial sharp/small radius */
+				padding: 0;
+				overflow: hidden;
+				transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				/* Grid background for technical feel */
+				background-image: 
+					linear-gradient(var(--border) 1px, transparent 1px),
+					linear-gradient(90deg, var(--border) 1px, transparent 1px);
+				background-size: 20px 20px;
+				background-position: center;
+				box-shadow: none;
+			}
+			
+			.project-card:hover {
+				border-color: var(--primary);
+				box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+				transform: translateY(-2px);
+			}
+
+			/* Corner Accents (The "Frame" look) */
+			.corner-accents::before,
+			.corner-accents::after {
+				content: '';
+				position: absolute;
+				width: 12px;
+				height: 12px;
+				border: 2px solid transparent;
+				transition: all 0.3s ease;
+				opacity: 0.5;
+				pointer-events: none;
+			}
+
+			.corner-accents::before {
+				top: -1px;
+				left: -1px;
+				border-top-color: var(--text-muted);
+				border-left-color: var(--text-muted);
+			}
+
+			.corner-accents::after {
+				bottom: -1px;
+				right: -1px;
+				border-bottom-color: var(--text-muted);
+				border-right-color: var(--text-muted);
+			}
+
+			.project-card:hover .corner-accents::before,
+			.project-card:hover .corner-accents::after {
+				width: 100%;
+				height: 100%;
+				border-color: var(--primary);
+				opacity: 1;
+			}
+
+			/* Scan Line Effect */
+			.project-card:hover .scan-line {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(to bottom, transparent, rgba(11, 91, 110, 0.05), transparent);
+				animation: scan 1.5s linear infinite;
+				pointer-events: none;
+				z-index: 0;
+			}
+
+			@keyframes scan {
+				0% { transform: translateY(-100%); }
+				100% { transform: translateY(100%); }
+			}
+
+			/* Layout Sections */
+			.card-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				background: var(--bg);
+				font-family: var(--mono);
+				font-size: 0.75rem;
+				letter-spacing: 0.05em;
+				z-index: 1;
+			}
+
+			.card-content {
+				padding: 24px 20px;
+				flex: 1;
+				background: var(--glass-surface); /* Use themed glass effect */
+				backdrop-filter: blur(2px);
+				z-index: 1;
+			}
+
+			.card-footer {
+				padding: 12px 16px;
+				border-top: 1px solid var(--border);
+				background: var(--bg);
+				display: flex;
+				gap: 12px;
+				z-index: 1;
+			}
+
+			/* Elements */
+			.status-indicator {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+			
+			.status-dot {
+				width: 6px;
+				height: 6px;
+				background: var(--code-comment); /* Use green/success color */
+				border-radius: 50%;
+				box-shadow: 0 0 4px var(--code-comment);
+			}
+			
+			.featured .status-dot {
+				background: var(--a-500); /* Orange for priority */
+				box-shadow: 0 0 4px var(--a-500);
+			}
+
+			.status-text {
+				color: var(--text-muted);
+				font-weight: 600;
+			}
+
+			.tech-id {
+				color: var(--text-faint);
+				opacity: 0.7;
+			}
+
+			.project-title {
+				margin: 0 0 12px 0;
+				font-size: 1.25rem;
+				font-weight: 700;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				letter-spacing: -0.02em;
+				color: var(--text);
+			}
+
+			.project-icon {
+				font-size: 1.4em;
+				line-height: 1;
+			}
+
+			.description {
+				font-size: 0.925rem;
+				color: var(--text-muted);
+				line-height: 1.6;
+				margin-bottom: 20px;
+			}
+
+			/* Tech Stack Chips */
+			.tech-stack {
+				margin-top: auto;
+				padding-top: 16px;
+				border-top: 1px dashed var(--border);
+			}
+
+			.tags {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: baseline;
+				gap: 6px;
+				font-family: var(--mono);
+				font-size: 0.75rem;
+			}
+
+			.stack-prefix {
+				color: var(--text-faint);
+				font-size: 0.7rem;
+				margin-right: 4px;
+				opacity: 0.8;
+			}
+
+			.tech-tag {
+				padding: 2px 6px;
+				background: var(--bg-soft);
+				color: var(--text-muted);
+				border: 1px solid var(--border-strong);
+				border-radius: 4px;
+				transition: all 0.2s ease;
+				position: relative;
+			}
+			
+			.tech-tag:hover {
 				color: var(--primary);
-				border-color: var(--primary-soft);
+				border-color: var(--primary);
+				background: var(--primary-soft);
+			}
+
+			/* Buttons: Industrial Switches */
+			.action-btn {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 8px;
+				background: transparent;
+				border: 1px solid var(--border-strong);
+				color: var(--text-muted);
+				font-family: var(--mono);
+				font-size: 0.8rem;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				position: relative;
+				overflow: hidden;
+				border-radius: 2px;
+			}
+
+			.action-btn::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 2px;
+				height: 100%;
+				background: var(--text-muted);
+				transition: width 0.2s ease;
+				z-index: 0;
+			}
+
+			.action-btn:hover {
+				color: var(--bg);
+				border-color: var(--text-muted);
+			}
+
+			.action-btn:hover::before {
+				width: 100%;
+			}
+
+			.action-btn .btn-text,
+			.action-btn .btn-icon {
+				position: relative;
+				z-index: 1;
+				font-weight: 600;
+			}
+			
+			.action-btn.primary:hover::before {
+				background: var(--text); /* Dark background on hover */
+			}
+
+			.action-btn.secondary:hover {
+				color: var(--primary);
+				border-color: var(--primary);
+			}
+			.action-btn.secondary:hover::before {
+				background: rgba(var(--primary-rgb, 100,100,100), 0.1); 
+				width: 100%;
+			}
+			/* Different hover style for secondary to keep it distinct */
+			.action-btn.secondary:hover .btn-text {
+				color: var(--primary);
 			}
 		</style>
 		<script>
+			// Interact Logic
 			document.querySelectorAll('.project-card').forEach(card => {
 				const slug = card.dataset.slug;
 				const lang = card.dataset.lang;
 				
-				// 点击卡片跳转到详情页
+				// Main Card Click
 				card.addEventListener('click', (e) => {
-					// 如果点击的是按钮区域，不跳转
-					if (e.target.closest('.project-actions')) {
-						return;
-					}
+					// Ignore if clicking action buttons
+					if (e.target.closest('.project-actions')) return;
 					window.location.href = `/${lang}/projects/${slug}/`;
 				});
 				
-				// 处理 GitHub 按钮点击
+				// Hover Sound Effect (Optional - maybe too much? kept simple visual only for now)
+				
+				// Buttons
 				const repoBtn = card.querySelector('[data-repo]');
 				if (repoBtn) {
 					repoBtn.addEventListener('click', (e) => {
@@ -96,7 +392,6 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 					});
 				}
 				
-				// 处理 Demo 按钮点击
 				const demoBtn = card.querySelector('[data-demo]');
 				if (demoBtn) {
 					demoBtn.addEventListener('click', (e) => {
