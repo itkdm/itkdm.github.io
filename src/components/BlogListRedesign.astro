@@ -1,0 +1,448 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Post = CollectionEntry<'blog'>;
+
+interface Props {
+	lang: 'zh' | 'en';
+	posts: Post[];
+	tags: string[];
+}
+
+const { lang, posts, tags } = Astro.props;
+
+// Logic: Separate Featured Post & Rest
+const featuredPost = posts.find((post: any) => (post.data.priority ?? 0) === 9999) || posts[0];
+const otherPosts = featuredPost ? posts.filter((p: any) => p.slug !== featuredPost.slug) : [];
+
+// Logic: Group by Year for Timeline
+const postsByYear = otherPosts.reduce((acc, post) => {
+    const year = new Date(post.data.date).getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(post);
+    return acc;
+}, {} as Record<number, Post[]>);
+
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+
+const dateLocale = lang === 'zh' ? 'zh-CN' : 'en-US';
+const formatDate = (date: Date) =>
+	new Intl.DateTimeFormat(dateLocale, {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+	}).format(date);
+
+const labels = {
+	title: lang === 'zh' ? '传输日志' : 'Transmission Log',
+	subtitle: lang === 'zh' ? '记录技术探索与思维碎片' : 'Recording technical explorations and thought fragments',
+    featuredBadge: lang === 'zh' ? '头条' : 'HEADLINE',
+    readFull: lang === 'zh' ? '阅读全文' : 'Read Article',
+    yearLabel: lang === 'zh' ? '年' : '',
+    empty: lang === 'zh' ? '暂无数据' : 'No Data'
+};
+---
+
+<div class="cyber-blog-container">
+
+    {/* HEADER: Tech/Magazine Style */}
+    <header class="cyber-header">
+        <div class="header-decoration"></div>
+        <div class="header-content">
+            <h1 class="glitch-title" data-text={labels.title}>{labels.title}</h1>
+            <p class="cyber-subtitle">:: {labels.subtitle} ::</p>
+        </div>
+    </header>
+
+    {/* TAGS MATRIX */}
+    {tags.length > 0 && (
+        <div class="tags-matrix">
+            <div class="tags-scroller">
+                {tags.slice(0, 15).map(tag => (
+                    <a href={`/${lang}/blog/tags/${tag}/`} class="matrix-tag">
+                        <span class="hash">#</span>{tag}
+                    </a>
+                ))}
+            </div>
+            <div class="tags-fade"></div>
+        </div>
+    )}
+
+    {/* FEATURED: Magazine Cover Style */}
+    {featuredPost && (
+        <section class="featured-zone">
+            <a href={`/${lang}/blog/${featuredPost.data.slug ?? featuredPost.slug.split('/').pop() ?? featuredPost.slug}/`} class="hero-card">
+                <div class="hero-content">
+                    <div class="hero-meta">
+                        <span class="hero-badge">{labels.featuredBadge}</span>
+                        <time class="hero-date">{formatDate(featuredPost.data.date)}</time>
+                    </div>
+                    <h2 class="hero-title">{featuredPost.data.title}</h2>
+                    <p class="hero-summary">{featuredPost.data.summary}</p>
+                    <div class="hero-action">
+                        {labels.readFull} <span class="arrow">_&gt;</span>
+                    </div>
+                </div>
+                <div class="hero-decoration"></div>
+            </a>
+            <div class="hero-glow"></div>
+        </section>
+    )}
+
+    {/* TIMELINE STREAM */}
+    <section class="timeline-stream">
+        <div class="timeline-track"></div>
+        
+        {years.length > 0 ? years.map(year => (
+            <div class="year-group">
+                <div class="year-marker">
+                    <span class="year-text">{year}{labels.yearLabel}</span>
+                </div>
+                
+                <div class="year-posts">
+                    {postsByYear[Number(year)].map(post => (
+                        <a href={`/${lang}/blog/${post.data.slug ?? post.slug.split('/').pop() ?? post.slug}/`} class="stream-card-link">
+                            <article class="stream-card">
+                                <div class="card-timeline-node"></div>
+                                <div class="card-metaline">
+                                    <time class="card-date">{formatDate(post.data.date)}</time>
+                                    <div class="card-tags">
+                                        {post.data.tags.slice(0, 2).map((tag:string) => (
+                                            <span class="mini-tag">#{tag}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                <h3 class="card-title">{post.data.title}</h3>
+                                <p class="card-summary">{post.data.summary}</p>
+                            </article>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        )) : (
+            <div class="empty-state">{labels.empty}</div>
+        )}
+    </section>
+
+</div>
+
+<style>
+    /* VARIABLES */
+    :root {
+        --c-font-display: 'JetBrains Mono', monospace;
+        --c-accent: var(--primary);
+        --c-bg: var(--bg);
+        --c-bg-card: var(--bg-elev);
+        --c-border: var(--border);
+        --c-text: var(--text);
+        --c-text-muted: var(--text-muted);
+        --c-glow: rgba(59, 130, 246, 0.15); /* Adjust based on primary color if possible */
+    }
+
+    .cyber-blog-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        font-family: var(--c-font-display);
+    }
+
+    /* HEADER */
+    .cyber-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+    .glitch-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        margin: 0;
+        background: linear-gradient(to right, var(--c-text), var(--c-text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+    }
+    .cyber-subtitle {
+        color: var(--c-text-muted);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.8;
+    }
+    .header-decoration {
+        position: absolute;
+        top: 50%; width: 100%; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--c-border), transparent);
+        z-index: -1;
+    }
+
+    /* TAGS MATRIX */
+    .tags-matrix {
+        position: relative;
+        margin-bottom: 4rem;
+        border-top: 1px dashed var(--c-border);
+        border-bottom: 1px dashed var(--c-border);
+        padding: 1rem 0;
+    }
+    .tags-scroller {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        max-height: 60px;
+        overflow: hidden;
+    }
+    .matrix-tag {
+        font-size: 0.8rem;
+        color: var(--c-text-muted);
+        text-decoration: none;
+        padding: 4px 10px;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+        border-radius: 4px;
+    }
+    .matrix-tag:hover {
+        color: var(--c-accent);
+        border-color: var(--c-accent);
+        background: rgba(255,255,255,0.03);
+    }
+    .hash { color: var(--c-accent); opacity: 0.5; margin-right: 2px; }
+
+    /* FEATURED HERO */
+    .featured-zone {
+        position: relative;
+        margin-bottom: 3rem; /* Reduced from 5rem */
+    }
+    .hero-card {
+        display: block;
+        background: var(--c-bg-card);
+        border: 1px solid var(--c-border);
+        padding: 3rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 2;
+        /* Add shadow to pop */
+        box-shadow: var(--shadow-1);
+    }
+    .hero-card:hover {
+        border-color: var(--c-accent);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-2);
+    }
+    .hero-badge {
+        background: var(--c-accent);
+        color: white;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-right: 1rem;
+        border-radius: 2px;
+    }
+    .hero-date {
+        color: var(--c-text-muted);
+        font-size: 0.9rem;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+        margin: 1.5rem 0 1rem;
+        color: var(--c-text);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+    }
+    .hero-summary {
+        font-size: 1.1rem;
+        color: var(--c-text-muted);
+        line-height: 1.6;
+        max-width: 80%;
+        margin-bottom: 2rem;
+    }
+    .hero-action {
+        color: var(--c-accent);
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+    .hero-glow {
+        position: absolute;
+        top: 20px; left: 20px; right: 20px; bottom: 20px;
+        background: var(--c-accent);
+        filter: blur(60px);
+        opacity: 0.08; /* Slightly more visible by default */
+        z-index: 1;
+        transition: opacity 0.3s;
+    }
+    .hero-card:hover + .hero-glow { opacity: 0.15; }
+
+    /* TIMELINE STREAM */
+    .timeline-stream {
+        position: relative;
+        padding-left: 3rem; /* Increase indent space for clearer timeline channel */
+    }
+    .timeline-track {
+        position: absolute;
+        left: 0.5rem; /* Indent track slightly */
+        top: 0; bottom: 0;
+        width: 2px; /* Thicker line */
+        background: linear-gradient(to bottom, var(--c-accent), var(--c-border) 10%, var(--c-border) 90%, transparent);
+    }
+
+    .year-group {
+        margin-bottom: 3rem;
+        position: relative;
+    }
+    .year-marker {
+        position: sticky;
+        top: 1rem;
+        display: flex;
+        align-items: center;
+        margin-left: -2.8rem; /* Re-align with new track position */
+        margin-bottom: 1.5rem;
+        z-index: 5;
+    }
+    .year-text {
+        background: var(--c-bg-card); /* White bg to stand out */
+        border: 1px solid var(--c-border);
+        padding: 4px 12px;
+        color: var(--c-accent);
+        font-weight: 800;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* CARD ITEM */
+    .stream-card-link {
+        display: block;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    .stream-card {
+        background: var(--c-bg-card); /* Visible card background */
+        border: 1px solid var(--c-border); /* Visible border */
+        border-left: 3px solid var(--c-border); /* Thicker left border basis */
+        border-radius: 4px 12px 12px 12px; /* Tech detail: Sharp top-left */
+        padding: 1.5rem 2rem;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        margin-left: 0; /* Remove extra margin as we padded the stream */
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    /* Timeline Node Dot */
+    .card-timeline-node {
+        position: absolute;
+        left: -2.85rem; /* Align with track calculate: 0.5rem(track) - 0.35rem(radius) approx */
+        top: 2.2rem;
+        width: 11px;
+        height: 11px;
+        background: var(--c-bg);
+        border: 2px solid var(--c-border); /* Default neutral border */
+        border-radius: 2px; /* Square/Diamond node for tech feel */
+        transform: rotate(45deg); /* Diamond shape */
+        transition: all 0.3s;
+        z-index: 2;
+    }
+    
+    /* Hover Effects */
+    .stream-card-link:hover .card-timeline-node {
+        background: var(--c-accent);
+        border-color: var(--c-accent);
+        box-shadow: 0 0 10px var(--c-accent);
+        transform: rotate(225deg) scale(1.2); /* Rotate animation */
+    }
+    .stream-card-link:hover .stream-card {
+        border-color: var(--c-accent);
+        border-left-color: var(--c-accent); /* Highlight left border */
+        background: linear-gradient(to bottom right, var(--c-bg-card), var(--c-bg-soft));
+        transform: translateY(-2px) translateX(4px);
+        box-shadow: var(--shadow-2);
+    }
+
+    /* Connecting line from node to card */
+    .stream-card::before {
+        content: '';
+        position: absolute;
+        left: -1rem; /* Length of the connector */
+        top: 2.5rem;
+        width: 1rem;
+        height: 1px;
+        background: var(--c-border);
+        transition: background 0.2s;
+    }
+    .stream-card-link:hover .stream-card::before {
+        background: var(--c-accent);
+    }
+
+    .card-metaline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem; /* Increased spacing */
+        font-size: 0.85rem;
+        color: var(--c-text-muted);
+    }
+    .card-date { opacity: 0.9; font-weight: 500; font-family: monospace; }
+    
+    .card-tags {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .mini-tag { 
+        color: var(--c-accent); 
+        opacity: 0.9; 
+        font-family: monospace;
+        font-size: 0.75rem;
+        background: rgba(var(--c-accent), 0.05); /* Subtle background if variable supported, else transparent */
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+    }
+    .stream-card-link:hover .mini-tag {
+        background: var(--c-bg);
+        border-color: var(--c-accent);
+    }
+    
+    .card-title {
+        color: var(--c-text);
+        font-size: 1.35rem;
+        margin: 0.5rem 0 0.8rem; /* Adjusted margins */
+        line-height: 1.3;
+        font-weight: 700;
+        transition: color 0.2s;
+        letter-spacing: -0.01em;
+    }
+    .stream-card-link:hover .card-title { color: var(--c-accent); }
+    
+    .card-summary {
+        color: var(--c-text-muted);
+        line-height: 1.6;
+        margin: 0;
+        font-size: 0.95rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        opacity: 0.85; /* Increased opacity for readability */
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .timeline-stream { padding-left: 2rem; }
+        .timeline-track { left: 0; }
+        .hero-title { font-size: 1.8rem; }
+        .glitch-title { font-size: 2.5rem; }
+        .stream-card { padding: 1.2rem; }
+        
+        .card-timeline-node { left: -2.35rem; }
+        .stream-card::before { width: 0.8rem; left: -0.8rem; } /* Shorten connector */
+        
+        .year-marker { margin-left: -2.4rem; font-size: 1rem; }
+    }
+</style>
