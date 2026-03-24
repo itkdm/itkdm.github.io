@@ -1,22 +1,22 @@
 ---
-title: "JMeter 参数化详解"
+title: "JMeter参数化详解"
 order: 8
 section: "性能测试"
-topic: "JMeter"
+topic: "JMeter 实践"
 lang: "zh"
-slug: "perf-jmeter-param"
-summary: "使用 CSV Data Set Config 实现用户数据模拟和参数化测试。"
-icon: "📊"
+slug: "perf-jmeter-parameterization"
+summary: "掌握 CSV Data Set Config、变量引用与动态函数生成等参数化方法，避免压测数据冲突并更真实地模拟业务场景。"
+icon: "🗂"
 featured: false
 toc: true
-updated: 2026-03-10
+updated: 2026-03-14
 ---
+
+# JMeter参数化详解
 
 ## 一、什么是参数化
 
-在真实业务场景中，不同用户会使用不同的数据访问系统。
-
-例如：
+在真实业务场景中，不同用户会使用不同的数据访问系统。例如：
 
 * 不同用户登录
 * 不同商品查询
@@ -24,7 +24,7 @@ updated: 2026-03-10
 
 如果压测脚本使用固定数据，例如：
 
-```
+```text
 username=test
 password=123456
 ```
@@ -51,49 +51,49 @@ password=123456
 
 ### 用户登录
 
-```
-用户 1 登录
-用户 2 登录
-用户 3 登录
+```text
+用户1登录
+用户2登录
+用户3登录
 ```
 
 ---
 
 ### 商品查询
 
-```
-查询商品 ID=1001
-查询商品 ID=1002
-查询商品 ID=1003
+```text
+查询商品ID=1001
+查询商品ID=1002
+查询商品ID=1003
 ```
 
 ---
 
 ### 创建订单
 
-```
-订单 1
-订单 2
-订单 3
+```text
+订单1
+订单2
+订单3
 ```
 
 如果没有参数化，所有请求都会使用同一数据，这样压测结果是不可信的。
 
 ---
 
-## 三、JMeter 参数化方式
+## 三、JMeter参数化方式
 
 JMeter 支持多种参数化方式：
 
 | 方式 | 说明 |
-| ---------------------- | ---------- |
-| CSV Data Set Config | 从 CSV 文件读取数据 |
+| --- | --- |
+| CSV Data Set Config | 从CSV文件读取数据 |
 | User Defined Variables | 自定义变量 |
-| 函数变量 | JMeter 内置函数 |
+| 函数变量 | JMeter内置函数 |
 
 在实际项目中最常用的是：
 
-```
+```text
 CSV Data Set Config
 ```
 
@@ -105,13 +105,13 @@ CSV Data Set Config 用于从文件读取测试数据。
 
 例如创建一个文件：
 
-```
+```text
 users.csv
 ```
 
 内容：
 
-```
+```text
 username,password
 user1,123456
 user2,123456
@@ -121,21 +121,21 @@ user4,123456
 
 ---
 
-## 五、添加 CSV 配置
+## 五、添加CSV配置
 
 在 JMeter 中：
 
 右键 Thread Group：
 
-```
+```text
 Add → Config Element → CSV Data Set Config
 ```
 
 配置参数：
 
 | 参数 | 说明 |
-| ------------------ | ------- |
-| Filename | CSV 文件路径 |
+| --- | --- |
+| Filename | CSV文件路径 |
 | Variable Names | 变量名 |
 | Delimiter | 分隔符 |
 | Recycle on EOF | 是否循环读取 |
@@ -143,7 +143,7 @@ Add → Config Element → CSV Data Set Config
 
 示例配置：
 
-```
+```text
 Filename: users.csv
 Variable Names: username,password
 Delimiter: ,
@@ -155,7 +155,7 @@ Delimiter: ,
 
 CSV 文件中的变量可以通过：
 
-```
+```text
 ${变量名}
 ```
 
@@ -165,7 +165,7 @@ ${变量名}
 
 登录请求：
 
-```
+```text
 POST /api/login
 ```
 
@@ -190,7 +190,7 @@ CSV Data Set Config 支持多种读取方式。
 
 按顺序读取：
 
-```
+```text
 user1
 user2
 user3
@@ -198,7 +198,7 @@ user3
 
 适合：
 
-```
+```text
 用户数据
 订单数据
 ```
@@ -209,7 +209,7 @@ user3
 
 随机读取数据：
 
-```
+```text
 user3
 user1
 user2
@@ -217,7 +217,7 @@ user2
 
 适合：
 
-```
+```text
 商品查询
 随机业务
 ```
@@ -238,13 +238,13 @@ JMeter 提供了很多函数。
 
 ### 生成随机数
 
-```
+```text
 ${__Random(1,10000)}
 ```
 
 生成：
 
-```
+```text
 5483
 9211
 137
@@ -254,13 +254,13 @@ ${__Random(1,10000)}
 
 ### 当前时间戳
 
-```
+```text
 ${__time()}
 ```
 
 生成：
 
-```
+```text
 1712345678900
 ```
 
@@ -268,21 +268,21 @@ ${__time()}
 
 ### UUID
 
-```
+```text
 ${__UUID()}
 ```
 
 生成：
 
-```
+```text
 550e8400-e29b-41d4-a716-446655440000
 ```
 
 这些数据可以用于：
 
-```
-订单 ID
-请求 ID
+```text
+订单ID
+请求ID
 唯一参数
 ```
 
@@ -292,31 +292,31 @@ ${__UUID()}
 
 假设压测登录接口：
 
-```
+```text
 POST /api/login
 ```
 
 用户数据：
 
-```
+```text
 users.csv
 ```
 
 内容：
 
-```
+```text
 username,password
 user1,123456
 user2,123456
 user3,123456
 ```
 
-JMeter 结构：
+JMeter结构：
 
-```
+```text
 Thread Group
-├ CSV Data Set Config
-└ HTTP Request (Login)
+ ├ CSV Data Set Config
+ └ HTTP Request (Login)
 ```
 
 请求参数：
@@ -330,10 +330,10 @@ Thread Group
 
 运行压测时：
 
-```
-用户 1 登录
-用户 2 登录
-用户 3 登录
+```text
+用户1登录
+用户2登录
+用户3登录
 ```
 
 每个线程都会使用不同数据。
@@ -346,28 +346,28 @@ Thread Group
 
 如果压测：
 
-```
-1000 线程
+```text
+1000线程
 ```
 
-但 CSV 只有：
+但CSV只有：
 
-```
-100 条数据
+```text
+100条数据
 ```
 
 就会重复使用数据。
 
 解决方案：
 
-```
+```text
 准备足够数据
 ```
 
 例如：
 
-```
-10000 用户
+```text
+10000用户
 ```
 
 ---
@@ -376,17 +376,17 @@ Thread Group
 
 例如：
 
-多个线程同时使用同一个订单 ID。
+多个线程同时使用同一个订单ID。
 
 解决方案：
 
-```
-生成随机 ID
+```text
+生成随机ID
 ```
 
 例如：
 
-```
+```text
 ${__UUID()}
 ```
 
@@ -400,11 +400,11 @@ ${__UUID()}
 
 * CSV 数据文件
 * 变量
-* JMeter 函数
+* JMeter函数
 
 企业压测通常使用：
 
-```
+```text
 CSV Data Set Config
 ```
 
@@ -417,9 +417,3 @@ CSV Data Set Config
 * 不同商品
 
 这也是进行真实业务压测的重要基础。
-
----
-
-## 上一篇 | 下一篇
-
-📖 [JMeter 核心组件详解](/zh/docs/perf-jmeter-components/) | 📖 [业务压测设计](/zh/docs/perf-business-design/)

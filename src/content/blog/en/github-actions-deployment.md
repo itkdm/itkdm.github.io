@@ -1,6 +1,6 @@
 ---
 title: "GitHub Actions Automation Best Practices"
-date: 2024-01-05
+date: 2025-09-12
 tags: [GitHub Actions, CI-CD, Automation]
 summary: "GitHub Actions is GitHub's continuous integration and continuous deployment service. This article covers how to use GitHub Actions for automated building, testing, and deployment to improve development efficiency and code quality."
 lang: "en"

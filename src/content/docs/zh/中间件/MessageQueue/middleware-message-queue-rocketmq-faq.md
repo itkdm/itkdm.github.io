@@ -9,7 +9,7 @@ summary: "RocketMQ 高频面试题汇总：使用场景、架构设计、消息�
 icon: "🚀"
 featured: false
 toc: true
-updated: 2026-03-07
+updated: 2026-03-14
 ---
 
 本文整理了 RocketMQ 相关的高频面试题，涵盖使用场景、架构设计、消息可靠性、事务消息、消息堆积等关键知识点。

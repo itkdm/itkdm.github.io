@@ -1,6 +1,6 @@
 ---
 title: "TODO Tags in IDEs: Manage TODO/FIXME/HACK in IntelliJ IDEA"
-date: 2026-02-05
+date: 2025-12-19
 tags: [IntelliJ IDEA, Eclipse, TODO, Coding Standards, Productivity]
 summary: "Don’t stop at TODO. Add patterns for common task tags (FIXME/XXX/HACK/OPTIMIZE/REVIEW) so IDEs can surface them in one place and you can distinguish bugs, hacks, and real follow-ups."
 lang: "en"

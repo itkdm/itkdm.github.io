@@ -1,0 +1,295 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type StatItem = {
+	label: string;
+	value: string;
+	hint: string;
+};
+
+type DocCard = {
+	section: string;
+	description: string;
+	count: number;
+};
+
+type Action = {
+	href: string;
+	label: string;
+	style?: 'primary' | 'ghost';
+};
+
+type Labels = {
+	heroKicker: string;
+	heroTitle: string;
+	heroLead: string;
+	heroNote: string;
+	primaryAction: Action;
+	secondaryAction: Action;
+	stats: StatItem[];
+	spotlightLabel: string;
+	spotlightTitle: string;
+	spotlightBody: string;
+	spotlightLink: string;
+	latestSection: string;
+	latestMore: string;
+	latestFeatured: string;
+	latestContinue: string;
+	latestRead: string;
+	latestFallback: string;
+	latestArticleType: string;
+	latestTagFallback: string;
+	docsSection: string;
+	docsMore: string;
+	docsSummaryTitle: string;
+	docsSummaryBody: string;
+	docsSummaryLink: string;
+	docsCountSuffix: string;
+	docsArrow: string;
+	projectsSection: string;
+	projectsMore: string;
+	projectsFeatured: string;
+	projectsOpen: string;
+	projectsDemo: string;
+	projectsFallback: string;
+	toolsSection: string;
+	toolsMore: string;
+	toolsSummaryTitle: string;
+	toolsSummaryBody: string;
+	toolsSummaryLink: string;
+	toolsFallback: string;
+};
+
+const {
+	lang,
+	labels,
+	latestPost,
+	secondaryPosts,
+	docsCards,
+	featuredProjects,
+	featuredTools,
+} = Astro.props as {
+	lang: 'zh' | 'en';
+	labels: Labels;
+	latestPost?: CollectionEntry<'blog'>;
+	secondaryPosts: CollectionEntry<'blog'>[];
+	docsCards: DocCard[];
+	featuredProjects: CollectionEntry<'projects'>[];
+	featuredTools: CollectionEntry<'tools'>[];
+};
+
+const dateLocale = lang === 'zh' ? 'zh-CN' : 'en-US';
+const formatDate = (date: Date) =>
+	new Intl.DateTimeFormat(dateLocale, {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+	}).format(date);
+---
+
+<div class="home-redesign">
+	<section class="home-hero-panel">
+		<div class="home-hero-copy">
+			<p class="home-kicker">{labels.heroKicker}</p>
+			<h1>{labels.heroTitle}</h1>
+			<p class="home-lead">{labels.heroLead}</p>
+			<div class="home-actions">
+				<a class={`btn ${labels.primaryAction.style === 'ghost' ? 'btn-ghost' : 'btn-primary'}`} href={labels.primaryAction.href}>
+					<span class="dot"></span>
+					<span>{labels.primaryAction.label}</span>
+				</a>
+				<a class={`btn ${labels.secondaryAction.style === 'ghost' ? 'btn-ghost' : 'btn-primary'}`} href={labels.secondaryAction.href}>
+					<span>{labels.secondaryAction.label}</span>
+				</a>
+			</div>
+			<p class="home-hero-note">{labels.heroNote}</p>
+		</div>
+
+		<div class="home-hero-side">
+			<div class="home-spotlight-card">
+				<div class="home-spotlight-meta">{labels.spotlightLabel}</div>
+				<h2>{labels.spotlightTitle}</h2>
+				<p>{labels.spotlightBody}</p>
+				<a href={labels.spotlightLink}>{labels.docsSummaryLink}</a>
+			</div>
+			<div class="home-stats-grid">
+				{labels.stats.map((item) => (
+					<div class="home-stat-card">
+						<div class="home-stat-value">{item.value}</div>
+						<div class="home-stat-label">{item.label}</div>
+						<p>{item.hint}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<div class="home-sections">
+		<section class="home-block home-block-featured">
+			<div class="home-block-head">
+				<div>
+					<p class="section-kicker">{labels.latestSection}</p>
+				</div>
+				<a class="section-link" href={`/${lang}/blog/`}>{labels.latestMore}</a>
+			</div>
+
+			{latestPost ? (
+				<div class="home-featured-grid">
+					<a
+						class="home-featured-primary"
+						href={`/${lang}/blog/${latestPost.data.slug ?? latestPost.slug.split('/').pop() ?? latestPost.slug}/`}
+					>
+						<div class="home-featured-chip">{labels.latestFeatured}</div>
+						<h2>{latestPost.data.title}</h2>
+						<div class="blog-meta-row">
+							<time datetime={latestPost.data.date.toISOString()}>{formatDate(latestPost.data.date)}</time>
+							<span>{labels.latestArticleType}</span>
+							<span>{latestPost.data.tags.length}</span>
+						</div>
+						<p>{latestPost.data.summary}</p>
+						{latestPost.data.tags.length > 0 && (
+							<div class="tag-row">
+								{latestPost.data.tags.slice(0, 4).map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+						)}
+						<div class="card-cta">{labels.latestRead}</div>
+					</a>
+
+					<div class="home-featured-secondary">
+						{secondaryPosts.map((post) => {
+							const slug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
+							return (
+								<a class="home-secondary-card" href={`/${lang}/blog/${slug}/`}>
+									<div class="home-featured-chip subtle">{labels.latestContinue}</div>
+									<h3>{post.data.title}</h3>
+									<div class="blog-meta-row">
+										<time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+										<span>{post.data.tags[0] ?? labels.latestTagFallback}</span>
+									</div>
+									<p>{post.data.summary}</p>
+								</a>
+							);
+						})}
+					</div>
+				</div>
+			) : (
+				<p>{labels.latestFallback}</p>
+			)}
+		</section>
+
+		<section class="home-block">
+			<div class="home-block-head">
+				<div>
+					<p class="section-kicker">{labels.docsSection}</p>
+				</div>
+				<a class="section-link" href={`/${lang}/docs/`}>{labels.docsMore}</a>
+			</div>
+
+			<div class="home-docs-layout">
+				<div class="home-docs-intro">
+					<h2>{labels.docsSummaryTitle}</h2>
+					<p>{labels.docsSummaryBody}</p>
+					<a class="btn btn-primary" href={`/${lang}/docs/`}>
+						<span class="dot"></span>
+						<span>{labels.docsSummaryLink}</span>
+					</a>
+				</div>
+
+				<div class="home-docs-grid">
+					{docsCards.map((item) => (
+						<a class="home-doc-card" href={`/${lang}/docs/#${encodeURIComponent(item.section)}`}>
+							<div class="home-doc-card-top">
+								<span class="badge">Docs</span>
+								<span class="home-doc-count">{item.count} {labels.docsCountSuffix}</span>
+							</div>
+							<h3>{item.section}</h3>
+							<p>{item.description}</p>
+							<div class="home-doc-arrow">{labels.docsArrow}</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="home-block">
+			<div class="home-block-head">
+				<div>
+					<p class="section-kicker">{labels.projectsSection}</p>
+				</div>
+				<a class="section-link" href={`/${lang}/projects/`}>{labels.projectsMore}</a>
+			</div>
+
+			{featuredProjects.length > 0 ? (
+				<div class="home-project-grid">
+					{featuredProjects.map((project) => {
+						const slug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
+						return (
+							<a class="home-project-card" href={`/${lang}/projects/${slug}/`}>
+								<div class="home-project-top">
+									<span class="badge">Project</span>
+									<span class="home-project-status">{labels.projectsFeatured}</span>
+								</div>
+								<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
+								<p>{project.data.summary}</p>
+								{project.data.tags.length > 0 && (
+									<div class="tag-row">
+										{project.data.tags.slice(0, 5).map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</div>
+								)}
+								<div class="home-project-footer">
+									<span class="card-cta">{labels.projectsOpen}</span>
+									{project.data.demo && <span class="subtle-link">{labels.projectsDemo}</span>}
+								</div>
+							</a>
+						);
+					})}
+				</div>
+			) : (
+				<p>{labels.projectsFallback}</p>
+			)}
+		</section>
+
+		<section class="home-block">
+			<div class="home-block-head">
+				<div>
+					<p class="section-kicker">{labels.toolsSection}</p>
+				</div>
+				<a class="section-link" href={`/${lang}/tools/`}>{labels.toolsMore}</a>
+			</div>
+
+			<div class="home-tools-layout">
+				<div class="home-tools-intro">
+					<h2>{labels.toolsSummaryTitle}</h2>
+					<p>{labels.toolsSummaryBody}</p>
+					<a class="section-link" href={`/${lang}/tools/`}>{labels.toolsSummaryLink}</a>
+				</div>
+
+				{featuredTools.length > 0 ? (
+					<div class="home-tools-grid">
+						{featuredTools.map((tool) => (
+							<a
+								class="home-tool-card"
+								href={tool.data.homepage}
+								target={tool.data.homepage.startsWith('http') ? '_blank' : undefined}
+								rel={tool.data.homepage.startsWith('http') ? 'noreferrer' : undefined}
+							>
+								<div class="home-tool-top">
+									<span class="home-tool-icon">{tool.data.icon ?? '•'}</span>
+									<span class="badge">Tool</span>
+								</div>
+								<h3>{tool.data.name}</h3>
+								<p>{tool.data.summary}</p>
+							</a>
+						))}
+					</div>
+				) : (
+					<p>{labels.toolsFallback}</p>
+				)}
+			</div>
+		</section>
+	</div>
+</div>

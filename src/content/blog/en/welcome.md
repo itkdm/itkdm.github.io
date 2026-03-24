@@ -1,6 +1,6 @@
 ---
 title: "Welcome to the Astro multilingual site"
-date: 2026-01-13
+date: 2025-11-07
 tags: [Astro, Guide]
 summary: "Starter sample for blog + docs + tools + downloads in one static site."
 slug: "welcome"

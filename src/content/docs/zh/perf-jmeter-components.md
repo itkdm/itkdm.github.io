@@ -1,18 +1,20 @@
 ---
-title: "JMeter 核心组件详解"
+title: "JMeter核心组件详解"
 order: 7
 section: "性能测试"
-topic: "JMeter"
+topic: "JMeter 实践"
 lang: "zh"
 slug: "perf-jmeter-components"
-summary: "深入理解 Thread Group、Sampler、Config Element、Timer、Assertion、Listener 等核心组件。"
+summary: "理解 Thread Group、Sampler、Config Element、Timer、Assertion、Listener 的职责与配置方式，搭建企业级 JMeter 脚本基础。"
 icon: "🧩"
-featured: true
+featured: false
 toc: true
-updated: 2026-03-10
+updated: 2026-03-14
 ---
 
-## 一、为什么需要理解 JMeter 核心组件
+# JMeter核心组件详解
+
+## 一、为什么需要理解JMeter核心组件
 
 在实际企业压测中，一个压测脚本往往不仅仅包含简单的 HTTP 请求，还会涉及：
 
@@ -26,14 +28,14 @@ updated: 2026-03-10
 
 一个典型的 JMeter 脚本结构如下：
 
-```
+```text
 Test Plan
-└ Thread Group
-  ├ Config Element
-  ├ Sampler
-  ├ Timer
-  ├ Assertion
-  └ Listener
+ └ Thread Group
+     ├ Config Element
+     ├ Sampler
+     ├ Timer
+     ├ Assertion
+     └ Listener
 ```
 
 每一种组件都承担不同职责。
@@ -42,13 +44,13 @@ Test Plan
 
 ## 二、Thread Group（线程组）
 
-### 1. 作用
+### 1 作用
 
 Thread Group 用于 **模拟并发用户**。
 
 每个线程可以理解为：
 
-```
+```text
 一个虚拟用户
 ```
 
@@ -56,26 +58,26 @@ Thread Group 用于 **模拟并发用户**。
 
 ---
 
-### 2. 重要参数
+### 2 重要参数
 
 #### Number of Threads（线程数）
 
 表示：
 
-```
+```text
 同时模拟多少用户
 ```
 
 例如：
 
-```
+```text
 线程数 = 100
 ```
 
 表示：
 
-```
-100 个用户同时访问系统
+```text
+100个用户同时访问系统
 ```
 
 ---
@@ -84,22 +86,22 @@ Thread Group 用于 **模拟并发用户**。
 
 表示：
 
-```
+```text
 多少秒内启动所有线程
 ```
 
 例如：
 
-```
+```text
 线程数 = 100
-Ramp-Up = 10 秒
+Ramp-Up = 10秒
 ```
 
 含义：
 
-```
-10 秒内逐渐启动 100 个用户
-平均每 0.1 秒启动 1 个用户
+```text
+10秒内逐渐启动100个用户
+平均每0.1秒启动1个用户
 ```
 
 这样可以避免瞬间压垮系统。
@@ -112,14 +114,14 @@ Ramp-Up = 10 秒
 
 例如：
 
-```
+```text
 Loop Count = 10
 ```
 
 表示：
 
-```
-每个用户执行 10 次请求
+```text
+每个用户执行10次请求
 ```
 
 ---
@@ -131,15 +133,15 @@ Sampler 是 JMeter 中 **真正发送请求的组件**。
 常见 Sampler 包括：
 
 | Sampler | 作用 |
-| ------------ | ------ |
-| HTTP Request | HTTP 接口 |
+| --- | --- |
+| HTTP Request | HTTP接口 |
 | JDBC Request | 数据库 |
-| FTP Request | FTP 服务 |
-| TCP Request | TCP 协议 |
+| FTP Request | FTP服务 |
+| TCP Request | TCP协议 |
 
 在 API 压测中最常用的是：
 
-```
+```text
 HTTP Request
 ```
 
@@ -148,7 +150,7 @@ HTTP Request
 ### HTTP Request 主要参数
 
 | 参数 | 说明 |
-| ----------- | ---- |
+| --- | --- |
 | Method | 请求方法 |
 | Server Name | 域名 |
 | Port | 端口 |
@@ -156,13 +158,13 @@ HTTP Request
 
 示例：
 
-```
+```text
 GET https://api.example.com/product/list
 ```
 
 配置：
 
-```
+```text
 Method = GET
 Server = api.example.com
 Path = /product/list
@@ -177,7 +179,7 @@ Config Element 用于 **配置请求参数或环境变量**。
 常见组件：
 
 | 组件 | 作用 |
-| ---------------------- | ------ |
+| --- | --- |
 | HTTP Request Defaults | 默认请求配置 |
 | HTTP Header Manager | 请求头 |
 | CSV Data Set Config | 参数化 |
@@ -191,7 +193,7 @@ Config Element 用于 **配置请求参数或环境变量**。
 
 例如：
 
-```
+```text
 Content-Type: application/json
 Authorization: Bearer token
 ```
@@ -206,7 +208,7 @@ Authorization: Bearer token
 
 例如：
 
-```
+```text
 username,password
 user1,123456
 user2,123456
@@ -217,7 +219,7 @@ JMeter 会从 CSV 文件读取数据。
 
 这样可以模拟：
 
-```
+```text
 不同用户登录
 ```
 
@@ -229,7 +231,7 @@ Timer 用于 **控制请求发送速度**。
 
 如果没有 Timer，JMeter 会：
 
-```
+```text
 尽可能快地发送请求
 ```
 
@@ -245,7 +247,7 @@ Timer 用于 **控制请求发送速度**。
 
 例如：
 
-```
+```text
 等待时间 = 1000ms
 ```
 
@@ -259,7 +261,7 @@ Timer 用于 **控制请求发送速度**。
 
 例如：
 
-```
+```text
 500ms ~ 1500ms
 ```
 
@@ -273,7 +275,7 @@ Timer 用于 **控制请求发送速度**。
 
 例如：
 
-```
+```text
 目标 QPS = 1000
 ```
 
@@ -292,9 +294,9 @@ JMeter 会自动控制请求速度。
 常见断言：
 
 | 类型 | 用途 |
-| ------------------ | ------ |
+| --- | --- |
 | Response Assertion | 验证响应内容 |
-| JSON Assertion | 验证 JSON |
+| JSON Assertion | 验证JSON |
 | Duration Assertion | 验证响应时间 |
 
 ---
@@ -312,7 +314,7 @@ JMeter 会自动控制请求速度。
 
 可以添加断言：
 
-```
+```text
 code = 200
 ```
 
@@ -327,7 +329,7 @@ Listener 用于 **查看压测结果**。
 常见 Listener：
 
 | Listener | 作用 |
-| ----------------- | ------ |
+| --- | --- |
 | View Results Tree | 查看请求详情 |
 | Summary Report | 汇总报告 |
 | Aggregate Report | 聚合报告 |
@@ -337,7 +339,7 @@ Listener 用于 **查看压测结果**。
 ### Aggregate Report 常见指标
 
 | 指标 | 含义 |
-| ---------- | ------ |
+| --- | --- |
 | Samples | 请求数量 |
 | Average | 平均响应时间 |
 | Min | 最小响应时间 |
@@ -347,13 +349,13 @@ Listener 用于 **查看压测结果**。
 
 例如：
 
-```
+```text
 Throughput = 2000/sec
 ```
 
 说明：
 
-```
+```text
 QPS ≈ 2000
 ```
 
@@ -363,22 +365,22 @@ QPS ≈ 2000
 
 在实际公司中，一个标准的 JMeter 脚本通常如下：
 
-```
+```text
 Test Plan
-└ Thread Group
-  ├ HTTP Request Defaults
-  ├ HTTP Header Manager
-  ├ CSV Data Set Config
-  ├ Timer
-  ├ HTTP Request
-  ├ Assertion
-  └ Listener
+ └ Thread Group
+     ├ HTTP Request Defaults
+     ├ HTTP Header Manager
+     ├ CSV Data Set Config
+     ├ Timer
+     ├ HTTP Request
+     ├ Assertion
+     └ Listener
 ```
 
 这样可以实现：
 
 * 用户参数化
-* 控制 QPS
+* 控制QPS
 * 验证接口正确性
 * 统计性能数据
 
@@ -389,7 +391,7 @@ Test Plan
 JMeter 的核心组件包括：
 
 | 组件 | 作用 |
-| -------------- | ------ |
+| --- | --- |
 | Thread Group | 模拟并发用户 |
 | Sampler | 发送请求 |
 | Config Element | 配置参数 |
@@ -399,8 +401,8 @@ JMeter 的核心组件包括：
 
 理解这些组件后，就可以构建 **企业级压测脚本**。
 
----
+后续还需要掌握：
 
-## 上一篇 | 下一篇
-
-📖 [JMeter 基础使用](/zh/docs/perf-jmeter-enterprise/) | 📖 [业务压测设计](/zh/docs/perf-business-design/)
+* 参数化测试
+* 接口关联
+* 复杂业务流程压测

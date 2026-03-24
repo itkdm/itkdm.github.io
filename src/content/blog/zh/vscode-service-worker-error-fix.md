@@ -1,6 +1,6 @@
 ---
 title: "VS Code 报错 \"Could not register service worker\" 无法加载 Web 视图的终极解决办法"
-date: 2026-03-05
+date: 2026-02-12
 tags: [VS Code, 问题排查, 开发工具, Cursor]
 summary: "在使用 VS Code 或 Cursor 时，Markdown 预览、插件页面等 Web 视图突然打不开？遇到 \"Could not register service worker\" 报错？本文介绍最简单有效的解决方案。"
 lang: "zh"

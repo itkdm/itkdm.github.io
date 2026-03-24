@@ -1,0 +1,91 @@
+---
+interface Props {
+	icon?: string;
+}
+
+const { icon = '' } = Astro.props;
+
+const normalizedIcon = icon.trim();
+
+const svgIcons: Record<string, string> = {
+	file: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>`,
+	brain: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5a3.5 3.5 0 0 0-3.34 4.54A4 4 0 0 0 4 11.5 4 4 0 0 0 7.5 15.45V16a3 3 0 0 0 3 3"/><path d="M14.5 3.5a3.5 3.5 0 0 1 3.34 4.54A4 4 0 0 1 20 11.5a4 4 0 0 1-3.5 3.95V16a3 3 0 0 1-3 3"/><path d="M12 6v12"/><path d="M9 8.5h3"/><path d="M12 15.5h3"/><path d="M8 12h4"/><path d="M12 12h4"/></svg>`,
+	database: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.66 3.13 3 7 3s7-1.34 7-3V5"/><path d="M5 11v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6"/></svg>`,
+	search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>`,
+	memory: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="10" rx="2"/><path d="M9 7V5"/><path d="M15 7V5"/><path d="M9 19v-2"/><path d="M15 19v-2"/><path d="M5 11H3"/><path d="M5 13H3"/><path d="M21 11h-2"/><path d="M21 13h-2"/><path d="M9.5 10.5h5v3h-5z"/></svg>`,
+	microphone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg>`,
+	rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c2.5-1 4.5-3 5.5-5.5"/><path d="M14 10 8 16"/><path d="M15 4c2.8 0 5 2.2 5 5 0 4-3 7-8 10-1.5-5-4.5-8-9-9 3-5 6-8 10-8h2Z"/><path d="M15 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>`,
+	protocol: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8 8 8"/><path d="m16 8-8 8"/><rect x="3.5" y="3.5" width="6" height="6" rx="1.5"/><rect x="14.5" y="3.5" width="6" height="6" rx="1.5"/><rect x="3.5" y="14.5" width="6" height="6" rx="1.5"/><rect x="14.5" y="14.5" width="6" height="6" rx="1.5"/></svg>`,
+	comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17.5 3.5 20V7a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6Z"/></svg>`,
+	context: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h8"/><path d="M8 12h5"/><path d="M8 16h8"/></svg>`,
+	flask: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4"/><path d="M10 3v5l-5 8.5A3 3 0 0 0 7.6 21h8.8a3 3 0 0 0 2.6-4.5L14 8V3"/><path d="M8.5 14h7"/></svg>`,
+	users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19a4 4 0 0 0-8 0"/><circle cx="12" cy="10" r="3"/><path d="M20 19a3.5 3.5 0 0 0-2.5-3.35"/><path d="M6.5 15.65A3.5 3.5 0 0 0 4 19"/><path d="M17.5 8.5a2.5 2.5 0 1 1 0 5"/><path d="M6.5 8.5a2.5 2.5 0 1 0 0 5"/></svg>`,
+	broadcast: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M17.66 17.66a8 8 0 0 0 0-11.32"/><path d="M6.34 6.34a8 8 0 0 0 0 11.32"/><path d="M20.49 20.49a12 12 0 0 0 0-16.98"/><path d="M3.51 3.51a12 12 0 0 0 0 16.98"/></svg>`,
+	shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.5 6v5.5c0 4.2 2.5 7.9 6.5 9.5 4-1.6 6.5-5.3 6.5-9.5V6L12 3Z"/><path d="m9.5 12 1.7 1.7 3.3-3.4"/></svg>`,
+	'circle-check': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="m8.8 12 2.1 2.2 4.3-4.4"/></svg>`,
+	download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10"/><path d="m8.5 10.5 3.5 3.5 3.5-3.5"/><path d="M5 19h14"/></svg>`,
+	layers: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4 7 4-7 4-7-4 7-4Z"/><path d="m5 12 7 4 7-4"/><path d="m5 16 7 4 7-4"/></svg>`,
+	'help-circle': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9.6 9.2a2.6 2.6 0 1 1 4.8 1.4c-.8 1-1.9 1.5-2.4 2.4"/><path d="M12 17h.01"/></svg>`,
+	eye: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>`,
+	lightbulb: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.9.8 1.5 1.9 1.8 3.1h4c.3-1.2.9-2.3 1.8-3.1A6 6 0 0 0 12 3Z"/></svg>`,
+	cpu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 15h3"/><path d="M1 9h3"/><path d="M1 15h3"/></svg>`,
+	monitor: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg>`,
+	'message-square': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18.5h10.5A2.5 2.5 0 0 0 19 16V6.5A2.5 2.5 0 0 0 16.5 4h-9A2.5 2.5 0 0 0 5 6.5V20l1-1.5Z"/></svg>`,
+	'graduation-cap': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-4 9 4-9 4-9-4Z"/><path d="M7 10.8v3.7c0 .8 2.2 2.5 5 2.5s5-1.7 5-2.5v-3.7"/><path d="M21 10v5"/></svg>`,
+};
+
+const aliases: Record<string, string> = {
+	'lucide:brain': 'brain',
+	'lucide:database': 'database',
+	'lucide:search': 'search',
+	'lucide:memory-stick': 'memory',
+	'lucide:mic': 'microphone',
+	'lucide:rocket': 'rocket',
+	'lucide:boxes': 'protocol',
+	'lucide:message-circle': 'comment',
+	'lucide:panel-top': 'context',
+	'lucide:flask-conical': 'flask',
+	'lucide:users': 'users',
+	'lucide:radio': 'broadcast',
+	'lucide:shield': 'shield',
+	'lucide:badge-check': 'circle-check',
+	'lucide:download': 'download',
+	'lucide:layers': 'layers',
+	'lucide:help-circle': 'help-circle',
+	'lucide:circle-help': 'help-circle',
+	'lucide:eye': 'eye',
+	'lucide:lightbulb': 'lightbulb',
+	'lucide:cpu': 'cpu',
+	'lucide:monitor': 'monitor',
+	'lucide:message-square': 'message-square',
+	'lucide:graduation-cap': 'graduation-cap',
+};
+
+const iconKey = aliases[normalizedIcon] ?? normalizedIcon.replace(/^lucide:/, '');
+const svgIcon = svgIcons[iconKey] ?? (normalizedIcon && /^[a-z0-9:-]+$/i.test(normalizedIcon) ? svgIcons.file : undefined);
+
+const textFallback = svgIcon || !normalizedIcon || /^[a-z0-9:-]+$/i.test(normalizedIcon) ? '' : normalizedIcon;
+---
+
+{
+	svgIcon ? (
+		<span class="docs-icon docs-icon-svg" aria-hidden="true" set:html={svgIcon} />
+	) : textFallback ? (
+		<span class="docs-icon" aria-hidden="true">{textFallback}</span>
+	) : null
+}
+
+<style>
+	.docs-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+	}
+
+	.docs-icon-svg :global(svg) {
+		width: 18px;
+		height: 18px;
+		display: block;
+	}
+</style>

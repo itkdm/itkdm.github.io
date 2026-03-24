@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from './BaseLayout.astro';
 import type { Lang } from '../i18n/config';
 import type { CollectionEntry } from 'astro:content';
@@ -12,7 +12,6 @@ const { lang = 'zh', entry } = Astro.props as {
 
 const sidebar = await getSidebar(lang);
 const currentSlug = entry.data.slug ?? entry.slug.split('/').pop() ?? entry.slug;
-const topic = entry.data.topic ?? entry.data.title;
 const site = Astro.site?.href ?? 'https://itkdm.com';
 const canonical = new URL(`/${lang}/docs/${currentSlug}/`, site).href;
 const jsonLd = {
@@ -33,19 +32,36 @@ const jsonLd = {
 		},
 	},
 };
-// 规范化 section 字段：去除首尾空格，确保一致性
+// 瑙勮寖鍖?section 瀛楁锛氬幓闄ら灏剧┖鏍硷紝纭繚涓€鑷存€?
 const sectionName = (entry.data.section || (lang === 'zh' ? '其他' : 'Others')).trim();
-const topicDocs = (await getCollection('docs', (doc) => {
-	const docSlug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
-	const docTopic = doc.data.topic ?? doc.data.title;
-	return doc.data.lang === lang && docTopic === topic && Boolean(docSlug);
+type SectionDoc = {
+    title: string;
+    slug: string;
+    order: number;
+    topic: string;
+};
+const sectionDocs: SectionDoc[] = (await getCollection('docs', (doc) => {
+    const docSlug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
+    const docSection = (doc.data.section || (lang === 'zh' ? '其他' : 'Others')).trim();
+    return doc.data.lang === lang && docSection === sectionName && Boolean(docSlug);
 }))
-	.map((doc) => ({
-		title: doc.data.title,
-		slug: doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug,
-		order: typeof doc.data.order === 'number' ? doc.data.order : 9999,
-	}))
-	.sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+    .map((doc) => ({
+        title: doc.data.title,
+        slug: doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug,
+        order: typeof doc.data.order === 'number' ? doc.data.order : 9999,
+        topic: doc.data.topic ?? doc.data.title,
+    }))
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+const sectionTopicMap = new Map<string, SectionDoc[]>();
+for (const doc of sectionDocs) {
+    const groupName = doc.topic || (lang === 'zh' ? '未分类' : 'Ungrouped');
+    if (!sectionTopicMap.has(groupName)) sectionTopicMap.set(groupName, []);
+    sectionTopicMap.get(groupName)!.push(doc);
+}
+const sectionTopicGroups = Array.from(sectionTopicMap.entries()).map(([topic, items]) => ({
+    topic,
+    items,
+}));
 const { Content, headings } = await entry.render();
 ---
 
@@ -110,10 +126,10 @@ const { Content, headings } = await entry.render();
 			width: 280px;
 			max-width: 85vw;
 			height: 100vh;
-			background: var(--bg-elev);
+			background: transparent;
 			border-right: 1px solid var(--border);
 			z-index: 999;
-			box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+			box-shadow: none;
 			transition: left 0.3s ease;
 			overflow-y: auto;
 		}
@@ -130,7 +146,7 @@ const { Content, headings } = await entry.render();
 			border-bottom: 1px solid var(--border);
 			position: sticky;
 			top: 0;
-			background: var(--bg-elev);
+			background: transparent;
 			z-index: 1;
 		}
 		
@@ -224,7 +240,7 @@ const { Content, headings } = await entry.render();
 			position: sticky;
 			top: 90px;
 			align-self: start;
-			background: color-mix(in srgb, var(--bg-elev) 92%, transparent);
+			background: transparent;
 			border: 1px solid var(--border);
 			border-radius: 14px;
 			padding: 14px 12px;
@@ -269,7 +285,7 @@ const { Content, headings } = await entry.render();
 			display: block;
 		}
 		.docs-article {
-			background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+			background: transparent;
 			border: 1px solid var(--border);
 			border-radius: 14px;
 			padding: 24px 22px;
@@ -290,7 +306,7 @@ const { Content, headings } = await entry.render();
 			align-self: start;
 			border-radius: 14px;
 			border: 1px solid var(--border);
-			background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
+			background: transparent;
 			padding: 14px 12px;
 			font-size: 0.9rem;
 		}
@@ -332,28 +348,33 @@ const { Content, headings } = await entry.render();
 	<div class="docs-sidebar-overlay" id="docsSidebarOverlay"></div>
 	
 	<!-- Mobile Sidebar Drawer -->
-	<aside class="docs-sidebar-mobile" id="docsSidebarMobile">
-		<div class="docs-sidebar-mobile-header">
-			<h3>{topic}</h3>
-			<button class="docs-sidebar-mobile-close" id="docsSidebarMobileClose" type="button" aria-label={lang === 'zh' ? '关闭' : 'Close'}>
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<line x1="18" y1="6" x2="6" y2="18"></line>
-					<line x1="6" y1="6" x2="18" y2="18"></line>
-				</svg>
-			</button>
-		</div>
-		<div class="docs-sidebar-mobile-content">
-			{topicDocs.map((item) => (
-				<a
-					href={`/${lang}/docs/${item.slug}/`}
-					class="docs-sidebar-mobile-item"
-					aria-current={item.slug === currentSlug ? 'page' : undefined}
-				>
-					{item.title}
-				</a>
-			))}
-		</div>
-	</aside>
+    <aside class="docs-sidebar-mobile" id="docsSidebarMobile">
+        <div class="docs-sidebar-mobile-header">
+            <h3>{sectionName}</h3>
+            <button class="docs-sidebar-mobile-close" id="docsSidebarMobileClose" type="button" aria-label={lang === 'zh' ? '关闭' : 'Close'}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="docs-sidebar-mobile-content">
+            {sectionTopicGroups.map((group) => (
+                <div>
+                    <h4 style="margin: 14px 20px 6px; font-size: 0.9rem; color: var(--text-muted);">{group.topic}</h4>
+                    {group.items.map((item) => (
+                        <a
+                            href={`/${lang}/docs/${item.slug}/`}
+                            class="docs-sidebar-mobile-item"
+                            aria-current={item.slug === currentSlug ? 'page' : undefined}
+                        >
+                            {item.title}
+                        </a>
+                    ))}
+                </div>
+            ))}
+        </div>
+    </aside>
 
 	<!-- Floating Menu Button (Mobile Only) -->
 	<button class="docs-sidebar-toggle" id="docsSidebarToggle" type="button" aria-label={lang === 'zh' ? '打开目录' : 'Open menu'}>
@@ -365,17 +386,22 @@ const { Content, headings } = await entry.render();
 	</button>
 
 	<div class="docs-layout">
-		<aside class="docs-sidebar">
-			<h3 style="margin-top: 4px">{topic}</h3>
-			{topicDocs.map((item) => (
-				<a
-					href={`/${lang}/docs/${item.slug}/`}
-					aria-current={item.slug === currentSlug ? 'page' : undefined}
-				>
-					{item.title}
-				</a>
-			))}
-		</aside>
+        <aside class="docs-sidebar">
+            <h3 style="margin-top: 4px">{sectionName}</h3>
+            {sectionTopicGroups.map((group) => (
+                <div>
+                    <h4 style="margin: 12px 8px 6px; font-size: 0.9rem; color: var(--text-muted);">{group.topic}</h4>
+                    {group.items.map((item) => (
+                        <a
+                            href={`/${lang}/docs/${item.slug}/`}
+                            aria-current={item.slug === currentSlug ? 'page' : undefined}
+                        >
+                            {item.title}
+                        </a>
+                    ))}
+                </div>
+            ))}
+        </aside>
 		<article class="docs-article">
 			<div class="docs-article-header">
 				<h1>{entry.data.title}</h1>
@@ -425,7 +451,7 @@ const { Content, headings } = await entry.render();
 		(function() {
 			const isZh = lang === 'zh';
 			const copyText = isZh ? '复制' : 'Copy';
-			const copiedText = isZh ? '已复制!' : 'Copied!';
+			const copiedText = isZh ? '已复制' : 'Copied!';
 			const debugMermaid = true;
 
 			if (debugMermaid) {
@@ -791,7 +817,7 @@ const { Content, headings } = await entry.render();
 
 				allCodeBlocks.forEach((codeBlock) => {
 					const cls = codeBlock.classList || [];
-					// 我们已经不再生成源码视图，这里只是防御性判断
+					// 鎴戜滑宸茬粡涓嶅啀鐢熸垚婧愮爜瑙嗗浘锛岃繖閲屽彧鏄槻寰℃€у垽鏂?
 					if (cls.contains('mermaid-source-code')) {
 						return;
 					}
@@ -963,11 +989,10 @@ const { Content, headings } = await entry.render();
 				});
 			}
 			
-			// Also listen to theme button clicks directly for immediate response
-			const themeBtn = document.getElementById('themeBtn');
-			if (themeBtn) {
-				// Use capture phase to run before other handlers
-				themeBtn.addEventListener('click', () => {
+			// Also listen to theme selection changes directly for immediate response
+			const themeSelect = document.getElementById('themeSelect');
+			if (themeSelect) {
+				themeSelect.addEventListener('change', () => {
 					setTimeout(() => {
 						applyThemeAwareHighlighting();
 					}, 100);
@@ -1054,7 +1079,7 @@ const { Content, headings } = await entry.render();
 				};
 				// offsetHeight is more stable for fixed/sticky headers
 				var height = header.offsetHeight || rect.height || SCROLL_OFFSET_FALLBACK;
-				// add a small extra gap so 标题不会贴在导航栏下边缘
+				// add a small extra gap so 鏍囬涓嶄細璐村湪瀵艰埅鏍忎笅杈圭紭
 				return height + 12;
 			}
 
@@ -1076,7 +1101,7 @@ const { Content, headings } = await entry.render();
 				}
 			}
 
-			// Enhance all in-page anchor links (包括右侧 TOC、正文内链接等)
+			// Enhance all in-page anchor links (鍖呮嫭鍙充晶 TOC銆佹鏂囧唴閾炬帴绛?
 			document.addEventListener('click', (event) => {
 				const target = event.target;
 				if (!target) return;
@@ -1084,7 +1109,7 @@ const { Content, headings } = await entry.render();
 				if (!link) return;
 
 				const href = link.getAttribute('href') || '';
-				// 忽略纯 "#" 占位符
+				// 蹇界暐绾?"#" 鍗犱綅绗?
 				if (!href || href === '#') return;
 				if (!href.startsWith('#')) return;
 
@@ -1093,7 +1118,7 @@ const { Content, headings } = await entry.render();
 
 				event.preventDefault();
 
-				// 更新地址栏 hash 但不触发默认锚点滚动
+				// 鏇存柊鍦板潃鏍?hash 浣嗕笉瑙﹀彂榛樿閿氱偣婊氬姩
 				if (history.pushState) {
 					const url = new URL(window.location.href);
 					url.hash = `#${encodeURIComponent(id)}`;
@@ -1110,7 +1135,7 @@ const { Content, headings } = await entry.render();
 				const raw = window.location.hash.slice(1);
 				const id = decodeURIComponent(raw);
 				if (!id) return;
-				// 延迟一下等待布局和字体渲染稳定
+				// 寤惰繜涓€涓嬬瓑寰呭竷灞€鍜屽瓧浣撴覆鏌撶ǔ瀹?
 				setTimeout(() => scrollToId(id, false), 80);
 			}
 
@@ -1121,3 +1146,7 @@ const { Content, headings } = await entry.render();
 		})();
 	</script>
 </BaseLayout>
+
+
+
+

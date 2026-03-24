@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DocsIcon from '../../../components/DocsIcon.astro';
 import type { Lang } from '../../../i18n/config';
 import { SUPPORTED_LANGS } from '../../../i18n/config';
 
@@ -13,138 +14,109 @@ const docs = (await getCollection('docs', (doc) => doc.data.lang === lang)).sort
 	(a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
 );
 
-// 分类排序映射：定义分类在首页的显示顺序
-// 数字越小越靠前，未列出的分类会排在最后（按名称排序）
 const sectionOrderMap: Record<string, number> = {
-	// 中文分类
 	'入门': 1,
-	'学习路线': 2,
-	'HTML / CSS': 3,
-	'JavaScript': 4,
-	'服务端': 5,
-	'数据库': 6,
-	'中间件': 7,
-	'算法': 8,
-	'面试': 9,
-	'LangChain AI': 10,
-	// 英文分类
+	'服务端': 2,
+	'数据库': 3,
+	'中间件': 4,
+	'算法': 5,
+	'面试': 6,
+	'LangChain AI': 7,
+	'入门指南': 8,
+	'性能测试': 9,
+	'AI': 10,
 	'Getting Started': 1,
-	'Learning Path': 2,
-	'HTML / CSS': 3,
-	'JavaScript': 4,
-	'Server-side': 5,
-	'Database': 6,
-	'Middleware': 7,
-	'Algorithms': 8,
-	'Interview': 9,
-	'LangChain AI': 10,
+	'Server-side': 2,
+	'Database': 3,
+	'Middleware': 4,
+	'Algorithms': 5,
+	'Interview': 6,
+	'LangChain AI': 7,
+	'Guides': 8,
+	'Performance Testing': 9,
+	'AI': 10,
+};
+
+type SectionItem = {
+	title: string;
+	topic?: string;
+	slug: string;
+	order: number;
+	summary?: string;
+	icon?: string;
 };
 
 type SectionGroup = {
 	section: string;
-	items: {
-		title: string;
-		topic?: string;
-		slug: string;
-		order: number;
-		featured: boolean;
-		summary?: string;
-		icon?: string;
-	}[];
+	items: SectionItem[];
 	order: number;
 };
+
+const getSectionOrder = (section: string) =>
+	sectionOrderMap[section] ?? Number.MAX_SAFE_INTEGER;
 
 const sectionMap = new Map<string, SectionGroup>();
 
 for (const doc of docs) {
-	// 规范化 section 字段：去除首尾空格，确保一致性
-	const section = (doc.data.section?.trim() || (lang === 'zh' ? '其他' : 'Others'));
+	const section = doc.data.section?.trim() || (lang === 'zh' ? '其他' : 'Others');
 	const slug = doc.data.slug ?? doc.slug.split('/').pop() ?? doc.slug;
 	const order = typeof doc.data.order === 'number' ? doc.data.order : 9999;
-	const title = doc.data.title;
-	const topic = doc.data.topic;
-	const summary = doc.data.summary;
-	const icon = doc.data.icon;
-	const featured = doc.data.featured ?? true;
 
 	if (!sectionMap.has(section)) {
-		// 初始用当前文档的 order，后面在循环里取该分类最小的 order，完全由内容控制
-		sectionMap.set(section, { section, items: [], order });
+		sectionMap.set(section, {
+			section,
+			items: [],
+			order,
+		});
 	}
+
 	const group = sectionMap.get(section)!;
-	group.items.push({ title, topic, slug, order, summary, icon, featured });
-	// 分类排序值始终取该分类下最小的 order
+	group.items.push({
+		title: doc.data.title,
+		topic: doc.data.topic,
+		slug,
+		order,
+		summary: doc.data.summary,
+		icon: doc.data.icon,
+	});
 	if (order < group.order) group.order = order;
 }
 
-const sections = Array.from(sectionMap.values())
-	.sort((a, b) => a.order - b.order || a.section.localeCompare(b.section))
-	.map((group) => ({
-		...group,
-		items: group.items
-			.sort(
-				(a, b) =>
-					a.order - b.order ||
-					(a.topic ?? a.title).localeCompare(b.topic ?? b.title)
-			),
-	}));
-
-// Docs home page: only show featured items as cards.
-// Non-featured docs are still available in the docs detail layout sidebar.
-// 文档首页展示的「全部分类」与右侧导航（根据语言可定制）
-const zhHomeOrder = ['入门', '服务端', '数据库', '中间件', '算法', '面试', 'LangChain AI'];
-const enHomeOrder = ['Getting Started', 'Server-side', 'Database', 'Middleware', 'Algorithms', 'Interview', 'LangChain AI'];
-
-// Docs home page: show all non-empty categories; use order list to prioritize known ones.
-const orderList = lang === 'zh' ? zhHomeOrder : enHomeOrder;
-const getOrderIndex = (name: string) => {
-	const idx = orderList.indexOf(name);
-	return idx === -1 ? orderList.length + 999 : idx;
-};
-// 先过滤出有文档的分类（避免显示空分类），不再硬过滤列表，避免新增分类不显示
-const targetSections = sections.filter((section) => section.items.length > 0);
-
-
-// 为每个分类添加 featuredItems，但不过滤掉没有 featured 的分类
-const homeSections = targetSections.map((section) => ({
-	...section,
-	featuredItems: section.items.filter((item) => item.featured === true),
-}));
-
-// 按配置的顺序排序
-const orderedHomeSections = homeSections.sort(
-	(a, b) =>
-		getOrderIndex(a.section) - getOrderIndex(b.section) ||
-		a.section.localeCompare(b.section)
-);
-
-const navSections = sections
+const orderedHomeSections = Array.from(sectionMap.values())
 	.filter((section) => section.items.length > 0)
+	.map((section) => ({
+		...section,
+		items: [...section.items].sort(
+			(a, b) =>
+				a.order - b.order ||
+				a.title.localeCompare(b.title, lang === 'zh' ? 'zh-CN' : 'en')
+		),
+	}))
 	.sort(
 		(a, b) =>
-			getOrderIndex(a.section) - getOrderIndex(b.section) ||
-			a.section.localeCompare(b.section)
+			getSectionOrder(a.section) - getSectionOrder(b.section) ||
+			a.section.localeCompare(b.section, lang === 'zh' ? 'zh-CN' : 'en')
 	);
 
+const navSections = orderedHomeSections.filter((section) => section.items.length > 0);
 
 const pageTitle = lang === 'zh' ? '文档中心' : 'Docs';
 const pageDesc =
 	lang === 'zh'
-		? '按照分类浏览所有文档，点击左侧大类筛选，中间查看具体主题。'
-		: 'Browse all docs by category. Use the left navigation to filter topics.';
+		? '按分类浏览全部文档，左侧筛选分类，中间查看该分类下的所有文章。'
+		: 'Browse all docs by category. Filter categories on the left and explore every article in each section.';
 ---
 
 <BaseLayout
 	lang={lang}
-	title={`${pageTitle} · 布吉岛`}
+	title={pageTitle}
 	description={pageDesc}
 	currentPath={`/${lang}/docs/`}
 >
 	<section class="section">
-		<!-- Mobile Category Tabs (only visible on mobile) -->
 		<div class="docs-home-mobile-tabs">
 			<div class="docs-home-mobile-tabs-scroll">
-				{orderedHomeSections.map((section, idx) => (
+				{orderedHomeSections.map((section) => (
 					<button
 						type="button"
 						class="docs-home-mobile-tab"
@@ -162,7 +134,7 @@ const pageDesc =
 			<aside class="docs-home-left">
 				<h2>{lang === 'zh' ? '全部分类' : 'Categories'}</h2>
 				<ul>
-					{orderedHomeSections.map((section, idx) => (
+					{orderedHomeSections.map((section) => (
 						<li>
 							<button
 								type="button"
@@ -179,7 +151,7 @@ const pageDesc =
 			</aside>
 
 			<div class="docs-home-main">
-				{orderedHomeSections.map((section, idx) => (
+				{orderedHomeSections.map((section) => (
 					<section
 						class="docs-home-section"
 						data-section={section.section}
@@ -195,21 +167,22 @@ const pageDesc =
 								{lang === 'zh' ? '返回' : 'Back'}
 							</a>
 						</div>
-						{(section.featuredItems.length > 0 ? section.featuredItems : section.items).length > 0 ? (
+
+						{section.items.length > 0 ? (
 							<div class="grid grid-3">
-								{(section.featuredItems.length > 0 ? section.featuredItems : section.items).map((item) => (
-									<a
-										class="card docs-home-card"
-										href={`/${lang}/docs/${item.slug}/`}
-									>
+								{section.items.map((item) => (
+									<a class="card docs-home-card" href={`/${lang}/docs/${item.slug}/`}>
 										<div class="docs-home-card-inner">
 											{item.icon && (
 												<div class="docs-home-card-icon">
-													<span>{item.icon}</span>
+													<DocsIcon icon={item.icon} />
 												</div>
 											)}
 											<div class="docs-home-card-body">
-												<h3>{item.topic ?? item.title}</h3>
+												<h3>{item.title}</h3>
+												{item.topic && item.topic !== item.title && (
+													<p class="meta">{item.topic}</p>
+												)}
 												<p class="meta">
 													{item.summary ||
 														(lang === 'zh'
@@ -235,10 +208,6 @@ const pageDesc =
 				<ul>
 					{navSections.map((section) => (
 						<li>
-							{
-								// 右侧快捷导航仍然指向当前分类中排序最靠前的文档
-								// 与是否 featured 无关，方便深入阅读
-							}
 							<a href={`/${lang}/docs/${section.items[0]?.slug ?? ''}/`}>
 								{section.section}
 							</a>
@@ -250,21 +219,17 @@ const pageDesc =
 	</section>
 
 	<script is:inline>
-		// 简单的前端筛选：点击左侧分类，只显示对应中间内容
 		document.addEventListener('DOMContentLoaded', () => {
 			const buttons = Array.from(document.querySelectorAll('.docs-home-cat-btn'));
 			const sections = Array.from(document.querySelectorAll('.docs-home-section'));
 
 			if (!buttons.length || !sections.length) return;
 
-			// 当前筛选的分类名称；null 表示"全部分类"
 			let currentFilter = null;
 
 			let showAll = () => {
 				currentFilter = null;
-				buttons.forEach((btn) => {
-					btn.setAttribute('aria-pressed', 'false');
-				});
+				buttons.forEach((btn) => btn.setAttribute('aria-pressed', 'false'));
 				sections.forEach((sec) => {
 					sec.dataset.active = 'true';
 				});
@@ -294,47 +259,31 @@ const pageDesc =
 					return;
 				}
 				const hasSection = buttons.some((btn) => btn.dataset.section === name);
-				if (hasSection) {
-					setFilter(name);
-				} else {
-					showAll();
-				}
+				if (hasSection) setFilter(name);
+				else showAll();
 			};
 
-			// 根据 URL hash 初始化一次
 			applyInitialFilterFromHash();
-
-			// 当 hash 变化时（例如从详情页点分类返回），自动更新筛选
 			window.addEventListener('hashchange', applyInitialFilterFromHash);
 
 			buttons.forEach((btn) => {
 				btn.addEventListener('click', () => {
 					const name = btn.dataset.section;
 					if (!name) return;
-
-					// 再次点击当前分类时，取消过滤，回到"全部分类"
-					if (currentFilter === name) {
-						showAll();
-					} else {
-						setFilter(name);
-					}
+					if (currentFilter === name) showAll();
+					else setFilter(name);
 				});
 			});
 
-			// Mobile tabs - sync with desktop buttons
 			const mobileTabs = Array.from(document.querySelectorAll('.docs-home-mobile-tab'));
 			mobileTabs.forEach((tab) => {
 				tab.addEventListener('click', () => {
 					const name = tab.dataset.section;
 					if (!name) return;
 
-					// Sync with desktop buttons
-					const desktopBtn = buttons.find(btn => btn.dataset.section === name);
-					if (desktopBtn) {
-						desktopBtn.click();
-					}
+					const desktopBtn = buttons.find((btn) => btn.dataset.section === name);
+					if (desktopBtn) desktopBtn.click();
 
-					// Scroll to top of content
 					const mainContent = document.querySelector('.docs-home-main');
 					if (mainContent) {
 						mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -342,19 +291,16 @@ const pageDesc =
 				});
 			});
 
-			// Sync mobile tabs state with desktop buttons
 			const syncMobileTabs = () => {
 				mobileTabs.forEach((tab) => {
 					const name = tab.dataset.section;
-					const desktopBtn = buttons.find(btn => btn.dataset.section === name);
-					if (desktopBtn) {
-						const isActive = desktopBtn.getAttribute('aria-pressed') === 'true';
-						tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-					}
+					const desktopBtn = buttons.find((btn) => btn.dataset.section === name);
+					if (!desktopBtn) return;
+					const isActive = desktopBtn.getAttribute('aria-pressed') === 'true';
+					tab.setAttribute('aria-pressed', isActive ? 'true' : 'false');
 				});
 			};
 
-			// Update mobile tabs when filter changes
 			const originalSetFilter = setFilter;
 			setFilter = (sectionName) => {
 				originalSetFilter(sectionName);
@@ -367,7 +313,6 @@ const pageDesc =
 				syncMobileTabs();
 			};
 
-			// Initial sync
 			syncMobileTabs();
 		});
 	</script>

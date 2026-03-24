@@ -1,6 +1,6 @@
 ---
 title: "IDE TODO 标签治理：用 IDEA 管好 TODO/FIXME/HACK"
-date: 2026-02-05
+date: 2025-12-19
 tags: [IntelliJ IDEA, Eclipse, TODO, 开发规范, 效率]
 summary: "不只用 TODO：给常见的任务标签（FIXME/XXX/HACK/OPTIMIZE/REVIEW）加上 IDE 识别规则，让待办、缺陷、临时方案分层可见，避免“满屏 TODO”难以管理。"
 lang: "zh"

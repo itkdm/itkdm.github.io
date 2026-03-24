@@ -1,0 +1,772 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type StatItem = {
+	label: string;
+	value: string;
+	hint: string;
+};
+
+type DocCard = {
+	section: string;
+	description: string;
+	count: number;
+};
+
+type Action = {
+	href: string;
+	label: string;
+	style?: 'primary' | 'ghost';
+};
+
+type Labels = {
+	heroKicker: string;
+	heroTitle: string;
+	heroLead: string;
+	heroNote: string;
+	primaryAction: Action;
+	secondaryAction: Action;
+	stats: StatItem[];
+	spotlightLabel: string;
+	spotlightTitle: string;
+	spotlightBody: string;
+	spotlightLink: string;
+	latestSection: string;
+	latestMore: string;
+	latestFeatured: string;
+	latestContinue: string;
+	latestRead: string;
+	latestFallback: string;
+	latestArticleType: string;
+	latestTagFallback: string;
+	docsSection: string;
+	docsMore: string;
+	docsSummaryTitle: string;
+	docsSummaryBody: string;
+	docsSummaryLink: string;
+	docsCountSuffix: string;
+	docsArrow: string;
+	projectsSection: string;
+	projectsMore: string;
+	projectsFeatured: string;
+	projectsOpen: string;
+	projectsDemo: string;
+	projectsFallback: string;
+	toolsSection: string;
+	toolsMore: string;
+	toolsSummaryTitle: string;
+	toolsSummaryBody: string;
+	toolsSummaryLink: string;
+	toolsFallback: string;
+};
+
+const {
+	lang,
+	labels,
+	latestPost,
+	secondaryPosts,
+	docsCards,
+	featuredProjects,
+	featuredTools,
+} = Astro.props as {
+	lang: 'zh' | 'en';
+	labels: Labels;
+	latestPost?: CollectionEntry<'blog'>;
+	secondaryPosts: CollectionEntry<'blog'>[];
+	docsCards: DocCard[];
+	featuredProjects: CollectionEntry<'projects'>[];
+	featuredTools: CollectionEntry<'tools'>[];
+};
+
+const dateLocale = lang === 'zh' ? 'zh-CN' : 'en-US';
+const formatDate = (date: Date) =>
+	new Intl.DateTimeFormat(dateLocale, {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+	}).format(date);
+---
+
+<style is:global>
+	:root {
+		--font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	}
+
+	/* 
+	   HOMEPAGE THEME LOGIC
+	   We use a body class .home-redesign-active to scope these overrides 
+	   so they only apply when this component is mounted.
+	*/
+
+	/* --- Light Mode (Default) --- */
+	body.home-redesign-active {
+		/* Inherit base colors from theme.css for consistency */
+		--r-bg-main: var(--bg);
+		
+		/* Removed pattern to match documentation pages exactly */
+		--r-bg-pattern: none; 
+		--r-bg-size: auto;
+		
+		/* Card colors based on theme vars but slightly elevated */
+		--r-card-bg: var(--bg-elev); 
+		--r-card-hover: var(--bg);
+		
+		--r-border: var(--border);
+		--r-border-hover: var(--border-strong);
+		
+		--r-text-primary: var(--text);
+		--r-text-secondary: var(--text-muted);
+		
+		/* Keep accent colors distinct or derive from theme */
+		--r-accent: var(--primary); 
+		
+		--r-shadow: var(--shadow-1);
+		--r-glass: blur(10px);
+		
+		background-color: var(--r-bg-main) !important;
+		background-image: none !important;
+		color: var(--r-text-primary) !important;
+	}
+
+	/* --- Dark Mode --- */
+	html[data-theme='dark'] body.home-redesign-active {
+		--r-bg-main: var(--bg);
+		/* Removed aurora effect to ensure background color matches docs */
+		--r-bg-pattern: none;
+		--r-bg-size: auto;
+		
+		--r-card-bg: var(--bg-elev);
+		--r-card-hover: var(--bg-soft);
+		
+		--r-border: var(--border);
+		--r-border-hover: var(--border-strong);
+		
+		--r-text-primary: var(--text);
+		--r-text-secondary: var(--text-muted);
+		
+		--r-accent: var(--accent);
+		--r-shadow: var(--shadow-2);
+	}
+	
+	/* --- Paper Mode (Reuse Light Logic basically) --- */
+	html[data-theme='paper'] body.home-redesign-active {
+		--r-bg-pattern: none; /* Paper usually cleaner */
+	}
+
+	/* Header/Footer/Menu Overrides */
+	body.home-redesign-active header.topbar,
+	body.home-redesign-active footer {
+		background-color: transparent !important;
+		border-color: var(--r-border) !important;
+		backdrop-filter: var(--r-glass);
+	}
+	body.home-redesign-active header.topbar a,
+	body.home-redesign-active footer {
+		color: var(--r-text-secondary) !important;
+	}
+	body.home-redesign-active header.topbar a:hover {
+		color: var(--r-text-primary) !important;
+	}
+
+	/* Mobile Menu */
+	body.home-redesign-active .mobile-menu {
+		background: var(--r-card-bg) !important;
+		border-left: 1px solid var(--r-border);
+	}
+	body.home-redesign-active .mobile-menu-item {
+		color: var(--r-text-secondary) !important;
+	}
+	body.home-redesign-active .mobile-menu-item:hover {
+		background: var(--r-border) !important; 
+		color: var(--r-text-primary) !important;
+	}
+
+	/* component styles using the variables */
+	.bento-card {
+		background: var(--r-card-bg);
+		border: 1px solid var(--r-border);
+		border-radius: 12px;
+		padding: 1.5rem;
+		position: relative;
+		overflow: hidden;
+		transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		box-shadow: var(--r-shadow);
+	}
+
+	.bento-card:hover {
+		transform: translateY(-2px);
+		border-color: var(--r-border-hover);
+		background: var(--r-card-hover);
+		box-shadow: var(--r-shadow), 0 0 0 1px var(--r-border-hover);
+	}
+
+	.bento-card::before {
+		content: "";
+		position: absolute;
+		top: 0; left: 0; right: 0; height: 1px;
+		background: linear-gradient(90deg, transparent, var(--r-accent), transparent);
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
+	.bento-card:hover::before {
+		opacity: 1;
+	}
+
+	/* Typography */
+	h1, h2, h3, .mono-font, .hero-title, .post-title, .project-name, .tool-name {
+		font-family: var(--font-mono);
+		letter-spacing: -0.03em;
+		color: var(--r-text-primary) !important;
+	}
+	p, .post-summary, .stat-label, .doc-count, .doc-title {
+		color: var(--r-text-secondary);
+	}
+</style>
+
+<script>
+	// Add class to body when component mounts
+	document.body.classList.add('home-redesign-active');
+	
+	// Cleanup when navigating away
+	document.addEventListener('astro:before-swap', () => {
+		document.body.classList.remove('home-redesign-active');
+	});
+</script>
+
+<div class="home-redesign-v2">
+	
+	{/* Hero Section */}
+	<section class="hero-section">
+		<div class="hero-content">
+			<div class="glitch-wrapper">
+				<h1 class="hero-title glitch" data-text={labels.heroTitle}>
+					{labels.heroTitle}
+				</h1>
+			</div>
+			
+			<div class="typewriter-container">
+				<p class="hero-lead typing-effect">{labels.heroLead}</p>
+			</div>
+			
+			<div class="hero-actions">
+				<a href={labels.primaryAction.href} class="btn-tech primary">
+					<span class="btn-bracket">[</span> 
+					{labels.primaryAction.label} 
+					<span class="btn-bracket">]</span>
+				</a>
+				<a href={labels.secondaryAction.href} class="btn-tech ghost">
+					{labels.secondaryAction.label}
+				</a>
+			</div>
+		</div>
+	</section>
+
+	{/* Main Grid Layout */}
+	<div class="bento-grid">
+		
+		{/* Top Row: Latest Post (Large) */}
+		{latestPost && (
+			<a href={`/${lang}/blog/${latestPost.data.slug ?? latestPost.slug.split('/').pop() ?? latestPost.slug}/`} class="bento-card featured-post-card span-8">
+				<div class="card-badge">Latest.Log</div>
+				<div class="card-content">
+					<h2 class="post-title">{latestPost.data.title}</h2>
+					<p class="post-summary">{latestPost.data.summary}</p>
+					<div class="meta-row">
+						<span class="meta-tag">#{latestPost.data.tags[0]}</span>
+						<span class="meta-date">{formatDate(latestPost.data.date)}</span>
+					</div>
+				</div>
+				<div class="card-bg-gradient"></div>
+			</a>
+		)}
+
+		{/* Top Row: Secondary Stats (small) */}
+		<div class="bento-card stats-card span-4">
+			<div class="card-header">
+				<h3>System.Status</h3>
+			</div>
+			<div class="stats-list">
+				{labels.stats.map(stat => (
+					<div class="stat-row">
+						<span class="stat-label">:: {stat.label}</span>
+						<div class="stat-line"></div>
+						<span class="stat-val">{stat.value}</span>
+					</div>
+				))}
+			</div>
+		</div>
+
+		{/* Middle Row: Docs (Medium) */}
+		<div class="bento-card docs-card span-6">
+			<div class="card-header-row">
+				<h3>Documentation.Index</h3>
+				<a href={`/${lang}/docs/`} class="link-arrow">ALL &rarr;</a>
+			</div>
+			<div class="docs-micro-grid">
+				{docsCards.map(doc => (
+					<a href={`/${lang}/docs/#${encodeURIComponent(doc.section)}`} class="doc-micro-item">
+						<div class="doc-icon-box">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+						</div>
+						<div class="doc-text">
+							<span class="doc-title">{doc.section}</span>
+							<span class="doc-count">{doc.count} modules</span>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+
+		{/* Middle Row: Featured Projects (Medium) */}
+		<div class="bento-card projects-card span-6">
+			<div class="card-header-row">
+				<h3>Projects.Deployed</h3>
+				<a href={`/${lang}/projects/`} class="link-arrow">ALL &rarr;</a>
+			</div>
+			<div class="projects-list">
+				{featuredProjects.map(project => (
+					<a href={`/${lang}/projects/${project.data.slug ?? project.slug.split('/').pop() ?? project.slug}/`} class="project-item-row">
+						<span class="status-dot"></span>
+						<span class="project-name">{project.data.title}</span>
+						<span class="project-desc-short">{project.data.summary.slice(0, 30)}...</span>
+					</a>
+				))}
+			</div>
+		</div>
+
+		{/* Bottom Row: Tools (Strip) */}
+		<div class="bento-card tools-card span-12">
+			<div class="card-header-row">
+				<h3>Tools.Utility</h3>
+				<a href={`/${lang}/tools/`} class="link-arrow">VIEW ALL</a>
+			</div>
+			
+			<div class="tools-marquee">
+				<div class="tools-track">
+					{/* Original Set */}
+					{featuredTools.map(tool => (
+						<a href={tool.data.homepage} target="_blank" class="tool-chip">
+							<span class="tool-icon">{tool.data.icon ?? '#'}</span>
+							<span class="tool-name">{tool.data.name}</span>
+						</a>
+					))}
+					{/* Duplicate Set for Seamless Loop */}
+					{featuredTools.map(tool => (
+						<a href={tool.data.homepage} target="_blank" class="tool-chip">
+							<span class="tool-icon">{tool.data.icon ?? '#'}</span>
+							<span class="tool-name">{tool.data.name}</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<style>
+	/* Layout Grid */
+	.bento-grid {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 1.5rem;
+		padding: 2rem 0;
+		max-width: 1400px; /* Wider for dashboard feel */
+		margin: 0 auto;
+	}
+	
+	.span-12 { grid-column: span 12; }
+	.span-8 { grid-column: span 12; } /* Mobile first: full width */
+	.span-6 { grid-column: span 12; }
+	.span-4 { grid-column: span 12; }
+
+	@media (min-width: 768px) {
+		.span-8 { grid-column: span 8; }
+		.span-6 { grid-column: span 6; }
+		.span-4 { grid-column: span 4; }
+	}
+
+	/* Hero Styles */
+	.hero-section {
+		text-align: center;
+		padding: 6rem 1rem 4rem;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.hero-title {
+		font-size: 2.5rem;
+		line-height: 1.2;
+		font-weight: 700;
+		/* color removed - handled by global variable */
+		margin-bottom: 1.5rem;
+		position: relative;
+		display: inline-block;
+		text-shadow: 0 0 20px rgba(6,182,212,0.3);
+	}
+
+	@media(min-width: 768px) {
+		.hero-title { font-size: 4rem; }
+	}
+
+	.hero-lead {
+		font-size: 1.1rem;
+		/* color removed */
+		max-width: 700px;
+		margin: 0 auto 3rem;
+		line-height: 1.6;
+		font-family: var(--font-mono);
+	}
+
+	.hero-actions {
+		display: flex;
+		justify-content: center;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	/* Tech Buttons */
+	.btn-tech {
+		display: inline-flex;
+		align-items: center;
+		height: 48px;
+		padding: 0 24px;
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+		text-decoration: none;
+		transition: all 0.2s;
+		border-radius: 4px;
+	}
+
+	.btn-tech.primary {
+		background: rgba(255,255,255,0.05); /* Keep slight toggle for depth */
+		border: 1px solid var(--r-border);
+		color: var(--r-text-primary);
+		backdrop-filter: blur(5px);
+	}
+	
+	.btn-tech.primary:hover {
+		background: var(--r-card-hover);
+		border-color: var(--r-accent);
+		box-shadow: 0 0 20px rgba(6,182,212,0.2);
+		color: var(--r-text-primary);
+	}
+
+	.btn-tech.ghost {
+		color: var(--r-text-secondary);
+		border: 1px solid transparent;
+	}
+	.btn-tech.ghost:hover {
+		color: var(--r-text-primary);
+		border-color: var(--r-border);
+	}
+
+	.btn-bracket {
+		color: var(--r-accent);
+		margin: 0 4px;
+		font-weight: bold;
+		opacity: 0.7;
+	}
+
+	/* Featured Post Card */
+	.featured-post-card {
+		min-height: 320px;
+		justify-content: flex-end;
+		border: 1px solid var(--r-border);
+		/* Gradient background handled by variable now or kept subtle */
+	}
+	.featured-post-card:hover {
+		border-color: var(--r-accent);
+	}
+	.featured-post-card .post-title {
+		font-size: 1.8rem;
+		/* color removed */
+		margin-bottom: 1rem;
+		line-height: 1.2;
+	}
+	/* .post-summary color handled global */
+	
+	.featured-post-card .card-badge {
+		position: absolute;
+		top: 1.5rem;
+		right: 1.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--r-accent);
+		border: 1px solid var(--r-border);
+		padding: 2px 8px;
+		border-radius: 4px;
+		background: rgba(6,182,212,0.1);
+		text-transform: uppercase;
+	}
+	.meta-row {
+		display: flex;
+		gap: 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		opacity: 0.8;
+	}
+	.meta-tag { color: var(--r-text-secondary); }
+
+	/* Stats Card */
+	.stats-card {
+		justify-content: center;
+	}
+	.stats-card .card-header h3 {
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		color: var(--r-text-secondary);
+		margin-bottom: 1rem;
+		letter-spacing: 2px;
+	}
+	.stat-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.75rem 0;
+		border-bottom: 1px dashed var(--r-border);
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+	}
+	.stat-row:last-child { border-bottom: none; }
+	.stat-label { color: var(--r-text-secondary); }
+	.stat-line { flex: 1; margin: 0 1rem; border-bottom: 1px dotted var(--r-border); }
+	.stat-val { color: var(--r-accent); font-weight: bold; }
+
+	/* Docs Styles */
+	.card-header-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid var(--r-border);
+	}
+	.card-header-row h3 {
+		font-size: 1.1rem;
+		margin: 0;
+		font-weight: 600;
+	}
+	.link-arrow {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--r-text-secondary);
+		text-decoration: none;
+		border: 1px solid var(--r-border);
+		padding: 2px 8px;
+		border-radius: 4px;
+	}
+	.link-arrow:hover { 
+		color: var(--r-text-primary); 
+		border-color: var(--r-accent);
+		background: rgba(6,182,212,0.1);
+	}
+
+	.docs-micro-grid {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 0.8rem;
+	}
+	@media (min-width: 500px) {
+		.docs-micro-grid { grid-template-columns: repeat(2, 1fr); } 
+	}
+	
+	.doc-micro-item {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		background: rgba(255,255,255,0.03);
+		padding: 1rem;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: background 0.2s;
+		border: 1px solid transparent;
+	}
+	.doc-micro-item:hover {
+		background: rgba(255,255,255,0.06);
+		border-color: var(--r-border);
+	}
+	.doc-icon-box {
+		color: var(--r-text-primary);
+		background: rgba(139, 92, 246, 0.1);
+		padding: 8px;
+		border-radius: 6px;
+		display: flex;
+	}
+	.doc-text {
+		display: flex;
+		flex-direction: column;
+	}
+	.doc-title {
+		font-size: 0.95rem;
+		font-weight: 500;
+	}
+	.doc-count {
+		font-size: 0.75rem;
+		font-family: var(--font-mono);
+		margin-top: 2px;
+	}
+
+	/* Projects List */
+	.projects-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.project-item-row {
+		display: flex;
+		align-items: center;
+		padding: 0.8rem;
+		border-radius: 6px;
+		text-decoration: none;
+		border: 1px solid transparent;
+		transition: all 0.2s;
+	}
+	.project-item-row:hover {
+		border-color: var(--r-border);
+		background: rgba(255,255,255,0.03);
+	}
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		background: #10b981; /* Emerald 500 */
+		border-radius: 50%;
+		margin-right: 1rem;
+		box-shadow: 0 0 8px #10b981;
+		flex-shrink: 0;
+	}
+	.project-name {
+		font-weight: 500;
+		margin-right: 1rem;
+		white-space: nowrap;
+	}
+	.project-desc-short {
+		font-size: 0.85rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	/* Tools Marquee */
+	.tools-marquee {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		/* Fade mask for smooth edges */
+		mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+		-webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+	}
+	
+	.tools-track {
+		display: flex;
+		gap: 1rem;
+		width: max-content;
+		padding: 0.5rem 0;
+		animation: scroll-left 40s linear infinite;
+	}
+	
+	.tools-track:hover {
+		animation-play-state: paused;
+	}
+	
+	@keyframes scroll-left {
+		0% { transform: translateX(0); }
+		100% { transform: translateX(-50%); }
+	}
+
+	.tool-chip {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		background: rgba(255,255,255,0.03);
+		padding: 0.8rem 1.2rem;
+		border-radius: 6px;
+		text-decoration: none;
+		border: 1px solid var(--r-border);
+		transition: all 0.2s;
+	}
+	.tool-chip:hover {
+		background: rgba(255,255,255,0.08);
+		border-color: var(--r-accent);
+		transform: translateY(-2px);
+	}
+	.tool-icon {
+		font-size: 1.1rem;
+	}
+	.tool-name {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: var(--bg-dark);
+		opacity: 0.8;
+	}
+	.glitch::before {
+		left: 2px;
+		text-shadow: -1px 0 #ff00c1;
+		clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+		animation: glitch-anim 3s infinite linear alternate-reverse;
+		display: none; /* Only show on hover/interact or simplify */
+	}
+	.glitch:hover::before { display: block; }
+
+	.glitch::after {
+		left: -2px;
+		text-shadow: -1px 0 #00fff9;
+		clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+		animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+		display: none;
+	}
+	.glitch:hover::after { display: block; }
+	
+	@keyframes glitch-anim {
+		0% { clip-path: inset(40% 0 61% 0); }
+		20% { clip-path: inset(92% 0 1% 0); }
+		40% { clip-path: inset(43% 0 1% 0); }
+		60% { clip-path: inset(25% 0 58% 0); }
+		80% { clip-path: inset(54% 0 7% 0); }
+		100% { clip-path: inset(58% 0 43% 0); }
+	}
+	@keyframes glitch-anim2 {
+		0% { clip-path: inset(24% 0 29% 0); }
+		20% { clip-path: inset(54% 0 21% 0); }
+		40% { clip-path: inset(11% 0 5% 0); }
+		60% { clip-path: inset(69% 0 54% 0); }
+		80% { clip-path: inset(100% 0 10% 0); }
+		100% { clip-path: inset(90% 0 10% 0); }
+	}
+
+	.typing-effect {
+		overflow: hidden;
+		border-right: .15em solid orange; /* The typwriter cursor */
+		white-space: nowrap; /* Keeps the content on a single line */
+		margin: 0 auto 3rem; /* Gives that scrolling effect as the typing happens */
+		letter-spacing: .05em; /* Adjust as needed */
+		animation: 
+			typing 2.5s steps(40, end),
+			blink-caret .75s step-end infinite;
+		width: 100%;
+		max-width: fit-content;
+	}
+
+	@media (max-width: 600px) {
+		.typing-effect {
+			white-space: normal;
+			border-right: none;
+			animation: none;
+		}
+	}
+
+	@keyframes typing {
+		from { width: 0 }
+		to { width: 100% }
+	}
+	@keyframes blink-caret {
+		from, to { border-color: transparent }
+		50% { border-color: orange; }
+	}
+</style>

@@ -9,7 +9,7 @@ summary: "Kafka 高频面试题汇总：使用场景、队列模型 vs 发布订
 icon: "🎯"
 featured: false
 toc: true
-updated: 2026-03-07
+updated: 2026-03-14
 ---
 
 本文整理了 Kafka 相关的高频面试题，涵盖使用场景、核心概念、高可用机制、消息可靠性等关键知识点。

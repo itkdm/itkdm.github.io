@@ -1,6 +1,6 @@
 ---
 title: "Moltbot：把聊天软件变成个人 AI 系统"
-date: 2026-01-28
+date: 2025-12-05
 tags: [AI, Agent, 自动化, 架构, 工具推荐]
 summary: "从入门例子到架构原理与源码入口，讲清楚 Moltbot 如何把 Telegram/WhatsApp 等聊天入口、Gateway 控制平面、多设备 Nodes 与 Canvas 可视化工作台拼成一个可自托管的个人 AI 系统。"
 lang: "zh"

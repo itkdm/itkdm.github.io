@@ -1,6 +1,6 @@
 ---
 title: "Building High-Performance Static Sites with Astro"
-date: 2024-01-15
+date: 2025-09-26
 tags: [Astro, Frontend, Static Sites]
 summary: "Astro is a modern static site generator that lets you use your favorite framework components, but only sends JavaScript when needed, resulting in exceptional performance. This article explores how to build high-performance static sites with Astro."
 lang: "en"

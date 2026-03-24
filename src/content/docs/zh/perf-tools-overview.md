@@ -1,16 +1,18 @@
 ---
-title: "压测工具概览"
+title: "主流压测工具对比"
 order: 5
 section: "性能测试"
 topic: "压测工具"
 lang: "zh"
 slug: "perf-tools-overview"
-summary: "主流压测工具对比与选型指南，包括 JMeter、k6、Gatling、Locust、wrk。"
-icon: "🛠️"
-featured: true
+summary: "对比 JMeter、k6、Gatling、Locust、wrk 的特点、优缺点和适用场景，帮助选择合适的压测工具。"
+icon: "🧰"
+featured: false
 toc: true
-updated: 2026-03-10
+updated: 2026-03-14
 ---
+
+# 主流压测工具对比
 
 ## 一、为什么需要压测工具
 
@@ -18,12 +20,12 @@ updated: 2026-03-10
 
 例如：
 
-```
+```text
 1000 个用户同时访问系统
 5000 QPS 请求
 ```
 
-人工测试几乎无法完成，因此需要借助 **性能测试工具** 来模拟真实用户行为。
+人工测试几乎无法完成，因此需要借助**性能测试工具**来模拟真实用户行为。
 
 压测工具通常具备以下能力：
 
@@ -34,8 +36,6 @@ updated: 2026-03-10
 * 生成性能报告
 
 通过这些工具，可以更真实地评估系统性能。
-
----
 
 ## 二、常见压测工具
 
@@ -48,8 +48,6 @@ updated: 2026-03-10
 * wrk
 
 这些工具各有特点，适用于不同场景。
-
----
 
 ## 三、JMeter
 
@@ -84,15 +82,13 @@ JMeter 非常适合：
 * 接口性能测试
 * 企业内部系统压测
 
----
-
 ## 四、k6
 
 ### 简介
 
 k6 是 Grafana 推出的现代化性能测试工具。
 
-k6 使用 **JavaScript 编写测试脚本**，非常适合开发人员使用。
+k6 使用**JavaScript 编写测试脚本**，非常适合开发人员使用。
 
 ### 优点
 
@@ -107,7 +103,7 @@ k6 使用 **JavaScript 编写测试脚本**，非常适合开发人员使用。
 import http from "k6/http";
 
 export default function () {
-  http.get("https://example.com/api");
+    http.get("https://example.com/api");
 }
 ```
 
@@ -119,13 +115,11 @@ k6 适合：
 * CI/CD 自动化测试
 * DevOps 场景
 
----
-
 ## 五、Gatling
 
 ### 简介
 
-Gatling 是一个高性能压测工具，使用 **Scala DSL** 编写测试脚本。
+Gatling 是一个高性能压测工具，使用**Scala DSL**编写测试脚本。
 
 很多互联网公司在大规模压测中使用 Gatling。
 
@@ -140,7 +134,7 @@ Gatling 是一个高性能压测工具，使用 **Scala DSL** 编写测试脚本
 ```scala
 scenario("API Test")
   .exec(http("request")
-    .get("/api/test"))
+  .get("/api/test"))
 ```
 
 ### 适用场景
@@ -150,15 +144,13 @@ Gatling 非常适合：
 * 大规模 API 压测
 * 微服务系统测试
 
----
-
 ## 六、Locust
 
 ### 简介
 
 Locust 是一个基于 Python 的性能测试工具。
 
-Locust 的特点是 **用 Python 编写压测脚本**。
+Locust 的特点是**用 Python 编写压测脚本**。
 
 ### 示例
 
@@ -166,6 +158,7 @@ Locust 的特点是 **用 Python 编写压测脚本**。
 from locust import HttpUser, task
 
 class User(HttpUser):
+
     @task
     def test_api(self):
         self.client.get("/api/test")
@@ -183,8 +176,6 @@ Locust 适合：
 
 * Python 技术栈团队
 * 复杂业务逻辑压测
-
----
 
 ## 七、wrk
 
@@ -220,55 +211,49 @@ wrk -t12 -c400 -d30s http://example.com/api
 * 功能较简单
 * 不适合复杂业务场景
 
----
-
 ## 八、压测工具对比
 
 | 工具 | 语言 | 特点 | 适用场景 |
-| ------- | ---------- | ---- | ------------ |
+| --- | --- | --- | --- |
 | JMeter | Java | 功能全面 | 企业常用压测 |
 | k6 | JavaScript | 轻量现代 | DevOps / API |
 | Gatling | Scala | 高性能 | 大规模压测 |
-| Locust | Python | 易扩展 | Python 团队 |
-| wrk | C | 极高性能 | HTTP 基准测试 |
-
----
+| Locust | Python | 易扩展 | Python团队 |
+| wrk | C | 极高性能 | HTTP基准测试 |
 
 ## 九、企业常见工具选择
 
 在实际企业中，常见的工具组合如下：
 
-**中小型企业：**
+中小型企业：
 
-```
+```text
 JMeter
 ```
 
-**互联网公司：**
+互联网公司：
 
-```
+```text
 JMeter + wrk
 ```
 
-**DevOps 团队：**
+DevOps 团队：
 
-```
+```text
 k6
 ```
 
-**Python 技术团队：**
+Python 技术团队：
 
-```
+```text
 Locust
 ```
 
-**大规模性能测试：**
+大规模性能测试：
 
-```
+```text
 Gatling
 ```
-
----
 
 ## 十、总结
 
@@ -289,9 +274,3 @@ Gatling
 * **wrk**：轻量 HTTP 压测工具
 
 在企业实践中，可以根据项目规模和技术栈选择合适的工具。
-
----
-
-## 上一篇 | 下一篇
-
-📖 [如何分析压测结果](/zh/docs/perf-result-analysis/) | 📖 [JMeter 企业级实践](/zh/docs/perf-jmeter-enterprise/)

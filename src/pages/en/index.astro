@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomePage from '../../components/HomePageRedesign.astro';
 import { getCollection } from 'astro:content';
 import { sortBlogPosts } from '../../lib/blog-sort';
 import { sortTools } from '../../lib/tools-sort';
@@ -8,11 +9,15 @@ const lang = 'en';
 const posts = sortBlogPosts(
 	await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft)
 );
-// Home rule: show 3 cards max, first prefers pinned post with priority = 9999, rest are newest
+
 const pinnedPost = posts.find((post) => (post.data.priority ?? 0) === 9999);
 const latestPosts = pinnedPost
 	? [pinnedPost, ...posts.filter((p) => p !== pinnedPost).slice(0, 2)]
 	: posts.slice(0, 3);
+
+const featuredPost = latestPosts[0];
+const secondaryPosts = latestPosts.slice(1, 3);
+
 const docs = await getCollection('docs', (entry) => entry.data.lang === lang);
 const projects = (await getCollection('projects', (entry) => entry.data.lang === lang && entry.data.featured !== false)).sort(
 	(a, b) => {
@@ -23,100 +28,88 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 const tools = sortTools(
 	await getCollection('tools', (entry) => entry.data.lang === lang && entry.data.featured !== false)
 );
+
+const docsBySection = new Map<string, number>();
+for (const doc of docs) {
+	const section = (doc.data.section || 'Others').trim();
+	docsBySection.set(section, (docsBySection.get(section) ?? 0) + 1);
+}
+
+const docsOverviewCards = [
+	{
+		section: 'Intro',
+		description: 'Start here for the site structure, onboarding notes, and the shortest path into the knowledge base.',
+		count: docsBySection.get('Intro') ?? 0,
+	},
+	{
+		section: 'Backend',
+		description: 'Java, Rust, Go, Python and server-side notes, from overview pages to deeper implementation details.',
+		count: docsBySection.get('Backend') ?? 0,
+	},
+	{
+		section: 'Database',
+		description: 'MySQL, PostgreSQL and Redis references focused on practical understanding, tradeoffs, and usage.',
+		count: docsBySection.get('Database') ?? 0,
+	},
+];
+
+const featuredProjects = projects.slice(0, 2);
+const featuredTools = tools.slice(0, 6);
+
+const labels = {
+	heroKicker: 'Personal Knowledge Hub',
+	heroTitle: 'One clear homepage for docs, posts, projects, and tools.',
+	heroLead: 'The homepage now leads with the knowledge base and recent work instead of giving every card the same weight.',
+	heroNote: 'Primary attention goes to docs, fresh writing, and featured builds.',
+	primaryAction: { href: '/en/docs/', label: 'Open docs hub' },
+	secondaryAction: { href: '/en/blog/', label: 'Read latest posts', style: 'ghost' as const },
+	stats: [
+		{ label: 'Docs', value: String(docs.length), hint: 'Structured for systematic reading.' },
+		{ label: 'Projects', value: String(projects.length), hint: 'Selected practical work and experiments.' },
+		{ label: 'Tools', value: String(tools.length), hint: 'Quick utilities you can use directly.' },
+	],
+	spotlightLabel: 'Start here',
+	spotlightTitle: 'New visitors should enter from the docs area first.',
+	spotlightBody: 'The redesign pushes the documentation system higher in the hierarchy and gives the homepage a more intentional visual focus.',
+	spotlightLink: '/en/docs/',
+	latestSection: 'Latest',
+	latestMore: 'View all posts',
+	latestFeatured: 'Featured',
+	latestContinue: 'More to read',
+	latestRead: 'Read article',
+	latestFallback: 'No posts yet.',
+	latestArticleType: 'Blog',
+	latestTagFallback: 'Post',
+	docsSection: 'Docs',
+	docsMore: 'View all docs',
+	docsSummaryTitle: 'Docs are now the primary entry point.',
+	docsSummaryBody: 'Three key topic cards help visitors understand where to start before they dive into the full documentation tree.',
+	docsSummaryLink: 'Browse documentation',
+	docsCountSuffix: 'docs',
+	docsArrow: 'Open section →',
+	projectsSection: 'Projects',
+	projectsMore: 'View all projects',
+	projectsFeatured: 'Featured',
+	projectsOpen: 'Open project',
+	projectsDemo: 'Demo available',
+	projectsFallback: 'No projects yet.',
+	toolsSection: 'Tools',
+	toolsMore: 'View all tools',
+	toolsSummaryTitle: 'Tools still matter, but they no longer overwhelm the homepage.',
+	toolsSummaryBody: 'They remain accessible, just placed behind the core reading and documentation paths so the page feels more focused.',
+	toolsSummaryLink: 'Open tools',
+	toolsFallback: 'No tools yet.',
+};
 ---
 
-<BaseLayout lang={lang} title="Bu Ji Dao · Home" description="Unified blog + docs + downloads with Astro" currentPath="/en/">
-	<section class="hero-landing">
-		<div class="hero-landing-inner">
-			<div>
-				<h1>Welcome to my Bu Ji Dao, I'm Bu Ji Dao!</h1>
-				<p class="hero-lead">Make boring interesting, simplify complexity, solve problems!</p>
-			</div>
-			<div class="hero-actions">
-				<a class="btn btn-primary" href="/en/blog/">
-					<span class="dot"></span>
-					<span>Read the blog</span>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<section class="section">
-		<h2>Latest posts</h2>
-		{latestPosts.length === 0 ? (
-			<p>No posts yet.</p>
-		) : (
-			<div class="grid grid-3">
-				{latestPosts.map((post) => {
-					const postSlug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
-					return (
-						<a class="card blog-card" href={`/en/blog/${postSlug}/`}>
-							<div class="badge">Blog</div>
-							<h3>{post.data.title}</h3>
-							<p class="meta">
-								<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
-								{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
-							</p>
-							<p>{post.data.summary}</p>
-						</a>
-					);
-				})}
-			</div>
-		)}
-	</section>
-
-	<section class="section">
-		<h2>Docs</h2>
-		<p class="meta">Docs entries: {docs.length}</p>
-		<a class="badge" href="/en/docs/">View docs</a>
-	</section>
-
-	<section class="section">
-		<h2>Projects</h2>
-		{projects.length === 0 ? (
-			<p>No projects yet.</p>
-		) : (
-			<div class="grid grid-3">
-				{projects.slice(0, 3).map((project) => {
-					const projectSlug = project.data.slug ?? project.slug.split('/').pop() ?? project.slug;
-					return (
-						<a class="card" href={`/en/projects/${projectSlug}/`}>
-							<div class="badge">Projects</div>
-							<div class="card-doc-header">
-								<h3>{project.data.icon ? `${project.data.icon} ${project.data.title}` : project.data.title}</h3>
-							</div>
-							<p>{project.data.summary}</p>
-							{project.data.tags.length > 0 && <p class="meta">{project.data.tags.join(' · ')}</p>}
-						</a>
-					);
-				})}
-			</div>
-		)}
-	</section>
-
-	<section class="section">
-		<h2>Tools</h2>
-		{tools.length === 0 ? (
-			<p>No tools yet.</p>
-		) : (
-			<div class="grid grid-3">
-				{tools.slice(0, 3).map((tool) => (
-					<div class="card">
-						<div class="badge">Tools</div>
-						<div class="card-doc-header">
-							<h3>{tool.data.icon ? `${tool.data.icon} ${tool.data.name}` : tool.data.name}</h3>
-						</div>
-						<p>{tool.data.summary}</p>
-						<div class="card-tool-action">
-							<a href={tool.data.homepage} class="btn btn-primary" target={tool.data.homepage.startsWith('http') ? '_blank' : undefined} rel={tool.data.homepage.startsWith('http') ? 'noreferrer' : undefined}>
-								<span class="dot"></span>
-								<span>Open Tool</span>
-							</a>
-						</div>
-					</div>
-				))}
-			</div>
-		)}
-	</section>
-
+<BaseLayout lang={lang} title="Bu Ji Dao · Home" description="Unified blog, docs, projects and tools with Astro" currentPath="/en/">
+	<HomePage
+		lang={lang}
+		labels={labels}
+		latestPost={featuredPost}
+		secondaryPosts={secondaryPosts}
+		docsCards={docsOverviewCards}
+		featuredProjects={featuredProjects}
+		featuredTools={featuredTools}
+	/>
 </BaseLayout>
