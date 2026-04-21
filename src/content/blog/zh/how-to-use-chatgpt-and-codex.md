@@ -609,7 +609,7 @@ Excel 里 A 列是姓名，B 列是成绩，
 
 这里补充一个你可以自行了解的方案：
 
-- [Sakura Cat](https://sakura-cat1.com/register?code=avL9AJmI)
+- [Sakura Cat](https://c1-sakuracat.com/register?code=avL9AJmI)
 
 需要说明的是：
 
