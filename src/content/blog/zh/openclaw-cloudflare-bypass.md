@@ -1,5 +1,5 @@
 ---
-title: "OpenClaw 可绕过 Cloudflare 抓取任何网站？反爬与 AI 采集的战争升级了"
+title: "OpenClaw、Cloudflare 与 AI 采集的对抗升级"
 date: 2026-03-06
 tags: ["OpenClaw"]
 summary: "最近有个话题在技术圈炸开了锅：OpenClaw 被曝可以绕过 Cloudflare 的反爬机制，实现\"任意网站抓取\"。"
