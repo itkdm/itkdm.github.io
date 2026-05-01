@@ -11,11 +11,12 @@ interface Props {
 
 const { lang, posts, tags } = Astro.props;
 
-// Logic: Separate Featured Post & Rest
-const featuredPost = posts.find((post: any) => (post.data.priority ?? 0) === 9999) || posts[0];
-const otherPosts = featuredPost ? posts.filter((p: any) => p.slug !== featuredPost.slug) : [];
+// Only show a featured hero when a post is explicitly pinned via priority.
+// Otherwise keep the full list in the timeline so the newest post appears first.
+const featuredPost = posts.find((post: any) => (post.data.priority ?? 0) > 0);
+const otherPosts = featuredPost ? posts.filter((p: any) => p.slug !== featuredPost.slug) : posts;
 
-// Logic: Group by Year for Timeline
+// Logic: Group by Year/Month for Timeline
 const postsByYear = otherPosts.reduce((acc, post) => {
     const year = new Date(post.data.date).getFullYear();
     if (!acc[year]) acc[year] = [];
@@ -23,7 +24,27 @@ const postsByYear = otherPosts.reduce((acc, post) => {
     return acc;
 }, {} as Record<number, Post[]>);
 
+for (const yearPosts of Object.values(postsByYear)) {
+    yearPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+}
+
 const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a));
+const postsByYearMonth = Object.fromEntries(
+    years.map((year) => {
+        const byMonth = postsByYear[Number(year)].reduce((acc, post) => {
+            const month = new Date(post.data.date).getMonth() + 1;
+            if (!acc[month]) acc[month] = [];
+            acc[month].push(post);
+            return acc;
+        }, {} as Record<number, Post[]>);
+
+        const months = Object.keys(byMonth)
+            .map(Number)
+            .sort((a, b) => b - a);
+
+        return [year, { months, byMonth }];
+    })
+);
 
 const dateLocale = lang === 'zh' ? 'zh-CN' : 'en-US';
 const formatDate = (date: Date) =>
@@ -32,6 +53,10 @@ const formatDate = (date: Date) =>
 		month: 'short',
 		day: 'numeric',
 	}).format(date);
+const formatMonth = (month: number) =>
+    lang === 'zh'
+        ? `${month}月`
+        : new Intl.DateTimeFormat(dateLocale, { month: 'short' }).format(new Date(2026, month - 1, 1));
 
 const labels = {
 	title: lang === 'zh' ? '传输日志' : 'Transmission Log',
@@ -64,7 +89,6 @@ const labels = {
                     </a>
                 ))}
             </div>
-            <div class="tags-fade"></div>
         </div>
     )}
 
@@ -100,22 +124,30 @@ const labels = {
                 </div>
                 
                 <div class="year-posts">
-                    {postsByYear[Number(year)].map(post => (
-                        <a href={`/${lang}/blog/${post.data.slug ?? post.slug.split('/').pop() ?? post.slug}/`} class="stream-card-link">
-                            <article class="stream-card">
-                                <div class="card-timeline-node"></div>
-                                <div class="card-metaline">
-                                    <time class="card-date">{formatDate(post.data.date)}</time>
-                                    <div class="card-tags">
-                                        {post.data.tags.slice(0, 2).map((tag:string) => (
-                                            <span class="mini-tag">#{tag}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                                <h3 class="card-title">{post.data.title}</h3>
-                                <p class="card-summary">{post.data.summary}</p>
-                            </article>
-                        </a>
+                    {postsByYearMonth[year].months.map(month => (
+                        <div class="month-group">
+                            <div class="month-marker">
+                                <span class="month-text">{formatMonth(month)}</span>
+                            </div>
+
+                            {postsByYearMonth[year].byMonth[month].map(post => (
+                                <a href={`/${lang}/blog/${post.data.slug ?? post.slug.split('/').pop() ?? post.slug}/`} class="stream-card-link">
+                                    <article class="stream-card">
+                                        <div class="card-timeline-node"></div>
+                                        <div class="card-metaline">
+                                            <time class="card-date">{formatDate(post.data.date)}</time>
+                                            <div class="card-tags">
+                                                {post.data.tags.slice(0, 2).map((tag:string) => (
+                                                    <span class="mini-tag">#{tag}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <h3 class="card-title">{post.data.title}</h3>
+                                        <p class="card-summary">{post.data.summary}</p>
+                                    </article>
+                                </a>
+                            ))}
+                        </div>
                     ))}
                 </div>
             </div>
@@ -191,8 +223,7 @@ const labels = {
         justify-content: center;
         flex-wrap: wrap;
         gap: 0.8rem;
-        max-height: 60px;
-        overflow: hidden;
+        overflow: visible;
     }
     .matrix-tag {
         font-size: 0.8rem;
@@ -313,6 +344,22 @@ const labels = {
         font-size: 1.2rem;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .month-group {
+        margin-bottom: 2rem;
+    }
+    .month-marker {
+        margin: 0 0 1rem 0;
+        padding-left: 0.25rem;
+    }
+    .month-text {
+        display: inline-block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--c-text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     /* CARD ITEM */
