@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import yellowTrackUrl from '../Yellow - Coldplay.mp3?url';
 
 type StatItem = {
 	label: string;
@@ -234,6 +235,79 @@ const formatDate = (date: Date) =>
 	document.addEventListener('astro:before-swap', () => {
 		document.body.classList.remove('home-redesign-active');
 	});
+
+	const setupHeroPlayer = () => {
+		const player = document.querySelector('[data-hero-player]');
+		if (!player) return;
+		if (player instanceof HTMLElement && player.dataset.playerBound === 'true') return;
+
+		const audio = player.querySelector('audio');
+		const playButton = player.querySelector('[data-player-toggle]');
+		const muteButton = player.querySelector('[data-player-mute]');
+		const volumeSlider = player.querySelector('[data-player-volume]');
+		const statusLabel = player.querySelector('[data-player-status]');
+		const volumeValue = player.querySelector('[data-player-volume-value]');
+
+		if (!(audio instanceof HTMLAudioElement)) return;
+		if (!(playButton instanceof HTMLButtonElement)) return;
+		if (!(muteButton instanceof HTMLButtonElement)) return;
+		if (!(volumeSlider instanceof HTMLInputElement)) return;
+		if (!(statusLabel instanceof HTMLElement)) return;
+		if (!(volumeValue instanceof HTMLElement)) return;
+
+		const syncUi = () => {
+			const isPlaying = !audio.paused;
+			playButton.textContent = isPlaying ? 'Pause' : 'Play';
+			muteButton.textContent = audio.muted || audio.volume === 0 ? 'Unmute' : 'Mute';
+			statusLabel.textContent = isPlaying ? 'Now playing' : 'Ready to play';
+			volumeSlider.value = String(Math.round(audio.volume * 100));
+			volumeValue.textContent = `${Math.round(audio.volume * 100)}%`;
+		};
+
+		playButton.addEventListener('click', async () => {
+			if (audio.paused) {
+				try {
+					await audio.play();
+				} catch (error) {
+					statusLabel.textContent = 'Playback blocked';
+				}
+			} else {
+				audio.pause();
+			}
+			syncUi();
+		});
+
+		muteButton.addEventListener('click', () => {
+			audio.muted = !audio.muted;
+			syncUi();
+		});
+
+		volumeSlider.addEventListener('input', () => {
+			const nextVolume = Number(volumeSlider.value) / 100;
+			audio.volume = nextVolume;
+			audio.muted = nextVolume === 0;
+			syncUi();
+		});
+
+		audio.addEventListener('play', syncUi);
+		audio.addEventListener('pause', syncUi);
+		audio.addEventListener('volumechange', syncUi);
+		audio.addEventListener('ended', syncUi);
+
+		audio.volume = 0.45;
+		if (player instanceof HTMLElement) {
+			player.dataset.playerBound = 'true';
+		}
+		syncUi();
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupHeroPlayer, { once: true });
+	} else {
+		setupHeroPlayer();
+	}
+
+	document.addEventListener('astro:page-load', setupHeroPlayer);
 </script>
 
 <div class="home-redesign-v2">
@@ -260,6 +334,27 @@ const formatDate = (date: Date) =>
 				<a href={labels.secondaryAction.href} class="btn-tech ghost">
 					{labels.secondaryAction.label}
 				</a>
+			</div>
+
+			<div class="hero-player-card bento-card" data-hero-player>
+				<div class="hero-player-copy">
+					<p class="hero-player-kicker">Now Spinning</p>
+					<h2>Yellow</h2>
+					<p class="hero-player-meta">Coldplay</p>
+				</div>
+				<div class="hero-player-controls">
+					<button type="button" class="player-control player-control-primary" data-player-toggle>Play</button>
+					<button type="button" class="player-control" data-player-mute>Mute</button>
+				</div>
+				<label class="player-volume-wrap" for="hero-player-volume">
+					<span>Volume</span>
+					<input id="hero-player-volume" type="range" min="0" max="100" value="45" data-player-volume />
+				</label>
+				<div class="hero-player-footer">
+					<span class="player-status" data-player-status>Ready to play</span>
+					<span class="player-volume-value" data-player-volume-value>45%</span>
+				</div>
+				<audio preload="metadata" src={yellowTrackUrl}></audio>
 			</div>
 		</div>
 	</section>
@@ -426,6 +521,108 @@ const formatDate = (date: Date) =>
 		justify-content: center;
 		gap: 1.5rem;
 		flex-wrap: wrap;
+		margin-bottom: 1.75rem;
+	}
+
+	.hero-player-card {
+		max-width: 34rem;
+		margin: 0 auto;
+		padding: 1.2rem 1.25rem 1.35rem;
+		text-align: left;
+		gap: 1rem;
+	}
+
+	.hero-player-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.hero-player-kicker {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--r-accent);
+	}
+
+	.hero-player-copy h2 {
+		margin: 0;
+		font-size: 1.4rem;
+	}
+
+	.hero-player-meta {
+		margin: 0;
+		font-size: 0.95rem;
+		color: var(--r-text-secondary);
+	}
+
+	.hero-player-controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.player-control {
+		min-width: 7rem;
+		padding: 0.72rem 1rem;
+		border: 1px solid var(--r-border);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.03);
+		color: var(--r-text-primary);
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.player-control:hover {
+		border-color: var(--r-accent);
+		background: rgba(6, 182, 212, 0.08);
+	}
+
+	.player-control-primary {
+		background: rgba(6, 182, 212, 0.12);
+	}
+
+	.player-volume-wrap {
+		display: grid;
+		gap: 0.6rem;
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		color: var(--r-text-secondary);
+	}
+
+	.player-volume-wrap input[type='range'] {
+		width: 100%;
+		accent-color: var(--r-accent);
+		cursor: pointer;
+	}
+
+	.hero-player-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		color: var(--r-text-secondary);
+	}
+
+	.player-status {
+		color: var(--r-text-primary);
+	}
+
+	@media (max-width: 600px) {
+		.hero-player-footer {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.player-control {
+			flex: 1 1 9rem;
+		}
 	}
 
 	/* Tech Buttons */
