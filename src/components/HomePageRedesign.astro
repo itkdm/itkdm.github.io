@@ -334,10 +334,18 @@ const formatDate = (date: Date) =>
 			<!-- Floating Music Player -->
 			<div class="floating-player" data-hero-player>
 				<button type="button" class="player-toggle-btn" data-player-toggle aria-label="Toggle music player">
-					<svg class="player-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M9 19V5l12-2v16"></path>
+					<svg class="player-icon play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+						<circle cx="12" cy="12" r="10"></circle>
+						<polygon points="8 5 15 12 8 19 8 5"></polygon>
+						<polygon points="16 5 23 12 16 19 16 5"></polygon>
+					</svg>
+					<svg class="player-icon pause-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+						<circle cx="12" cy="12" r="10"></circle>
+						<rect x="8" y="5" width="3" height="14" rx="1"></rect>
+						<rect x="13" y="5" width="3" height="14" rx="1"></rect>
 					</svg>
 					<div class="player-pulse" aria-hidden="true"></div>
+					<div class="player-glow" aria-hidden="true"></div>
 				</button>
 				<div class="player-panel">
 					<div class="player-info">
@@ -549,48 +557,83 @@ const formatDate = (date: Date) =>
 	}
 
 	.player-toggle-btn {
-		width: 48px;
-		height: 48px;
+		width: 52px;
+		height: 52px;
 		border-radius: 50%;
-		background: var(--r-card-bg);
+		background: rgba(255, 255, 255, 0.95);
 		border: 1px solid var(--r-border);
 		color: var(--r-text-primary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		transition: all 0.3s ease;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
-		box-shadow: var(--r-shadow);
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 	}
 
 	.player-toggle-btn:hover {
-		background: var(--r-card-hover);
-		border-color: var(--r-accent);
-	}
-
-	.player-toggle-btn.playing .player-icon path {
-		display: none;
-	}
-
-	.player-toggle-btn.playing::after {
-		content: '';
-		position: absolute;
-		width: 8px;
-		height: 8px;
 		background: var(--r-accent);
-		border-radius: 50%;
-		animation: pulse 1.5s ease-in-out infinite;
-	}
-
-	@keyframes pulse {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.5; transform: scale(1.5); }
+		color: #ffffff;
+		border-color: var(--r-accent);
+		box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35);
 	}
 
 	.player-icon {
-		width: 20px;
-		height: 20px;
+		width: 22px;
+		height: 22px;
+		transition: opacity 0.3s ease;
+	}
+
+	.player-icon.pause-icon {
+		display: none;
+	}
+
+	.player-toggle-btn.playing .play-icon {
+		display: none;
+	}
+
+	.player-toggle-btn.playing .pause-icon {
+		display: block;
+	}
+
+	.player-pulse {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background: var(--r-accent);
+		opacity: 0;
+		animation: player-pulse 2s ease-out infinite;
+	}
+
+	.player-toggle-btn.playing .player-pulse {
+		animation: player-pulse 1.5s ease-out infinite;
+	}
+
+	@keyframes player-pulse {
+		0% {
+			transform: scale(1);
+			opacity: 0.4;
+		}
+		100% {
+			transform: scale(1.8);
+			opacity: 0;
+		}
+	}
+
+	.player-glow {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.player-toggle-btn:hover .player-glow {
+		opacity: 1;
 	}
 
 	.player-panel {
