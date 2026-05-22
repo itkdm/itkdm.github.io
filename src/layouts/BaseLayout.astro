@@ -101,25 +101,9 @@ const navItems = [
 			gtag('js', new Date());
 			gtag('config', 'G-EFHHDPBBYV');
 		</script>
-		<meta name="theme-color" content="#f7f5f1" id="themeColorMeta" />
+		<meta name="theme-color" content="#EFF6FF" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="stylesheet" href="/theme.css" />
-		<script is:inline>
-			// Minimal theme bootstrapping to avoid FOUC
-			(function () {
-				let theme = 'light';
-				const supportedThemes = ['light', 'paper', 'dark'];
-				try {
-					const saved = localStorage.getItem('site-theme');
-					if (supportedThemes.includes(saved)) {
-						theme = saved;
-					} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-						theme = 'dark';
-					}
-				} catch {}
-				document.documentElement.setAttribute('data-theme', theme);
-			})();
-		</script>
 	</head>
 	<body>
 		<div class="page-root">
@@ -150,11 +134,6 @@ const navItems = [
 							<span class="dot" style="background:var(--text-faint); box-shadow:none"></span>
 							<span>{lang === 'zh' ? 'EN' : '中文'}</span>
 						</button>
-						<select class="btn theme-select" id="themeSelect" aria-label="Theme select">
-							<option value="light">Original Theme</option>
-							<option value="paper">Paper Yellow</option>
-							<option value="dark">Dark Theme</option>
-						</select>
 					</div>
 				</div>
 			</header>
