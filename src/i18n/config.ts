@@ -7,14 +7,14 @@ export const LANG_LABELS: Record<Lang, { name: string; brandName: string; siteNa
 		name: '中文',
 		brandName: '布吉岛',
 		siteName: '布吉岛 · 主页',
-		heroTitle: '打造统一的博客 + 文档 + 下载中心',
+		heroTitle: '打造统一的博客 + 文档知识库',
 		heroSubtitle: 'Astro + Markdown + GitHub Pages，纯静态，多语言，可持续演进。',
 	},
 	en: {
 		name: 'English',
 		brandName: 'bujidao',
 		siteName: 'Bu Ji Dao · Home',
-		heroTitle: 'Blog, Docs & Downloads in one site',
+		heroTitle: 'Blog and Docs in one site',
 		heroSubtitle: 'Astro + Markdown + GitHub Pages. Static, multilingual, and customizable.',
 	},
 };

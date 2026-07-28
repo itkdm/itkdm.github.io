@@ -4,11 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "predev": "node scripts/fetch-releases.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prebuild": "node scripts/fetch-releases.mjs",
     "postbuild": "npx --yes pagefind --site dist && node scripts/push-baidu.mjs"
   },
   "dependencies": {

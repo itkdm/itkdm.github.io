@@ -18,8 +18,6 @@ export const GET: APIRoute = async () => {
 		'/en/blog/tags/',
 		'/zh/tools/',
 		'/en/tools/',
-		'/zh/downloads/',
-		'/en/downloads/',
 		'/zh/search/',
 		'/en/search/',
 	];

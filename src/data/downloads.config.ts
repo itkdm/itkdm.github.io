@@ -59,53 +59,7 @@ export interface DownloadItem {
  * 下载源配置列表
  * 按需添加你的下载项
  */
-export const downloadItems: DownloadItem[] = [
-	{
-		id: 'side-lying-monitor',
-		name: '侧躺监测（枕边哨）',
-		nameEn: 'Side Lying Monitor',
-		description: '智能侧躺监测与健康提醒应用',
-		descriptionEn: 'Smart side-lying monitoring and health reminder app',
-		icon: '📱',
-		platform: 'Android',
-		order: 1,
-		sources: [
-			// GitHub Release 示例
-			{
-				type: 'github',
-				repo: 'itkdm/side-lying-monitor',
-				channel: 'stable',
-				preferAssetsRegex: '.*\\.apk$',
-				showSha256: true,
-			},
-			// 直接下载链接示例（阿里云OSS等）
-			{
-				type: 'direct',
-				name: '直接下载（阿里云OSS）',
-				url: 'https://example.com/releases/app-v1.0.0.apk',
-				size: 15 * 1024 * 1024, // 15MB
-				platform: 'android',
-				arch: 'universal',
-			},
-			// 百度网盘示例
-			{
-				type: 'baidu',
-				name: '百度网盘',
-				url: 'https://pan.baidu.com/s/xxxxxxxx',
-				code: '1234',
-				platform: 'android',
-			},
-			// 夸克网盘示例
-			{
-				type: 'quark',
-				name: '夸克网盘',
-				url: 'https://pan.quark.cn/s/xxxxxxxx',
-				platform: 'android',
-			},
-		],
-	},
-	// 可以继续添加更多下载项
-];
+export const downloadItems: DownloadItem[] = [];
 
 /**
  * 获取下载源类型的中文名称

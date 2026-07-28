@@ -21,8 +21,8 @@ const { lang } = Astro.params as { lang: Lang };
 			<h1>{lang === 'zh' ? '搜索' : 'Search'}</h1>
 			<p class="search-subtitle">
 				{lang === 'zh'
-					? '搜索所有内容：博客文章、文档、项目、工具和下载'
-					: 'Search all content: blog posts, docs, projects, tools, and downloads'}
+					? '搜索所有内容：博客文章、文档、项目和工具'
+					: 'Search all content: blog posts, docs, projects, and tools'}
 			</p>
 		</div>
 		<div id="search" class="search-container"></div>
