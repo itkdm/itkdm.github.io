@@ -1,0 +1,63 @@
+---
+import docsTree from '../generated/docs-tree.json';
+import DocsTreeNode from './DocsTreeNode.astro';
+
+interface Props {
+	lang: 'zh' | 'en';
+	currentSlug?: string;
+}
+
+const { lang, currentSlug = '' } = Astro.props;
+const root = docsTree.tree;
+const children = root.children ?? [];
+---
+
+<nav class="docs-file-tree" aria-label={lang === 'zh' ? '文档目录树' : 'Docs tree'}>
+	<div class="tree-head">
+		<span>{root.title}</span>
+		<small>{lang === 'zh' ? '目录树' : 'Tree'}</small>
+	</div>
+	<div class="tree-body">
+		{children.map((child) => (
+			<DocsTreeNode node={child} lang={lang} currentSlug={currentSlug} />
+		))}
+	</div>
+</nav>
+
+<style>
+	.docs-file-tree {
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		background: var(--bg-elev);
+		overflow: hidden;
+	}
+
+	.tree-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		padding: 12px 12px 10px;
+		border-bottom: 1px solid var(--border);
+		color: var(--text);
+		font-weight: 800;
+	}
+
+	.tree-head small {
+		color: var(--text-faint);
+		font-size: 0.75rem;
+		font-weight: 600;
+	}
+
+	.tree-body {
+		max-height: calc(100vh - 160px);
+		overflow: auto;
+		padding: 8px;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.tree-body::-webkit-scrollbar {
+		display: none;
+	}
+</style>

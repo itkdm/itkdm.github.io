@@ -1,0 +1,195 @@
+---
+import DocsTreeNode from './DocsTreeNode.astro';
+
+type TreeNode = {
+	type: 'directory' | 'file';
+	name: string;
+	title: string;
+	relativePath: string;
+	slug?: string;
+	empty?: boolean;
+	children?: TreeNode[];
+};
+
+interface Props {
+	node: TreeNode;
+	lang: 'zh' | 'en';
+	currentSlug?: string;
+	depth?: number;
+}
+
+const { node, lang, currentSlug = '', depth = 0 } = Astro.props;
+const children = node.children ?? [];
+
+function containsCurrent(item: TreeNode): boolean {
+	if (item.slug && item.slug === currentSlug) return true;
+	return (item.children ?? []).some(containsCurrent);
+}
+
+function countPublished(item: TreeNode): number {
+	if (item.type === 'file') return item.slug ? 1 : 0;
+	return (item.children ?? []).reduce((sum, child) => sum + countPublished(child), 0);
+}
+
+const isCurrent = node.slug === currentSlug;
+const isOpen = Boolean(currentSlug && containsCurrent(node));
+const publishedCount = countPublished(node);
+---
+
+{node.type === 'directory' ? (
+	<details class="tree-dir" open={isOpen}>
+		<summary class="tree-dir-label" style={`--depth: ${depth}`}>
+			<span class="tree-caret" aria-hidden="true"></span>
+			<span class="tree-folder" aria-hidden="true"></span>
+			<span class="tree-title">{node.title}</span>
+			<span class="tree-count">{publishedCount}</span>
+		</summary>
+		<div class="tree-children">
+			{children.map((child) => (
+				<DocsTreeNode node={child} lang={lang} currentSlug={currentSlug} depth={depth + 1} />
+			))}
+		</div>
+	</details>
+) : node.slug ? (
+	<a
+		class:list={['tree-file', { active: isCurrent }]}
+		style={`--depth: ${depth}`}
+		href={`/${lang}/docs/${node.slug}/`}
+		aria-current={isCurrent ? 'page' : undefined}
+	>
+		<span class="tree-file-icon" aria-hidden="true"></span>
+		<span class="tree-title">{node.title}</span>
+	</a>
+) : (
+	<span class:list={['tree-file', 'disabled', { empty: node.empty }]} style={`--depth: ${depth}`}>
+		<span class="tree-file-icon" aria-hidden="true"></span>
+		<span class="tree-title">{node.title}</span>
+	</span>
+)}
+
+<style>
+	.tree-dir {
+		margin: 0;
+	}
+
+	.tree-dir-label,
+	.tree-file {
+		--indent: calc(var(--depth) * 14px);
+		min-height: 30px;
+		display: grid;
+		grid-template-columns: 14px 16px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 7px;
+		padding: 4px 8px 4px calc(8px + var(--indent));
+		border-radius: 6px;
+		color: var(--text-muted);
+		font-size: 0.9rem;
+		line-height: 1.35;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.tree-file {
+		grid-template-columns: 16px minmax(0, 1fr);
+		padding-left: calc(29px + var(--indent));
+	}
+
+	.tree-dir-label:hover,
+	.tree-file:hover {
+		background: var(--bg-soft);
+		color: var(--text);
+	}
+
+	.tree-dir-label::-webkit-details-marker {
+		display: none;
+	}
+
+	.tree-caret::before {
+		content: '›';
+		display: inline-block;
+		color: var(--text-faint);
+		font-size: 1rem;
+		transition: transform 0.16s ease;
+	}
+
+	.tree-dir[open] > .tree-dir-label .tree-caret::before {
+		transform: rotate(90deg);
+	}
+
+	.tree-folder,
+	.tree-file-icon {
+		width: 14px;
+		height: 14px;
+		border: 1.5px solid currentColor;
+		opacity: 0.62;
+	}
+
+	.tree-folder {
+		border-radius: 3px;
+		position: relative;
+	}
+
+	.tree-folder::before {
+		content: '';
+		position: absolute;
+		left: -1.5px;
+		top: -4px;
+		width: 8px;
+		height: 5px;
+		border: 1.5px solid currentColor;
+		border-bottom: 0;
+		border-radius: 3px 3px 0 0;
+		background: var(--bg-elev);
+	}
+
+	.tree-file-icon {
+		border-radius: 2px;
+		position: relative;
+	}
+
+	.tree-file-icon::after {
+		content: '';
+		position: absolute;
+		right: -1.5px;
+		top: -1.5px;
+		width: 5px;
+		height: 5px;
+		border-left: 1.5px solid currentColor;
+		border-bottom: 1.5px solid currentColor;
+		background: var(--bg-elev);
+	}
+
+	.tree-title {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tree-count {
+		min-width: 20px;
+		color: var(--text-faint);
+		font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+		font-size: 0.72rem;
+		text-align: right;
+	}
+
+	.tree-file.active {
+		background: color-mix(in srgb, var(--primary-soft) 70%, transparent);
+		color: var(--primary);
+		font-weight: 700;
+	}
+
+	.tree-file.disabled {
+		color: var(--text-faint);
+		cursor: default;
+	}
+
+	.tree-file.disabled:hover {
+		background: transparent;
+	}
+
+	.tree-children {
+		margin: 1px 0;
+	}
+</style>

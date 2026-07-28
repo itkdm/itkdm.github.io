@@ -1,0 +1,1162 @@
+{
+  "tree": {
+    "type": "directory",
+    "name": "02-技术知识库",
+    "title": "技术知识库",
+    "relativePath": "",
+    "children": [
+      {
+        "type": "directory",
+        "name": "01-编程核心",
+        "title": "编程核心",
+        "relativePath": "01-编程核心",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-数据结构与算法",
+            "title": "数据结构与算法",
+            "relativePath": "01-编程核心/01-数据结构与算法",
+            "children": [
+              {
+                "type": "directory",
+                "name": "hot100",
+                "title": "hot100",
+                "relativePath": "01-编程核心/01-数据结构与算法/hot100",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "哈希.md",
+                    "title": "哈希",
+                    "relativePath": "01-编程核心/01-数据结构与算法/hot100/哈希.md",
+                    "slug": "hot100",
+                    "empty": false
+                  },
+                  {
+                    "type": "file",
+                    "name": "栈.md",
+                    "title": "栈",
+                    "relativePath": "01-编程核心/01-数据结构与算法/hot100/栈.md",
+                    "slug": "hot100-6c50570f",
+                    "empty": false
+                  },
+                  {
+                    "type": "file",
+                    "name": "Hot100首页.md",
+                    "title": "Hot100 首页",
+                    "relativePath": "01-编程核心/01-数据结构与算法/hot100/Hot100首页.md",
+                    "slug": "hot100-hot100",
+                    "empty": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "directory",
+            "name": "02-设计模式",
+            "title": "设计模式",
+            "relativePath": "01-编程核心/02-设计模式",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-面向对象",
+            "title": "面向对象",
+            "relativePath": "01-编程核心/03-面向对象",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-并发编程",
+            "title": "并发编程",
+            "relativePath": "01-编程核心/04-并发编程",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-网络编程",
+            "title": "网络编程",
+            "relativePath": "01-编程核心/05-网络编程",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "02-前端开发",
+        "title": "前端开发",
+        "relativePath": "02-前端开发",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-HTML-CSS",
+            "title": "HTML-CSS",
+            "relativePath": "02-前端开发/01-HTML-CSS",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-JavaScript",
+            "title": "JavaScript",
+            "relativePath": "02-前端开发/02-JavaScript",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-TypeScript",
+            "title": "TypeScript",
+            "relativePath": "02-前端开发/03-TypeScript",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-Vue",
+            "title": "Vue",
+            "relativePath": "02-前端开发/04-Vue",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-React",
+            "title": "React",
+            "relativePath": "02-前端开发/05-React",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "06-浏览器插件",
+            "title": "浏览器插件",
+            "relativePath": "02-前端开发/06-浏览器插件",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "07-Next.js",
+            "title": "Next.js",
+            "relativePath": "02-前端开发/07-Next.js",
+            "children": [
+              {
+                "type": "directory",
+                "name": "01-入门指南",
+                "title": "入门指南",
+                "relativePath": "02-前端开发/07-Next.js/01-入门指南",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-Next.js是什么.md",
+                    "title": "01-Next.js 是什么？",
+                    "relativePath": "02-前端开发/07-Next.js/01-入门指南/01-Next.js是什么.md",
+                    "slug": "next-js-next-js",
+                    "empty": false
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-环境搭建.md",
+                    "title": "环境搭建",
+                    "relativePath": "02-前端开发/07-Next.js/01-入门指南/02-环境搭建.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-项目目录结构.md",
+                    "title": "项目目录结构",
+                    "relativePath": "02-前端开发/07-Next.js/01-入门指南/03-项目目录结构.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-TypeScript基础补充.md",
+                    "title": "TypeScript基础补充",
+                    "relativePath": "02-前端开发/07-Next.js/01-入门指南/04-TypeScript基础补充.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-React基础补充.md",
+                    "title": "React基础补充",
+                    "relativePath": "02-前端开发/07-Next.js/01-入门指南/05-React基础补充.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "02-App-Router核心",
+                "title": "App-Router核心",
+                "relativePath": "02-前端开发/07-Next.js/02-App-Router核心",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-路由系统.md",
+                    "title": "路由系统",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/01-路由系统.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-page-layout-template.md",
+                    "title": "page-layout-template",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/02-page-layout-template.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-Link和导航.md",
+                    "title": "Link和导航",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/03-Link和导航.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-动态路由.md",
+                    "title": "动态路由",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/04-动态路由.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-路由组和私有文件夹.md",
+                    "title": "路由组和私有文件夹",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/05-路由组和私有文件夹.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-loading-error-not-found.md",
+                    "title": "loading-error-not-found",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/06-loading-error-not-found.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "07-Metadata元数据.md",
+                    "title": "Metadata元数据",
+                    "relativePath": "02-前端开发/07-Next.js/02-App-Router核心/07-Metadata元数据.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "03-渲染机制",
+                "title": "渲染机制",
+                "relativePath": "02-前端开发/07-Next.js/03-渲染机制",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-SSR-SSG-ISR-CSR.md",
+                    "title": "SSR-SSG-ISR-CSR",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/01-SSR-SSG-ISR-CSR.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-Server-Components.md",
+                    "title": "Server-Components",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/02-Server-Components.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-Client-Components.md",
+                    "title": "Client-Components",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/03-Client-Components.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-use-client边界.md",
+                    "title": "use-client边界",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/04-use-client边界.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-Suspense和Streaming.md",
+                    "title": "Suspense和Streaming",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/05-Suspense和Streaming.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-Hydration水合.md",
+                    "title": "Hydration水合",
+                    "relativePath": "02-前端开发/07-Next.js/03-渲染机制/06-Hydration水合.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "04-数据获取与缓存",
+                "title": "数据获取与缓存",
+                "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-Server-Component中获取数据.md",
+                    "title": "Server-Component中获取数据",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/01-Server-Component中获取数据.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-fetch和缓存机制.md",
+                    "title": "fetch和缓存机制",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/02-fetch和缓存机制.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-并行和串行请求.md",
+                    "title": "并行和串行请求",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/03-并行和串行请求.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-revalidate重新验证.md",
+                    "title": "revalidate重新验证",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/04-revalidate重新验证.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-客户端数据获取.md",
+                    "title": "客户端数据获取",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/05-客户端数据获取.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-常见缓存面试题.md",
+                    "title": "常见缓存面试题",
+                    "relativePath": "02-前端开发/07-Next.js/04-数据获取与缓存/06-常见缓存面试题.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "05-后端能力",
+                "title": "后端能力",
+                "relativePath": "02-前端开发/07-Next.js/05-后端能力",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-Route-Handlers.md",
+                    "title": "Route-Handlers",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/01-Route-Handlers.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-Server-Actions.md",
+                    "title": "Server-Actions",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/02-Server-Actions.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-表单处理.md",
+                    "title": "表单处理",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/03-表单处理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-Cookies和Headers.md",
+                    "title": "Cookies和Headers",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/04-Cookies和Headers.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-Middleware.md",
+                    "title": "Middleware",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/05-Middleware.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-文件上传.md",
+                    "title": "文件上传",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/06-文件上传.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "07-权限与认证.md",
+                    "title": "权限与认证",
+                    "relativePath": "02-前端开发/07-Next.js/05-后端能力/07-权限与认证.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "06-工程化",
+                "title": "工程化",
+                "relativePath": "02-前端开发/07-Next.js/06-工程化",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-环境变量.md",
+                    "title": "环境变量",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/01-环境变量.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-ESLint和Prettier.md",
+                    "title": "ESLint和Prettier",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/02-ESLint和Prettier.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-目录组织最佳实践.md",
+                    "title": "目录组织最佳实践",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/03-目录组织最佳实践.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-组件拆分.md",
+                    "title": "组件拆分",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/04-组件拆分.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-错误处理.md",
+                    "title": "错误处理",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/05-错误处理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-日志和调试.md",
+                    "title": "日志和调试",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/06-日志和调试.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "07-性能优化.md",
+                    "title": "性能优化",
+                    "relativePath": "02-前端开发/07-Next.js/06-工程化/07-性能优化.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "07-样式与UI",
+                "title": "样式与UI",
+                "relativePath": "02-前端开发/07-Next.js/07-样式与UI",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-CSS-Modules.md",
+                    "title": "CSS-Modules",
+                    "relativePath": "02-前端开发/07-Next.js/07-样式与UI/01-CSS-Modules.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-Tailwind-CSS.md",
+                    "title": "Tailwind-CSS",
+                    "relativePath": "02-前端开发/07-Next.js/07-样式与UI/02-Tailwind-CSS.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-响应式布局.md",
+                    "title": "响应式布局",
+                    "relativePath": "02-前端开发/07-Next.js/07-样式与UI/03-响应式布局.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-组件库.md",
+                    "title": "组件库",
+                    "relativePath": "02-前端开发/07-Next.js/07-样式与UI/04-组件库.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-主题切换.md",
+                    "title": "主题切换",
+                    "relativePath": "02-前端开发/07-Next.js/07-样式与UI/05-主题切换.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "08-数据库与全栈实战",
+                "title": "数据库与全栈实战",
+                "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-Prisma基础.md",
+                    "title": "Prisma基础",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/01-Prisma基础.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-数据库CRUD.md",
+                    "title": "数据库CRUD",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/02-数据库CRUD.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-登录注册.md",
+                    "title": "登录注册",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/03-登录注册.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-权限控制.md",
+                    "title": "权限控制",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/04-权限控制.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-文件存储.md",
+                    "title": "文件存储",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/05-文件存储.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-部署上线.md",
+                    "title": "部署上线",
+                    "relativePath": "02-前端开发/07-Next.js/08-数据库与全栈实战/06-部署上线.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "09-Pages-Router兼容知识",
+                "title": "Pages-Router兼容知识",
+                "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-Pages路由.md",
+                    "title": "Pages路由",
+                    "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识/01-Pages路由.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-getServerSideProps.md",
+                    "title": "getServerSideProps",
+                    "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识/02-getServerSideProps.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-getStaticProps.md",
+                    "title": "getStaticProps",
+                    "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识/03-getStaticProps.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-API-Routes.md",
+                    "title": "API-Routes",
+                    "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识/04-API-Routes.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-App-Router与Pages-Router对比.md",
+                    "title": "App-Router与Pages-Router对比",
+                    "relativePath": "02-前端开发/07-Next.js/09-Pages-Router兼容知识/05-App-Router与Pages-Router对比.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "10-实战项目",
+                "title": "实战项目",
+                "relativePath": "02-前端开发/07-Next.js/10-实战项目",
+                "children": [
+                  {
+                    "type": "directory",
+                    "name": "01-todo-app",
+                    "title": "todo-app",
+                    "relativePath": "02-前端开发/07-Next.js/10-实战项目/01-todo-app",
+                    "children": []
+                  },
+                  {
+                    "type": "directory",
+                    "name": "02-blog-system",
+                    "title": "blog-system",
+                    "relativePath": "02-前端开发/07-Next.js/10-实战项目/02-blog-system",
+                    "children": []
+                  },
+                  {
+                    "type": "directory",
+                    "name": "03-admin-dashboard",
+                    "title": "admin-dashboard",
+                    "relativePath": "02-前端开发/07-Next.js/10-实战项目/03-admin-dashboard",
+                    "children": []
+                  },
+                  {
+                    "type": "directory",
+                    "name": "04-fullstack-auth-project",
+                    "title": "fullstack-auth-project",
+                    "relativePath": "02-前端开发/07-Next.js/10-实战项目/04-fullstack-auth-project",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "11-面试专题",
+                "title": "面试专题",
+                "relativePath": "02-前端开发/07-Next.js/11-面试专题",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-高频面试题.md",
+                    "title": "高频面试题",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/01-高频面试题.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-Next和React区别.md",
+                    "title": "Next和React区别",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/02-Next和React区别.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-SSR-SSG-ISR区别.md",
+                    "title": "SSR-SSG-ISR区别",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/03-SSR-SSG-ISR区别.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-Server-Component面试题.md",
+                    "title": "Server-Component面试题",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/04-Server-Component面试题.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-缓存机制面试题.md",
+                    "title": "缓存机制面试题",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/05-缓存机制面试题.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "06-性能优化面试题.md",
+                    "title": "性能优化面试题",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/06-性能优化面试题.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "07-项目亮点表达.md",
+                    "title": "项目亮点表达",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/07-项目亮点表达.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "08-手写题和代码题.md",
+                    "title": "手写题和代码题",
+                    "relativePath": "02-前端开发/07-Next.js/11-面试专题/08-手写题和代码题.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "directory",
+                "name": "12-源码与原理理解",
+                "title": "源码与原理理解",
+                "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "01-路由原理.md",
+                    "title": "路由原理",
+                    "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解/01-路由原理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "02-构建原理.md",
+                    "title": "构建原理",
+                    "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解/02-构建原理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "03-服务端渲染原理.md",
+                    "title": "服务端渲染原理",
+                    "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解/03-服务端渲染原理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "04-RSC原理.md",
+                    "title": "RSC原理",
+                    "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解/04-RSC原理.md",
+                    "empty": true
+                  },
+                  {
+                    "type": "file",
+                    "name": "05-Bundling和Tree-Shaking.md",
+                    "title": "Bundling和Tree-Shaking",
+                    "relativePath": "02-前端开发/07-Next.js/12-源码与原理理解/05-Bundling和Tree-Shaking.md",
+                    "empty": true
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "00-学习路线.md",
+                "title": "Next.js 学习路线",
+                "relativePath": "02-前端开发/07-Next.js/00-学习路线.md",
+                "slug": "next-js",
+                "empty": false
+              },
+              {
+                "type": "file",
+                "name": "README.md",
+                "title": "Next.js 学习笔记",
+                "relativePath": "02-前端开发/07-Next.js/README.md",
+                "slug": "next-js-readme",
+                "empty": false
+              }
+            ]
+          },
+          {
+            "type": "directory",
+            "name": "08-Electron",
+            "title": "Electron",
+            "relativePath": "02-前端开发/08-Electron",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "03-后端开发",
+        "title": "后端开发",
+        "relativePath": "03-后端开发",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-Java",
+            "title": "Java",
+            "relativePath": "03-后端开发/01-Java",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-Python",
+            "title": "Python",
+            "relativePath": "03-后端开发/02-Python",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-Go",
+            "title": "Go",
+            "relativePath": "03-后端开发/03-Go",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-Rust",
+            "title": "Rust",
+            "relativePath": "03-后端开发/04-Rust",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-Node.js",
+            "title": "Node.js",
+            "relativePath": "03-后端开发/05-Node.js",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "06-SpringBoot",
+            "title": "SpringBoot",
+            "relativePath": "03-后端开发/06-SpringBoot",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "04-移动端与小程序",
+        "title": "移动端与小程序",
+        "relativePath": "04-移动端与小程序",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-微信小程序",
+            "title": "微信小程序",
+            "relativePath": "04-移动端与小程序/01-微信小程序",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-uni-app",
+            "title": "uni-app",
+            "relativePath": "04-移动端与小程序/02-uni-app",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-Android",
+            "title": "Android",
+            "relativePath": "04-移动端与小程序/03-Android",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-Flutter",
+            "title": "Flutter",
+            "relativePath": "04-移动端与小程序/04-Flutter",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "05-AI人工智能",
+        "title": "AI人工智能",
+        "relativePath": "05-AI人工智能",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-AI工具",
+            "title": "AI工具",
+            "relativePath": "05-AI人工智能/01-AI工具",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-提示词工程",
+            "title": "提示词工程",
+            "relativePath": "05-AI人工智能/02-提示词工程",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-大模型应用",
+            "title": "大模型应用",
+            "relativePath": "05-AI人工智能/03-大模型应用",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-RAG知识库",
+            "title": "RAG知识库",
+            "relativePath": "05-AI人工智能/04-RAG知识库",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-AI Agent",
+            "title": "AI Agent",
+            "relativePath": "05-AI人工智能/05-AI Agent",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "06-机器学习",
+            "title": "机器学习",
+            "relativePath": "05-AI人工智能/06-机器学习",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "07-计算机视觉",
+            "title": "计算机视觉",
+            "relativePath": "05-AI人工智能/07-计算机视觉",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "06-网络安全",
+        "title": "网络安全",
+        "relativePath": "06-网络安全",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-Web安全",
+            "title": "Web安全",
+            "relativePath": "06-网络安全/01-Web安全",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-渗透测试",
+            "title": "渗透测试",
+            "relativePath": "06-网络安全/02-渗透测试",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-漏洞复现",
+            "title": "漏洞复现",
+            "relativePath": "06-网络安全/03-漏洞复现",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-代码审计",
+            "title": "代码审计",
+            "relativePath": "06-网络安全/04-代码审计",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-安全工具",
+            "title": "安全工具",
+            "relativePath": "06-网络安全/05-安全工具",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "07-测试与质量",
+        "title": "测试与质量",
+        "relativePath": "07-测试与质量",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-单元测试",
+            "title": "单元测试",
+            "relativePath": "07-测试与质量/01-单元测试",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-接口测试",
+            "title": "接口测试",
+            "relativePath": "07-测试与质量/02-接口测试",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-自动化测试",
+            "title": "自动化测试",
+            "relativePath": "07-测试与质量/03-自动化测试",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-性能测试",
+            "title": "性能测试",
+            "relativePath": "07-测试与质量/04-性能测试",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "08-数据库",
+        "title": "数据库",
+        "relativePath": "08-数据库",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-MySQL",
+            "title": "MySQL",
+            "relativePath": "08-数据库/01-MySQL",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-Redis",
+            "title": "Redis",
+            "relativePath": "08-数据库/02-Redis",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-MongoDB",
+            "title": "MongoDB",
+            "relativePath": "08-数据库/03-MongoDB",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-PostgreSQL",
+            "title": "PostgreSQL",
+            "relativePath": "08-数据库/04-PostgreSQL",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-SQL优化",
+            "title": "SQL优化",
+            "relativePath": "08-数据库/05-SQL优化",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "09-运维部署",
+        "title": "运维部署",
+        "relativePath": "09-运维部署",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-Linux",
+            "title": "Linux",
+            "relativePath": "09-运维部署/01-Linux",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-Docker",
+            "title": "Docker",
+            "relativePath": "09-运维部署/02-Docker",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-Nginx",
+            "title": "Nginx",
+            "relativePath": "09-运维部署/03-Nginx",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-云服务器",
+            "title": "云服务器",
+            "relativePath": "09-运维部署/04-云服务器",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-CI-CD",
+            "title": "CI-CD",
+            "relativePath": "09-运维部署/05-CI-CD",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "06-项目部署",
+            "title": "项目部署",
+            "relativePath": "09-运维部署/06-项目部署",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "10- 计算机基础",
+        "title": "计算机基础",
+        "relativePath": "10- 计算机基础",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-计算机网络",
+            "title": "计算机网络",
+            "relativePath": "10- 计算机基础/01-计算机网络",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-操作系统",
+            "title": "操作系统",
+            "relativePath": "10- 计算机基础/02-操作系统",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-编译原理",
+            "title": "编译原理",
+            "relativePath": "10- 计算机基础/03-编译原理",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-计算机组成原理",
+            "title": "计算机组成原理",
+            "relativePath": "10- 计算机基础/04-计算机组成原理",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": "directory",
+        "name": "11-工具与环境",
+        "title": "工具与环境",
+        "relativePath": "11-工具与环境",
+        "children": [
+          {
+            "type": "directory",
+            "name": "01-Git",
+            "title": "Git",
+            "relativePath": "11-工具与环境/01-Git",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "02-VSCode",
+            "title": "VSCode",
+            "relativePath": "11-工具与环境/02-VSCode",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "03-IDEA",
+            "title": "IDEA",
+            "relativePath": "11-工具与环境/03-IDEA",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "04-Conda",
+            "title": "Conda",
+            "relativePath": "11-工具与环境/04-Conda",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "05-Windows环境",
+            "title": "Windows环境",
+            "relativePath": "11-工具与环境/05-Windows环境",
+            "children": []
+          },
+          {
+            "type": "directory",
+            "name": "06-Linux环境",
+            "title": "Linux环境",
+            "relativePath": "11-工具与环境/06-Linux环境",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}

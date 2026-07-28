@@ -12,6 +12,7 @@ const {
 	jsonLd,
 	keywords,
 	author,
+	robots = 'index, follow',
 } = Astro.props as {
 	lang?: Lang;
 	title?: string;
@@ -22,6 +23,7 @@ const {
 	jsonLd?: unknown; // JSON-LD object (will be stringified)
 	keywords?: string;
 	author?: string;
+	robots?: string;
 };
 
 const brandName = LANG_LABELS[lang].brandName;
@@ -59,7 +61,7 @@ const navItems = [
 		/>
 		{keywords && <meta name="keywords" content={keywords} />}
 		{author && <meta name="author" content={author} />}
-		<meta name="robots" content="index, follow" />
+		<meta name="robots" content={robots} />
 		<link rel="canonical" href={canonical} />
 		<link rel="alternate" href={new URL(altPath, site).href} hrefLang={otherLang} />
 		<link rel="alternate" href={canonical} hrefLang={lang} />

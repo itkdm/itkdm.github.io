@@ -10,12 +10,13 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Lang };
+const hasDocs = (await getCollection('docs', (doc) => doc.data.lang === lang)).length > 0;
 
 const pageTitle = lang === 'zh' ? '文档中心' : 'Docs';
 const pageDesc =
 	lang === 'zh'
-		? '按分类浏览全部文档，左侧筛选分类，中间查看该分类下的所有文章。'
-		: 'Browse all docs by category. Filter categories on the left and explore every article in each section.';
+		? '个人学习知识库，记录技术学习笔记、教程和实践理解，后续会逐步补充完善。'
+		: 'A personal learning knowledge base for technical notes, tutorials, and practical understanding, gradually expanded over time.';
 ---
 
 <BaseLayout
@@ -23,6 +24,7 @@ const pageDesc =
 	title={pageTitle}
 	description={pageDesc}
 	currentPath={`/${lang}/docs/`}
+	robots={hasDocs ? 'index, follow' : 'noindex, follow'}
 >
-    <DocsListRedesign lang={lang} />
+	<DocsListRedesign lang={lang} />
 </BaseLayout>

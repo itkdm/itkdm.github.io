@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import DocsLayout from '../../../layouts/DocsLayout.astro';
 import type { Lang } from '../../../../i18n/config';
-import { SUPPORTED_LANGS } from '../../../../i18n/config';
 
 export async function getStaticPaths() {
 	const docs = await getCollection('docs');

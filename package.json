@@ -17,7 +17,5 @@
     "marked": "^17.0.1",
     "qrcode": "^1.5.4"
   },
-  "devDependencies": {
-    "gray-matter": "^4.0.3"
-  }
+  "devDependencies": {}
 }
