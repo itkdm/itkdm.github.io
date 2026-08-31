@@ -10,10 +10,9 @@ import HomeGuestbook from './home/HomeGuestbook.astro';
 import HomeContact from './home/HomeContact.astro';
 
 
-const { lang, now, projects } = Astro.props as {
+const { lang, now } = Astro.props as {
 	lang: 'zh' | 'en';
 	now: CollectionEntry<'now'>[];
-	projects: CollectionEntry<'projects'>[];
 };
 ---
 
@@ -21,7 +20,7 @@ const { lang, now, projects } = Astro.props as {
 	<HomeHero lang={lang} />
 	<HomeNow lang={lang} events={now} />
 	<HomeProfile lang={lang} />
-	<HomeOpenSource lang={lang} projects={projects} />
+	<HomeOpenSource lang={lang} />
 	<HomeWriting lang={lang} />
 	<HomeBeyondWork lang={lang} />
 	<HomeGuestbook lang={lang} />

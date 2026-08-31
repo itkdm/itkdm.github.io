@@ -1,7 +1,157 @@
 ---
-import HomeSection from './HomeSection.astro';
-import type { CollectionEntry } from 'astro:content';
-const { lang, projects } = Astro.props as { lang: 'zh' | 'en'; projects: CollectionEntry<'projects'>[] };
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
 const isZh = lang === 'zh';
+
+const featuredProjects = isZh
+	? [
+			{ order: '01', key: 'cloudcrane', name: 'CLOUDCRANE', displayName: '筑云鹤', subtitle: 'Website Coding Agent', tags: ['AI Full-Stack', 'Coding Agent', 'TypeScript'], href: 'https://github.com/itkdm/CloudCrane' },
+			{ order: '02', key: 'bujidao-ai', name: 'BUJIDAO-AI', displayName: '企业 AI Agent 能力治理与 MCP', subtitle: '', tags: ['Java', 'Agent', 'MCP', 'Enterprise'], href: 'https://github.com/itkdm/bujidao-ai' },
+			{ order: '03', key: 'paperduck', name: 'PAPERDUCK', displayName: '纸上鸭', subtitle: 'Word Document Agent', tags: ['Agent', 'DOCX', 'OOXML', 'Next.js'], href: 'https://github.com/itkdm/DocuShuttle' },
+			{ order: '04', key: 'open-lab-components', name: 'OPEN LAB COMPONENTS', displayName: '', subtitle: 'AI-friendly STEM component infrastructure', tags: ['Components', 'Registry', 'JS API', 'MCP'], href: 'https://github.com/itkdm/open-lab-components' },
+		]
+	: [
+			{ order: '01', key: 'cloudcrane', name: 'CLOUDCRANE', displayName: 'CloudCrane', subtitle: 'Website Coding Agent', tags: ['AI Full-Stack', 'Coding Agent', 'TypeScript'], href: 'https://github.com/itkdm/CloudCrane' },
+			{ order: '02', key: 'bujidao-ai', name: 'BUJIDAO-AI', displayName: 'Enterprise AI Agent governance & MCP', subtitle: '', tags: ['Java', 'Agent', 'MCP', 'Enterprise'], href: 'https://github.com/itkdm/bujidao-ai' },
+			{ order: '03', key: 'paperduck', name: 'PAPERDUCK', displayName: 'PaperDuck', subtitle: 'Word Document Agent', tags: ['Agent', 'DOCX', 'OOXML', 'Next.js'], href: 'https://github.com/itkdm/DocuShuttle' },
+			{ order: '04', key: 'open-lab-components', name: 'OPEN LAB COMPONENTS', displayName: '', subtitle: 'AI-friendly STEM component infrastructure', tags: ['Components', 'Registry', 'JS API', 'MCP'], href: 'https://github.com/itkdm/open-lab-components' },
+		];
+const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 ---
-<HomeSection id="open-source" label="04 · OPEN SOURCE" title={isZh ? '开源实践' : 'Open source'} intro={isZh ? '保留真实项目与实验的入口，细节留待后续逐项展开。' : 'A focused entry point for practical projects and experiments, to be developed further.'}><div class="home-project-list">{projects.length > 0 ? projects.map((project) => <a class="home-project-item" href={`/${lang}/projects/${project.data.slug ?? project.slug.split('/').pop() ?? project.slug}/`}><span>↗</span><div><strong>{project.data.title}</strong><p>{project.data.summary}</p></div></a>) : <p class="home-empty">{isZh ? '开源项目正在整理中。' : 'Open source work is being prepared.'}</p>}</div></HomeSection>
+
+<section id="open-source" class="home-open-source" data-home-open-source aria-labelledby="open-source-title" style={`--open-source-scroll-height: ${scrollHeight}svh;`}>
+	<div class="home-open-source-sticky" data-open-source-sticky>
+		<header class="open-source-heading" data-open-source-reveal>
+			<p class="open-source-label"><span aria-hidden="true">●</span> 04 · OPEN SOURCE</p>
+			<h2 id="open-source-title">{isZh ? '开源实践' : 'Open source'}</h2>
+			<span class="open-source-rule" aria-hidden="true"></span>
+			<p class="open-source-intro">{isZh ? '通过开源项目，探索 AI 与工程化的边界，构建可复用、可持续进化的技术基础设施。' : 'Exploring the edge between AI and engineering through open source projects, and building reusable infrastructure that can keep evolving.'}</p>
+		</header>
+		<p class="open-source-selected" data-open-source-reveal>SELECTED PROJECTS <span aria-hidden="true">●</span></p>
+
+		<nav class="open-source-project-nav" aria-label={isZh ? '精选开源项目' : 'Selected open-source projects'} data-open-source-reveal>
+			<ol>
+				{featuredProjects.map((project, index) => <li><button type="button" class:list={{ 'is-active': index === 0 }} data-project-trigger data-project-index={index} aria-current={index === 0 ? 'true' : undefined} aria-controls={`project-stage-${project.key}`}><span class="project-nav-node" aria-hidden="true"></span><span class="project-nav-copy"><small>{project.order}</small><strong>{project.name}</strong>{project.displayName && <em>{project.displayName}</em>}<span>{project.subtitle || (isZh ? '企业 AI Agent 能力治理与 MCP' : 'Enterprise AI Agent governance & MCP')}</span></span></button></li>)}
+			</ol>
+		</nav>
+
+		<div class="open-source-stage" data-open-source-stage aria-live="polite">
+			<span class="open-source-watermark" aria-hidden="true" data-project-watermark>01</span>
+			<span class="open-source-progress" aria-hidden="true"><i></i><b></b><b></b><b></b></span>
+			{featuredProjects.map((project, index) => <article id={`project-stage-${project.key}`} class:list={{ 'is-active': index === 0 }} class="open-source-project" data-project-stage data-project-index={index} aria-hidden={index === 0 ? undefined : 'true'}>
+				<p class="project-stage-count"><strong>{project.order}</strong><span> / {featuredProjects.length.toString().padStart(2, '0')}</span></p>
+				<h3>{project.name}</h3>
+				<p class="project-stage-name">{project.displayName}</p>
+				<p class="project-stage-subtitle">{project.subtitle || (isZh ? '企业 AI Agent 能力治理与 MCP' : 'Enterprise AI Agent governance & MCP')}</p>
+				<span class="project-stage-rule" aria-hidden="true"></span>
+				<p class="project-stage-tags">{project.tags.join('  ·  ')}</p>
+				<a class="project-stage-link" href={project.href} target="_blank" rel="noopener noreferrer">github.com/itkdm/{project.key === 'paperduck' ? 'DocuShuttle' : project.key === 'cloudcrane' ? 'CloudCrane' : project.key}<span aria-hidden="true">↗</span></a>
+			</article>)}
+		</div>
+
+		<aside class="open-source-note" data-open-source-reveal>
+			<header><span aria-hidden="true">●</span> OPEN SOURCE <i aria-hidden="true"></i></header>
+			<strong>{isZh ? '技术共享' : 'Share the work'}</strong>
+			<p>{isZh ? '让创新持续发生' : 'Keep innovation moving'}</p>
+		</aside>
+		<p class="open-source-scroll-hint" data-open-source-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span></p>
+	</div>
+</section>
+
+<script>
+	const initOpenSourceReel = () => {
+		const section = document.querySelector('[data-home-open-source]');
+		const sticky = section?.querySelector('[data-open-source-sticky]');
+		const stage = section?.querySelector('[data-open-source-stage]');
+		const triggers = [...(section?.querySelectorAll('[data-project-trigger]') ?? [])];
+		const projects = [...(section?.querySelectorAll('[data-project-stage]') ?? [])];
+		if (!(section instanceof HTMLElement) || !(sticky instanceof HTMLElement) || !(stage instanceof HTMLElement) || projects.length === 0 || section.dataset.motionBound === 'true') return;
+		section.dataset.motionBound = 'true';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let activeIndex = 0;
+		let frame = 0;
+
+		const setActive = (index) => {
+			activeIndex = Math.max(0, Math.min(projects.length - 1, index));
+			triggers.forEach((trigger, triggerIndex) => { trigger.classList.toggle('is-active', triggerIndex === activeIndex); trigger.setAttribute('aria-current', triggerIndex === activeIndex ? 'true' : 'false'); });
+			projects.forEach((project, projectIndex) => { project.classList.toggle('is-active', projectIndex === activeIndex); project.setAttribute('aria-hidden', projectIndex === activeIndex ? 'false' : 'true'); project.toggleAttribute('inert', projectIndex !== activeIndex); });
+			section.style.setProperty('--project-index', String(activeIndex));
+			section.style.setProperty('--project-progress-y', `${(activeIndex / Math.max(1, projects.length - 1)) * 100}%`);
+			section.querySelector('[data-project-watermark]')?.replaceChildren(document.createTextNode(String(activeIndex + 1).padStart(2, '0')));
+		};
+		const render = () => {
+			frame = 0;
+			const distance = Math.max(1, section.offsetHeight - sticky.offsetHeight);
+			const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / distance));
+			setActive(Math.min(projects.length - 1, Math.floor(progress * projects.length)));
+		};
+		const onScroll = () => { if (!reducedMotion && !frame) frame = requestAnimationFrame(render); };
+		if (!reducedMotion) window.addEventListener('scroll', onScroll, { passive: true });
+		triggers.forEach((trigger, index) => trigger.addEventListener('click', () => setActive(index)));
+		if ('ResizeObserver' in window) new ResizeObserver(render).observe(section);
+		setActive(0);
+		render();
+	};
+
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initOpenSourceReel, { once: true });
+	else initOpenSourceReel();
+</script>
+
+<style>
+	.home-open-source { --open-source-gutter: clamp(28px, 5vw, 88px); width: 100vw; margin-left: calc(50% - 50vw); height: var(--open-source-scroll-height); background: var(--background); color: var(--text-primary); }
+	.home-open-source-sticky { position: sticky; top: 0; height: 100svh; min-height: 680px; overflow: hidden; padding: clamp(76px, 9vh, 108px) var(--open-source-gutter) clamp(34px, 5vh, 60px); }
+	.open-source-heading { position: absolute; top: clamp(76px, 9vh, 108px); left: var(--open-source-gutter); width: min(340px, 24vw); }
+	.open-source-label { margin: 0 0 18px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }
+	.open-source-label span { margin-right: 12px; font-size: 11px; }
+	.open-source-heading h2 { margin: 0; font: 650 clamp(44px, 5.3vw, 76px)/1 var(--display); letter-spacing: -.07em; }
+	.open-source-rule { display: block; width: 48px; height: 2px; margin-top: 26px; background: var(--accent); }
+	.open-source-intro { margin: 34px 0 0; color: var(--text-secondary); font: 17px/1.9 var(--display); }
+	.open-source-selected { position: absolute; top: clamp(76px, 9vh, 108px); right: var(--open-source-gutter); margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }
+	.open-source-selected span { margin-left: 12px; color: var(--accent); font-size: 9px; }
+	.open-source-project-nav { position: absolute; top: 20%; left: 29%; width: min(260px, 18vw); height: 65%; border-right: 1px solid var(--divider); }
+	.open-source-project-nav ol { display: flex; flex-direction: column; justify-content: space-between; height: 100%; margin: 0; padding: 0 0 0 0; list-style: none; }
+	.open-source-project-nav li { position: relative; }
+	.open-source-project-nav button { display: flex; width: 100%; padding: 0 32px 0 0; border: 0; background: transparent; color: var(--text-muted); text-align: left; cursor: pointer; transition: color .25s ease; }
+	.project-nav-node { position: absolute; top: 8px; right: -6px; width: 11px; height: 11px; border: 1px solid var(--text-muted); border-radius: 50%; background: var(--background); transform: translateX(50%); transition: width .3s ease, height .3s ease, border-color .3s ease, background .3s ease, box-shadow .3s ease; }
+	.open-source-project-nav button.is-active { color: var(--text-primary); }
+	.open-source-project-nav button.is-active .project-nav-node { width: 15px; height: 15px; border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+	.open-source-project-nav button:hover { color: var(--text-primary); }
+	.project-nav-copy { display: grid; gap: 5px; }
+	.project-nav-copy small { color: inherit; font: 14px var(--mono); }
+	.project-nav-copy strong { font: 650 14px/1.2 var(--mono); letter-spacing: .1em; }
+	.project-nav-copy em, .project-nav-copy > span { font-style: normal; font: 14px/1.4 var(--display); }
+	.project-nav-copy > span { color: var(--text-secondary); font-size: 13px; }
+	.open-source-stage { position: absolute; top: 18%; right: var(--open-source-gutter); width: 49%; height: 68%; overflow: hidden; }
+	.open-source-watermark { position: absolute; top: -12%; right: 4%; color: color-mix(in srgb, var(--accent) 8%, transparent); font: 800 clamp(220px, 25vw, 420px)/1 var(--display); letter-spacing: -.12em; pointer-events: none; }
+	.open-source-progress { position: absolute; top: 36%; right: 1%; width: 1px; height: 35%; background: var(--divider); }
+	.open-source-progress::before { content: ''; position: absolute; top: 0; left: -1px; width: 3px; height: 25%; background: var(--accent); transition: transform .35s ease; transform: translateY(var(--project-progress-y, 0%)); }
+	.open-source-progress i, .open-source-progress b { position: absolute; left: -3px; width: 7px; height: 7px; border: 1px solid var(--divider); border-radius: 50%; background: var(--background); }
+	.open-source-progress i { top: 0; border-color: var(--accent); background: var(--accent); }
+	.open-source-progress b:nth-of-type(1) { top: 33%; }.open-source-progress b:nth-of-type(2) { top: 66%; }.open-source-progress b:nth-of-type(3) { top: 100%; }
+	.open-source-project { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; opacity: 0; transform: translateY(28px); pointer-events: none; transition: opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
+	.open-source-project.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+	.project-stage-count { margin: 0 0 20px; color: var(--accent); font: 18px var(--mono); letter-spacing: .04em; }.project-stage-count strong { font-size: clamp(38px, 4vw, 60px); font-weight: 500; }.project-stage-count span { color: var(--text-muted); }
+	.open-source-project h3 { max-width: 100%; margin: 0; color: var(--text-primary); font: 650 clamp(42px, 5vw, 86px)/.98 var(--display); letter-spacing: -.055em; overflow-wrap: anywhere; }
+	.project-stage-name { margin: 18px 0 0; font: 650 clamp(26px, 2.5vw, 42px)/1.1 var(--display); }
+	.project-stage-subtitle { margin: 20px 0 0; color: var(--text-secondary); font: 24px/1.35 var(--display); }
+	.project-stage-rule { display: block; width: 36px; height: 2px; margin-top: 30px; background: var(--accent); }
+	.project-stage-tags { margin: 26px 0 0; color: var(--accent); font: 14px var(--mono); letter-spacing: .05em; }
+	.project-stage-link { display: inline-flex; align-items: center; gap: 12px; margin-top: 34px; padding-bottom: 6px; border-bottom: 1px solid var(--accent); color: var(--text-primary); font: 14px var(--mono); transition: color .2s ease; }.project-stage-link span { color: var(--accent); font-size: 22px; }.project-stage-link:hover { color: var(--accent); }
+	.open-source-note { position: absolute; left: var(--open-source-gutter); bottom: clamp(78px, 11vh, 130px); width: min(260px, 18vw); padding-left: 22px; border-left: 1px solid var(--accent); }
+	.open-source-note header { display: flex; gap: 10px; align-items: center; color: var(--accent); font: 10px var(--mono); letter-spacing: .14em; }.open-source-note header span { font-size: 8px; }.open-source-note header i { flex: 1; height: 1px; background: var(--divider); }
+	.open-source-note strong { display: block; margin-top: 22px; font: 650 16px var(--display); }.open-source-note p { margin: 8px 0 0; color: var(--text-secondary); font: 15px var(--display); }
+	.open-source-scroll-hint { position: absolute; left: 50%; bottom: 22px; margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; transform: translateX(-50%); white-space: nowrap; }.open-source-scroll-hint span { margin: 0 12px; color: var(--accent); }
+	.home-open-source [data-open-source-reveal] { opacity: 0; }.home-open-source.is-visible [data-open-source-reveal] { opacity: 1; transition: opacity .6s ease; }.home-open-source.is-visible .open-source-project-nav { animation: open-source-nav-in .8s .2s both ease; }.home-open-source.is-visible .open-source-stage { animation: open-source-stage-in .8s .35s both cubic-bezier(.2,.8,.2,1); }
+	@keyframes open-source-nav-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }.open-source-project-nav { opacity: 0; }.home-open-source.is-visible .open-source-project-nav { opacity: 1; }
+	@keyframes open-source-stage-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+	@media (max-width: 760px) {
+		.home-open-source-sticky { min-height: 780px; padding: 62px 20px 34px; }
+		.open-source-heading { top: 62px; left: 20px; width: 55%; }.open-source-label { font-size: 10px; margin-bottom: 14px; }.open-source-heading h2 { font-size: 44px; }.open-source-rule { margin-top: 16px; width: 34px; }.open-source-intro { margin-top: 18px; font-size: 14px; line-height: 1.7; }
+		.open-source-selected { top: 66px; right: 20px; font-size: 8px; letter-spacing: .12em; }.open-source-selected span { margin-left: 5px; }
+		.open-source-project-nav { top: 31%; left: 20px; width: 34%; height: 42%; }.open-source-project-nav button { padding-right: 17px; }.project-nav-copy { gap: 3px; }.project-nav-copy small { font-size: 10px; }.project-nav-copy strong { font-size: 9px; letter-spacing: .04em; }.project-nav-copy em, .project-nav-copy > span { font-size: 10px; }.project-nav-copy > span { display: none; }.project-nav-node { right: -5px; width: 8px; height: 8px; top: 3px; }.open-source-project-nav button.is-active .project-nav-node { width: 11px; height: 11px; }
+		.open-source-stage { top: 31%; right: 20px; width: 58%; height: 48%; }.open-source-watermark { top: 4%; right: 0; font-size: 150px; }.open-source-progress { right: -2px; top: 26%; height: 42%; }.open-source-project h3 { font-size: clamp(32px, 10vw, 48px); }.project-stage-count { margin-bottom: 14px; font-size: 12px; }.project-stage-count strong { font-size: 32px; }.project-stage-name { margin-top: 12px; font-size: 22px; }.project-stage-subtitle { margin-top: 12px; font-size: 16px; }.project-stage-rule { margin-top: 20px; }.project-stage-tags { margin-top: 16px; font-size: 9px; line-height: 1.7; }.project-stage-link { margin-top: 18px; font-size: 9px; gap: 6px; }.project-stage-link span { font-size: 16px; }
+		.open-source-note { left: 20px; bottom: 102px; width: 38%; padding-left: 12px; }.open-source-note header { font-size: 8px; }.open-source-note strong { margin-top: 14px; font-size: 14px; }.open-source-note p { font-size: 12px; }.open-source-scroll-hint { bottom: 28px; font-size: 8px; letter-spacing: .12em; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.home-open-source-sticky { position: relative; height: auto; min-height: 760px; }.home-open-source { height: auto; }.open-source-project-nav { opacity: 1; }.open-source-project, .open-source-project.is-active { transition: none; transform: none; }.home-open-source [data-open-source-reveal] { opacity: 1; }.home-open-source.is-visible .open-source-project-nav, .home-open-source.is-visible .open-source-stage { animation: none; }
+	}
+</style>
