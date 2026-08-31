@@ -7,4 +7,4 @@ const lang = 'en';
 const posts = sortBlogPosts(await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft)).slice(0, 3);
 const projects = (await getCollection('projects', (entry) => entry.data.lang === lang && entry.data.featured !== false)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
 ---
-<BaseLayout lang={lang} title="Bu Ji Dao · Home" description="The personal website of Bu Ji Dao, covering engineering practice, writing, and ideas." currentPath="/en/"><HomePage lang={lang} posts={posts} projects={projects} /></BaseLayout>
+<BaseLayout lang={lang} title="Bu Ji Dao · Home" description="The personal website of Bu Ji Dao, covering engineering practice, writing, and ideas." currentPath="/en/" overlayHeader><HomePage lang={lang} posts={posts} projects={projects} /></BaseLayout>

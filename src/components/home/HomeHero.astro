@@ -7,19 +7,18 @@ const isZh = lang === 'zh';
 
 <section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
 	<div class="hero-background" data-hero-background aria-hidden="true"><img src="/hero/hero-background.png" alt="" /></div>
-	<div class="hero-wordmark" aria-hidden="true" data-hero-wordmark><span>布</span><span>吉</span><span>岛</span></div>
+	<div class="hero-title-stack" data-hero-title-stack>
+		<div class="hero-wordmark" aria-hidden="true"><span>布</span><span>吉</span><span class="hero-wordmark-last">岛<i class="hero-wordmark-dot"></i></span></div>
+		<div class="hero-title-rule" aria-hidden="true"><span></span></div>
+		<div class="hero-lockup"><h1 id="home-hero-title" class="sr-only">布吉岛</h1><p class="hero-positioning">Java Backend · AI Agent · Open Source</p></div>
+	</div>
 	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot>
 		<img src="/hero/hero-ip.png" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
 	</div>
-	<div class="hero-lockup">
-		<h1 id="home-hero-title">布吉岛</h1>
-		<p class="hero-positioning">Java Backend · AI Agent · Open Source</p>
-	</div>
 	<div class="home-music-player" data-home-player data-locale={lang}>
-		<div class="home-music-copy"><span>{isZh ? '正在听' : 'LISTENING TO'}</span><strong>Yellow</strong><small>Coldplay</small></div>
-		<div class="home-music-controls"><button type="button" class="home-music-button" data-player-toggle aria-label={isZh ? '播放或暂停音乐' : 'Play or pause music'}>▶</button><button type="button" class="home-music-button" data-player-mute aria-label={isZh ? '静音或取消静音' : 'Mute or unmute'}>⌁</button></div>
-		<label class="home-music-volume"><span class="sr-only">{isZh ? '音量' : 'Volume'}</span><input type="range" min="0" max="100" value="45" data-player-volume /></label>
-		<span class="home-music-status" data-player-status>{isZh ? '准备播放' : 'Ready to play'}</span>
+		<button type="button" class="home-music-cover" data-player-toggle aria-pressed="false" aria-label={isZh ? '播放或暂停 Yellow' : 'Play or pause Yellow'}><span class="home-music-record" aria-hidden="true"><i></i></span></button>
+		<span class="home-music-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+		<span class="home-music-track"><strong>Yellow</strong><span> — Coldplay</span></span>
 		<audio preload="metadata" src={yellowTrackUrl}></audio>
 	</div>
 	<a class="home-scroll-cue" href="#now" data-scroll-hook><span>SCROLL</span><span aria-hidden="true">↓</span></a>
@@ -31,10 +30,7 @@ const isZh = lang === 'zh';
 		if (!(hero instanceof HTMLElement) || hero.dataset.motionBound === 'true') return;
 		const player = hero.querySelector('[data-home-player]');
 		const audio = player?.querySelector('audio');
-		const playButton = player?.querySelector('[data-player-toggle]');
-		const muteButton = player?.querySelector('[data-player-mute]');
-		const volume = player?.querySelector('[data-player-volume]');
-		const status = player?.querySelector('[data-player-status]');
+		const coverButton = player?.querySelector('[data-player-toggle]');
 		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		let frame = 0;
 
@@ -42,7 +38,7 @@ const isZh = lang === 'zh';
 			frame = 0;
 			const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, hero.offsetHeight * 0.82)));
 			if (reduceMotion) return;
-			hero.style.setProperty('--hero-wordmark-scroll-y', `${progress * -8}vh`);
+			hero.style.setProperty('--hero-title-scroll-y', `${progress * -5}vh`);
 			hero.style.setProperty('--hero-person-scroll-y', `${progress * 10}vh`);
 			hero.style.setProperty('--hero-background-scroll-y', `${progress * -3}vh`);
 			hero.style.setProperty('--hero-support-opacity', String(1 - progress * .45));
@@ -51,13 +47,9 @@ const isZh = lang === 'zh';
 		window.addEventListener('scroll', onScroll, { passive: true });
 		updateScroll();
 
-		if (audio instanceof HTMLAudioElement && playButton instanceof HTMLButtonElement && muteButton instanceof HTMLButtonElement && volume instanceof HTMLInputElement && status instanceof HTMLElement) {
-			const locale = player instanceof HTMLElement && player.dataset.locale === 'zh';
-			const copy = { ready: locale ? '准备播放' : 'Ready to play', playing: locale ? '正在播放' : 'Now playing', blocked: locale ? '播放被阻止' : 'Playback blocked' };
-			const sync = () => { playButton.textContent = audio.paused ? '▶' : 'Ⅱ'; status.textContent = audio.paused ? copy.ready : copy.playing; volume.value = String(Math.round(audio.volume * 100)); };
-			playButton.addEventListener('click', async () => { if (audio.paused) { try { await audio.play(); } catch { status.textContent = copy.blocked; } } else audio.pause(); sync(); });
-			muteButton.addEventListener('click', () => { audio.muted = !audio.muted; });
-			volume.addEventListener('input', () => { audio.volume = Number(volume.value) / 100; audio.muted = audio.volume === 0; });
+		if (audio instanceof HTMLAudioElement && coverButton instanceof HTMLButtonElement) {
+			const sync = () => { player?.classList.toggle('is-playing', !audio.paused); coverButton.setAttribute('aria-pressed', String(!audio.paused)); };
+			coverButton.addEventListener('click', async () => { if (audio.paused) { try { await audio.play(); } catch { /* Playback remains user initiated. */ } } else audio.pause(); sync(); });
 			['play', 'pause', 'volumechange', 'ended'].forEach((event) => audio.addEventListener(event, sync));
 			audio.volume = .45;
 			sync();
@@ -69,33 +61,47 @@ const isZh = lang === 'zh';
 </script>
 
 <style is:global>
-	.personal-home .home-hero { --hero-wordmark-scroll-y: 0px; --hero-person-scroll-y: 0px; --hero-background-scroll-y: 0px; --hero-support-opacity: 1; width: 100vw; margin: -32px 0 0 calc(50% - 50vw); min-height: calc(100svh - 64px); position: relative; isolation: isolate; overflow: hidden; padding: 36px clamp(24px, 4vw, 72px) 42px; display: grid; place-items: center; }
+	.personal-home .home-hero { --hero-title-scroll-y: 0px; --hero-person-scroll-y: 0px; --hero-background-scroll-y: 0px; --hero-support-opacity: 1; width: 100vw; margin: -32px 0 0 calc(50% - 50vw); min-height: 100svh; position: relative; isolation: isolate; overflow: hidden; padding: 36px clamp(24px, 4vw, 72px) 42px; display: grid; place-items: center; }
 	.home-hero::after { content: ''; position: absolute; inset: auto 0 0; height: 22%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--background)); pointer-events: none; }
 	.hero-background { position: absolute; inset: -1px; z-index: -3; transform: translate3d(0, var(--hero-background-scroll-y), 0); transition: transform .15s linear; pointer-events: none; }
 	.hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-	.hero-wordmark { position: absolute; z-index: 0; left: clamp(108px, 18vw, 300px); top: 51%; width: max-content; display: grid; gap: clamp(4px, .65vw, 10px); color: var(--text-primary); font: 650 clamp(76px, 7vw, 128px)/.92 var(--display); transform: translate(-50%, calc(-50% + var(--hero-wordmark-scroll-y))); user-select: none; pointer-events: none; }
+	.hero-title-stack { position: absolute; z-index: 2; left: clamp(56px, 7vw, 130px); top: 21%; width: min(420px, 34vw); transform: translateY(var(--hero-title-scroll-y)); opacity: var(--hero-support-opacity); }
+	.hero-wordmark { display: grid; gap: clamp(0px, .3vw, 6px); width: max-content; color: var(--text-primary); font: 650 clamp(76px, 6vw, 112px)/.92 var(--display); user-select: none; pointer-events: none; }
 	.hero-wordmark span { display: block; }
+	.hero-wordmark-last { position: relative; }
+	.hero-wordmark-dot { position: absolute; right: clamp(-24px, -1.8vw, -12px); bottom: 7px; width: clamp(8px, .7vw, 12px); height: clamp(8px, .7vw, 12px); border-radius: 50%; background: var(--accent); }
+	.hero-title-rule { width: min(100%, 420px); height: 1px; margin-top: 20px; background: var(--divider); }
+	.hero-title-rule span { display: block; width: clamp(32px, 3vw, 48px); height: 2px; background: var(--accent); transform: translateY(-.5px); }
 	.hero-person-layer { position: absolute; z-index: 1; right: clamp(72px, 13vw, 220px); bottom: 0; height: min(78svh, 760px); width: min(43vw, 550px); transform: translateY(var(--hero-person-scroll-y)); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
 	.hero-person-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 18px 15px color-mix(in srgb, var(--text-primary) 15%, transparent)); }
-	.hero-lockup { position: absolute; z-index: 2; left: clamp(48px, 11vw, 180px); bottom: 17%; width: min(420px, 34vw); text-align: left; pointer-events: none; opacity: var(--hero-support-opacity); }
-	.hero-lockup h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+	.hero-lockup { margin-top: 14px; text-align: left; pointer-events: none; }
 	.hero-positioning { margin: 0; color: var(--text-secondary); font: 13px/1.4 var(--mono); letter-spacing: .06em; }
-	.home-music-player { position: absolute; z-index: 3; left: clamp(24px, 4vw, 72px); bottom: 34px; display: flex; align-items: center; gap: 10px; padding: 7px 0; color: var(--text-primary); background: transparent; border: 0; box-shadow: none; opacity: var(--hero-support-opacity); }
-	.home-music-copy { display: grid; gap: 2px; min-width: 76px; }
-	.home-music-copy span, .home-music-copy small, .home-music-status { color: var(--text-muted); font: 9px/1 var(--mono); letter-spacing: .05em; }
-	.home-music-copy strong { font-size: 12px; line-height: 1.1; }
-	.home-music-controls { display: flex; gap: 4px; }
-	.home-music-button { width: 25px; height: 25px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text-primary); font-size: 10px; cursor: pointer; }
-	.home-music-volume { display: none; }
-	.home-music-status { white-space: nowrap; }
-	.home-scroll-cue { position: absolute; z-index: 3; right: clamp(24px, 4vw, 72px); bottom: 39px; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; opacity: var(--hero-support-opacity); }
+	.home-music-player { position: absolute; z-index: 3; left: clamp(40px, 5vw, 90px); bottom: clamp(28px, 4vh, 48px); display: flex; align-items: center; gap: 12px; color: var(--text-primary); background: transparent; border: 0; opacity: var(--hero-support-opacity); }
+	.home-music-cover { width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-primary); cursor: pointer; }
+	.home-music-record { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--text-primary); box-shadow: inset 0 0 0 5px var(--surface-secondary), inset 0 0 0 7px var(--text-primary); }
+	.home-music-record::before { content: ''; width: 15px; height: 15px; border: 2px solid var(--accent); border-radius: 50%; }
+	.home-music-record i { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--surface); }
+	.home-music-equalizer { display: flex; align-items: center; gap: 3px; width: 24px; height: 22px; }
+	.home-music-equalizer i { display: block; width: 2px; height: 8px; background: var(--text-primary); }
+	.home-music-equalizer i:nth-child(2) { height: 14px; }
+	.home-music-equalizer i:nth-child(3) { height: 18px; }
+	.home-music-equalizer i:nth-child(4) { height: 11px; }
+	.home-music-player.is-playing .home-music-equalizer i { animation: home-equalizer .75s ease-in-out infinite alternate; }
+	.home-music-player.is-playing .home-music-equalizer i:nth-child(2) { animation-delay: -.35s; }
+	.home-music-player.is-playing .home-music-equalizer i:nth-child(3) { animation-delay: -.6s; }
+	.home-music-player.is-playing .home-music-equalizer i:nth-child(4) { animation-delay: -.2s; }
+	.home-music-track { display: inline-flex; align-items: baseline; white-space: nowrap; font-size: 14px; }
+	.home-music-track strong { font-weight: 700; }
+	.home-music-track span { color: var(--text-secondary); }
+	.home-scroll-cue { position: absolute; z-index: 3; right: clamp(24px, 4vw, 72px); bottom: clamp(28px, 4vh, 48px); display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; opacity: var(--hero-support-opacity); }
 	.home-scroll-cue span:last-child { color: var(--accent); font-size: 18px; }
-	@keyframes hero-wordmark-in { from { opacity: 0; transform: translate(-50%, calc(-46% + var(--hero-wordmark-scroll-y))); } to { opacity: 1; transform: translate(-50%, calc(-50% + var(--hero-wordmark-scroll-y))); } }
-	@keyframes hero-person-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(var(--hero-person-scroll-y)); } }
+	@keyframes hero-wordmark-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+	@keyframes hero-person-in { from { opacity: 0; } to { opacity: 1; } }
+	@keyframes home-equalizer { from { transform: scaleY(.55); } to { transform: scaleY(1.05); } }
 	.hero-wordmark { animation: hero-wordmark-in .9s cubic-bezier(.2,.8,.2,1) both; }
 	.hero-person-layer { animation: hero-person-in 1s .12s cubic-bezier(.2,.8,.2,1) both; }
-	.hero-lockup, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
-	@keyframes hero-support-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 20px 38px; } .hero-wordmark { left: clamp(54px, 16vw, 82px); top: 34%; font-size: clamp(64px, 19vw, 96px); gap: 3px; } .hero-person-layer { right: clamp(4px, 4vw, 24px); bottom: 26px; height: 57svh; width: min(70vw, 300px); } .hero-lockup { left: 20px; bottom: 19%; width: 58%; } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 20px; bottom: 28px; } .home-music-status { display: none; } .home-scroll-cue { right: 20px; bottom: 33px; } .hero-background img { object-position: 58% center; } }
-	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-lockup, .home-music-player, .home-scroll-cue { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
+	.hero-title-stack, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
+	@keyframes hero-support-in { from { opacity: 0; } to { opacity: 1; } }
+	@media (max-width: 760px) { .personal-home .home-hero { min-height: 100svh; padding: 28px 20px 38px; } .hero-title-stack { left: 20px; top: 17%; width: min(250px, 62vw); } .hero-wordmark { font-size: clamp(64px, 19vw, 96px); gap: 3px; } .hero-title-rule { margin-top: 14px; } .hero-person-layer { right: clamp(4px, 4vw, 24px); bottom: 64px; height: 57svh; width: min(70vw, 300px); } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 20px; bottom: 28px; gap: 8px; } .home-music-cover { width: 42px; height: 42px; } .home-music-track { font-size: 12px; } .home-music-equalizer { width: 19px; } .home-scroll-cue { right: 20px; bottom: 33px; } .hero-background img { object-position: 58% center; } }
+	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-title-stack, .home-music-player, .home-scroll-cue { animation: none; } .home-music-player.is-playing .home-music-equalizer i { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
 </style>

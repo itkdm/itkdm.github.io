@@ -13,6 +13,7 @@ const {
 	keywords,
 	author,
 	robots = 'index, follow',
+	overlayHeader = false,
 } = Astro.props as {
 	lang?: Lang;
 	title?: string;
@@ -24,6 +25,7 @@ const {
 	keywords?: string;
 	author?: string;
 	robots?: string;
+	overlayHeader?: boolean;
 };
 
 const brandName = LANG_LABELS[lang].brandName;
@@ -108,7 +110,7 @@ const navItems = [
 	</head>
 	<body>
 		<div class="page-root">
-			<header class="topbar">
+			<header class={`topbar${overlayHeader ? ' topbar-overlay' : ''}`} data-overlay-header={overlayHeader ? 'true' : undefined}>
 				<div class="container topbar-inner">
 				<a href={`/${lang}/`} class="brand" aria-label="Site brand">
 					<img src="/logo.jpg" alt={brandName} class="logo" />

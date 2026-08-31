@@ -3,6 +3,15 @@
 
 	const html = document.documentElement;
 	const langBtn = document.getElementById('langBtn');
+	const overlayHeaders = document.querySelectorAll('[data-overlay-header="true"]');
+
+	const syncOverlayHeaders = () => {
+		overlayHeaders.forEach((header) => header.classList.toggle('is-scrolled', window.scrollY > 40));
+	};
+	if (overlayHeaders.length) {
+		syncOverlayHeaders();
+		window.addEventListener('scroll', syncOverlayHeaders, { passive: true });
+	}
 
 	if (langBtn) {
 		langBtn.addEventListener('click', () => {
