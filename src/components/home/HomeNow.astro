@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 
 const { lang, events } = Astro.props as { lang: 'zh' | 'en'; events: CollectionEntry<'now'>[] };
 const isZh = lang === 'zh';
-const scrollHeight = Math.max(300, events.length * 54 + 30);
+const scrollHeight = Math.max(270, events.length * 50 + 20);
 
 const formatDate = (date: Date) => ({
 	month: String(date.getMonth() + 1).padStart(2, '0'),
@@ -23,8 +23,10 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 			</div>
 			<p class="home-now-latest"><span aria-hidden="true">＋</span> LATEST EVENTS <i aria-hidden="true"></i></p>
 		</header>
+		<p class="home-now-changelog">PERSONAL CHANGELOG</p>
 
 		<div class="home-now-timeline" data-home-now-viewport>
+			<span class="home-now-focus-guide" aria-hidden="true"></span>
 			<ol class="home-now-track" data-home-now-track>
 				{events.length > 0 ? events.map((event, index) => {
 					const date = formatDate(event.data.date);
@@ -69,12 +71,15 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 			const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
 			if (!reducedMotion) track.style.transform = `translate3d(${-travel * progress}px, 0, 0)`;
 
-			const center = viewport.clientWidth / 2;
+			const focusRatio = Number.parseFloat(getComputedStyle(section).getPropertyValue('--now-focus')) / 100 || 0.5;
+			const focusX = viewport.clientWidth * focusRatio;
 			let activeIndex = 0;
 			let closest = Number.POSITIVE_INFINITY;
 			events.forEach((event, index) => {
 				const eventCenter = event.offsetLeft + event.offsetWidth / 2 - travel * progress;
-				const distance = Math.abs(eventCenter - center);
+				const distance = Math.abs(eventCenter - focusX);
+				const proximity = Math.max(0.25, Math.min(1, 1 - distance / (event.offsetWidth * 2.5)));
+				event.style.setProperty('--now-opacity', String(0.34 + proximity * 0.34));
 				if (distance < closest) { closest = distance; activeIndex = index; }
 			});
 			events.forEach((event, index) => event.classList.toggle('is-active', index === activeIndex));
@@ -97,19 +102,21 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 </script>
 
 <style>
-	.home-now { --now-event-width: clamp(220px, 28vw, 400px); --now-gutter: clamp(24px, 5vw, 88px); width: 100vw; margin-left: calc(50% - 50vw); height: var(--now-scroll-height); background: var(--background); }
-	.home-now-sticky { position: sticky; top: 0; height: 100svh; min-height: 620px; overflow: hidden; padding: clamp(104px, 14vh, 160px) var(--now-gutter) 42px; display: flex; flex-direction: column; justify-content: space-between; }
+	.home-now { --now-event-width: clamp(190px, 17vw, 280px); --now-gutter: clamp(24px, 5vw, 88px); --now-focus: 50; width: 100vw; margin-left: calc(50% - 50vw); height: var(--now-scroll-height); background: var(--background); }
+	.home-now-sticky { position: sticky; top: 0; height: 100svh; min-height: 620px; overflow: hidden; padding: clamp(76px, 9vh, 108px) var(--now-gutter) clamp(42px, 6vh, 72px); display: block; }
 	.home-now-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; position: relative; z-index: 1; }
-	.home-now-label { margin: 0 0 22px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }
+	.home-now-label { margin: 0 0 16px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }
 	.home-now-label span { margin-right: 12px; font-size: 13px; }
-	.home-now-heading h2 { margin: 0; color: var(--text-primary); font: 650 clamp(42px, 5.5vw, 78px)/.98 var(--display); letter-spacing: -.06em; }
+	.home-now-heading h2 { margin: 0; color: var(--text-primary); font: 650 clamp(42px, 5vw, 72px)/.98 var(--display); letter-spacing: -.06em; }
 	.home-now-latest { display: flex; align-items: center; gap: 12px; margin: 8px 0 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .18em; white-space: nowrap; }
 	.home-now-latest i { display: block; width: clamp(56px, 8vw, 120px); height: 1px; background: var(--divider); }
-	.home-now-timeline { position: relative; width: calc(100% + var(--now-gutter) + var(--now-gutter)); margin-left: calc(0px - var(--now-gutter)); overflow: hidden; }
-	.home-now-track { position: relative; display: flex; align-items: stretch; width: max-content; min-width: 100%; margin: 0; padding: 0 calc((100vw - var(--now-event-width)) / 2); list-style: none; transform: translate3d(0, 0, 0); transition: transform .12s linear; }
+	.home-now-changelog { position: absolute; left: 24px; top: 50%; margin: 0; color: var(--text-muted); font: 9px var(--mono); letter-spacing: .2em; writing-mode: vertical-rl; transform: translateY(-50%); opacity: .7; }
+	.home-now-timeline { position: absolute; top: 55%; left: calc(0px - var(--now-gutter)); width: calc(100% + var(--now-gutter) + var(--now-gutter)); transform: translateY(-50%); overflow: hidden; }
+	.home-now-focus-guide { position: absolute; z-index: 2; top: -42px; bottom: -42px; left: calc(var(--now-focus) * 1%); border-left: 1px dashed var(--divider); opacity: .8; pointer-events: none; }
+	.home-now-track { position: relative; display: flex; align-items: stretch; width: max-content; min-width: 100%; margin: 0; padding: 0 calc((100vw - var(--now-event-width)) / 2); list-style: none; transform: translate3d(0, 0, 0); }
 	.home-now-track::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--divider); }
-	.home-now-event { position: relative; flex: 0 0 var(--now-event-width); min-height: 190px; display: flex; justify-content: center; text-align: center; opacity: .38; transition: opacity .35s ease; }
-	.home-now-event + .home-now-event { margin-left: clamp(42px, 7vw, 132px); }
+	.home-now-event { position: relative; flex: 0 0 var(--now-event-width); min-height: 190px; display: flex; justify-content: center; text-align: center; opacity: var(--now-opacity, .58); transition: opacity .35s ease; }
+	.home-now-event + .home-now-event { margin-left: clamp(36px, 4vw, 72px); }
 	.home-now-event.is-active { opacity: 1; }
 	.home-now-event-link, .home-now-event-static { position: relative; width: 100%; min-height: 190px; display: flex; flex-direction: column; align-items: center; color: var(--text-primary); }
 	.home-now-event-link { cursor: pointer; }
@@ -118,8 +125,8 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 	.home-now-event.is-active .home-now-date { color: var(--accent); font-size: clamp(42px, 4.2vw, 68px); letter-spacing: -.08em; }
 	.home-now-node { position: absolute; top: 50%; z-index: 1; width: 15px; height: 15px; border: 2px solid var(--accent); border-radius: 50%; background: var(--background); transform: translateY(-50%); transition: width .35s ease, height .35s ease, background .35s ease, box-shadow .35s ease; }
 	.home-now-event.is-active .home-now-node { width: 27px; height: 27px; border: 0; background: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 0 0 1px var(--accent); }
-	.home-now-event-copy { position: absolute; top: calc(50% + 48px); width: 100%; padding: 0 14px; display: flex; flex-direction: column; align-items: center; gap: 14px; transition: transform .35s ease; }
-	.home-now-event-copy strong { max-width: 100%; font: 500 18px/1.35 var(--display); }
+	.home-now-event-copy { position: absolute; top: calc(50% + 42px); width: 100%; padding: 0 14px; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: transform .35s ease; }
+	.home-now-event-copy strong { max-width: 100%; font: 500 16px/1.35 var(--display); }
 	.home-now-event-copy small { color: var(--text-muted); font: 11px var(--mono); letter-spacing: .16em; }
 	.home-now-event.is-active .home-now-event-copy { transform: translateY(4px); }
 	.home-now-event.is-active .home-now-event-copy strong { font-size: clamp(24px, 2.1vw, 34px); font-weight: 650; }
@@ -128,30 +135,35 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 	.home-now-event-arrow { position: absolute; right: 24px; bottom: 0; color: var(--accent); font-size: 14px; opacity: 0; transition: opacity .2s ease; }
 	.home-now-event-link:hover .home-now-event-arrow { opacity: 1; }
 	.home-now-empty { width: 100%; padding: 30px 0; color: var(--text-muted); text-align: center; }
-	.home-now-scroll-hint { margin: 0 auto; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }
+	.home-now-scroll-hint { position: absolute; left: 50%; bottom: clamp(28px, 6vh, 72px); margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; transform: translateX(-50%); white-space: nowrap; }
+	.home-now-scroll-hint::after { content: ''; position: absolute; left: 50%; top: calc(100% + 14px); height: 42px; border-left: 1px dashed var(--divider); }
+	.home-now-scroll-hint::before { content: ''; position: absolute; left: calc(50% - 2px); top: calc(100% + 54px); width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 	@media (max-width: 760px) {
-		.home-now-sticky { min-height: 560px; padding: 94px 20px 34px; }
+		.home-now-sticky { min-height: 560px; padding: 82px 20px 34px; }
 		.home-now-heading { display: block; }
 		.home-now-label { margin-bottom: 16px; }
 		.home-now-heading h2 { font-size: clamp(40px, 13vw, 58px); }
 		.home-now-latest { position: absolute; top: 2px; right: 0; font-size: 9px; }
 		.home-now-latest i { display: none; }
-		.home-now-timeline { width: calc(100% + 40px); margin-left: -20px; }
-		.home-now-track { --now-event-width: min(72vw, 280px); padding-inline: calc((100vw - var(--now-event-width)) / 2); }
+		.home-now-timeline { left: -20px; width: calc(100% + 40px); margin-left: 0; }
+		.home-now-timeline { top: 56%; }
+		.home-now-track { --now-event-width: min(68vw, 280px); padding-inline: calc((100vw - var(--now-event-width)) / 2); }
 		.home-now-event + .home-now-event { margin-left: 28px; }
 		.home-now-event { min-height: 172px; }
 		.home-now-event-link, .home-now-event-static { min-height: 172px; }
-		.home-now-event-copy { top: calc(50% + 42px); padding: 0 6px; gap: 10px; }
+		.home-now-event-copy { top: calc(50% + 40px); padding: 0 6px; gap: 8px; }
 		.home-now-event-copy strong { font-size: 16px; }
 		.home-now-event.is-active .home-now-date { font-size: 38px; }
 		.home-now-event.is-active .home-now-event-copy strong { font-size: 23px; }
 		.home-now-event-copy small { font-size: 10px; }
+		.home-now-changelog { left: 7px; font-size: 8px; }
+		.home-now-scroll-hint { bottom: 30px; font-size: 9px; }
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.home-now { height: auto; }
 		.home-now-sticky { position: relative; height: auto; min-height: 620px; }
 		.home-now-timeline { overflow-x: auto; padding-bottom: 12px; }
-		.home-now-track { transform: none !important; transition: none; }
+		.home-now-track { transform: none !important; }
 		.home-now-event, .home-now-date, .home-now-node, .home-now-event-copy { transition: none; }
 	}
 </style>
