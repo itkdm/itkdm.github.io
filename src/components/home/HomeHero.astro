@@ -7,14 +7,13 @@ const isZh = lang === 'zh';
 
 <section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
 	<div class="hero-background" data-hero-background aria-hidden="true"><img src="/hero/hero-background.png" alt="" /></div>
-	<div class="hero-wordmark" aria-hidden="true" data-hero-wordmark>布吉岛</div>
+	<div class="hero-wordmark" aria-hidden="true" data-hero-wordmark><span>布</span><span>吉</span><span>岛</span></div>
 	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot>
 		<img src="/hero/hero-ip.png" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
 	</div>
 	<div class="hero-lockup">
-		<p class="hero-kicker">{isZh ? '个人官网 / 独立创作者' : 'Personal site / Independent creator'}</p>
 		<h1 id="home-hero-title">布吉岛</h1>
-		<p class="hero-positioning">Java Backend · AI Agent · Open Source · Writing</p>
+		<p class="hero-positioning">Java Backend · AI Agent · Open Source</p>
 	</div>
 	<div class="home-music-player" data-home-player data-locale={lang}>
 		<div class="home-music-copy"><span>{isZh ? '正在听' : 'LISTENING TO'}</span><strong>Yellow</strong><small>Coldplay</small></div>
@@ -30,9 +29,6 @@ const isZh = lang === 'zh';
 	const setupHeroMotion = () => {
 		const hero = document.querySelector('[data-home-hero]');
 		if (!(hero instanceof HTMLElement) || hero.dataset.motionBound === 'true') return;
-		const wordmark = hero.querySelector('[data-hero-wordmark]');
-		const person = hero.querySelector('[data-hero-person-layer]');
-		const background = hero.querySelector('[data-hero-background]');
 		const player = hero.querySelector('[data-home-player]');
 		const audio = player?.querySelector('audio');
 		const playButton = player?.querySelector('[data-player-toggle]');
@@ -45,23 +41,13 @@ const isZh = lang === 'zh';
 		const updateScroll = () => {
 			frame = 0;
 			const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, hero.offsetHeight * 0.82)));
-			hero.style.setProperty('--hero-progress', String(progress));
-			if (!reduceMotion) {
-				wordmark?.setAttribute('style', `transform: translate3d(0, ${progress * -9}vh, 0) scale(${1 - progress * .08})`);
-				person?.setAttribute('style', `transform: translate3d(0, ${progress * 12}vh, 0) scale(${1 - progress * .035})`);
-				background?.setAttribute('style', `transform: translate3d(0, ${progress * -4}vh, 0)`);
-			}
+			if (reduceMotion) return;
+			hero.style.setProperty('--hero-wordmark-scroll-y', `${progress * -8}vh`);
+			hero.style.setProperty('--hero-person-scroll-y', `${progress * 10}vh`);
+			hero.style.setProperty('--hero-background-scroll-y', `${progress * -3}vh`);
+			hero.style.setProperty('--hero-support-opacity', String(1 - progress * .45));
 		};
 		const onScroll = () => { if (!frame) frame = requestAnimationFrame(updateScroll); };
-		const onPointerMove = (event: PointerEvent) => {
-			if (reduceMotion || event.pointerType === 'touch') return;
-			const rect = hero.getBoundingClientRect();
-			const x = (event.clientX - rect.left) / rect.width - .5;
-			const y = (event.clientY - rect.top) / rect.height - .5;
-			person?.setAttribute('style', `transform: translate3d(${x * 8}px, ${y * 6}px, 0)`);
-			background?.setAttribute('style', `transform: translate3d(${x * -4}px, ${y * -3}px, 0)`);
-		};
-		hero.addEventListener('pointermove', onPointerMove);
 		window.addEventListener('scroll', onScroll, { passive: true });
 		updateScroll();
 
@@ -83,18 +69,18 @@ const isZh = lang === 'zh';
 </script>
 
 <style is:global>
-	.personal-home .home-hero { min-height: calc(100svh - 64px); position: relative; isolation: isolate; overflow: hidden; padding: 36px 0 42px; display: grid; place-items: center; }
+	.personal-home .home-hero { --hero-wordmark-scroll-y: 0px; --hero-person-scroll-y: 0px; --hero-background-scroll-y: 0px; --hero-support-opacity: 1; width: 100vw; margin: -32px 0 0 calc(50% - 50vw); min-height: calc(100svh - 64px); position: relative; isolation: isolate; overflow: hidden; padding: 36px clamp(24px, 4vw, 72px) 42px; display: grid; place-items: center; }
 	.home-hero::after { content: ''; position: absolute; inset: auto 0 0; height: 22%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--background)); pointer-events: none; }
-	.hero-background { position: absolute; inset: -1px; z-index: -3; transition: transform .15s linear; pointer-events: none; }
+	.hero-background { position: absolute; inset: -1px; z-index: -3; transform: translate3d(0, var(--hero-background-scroll-y), 0); transition: transform .15s linear; pointer-events: none; }
 	.hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-	.hero-wordmark { position: absolute; z-index: 0; left: 19%; top: 54%; width: max-content; color: var(--text-primary); font: 700 clamp(104px, 17vw, 275px)/.78 var(--display); letter-spacing: .02em; writing-mode: vertical-rl; text-orientation: upright; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
-	.hero-person-layer { position: absolute; z-index: 1; left: 68%; top: 54%; height: min(81svh, 790px); width: min(45vw, 560px); transform: translate(-50%, -50%); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
-	.hero-person-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
-	.hero-lockup { position: absolute; z-index: 2; left: 16%; bottom: 19%; width: 32%; text-align: left; pointer-events: none; }
-	.hero-kicker { display: none; }
+	.hero-wordmark { position: absolute; z-index: 0; left: clamp(108px, 18vw, 300px); top: 51%; width: max-content; display: grid; gap: clamp(4px, .65vw, 10px); color: var(--text-primary); font: 650 clamp(76px, 7vw, 128px)/.92 var(--display); transform: translate(-50%, calc(-50% + var(--hero-wordmark-scroll-y))); user-select: none; pointer-events: none; }
+	.hero-wordmark span { display: block; }
+	.hero-person-layer { position: absolute; z-index: 1; right: clamp(72px, 13vw, 220px); bottom: 0; height: min(78svh, 760px); width: min(43vw, 550px); transform: translateY(var(--hero-person-scroll-y)); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
+	.hero-person-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; filter: drop-shadow(0 18px 15px color-mix(in srgb, var(--text-primary) 15%, transparent)); }
+	.hero-lockup { position: absolute; z-index: 2; left: clamp(48px, 11vw, 180px); bottom: 17%; width: min(420px, 34vw); text-align: left; pointer-events: none; opacity: var(--hero-support-opacity); }
 	.hero-lockup h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-	.hero-positioning { margin: 17px 0 0; color: var(--text-secondary); font: 12px/1.4 var(--mono); letter-spacing: .08em; }
-	.home-music-player { position: absolute; z-index: 3; left: 0; bottom: 42px; display: flex; align-items: center; gap: 10px; padding: 7px 0; color: var(--text-primary); background: transparent; border: 0; box-shadow: none; }
+	.hero-positioning { margin: 0; color: var(--text-secondary); font: 13px/1.4 var(--mono); letter-spacing: .06em; }
+	.home-music-player { position: absolute; z-index: 3; left: clamp(24px, 4vw, 72px); bottom: 34px; display: flex; align-items: center; gap: 10px; padding: 7px 0; color: var(--text-primary); background: transparent; border: 0; box-shadow: none; opacity: var(--hero-support-opacity); }
 	.home-music-copy { display: grid; gap: 2px; min-width: 76px; }
 	.home-music-copy span, .home-music-copy small, .home-music-status { color: var(--text-muted); font: 9px/1 var(--mono); letter-spacing: .05em; }
 	.home-music-copy strong { font-size: 12px; line-height: 1.1; }
@@ -102,14 +88,14 @@ const isZh = lang === 'zh';
 	.home-music-button { width: 25px; height: 25px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text-primary); font-size: 10px; cursor: pointer; }
 	.home-music-volume { display: none; }
 	.home-music-status { white-space: nowrap; }
-	.home-scroll-cue { position: absolute; z-index: 3; right: 0; bottom: 47px; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; }
+	.home-scroll-cue { position: absolute; z-index: 3; right: clamp(24px, 4vw, 72px); bottom: 39px; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; opacity: var(--hero-support-opacity); }
 	.home-scroll-cue span:last-child { color: var(--accent); font-size: 18px; }
-	@keyframes hero-wordmark-in { from { opacity: 0; letter-spacing: -.02em; transform: translate(-50%, -45%) scale(.94); } to { opacity: 1; letter-spacing: -.13em; transform: translate(-50%, -50%) scale(1); } }
-	@keyframes hero-person-in { from { opacity: 0; transform: translate(-50%, -43%) scale(.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+	@keyframes hero-wordmark-in { from { opacity: 0; transform: translate(-50%, calc(-46% + var(--hero-wordmark-scroll-y))); } to { opacity: 1; transform: translate(-50%, calc(-50% + var(--hero-wordmark-scroll-y))); } }
+	@keyframes hero-person-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(var(--hero-person-scroll-y)); } }
 	.hero-wordmark { animation: hero-wordmark-in .9s cubic-bezier(.2,.8,.2,1) both; }
 	.hero-person-layer { animation: hero-person-in 1s .12s cubic-bezier(.2,.8,.2,1) both; }
 	.hero-lockup, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
 	@keyframes hero-support-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 0 38px; } .hero-wordmark { left: 17%; top: 47%; font-size: clamp(76px, 23vw, 150px); } .hero-person-layer { left: 65%; top: 53%; height: 64svh; width: min(64vw, 290px); } .hero-lockup { left: 10%; bottom: 18%; width: 52%; } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 0; bottom: 26px; } .home-music-status { display: none; } .home-scroll-cue { right: 0; bottom: 32px; } .hero-background img { object-position: 58% center; } }
+	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 20px 38px; } .hero-wordmark { left: clamp(54px, 16vw, 82px); top: 34%; font-size: clamp(64px, 19vw, 96px); gap: 3px; } .hero-person-layer { right: clamp(4px, 4vw, 24px); bottom: 26px; height: 57svh; width: min(70vw, 300px); } .hero-lockup { left: 20px; bottom: 19%; width: 58%; } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 20px; bottom: 28px; } .home-music-status { display: none; } .home-scroll-cue { right: 20px; bottom: 33px; } .hero-background img { object-position: 58% center; } }
 	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-lockup, .home-music-player, .home-scroll-cue { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
 </style>
