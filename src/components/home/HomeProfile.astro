@@ -1,6 +1,199 @@
 ---
-import HomeSection from './HomeSection.astro';
 const { lang } = Astro.props as { lang: 'zh' | 'en' };
 const isZh = lang === 'zh';
 ---
-<HomeSection id="profile" label="03 · PROFILE" title={isZh ? '个人档案' : 'Profile'}><div class="home-profile-layout"><p class="home-profile-lead">{isZh ? '我主要做服务端开发，也关注前端体验、AI 编程与工程效率。这个网站记录我对技术、工作方式和持续学习的长期观察。' : 'I work primarily on backend systems, while staying close to frontend craft, AI-assisted development, and engineering efficiency. This site is a record of that ongoing practice.'}</p><div class="home-profile-notes"><div><span>Focus</span><strong>{isZh ? '工程实践' : 'Engineering'}</strong></div><div><span>Approach</span><strong>{isZh ? '持续记录' : 'Keep writing'}</strong></div></div></div></HomeSection>
+
+<section id="profile" class="home-profile-map" data-home-profile aria-labelledby="profile-title">
+	<div class="home-profile-frame">
+		<header class="profile-heading" data-profile-reveal>
+			<p class="profile-label"><span aria-hidden="true">●</span> 03 · PROFILE</p>
+			<h2 id="profile-title">{isZh ? '个人档案' : 'Profile'}</h2>
+		</header>
+		<p class="profile-map-label" data-profile-reveal><span>IDENTITY MAP</span><i aria-hidden="true"></i><b aria-hidden="true">＋</b></p>
+
+		<div class="profile-map-canvas" data-profile-map>
+			<span class="profile-axis profile-axis-vertical" data-profile-axis aria-hidden="true"></span>
+			<span class="profile-axis profile-axis-horizontal" data-profile-axis aria-hidden="true"></span>
+			<span class="profile-orbit profile-orbit-inner" aria-hidden="true"></span>
+			<span class="profile-orbit profile-orbit-outer" aria-hidden="true"></span>
+			<span class="profile-crosshair profile-crosshair-north" aria-hidden="true"></span>
+			<span class="profile-crosshair profile-crosshair-east" aria-hidden="true"></span>
+			<span class="profile-crosshair profile-crosshair-south" aria-hidden="true"></span>
+			<span class="profile-crosshair profile-crosshair-west" aria-hidden="true"></span>
+
+			<div class="profile-center" data-profile-reveal>
+				<h3>布吉岛</h3>
+				<p>ENGINEER · BUILDER · CREATOR</p>
+			</div>
+
+			<article class="profile-identity profile-identity-north" data-profile-reveal data-profile-identity>
+				<span class="profile-direction" aria-hidden="true">⌃</span>
+				<h3>AI FULL-STACK</h3>
+				<p>Product · Frontend · Backend · AI</p>
+			</article>
+			<article class="profile-identity profile-identity-west" data-profile-reveal data-profile-identity>
+				<span class="profile-direction" aria-hidden="true">‹</span>
+				<h3>OPEN SOURCE</h3>
+				<p>Build · Maintain · Contribute</p>
+			</article>
+			<article class="profile-identity profile-identity-east" data-profile-reveal data-profile-identity>
+				<span class="profile-direction" aria-hidden="true">›</span>
+				<h3>AGENT ENGINEERING</h3>
+				<p>Agent · RAG · Context · Tool Use</p>
+			</article>
+			<article class="profile-identity profile-identity-south" data-profile-reveal data-profile-identity>
+				<span class="profile-direction" aria-hidden="true">⌄</span>
+				<h3>TECHNICAL CREATOR</h3>
+				<p>Writing · Tutorial · Training</p>
+			</article>
+		</div>
+
+		<aside class="profile-personality" data-profile-reveal>
+			<header><span>●</span><span>PERSONALITY</span><i aria-hidden="true"></i></header>
+			<strong>ENTP</strong>
+			<ul><li>Curious</li><li>Builder</li><li>Systems Thinker</li><li>Independent</li></ul>
+		</aside>
+
+		<aside class="profile-principles" data-profile-reveal>
+			<header><span>●</span><span>PRINCIPLES</span><i aria-hidden="true"></i></header>
+			<ol><li><b>01</b><span>Build real things.</span></li><li><b>02</b><span>Make complexity understandable.</span></li><li><b>03</b><span>Engineer for the long run.</span></li></ol>
+		</aside>
+
+		<p class="profile-scroll-hint" data-profile-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span><i aria-hidden="true"></i></p>
+	</div>
+</section>
+
+<script>
+	const initProfileMap = () => {
+		const section = document.querySelector('[data-home-profile]');
+		const map = section?.querySelector('[data-profile-map]');
+		if (!(section instanceof HTMLElement) || !(map instanceof HTMLElement) || section.dataset.motionBound === 'true') return;
+		section.dataset.motionBound = 'true';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const reveal = () => section.classList.add('is-visible');
+		if (reducedMotion || !('IntersectionObserver' in window)) reveal();
+		else new IntersectionObserver((entries, observer) => { if (entries.some((entry) => entry.isIntersecting)) { reveal(); observer.disconnect(); } }, { threshold: .18 }).observe(section);
+		if (reducedMotion) return;
+
+		let frame = 0;
+		const render = () => {
+			frame = 0;
+			const rect = section.getBoundingClientRect();
+			const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+			map.style.setProperty('--profile-map-y', `${(1 - progress) * 10}px`);
+			map.style.setProperty('--profile-map-scale', String(.97 + progress * .03));
+		};
+		const onScroll = () => { if (!frame) frame = requestAnimationFrame(render); };
+		window.addEventListener('scroll', onScroll, { passive: true });
+		render();
+	};
+
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initProfileMap, { once: true });
+	else initProfileMap();
+</script>
+
+<style>
+	.home-profile-map { --profile-map-y: 10px; --profile-map-scale: .97; width: 100vw; min-height: 100svh; margin-left: calc(50% - 50vw); background: var(--background); color: var(--text-primary); overflow: hidden; }
+	.home-profile-frame { position: relative; min-height: 100svh; height: max(760px, 100svh); padding: clamp(72px, 8vh, 108px) clamp(28px, 5vw, 88px) 42px; }
+	.profile-heading { position: absolute; top: clamp(72px, 8vh, 108px); left: clamp(28px, 5vw, 88px); z-index: 3; }
+	.profile-label { margin: 0 0 20px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .18em; }
+	.profile-label span { margin-right: 12px; font-size: 11px; }
+	.profile-heading h2 { margin: 0; font: 650 clamp(42px, 5vw, 72px)/1 var(--display); letter-spacing: -.06em; }
+	.profile-map-label { position: absolute; top: clamp(76px, 8.5vh, 112px); right: clamp(28px, 5vw, 88px); display: flex; align-items: center; gap: 14px; margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .18em; }
+	.profile-map-label i { display: block; width: clamp(56px, 8vw, 120px); height: 1px; background: var(--divider); }
+	.profile-map-label b { color: var(--accent); font-size: 14px; font-weight: 400; }
+	.profile-map-canvas { position: absolute; top: 17%; left: 50%; width: min(70vw, 1080px); height: 66%; min-height: 500px; transform: translateX(-50%) translateY(var(--profile-map-y)) scale(var(--profile-map-scale)); transform-origin: center; transition: transform .15s linear; }
+	.profile-axis { position: absolute; z-index: 0; background: var(--divider); opacity: .9; }
+	.profile-axis-vertical { top: 5%; bottom: 5%; left: 50%; width: 1px; }
+	.profile-axis-horizontal { top: 50%; left: 5%; right: 5%; height: 1px; }
+	.profile-orbit { position: absolute; top: 50%; left: 50%; border: 1px dashed var(--divider); border-radius: 50%; transform: translate(-50%, -50%); opacity: .7; }
+	.profile-orbit-inner { width: 180px; height: 180px; }
+	.profile-orbit-outer { width: 260px; height: 260px; opacity: .45; }
+	.profile-crosshair { position: absolute; z-index: 1; width: 9px; height: 9px; color: var(--accent); opacity: .8; }
+	.profile-crosshair::before, .profile-crosshair::after { content: ''; position: absolute; background: currentColor; }
+	.profile-crosshair::before { top: 4px; left: 0; width: 9px; height: 1px; }
+	.profile-crosshair::after { top: 0; left: 4px; width: 1px; height: 9px; }
+	.profile-crosshair-north { top: 1%; left: 50%; transform: translateX(-50%); }
+	.profile-crosshair-east { top: 50%; right: 1%; transform: translateY(-50%); }
+	.profile-crosshair-south { bottom: 1%; left: 50%; transform: translateX(-50%); }
+	.profile-crosshair-west { top: 50%; left: 1%; transform: translateY(-50%); }
+	.profile-center, .profile-identity { position: absolute; z-index: 2; text-align: center; }
+	.profile-center { top: 50%; left: 50%; width: 280px; transform: translate(-50%, -50%); }
+	.profile-center h3 { margin: 0 0 8px; font: 650 clamp(34px, 3.2vw, 52px)/1 var(--display); letter-spacing: -.05em; }
+	.profile-center p, .profile-identity p { margin: 0; color: var(--text-secondary); font: 11px var(--mono); letter-spacing: .12em; }
+	.profile-identity h3 { margin: 0 0 10px; font: 650 clamp(17px, 1.45vw, 23px)/1.2 var(--display); letter-spacing: .01em; }
+	.profile-direction { display: block; height: 24px; margin-bottom: 8px; color: var(--accent); font: 20px/1 var(--sans); }
+	.profile-identity-north { top: 3%; left: 50%; width: 330px; transform: translateX(-50%); }
+	.profile-identity-south { bottom: 3%; left: 50%; width: 330px; transform: translateX(-50%); }
+	.profile-identity-west { top: 50%; left: 1%; width: 270px; transform: translateY(-50%); text-align: right; }
+	.profile-identity-east { top: 50%; right: 1%; width: 270px; transform: translateY(-50%); text-align: left; }
+	.profile-identity-west .profile-direction { float: left; margin: -2px 12px 0 0; }
+	.profile-identity-east .profile-direction { float: right; margin: -2px 0 0 12px; }
+	.profile-personality, .profile-principles { position: absolute; z-index: 3; bottom: clamp(80px, 10vh, 116px); width: min(330px, 24vw); }
+	.profile-personality { left: clamp(28px, 5vw, 88px); }
+	.profile-principles { right: clamp(28px, 5vw, 88px); }
+	.profile-personality header, .profile-principles header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; color: var(--text-secondary); font: 10px var(--mono); letter-spacing: .18em; }
+	.profile-personality header span:first-child, .profile-principles header span:first-child { color: var(--accent); font-size: 11px; }
+	.profile-personality header i, .profile-principles header i { flex: 1; height: 1px; background: var(--divider); }
+	.profile-personality > strong { display: block; margin-bottom: 12px; font: 650 22px/1 var(--display); }
+	.profile-personality ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; color: var(--text-secondary); font: 14px/1.45 var(--display); }
+	.profile-principles ol { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+	.profile-principles li { display: grid; grid-template-columns: 36px 1fr; gap: 8px; align-items: baseline; font: 15px/1.35 var(--display); }
+	.profile-principles li b { color: var(--accent); font: 16px var(--display); }
+	.profile-scroll-hint { position: absolute; left: 50%; bottom: 28px; margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; transform: translateX(-50%); white-space: nowrap; }
+	.profile-scroll-hint > span { color: var(--accent); margin: 0 12px; }
+	.profile-scroll-hint i { position: absolute; left: 50%; top: calc(100% + 12px); height: 22px; border-left: 1px dashed var(--divider); }
+	.home-profile-map [data-profile-reveal] { opacity: 0; }
+	.home-profile-map.is-visible [data-profile-reveal] { opacity: 1; transition: opacity .65s ease; }
+	.home-profile-map.is-visible .profile-map-canvas { --profile-map-y: 0px; --profile-map-scale: 1; }
+	.home-profile-map.is-visible .profile-axis-horizontal { animation: profile-axis-x .9s .25s both cubic-bezier(.2,.8,.2,1); transform-origin: center; }
+	.home-profile-map.is-visible .profile-axis-vertical { animation: profile-axis-y .9s .25s both cubic-bezier(.2,.8,.2,1); transform-origin: center; }
+	.home-profile-map.is-visible .profile-orbit { animation: profile-orbit-in 1s .32s both ease-out; }
+	.home-profile-map.is-visible .profile-identity-north { transition-delay: .48s; }
+	.home-profile-map.is-visible .profile-identity-west { transition-delay: .58s; }
+	.home-profile-map.is-visible .profile-identity-east { transition-delay: .66s; }
+	.home-profile-map.is-visible .profile-identity-south { transition-delay: .74s; }
+	.home-profile-map.is-visible .profile-personality, .home-profile-map.is-visible .profile-principles { transition-delay: .86s; }
+	.profile-identity:hover h3, .profile-identity:hover .profile-direction { color: var(--accent); }
+	@keyframes profile-axis-x { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: .9; } }
+	@keyframes profile-axis-y { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: .9; } }
+	@keyframes profile-orbit-in { from { transform: translate(-50%, -50%) scale(.7); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: .7; } }
+	@media (max-width: 760px) {
+		.home-profile-frame { min-height: 820px; height: 100svh; padding: 58px 20px 32px; }
+		.profile-heading { top: 58px; left: 20px; }
+		.profile-label { margin-bottom: 14px; font-size: 10px; }
+		.profile-heading h2 { font-size: 46px; }
+		.profile-map-label { top: 62px; right: 20px; font-size: 8px; letter-spacing: .12em; }
+		.profile-map-label i { display: none; }
+		.profile-map-canvas { top: 22%; width: 100%; height: 48%; min-height: 390px; }
+		.profile-axis-vertical { top: 3%; bottom: 3%; }
+		.profile-axis-horizontal { left: 2%; right: 2%; }
+		.profile-orbit-inner { width: 132px; height: 132px; }
+		.profile-orbit-outer { width: 190px; height: 190px; }
+		.profile-center { width: 190px; }
+		.profile-center h3 { font-size: 34px; }
+		.profile-center p, .profile-identity p { font-size: 8px; letter-spacing: .08em; }
+		.profile-identity h3 { font-size: 15px; margin-bottom: 7px; }
+		.profile-identity-north, .profile-identity-south { width: 220px; }
+		.profile-identity-west, .profile-identity-east { width: 120px; }
+		.profile-identity-west { left: -2%; }
+		.profile-identity-east { right: -2%; }
+		.profile-identity-west .profile-direction, .profile-identity-east .profile-direction { display: none; }
+		.profile-personality, .profile-principles { bottom: 96px; width: calc(50% - 28px); }
+		.profile-personality { left: 20px; }
+		.profile-principles { right: 20px; }
+		.profile-personality header, .profile-principles header { gap: 7px; margin-bottom: 14px; font-size: 8px; letter-spacing: .1em; }
+		.profile-personality > strong { font-size: 18px; }
+		.profile-personality ul { gap: 5px; font-size: 12px; }
+		.profile-principles ol { gap: 9px; }
+		.profile-principles li { grid-template-columns: 24px 1fr; gap: 2px; font-size: 11px; }
+		.profile-principles li b { font-size: 12px; }
+		.profile-scroll-hint { bottom: 28px; font-size: 8px; letter-spacing: .14em; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.home-profile-map [data-profile-reveal] { opacity: 1; }
+		.home-profile-map.is-visible .profile-axis-horizontal, .home-profile-map.is-visible .profile-axis-vertical, .home-profile-map.is-visible .profile-orbit { animation: none; }
+		.profile-map-canvas { transition: none; transform: translateX(-50%); }
+		.home-profile-map.is-visible [data-profile-reveal] { transition: none; }
+	}
+</style>
