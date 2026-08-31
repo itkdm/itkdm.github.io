@@ -1,9 +1,157 @@
 ---
-import HomeSection from './HomeSection.astro';
 import type { CollectionEntry } from 'astro:content';
-const { lang, posts } = Astro.props as { lang: 'zh' | 'en'; posts: CollectionEntry<'blog'>[] };
+
+const { lang, events } = Astro.props as { lang: 'zh' | 'en'; events: CollectionEntry<'now'>[] };
 const isZh = lang === 'zh';
+const scrollHeight = Math.max(300, events.length * 54 + 30);
+
+const formatDate = (date: Date) => ({
+	month: String(date.getMonth() + 1).padStart(2, '0'),
+	day: String(date.getDate()).padStart(2, '0'),
+	iso: date.toISOString().slice(0, 10),
+});
+
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
 ---
-<HomeSection id="now" label="02 · NOW" title={isZh ? '近期动态' : 'Recent updates'} intro={isZh ? '正在写、正在做，也正在慢慢整理成可复用的经验。' : 'What is being written, built, and shaped into reusable experience.'}>
-	<div class="home-list-grid">{posts.length > 0 ? posts.map((post) => <a class="home-list-item" href={`/${lang}/blog/${post.data.slug ?? post.slug.split('/').pop() ?? post.slug}/`}><span class="home-item-meta">{post.data.date.toLocaleDateString(isZh ? 'zh-CN' : 'en-US')}</span><strong>{post.data.title}</strong><span>{post.data.summary}</span></a>) : <p class="home-empty">{isZh ? '近期内容正在整理中。' : 'Recent updates are being prepared.'}</p>}</div>
-</HomeSection>
+
+<section id="now" class="home-now" data-home-now aria-labelledby="now-title" style={`--now-scroll-height: ${scrollHeight}svh;`}>
+	<div class="home-now-sticky" data-home-now-sticky>
+		<header class="home-now-heading">
+			<div>
+				<p class="home-now-label"><span aria-hidden="true">●</span> 02 · NOW</p>
+				<h2 id="now-title">{isZh ? '近期动态' : 'Recent updates'}</h2>
+			</div>
+			<p class="home-now-latest"><span aria-hidden="true">＋</span> LATEST EVENTS <i aria-hidden="true"></i></p>
+		</header>
+
+		<div class="home-now-timeline" data-home-now-viewport>
+			<ol class="home-now-track" data-home-now-track>
+				{events.length > 0 ? events.map((event, index) => {
+					const date = formatDate(event.data.date);
+					const href = event.data.href;
+					const content = (
+						<>
+							<time class="home-now-date" datetime={date.iso}><span>{date.month}</span><b aria-hidden="true"> / </b>{date.day}</time>
+							<span class="home-now-node" aria-hidden="true"></span>
+							<span class="home-now-event-copy"><strong>{event.data.title}</strong><small>{event.data.category}</small></span>
+						</>
+					);
+					return (
+						<li class:list={['home-now-event', index === 0 && 'is-active']} data-now-event>
+							{href ? <a class="home-now-event-link" href={href} target={isExternal(href) ? '_blank' : undefined} rel={isExternal(href) ? 'noopener noreferrer' : undefined}>{content}<span class="home-now-event-arrow" aria-hidden="true">↗</span></a> : <div class="home-now-event-static">{content}</div>}
+						</li>
+					);
+				}) : <li class="home-now-empty">{isZh ? '近期动态正在整理中。' : 'Recent updates are being prepared.'}</li>}
+			</ol>
+		</div>
+
+		<p class="home-now-scroll-hint"><span aria-hidden="true">◂</span> SCROLL TO EXPLORE <span aria-hidden="true">▸</span></p>
+	</div>
+</section>
+
+<script>
+	const initNowTimeline = () => {
+		const section = document.querySelector('[data-home-now]');
+		const sticky = section?.querySelector('[data-home-now-sticky]');
+		const viewport = section?.querySelector('[data-home-now-viewport]');
+		const track = section?.querySelector('[data-home-now-track]');
+		const events = [...(section?.querySelectorAll('[data-now-event]') ?? [])];
+		if (!(section instanceof HTMLElement) || !(sticky instanceof HTMLElement) || !(viewport instanceof HTMLElement) || !(track instanceof HTMLElement) || events.length === 0 || section.dataset.motionBound === 'true') return;
+		section.dataset.motionBound = 'true';
+
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let travel = 0;
+		let scrollDistance = 1;
+		let frame = 0;
+
+		const render = () => {
+			frame = 0;
+			const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
+			if (!reducedMotion) track.style.transform = `translate3d(${-travel * progress}px, 0, 0)`;
+
+			const center = viewport.clientWidth / 2;
+			let activeIndex = 0;
+			let closest = Number.POSITIVE_INFINITY;
+			events.forEach((event, index) => {
+				const eventCenter = event.offsetLeft + event.offsetWidth / 2 - travel * progress;
+				const distance = Math.abs(eventCenter - center);
+				if (distance < closest) { closest = distance; activeIndex = index; }
+			});
+			events.forEach((event, index) => event.classList.toggle('is-active', index === activeIndex));
+		};
+
+		const measure = () => {
+			travel = Math.max(0, track.scrollWidth - viewport.clientWidth);
+			scrollDistance = Math.max(1, section.offsetHeight - sticky.offsetHeight);
+			render();
+		};
+		const onScroll = () => { if (!reducedMotion && !frame) frame = requestAnimationFrame(render); };
+		if (!reducedMotion) window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', measure, { passive: true });
+		if ('ResizeObserver' in window) new ResizeObserver(measure).observe(viewport);
+		measure();
+	};
+
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNowTimeline, { once: true });
+	else initNowTimeline();
+</script>
+
+<style>
+	.home-now { --now-event-width: clamp(220px, 28vw, 400px); --now-gutter: clamp(24px, 5vw, 88px); width: 100vw; margin-left: calc(50% - 50vw); height: var(--now-scroll-height); background: var(--background); }
+	.home-now-sticky { position: sticky; top: 0; height: 100svh; min-height: 620px; overflow: hidden; padding: clamp(104px, 14vh, 160px) var(--now-gutter) 42px; display: flex; flex-direction: column; justify-content: space-between; }
+	.home-now-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; position: relative; z-index: 1; }
+	.home-now-label { margin: 0 0 22px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }
+	.home-now-label span { margin-right: 12px; font-size: 13px; }
+	.home-now-heading h2 { margin: 0; color: var(--text-primary); font: 650 clamp(42px, 5.5vw, 78px)/.98 var(--display); letter-spacing: -.06em; }
+	.home-now-latest { display: flex; align-items: center; gap: 12px; margin: 8px 0 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .18em; white-space: nowrap; }
+	.home-now-latest i { display: block; width: clamp(56px, 8vw, 120px); height: 1px; background: var(--divider); }
+	.home-now-timeline { position: relative; width: calc(100% + var(--now-gutter) + var(--now-gutter)); margin-left: calc(0px - var(--now-gutter)); overflow: hidden; }
+	.home-now-track { position: relative; display: flex; align-items: stretch; width: max-content; min-width: 100%; margin: 0; padding: 0 calc((100vw - var(--now-event-width)) / 2); list-style: none; transform: translate3d(0, 0, 0); transition: transform .12s linear; }
+	.home-now-track::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--divider); }
+	.home-now-event { position: relative; flex: 0 0 var(--now-event-width); min-height: 190px; display: flex; justify-content: center; text-align: center; opacity: .38; transition: opacity .35s ease; }
+	.home-now-event + .home-now-event { margin-left: clamp(42px, 7vw, 132px); }
+	.home-now-event.is-active { opacity: 1; }
+	.home-now-event-link, .home-now-event-static { position: relative; width: 100%; min-height: 190px; display: flex; flex-direction: column; align-items: center; color: var(--text-primary); }
+	.home-now-event-link { cursor: pointer; }
+	.home-now-date { order: 0; position: absolute; top: 0; color: var(--text-muted); font: 15px/1 var(--mono); letter-spacing: .04em; transition: color .35s ease, font-size .35s ease; }
+	.home-now-date b { color: var(--divider); font-weight: 400; }
+	.home-now-event.is-active .home-now-date { color: var(--accent); font-size: clamp(42px, 4.2vw, 68px); letter-spacing: -.08em; }
+	.home-now-node { position: absolute; top: 50%; z-index: 1; width: 15px; height: 15px; border: 2px solid var(--accent); border-radius: 50%; background: var(--background); transform: translateY(-50%); transition: width .35s ease, height .35s ease, background .35s ease, box-shadow .35s ease; }
+	.home-now-event.is-active .home-now-node { width: 27px; height: 27px; border: 0; background: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft), 0 0 0 1px var(--accent); }
+	.home-now-event-copy { position: absolute; top: calc(50% + 48px); width: 100%; padding: 0 14px; display: flex; flex-direction: column; align-items: center; gap: 14px; transition: transform .35s ease; }
+	.home-now-event-copy strong { max-width: 100%; font: 500 18px/1.35 var(--display); }
+	.home-now-event-copy small { color: var(--text-muted); font: 11px var(--mono); letter-spacing: .16em; }
+	.home-now-event.is-active .home-now-event-copy { transform: translateY(4px); }
+	.home-now-event.is-active .home-now-event-copy strong { font-size: clamp(24px, 2.1vw, 34px); font-weight: 650; }
+	.home-now-event.is-active .home-now-event-copy small { color: var(--accent); }
+	.home-now-event-link:hover .home-now-event-copy strong { color: var(--accent); }
+	.home-now-event-arrow { position: absolute; right: 24px; bottom: 0; color: var(--accent); font-size: 14px; opacity: 0; transition: opacity .2s ease; }
+	.home-now-event-link:hover .home-now-event-arrow { opacity: 1; }
+	.home-now-empty { width: 100%; padding: 30px 0; color: var(--text-muted); text-align: center; }
+	.home-now-scroll-hint { margin: 0 auto; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }
+	@media (max-width: 760px) {
+		.home-now-sticky { min-height: 560px; padding: 94px 20px 34px; }
+		.home-now-heading { display: block; }
+		.home-now-label { margin-bottom: 16px; }
+		.home-now-heading h2 { font-size: clamp(40px, 13vw, 58px); }
+		.home-now-latest { position: absolute; top: 2px; right: 0; font-size: 9px; }
+		.home-now-latest i { display: none; }
+		.home-now-timeline { width: calc(100% + 40px); margin-left: -20px; }
+		.home-now-track { --now-event-width: min(72vw, 280px); padding-inline: calc((100vw - var(--now-event-width)) / 2); }
+		.home-now-event + .home-now-event { margin-left: 28px; }
+		.home-now-event { min-height: 172px; }
+		.home-now-event-link, .home-now-event-static { min-height: 172px; }
+		.home-now-event-copy { top: calc(50% + 42px); padding: 0 6px; gap: 10px; }
+		.home-now-event-copy strong { font-size: 16px; }
+		.home-now-event.is-active .home-now-date { font-size: 38px; }
+		.home-now-event.is-active .home-now-event-copy strong { font-size: 23px; }
+		.home-now-event-copy small { font-size: 10px; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.home-now { height: auto; }
+		.home-now-sticky { position: relative; height: auto; min-height: 620px; }
+		.home-now-timeline { overflow-x: auto; padding-bottom: 12px; }
+		.home-now-track { transform: none !important; transition: none; }
+		.home-now-event, .home-now-date, .home-now-node, .home-now-event-copy { transition: none; }
+	}
+</style>

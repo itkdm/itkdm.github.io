@@ -75,4 +75,18 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { blog, docs, tools, projects };
+const now = defineCollection({
+	type: 'content',
+	schema: () =>
+		z.object({
+			title: z.string(),
+			date: z.coerce.date(),
+			category: z.string(),
+			lang: z.enum(['zh', 'en']),
+			href: z.string().optional(),
+			summary: z.string().optional(),
+			draft: z.boolean().default(false),
+		}),
+});
+
+export const collections = { blog, docs, tools, projects, now };
