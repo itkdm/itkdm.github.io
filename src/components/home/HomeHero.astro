@@ -16,7 +16,7 @@ const isZh = lang === 'zh';
 		<img src="/hero/hero-ip.png" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
 	</div>
 	<div class="home-music-player" data-home-player data-locale={lang}>
-		<button type="button" class="home-music-cover" data-player-toggle aria-pressed="false" aria-label={isZh ? '播放或暂停 Yellow' : 'Play or pause Yellow'}><span class="home-music-record" aria-hidden="true"><i></i></span></button>
+		<button type="button" class="home-music-cover" data-player-toggle aria-pressed="false" aria-label={isZh ? '播放或暂停 Yellow' : 'Play or pause Yellow'}><span class="home-music-record" aria-hidden="true"><img src="/hero/yellow-cover.png" alt="" /></span></button>
 		<span class="home-music-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
 		<span class="home-music-track"><strong>Yellow</strong><span> — Coldplay</span></span>
 		<audio preload="metadata" src={yellowTrackUrl}></audio>
@@ -65,7 +65,7 @@ const isZh = lang === 'zh';
 	.home-hero::after { content: ''; position: absolute; inset: auto 0 0; height: 22%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--background)); pointer-events: none; }
 	.hero-background { position: absolute; inset: -1px; z-index: -3; transform: translate3d(0, var(--hero-background-scroll-y), 0); transition: transform .15s linear; pointer-events: none; }
 	.hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-	.hero-title-stack { position: absolute; z-index: 2; left: clamp(56px, 7vw, 130px); top: 21%; width: min(420px, 34vw); transform: translateY(var(--hero-title-scroll-y)); opacity: var(--hero-support-opacity); }
+	.hero-title-stack { position: absolute; z-index: 2; left: clamp(152px, 13vw, 230px); top: 24%; width: min(420px, 34vw); transform: translateY(var(--hero-title-scroll-y)); opacity: var(--hero-support-opacity); }
 	.hero-wordmark { display: grid; gap: clamp(0px, .3vw, 6px); width: max-content; color: var(--text-primary); font: 650 clamp(76px, 6vw, 112px)/.92 var(--display); user-select: none; pointer-events: none; }
 	.hero-wordmark span { display: block; }
 	.hero-wordmark-last { position: relative; }
@@ -78,9 +78,8 @@ const isZh = lang === 'zh';
 	.hero-positioning { margin: 0; color: var(--text-secondary); font: 13px/1.4 var(--mono); letter-spacing: .06em; }
 	.home-music-player { position: absolute; z-index: 3; left: clamp(40px, 5vw, 90px); bottom: clamp(28px, 4vh, 48px); display: flex; align-items: center; gap: 12px; color: var(--text-primary); background: transparent; border: 0; opacity: var(--hero-support-opacity); }
 	.home-music-cover { width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-primary); cursor: pointer; }
-	.home-music-record { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--text-primary); box-shadow: inset 0 0 0 5px var(--surface-secondary), inset 0 0 0 7px var(--text-primary); }
-	.home-music-record::before { content: ''; width: 15px; height: 15px; border: 2px solid var(--accent); border-radius: 50%; }
-	.home-music-record i { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--surface); }
+	.home-music-record { display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 50%; }
+	.home-music-record img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; display: block; }
 	.home-music-equalizer { display: flex; align-items: center; gap: 3px; width: 24px; height: 22px; }
 	.home-music-equalizer i { display: block; width: 2px; height: 8px; background: var(--text-primary); }
 	.home-music-equalizer i:nth-child(2) { height: 14px; }
@@ -102,6 +101,6 @@ const isZh = lang === 'zh';
 	.hero-person-layer { animation: hero-person-in 1s .12s cubic-bezier(.2,.8,.2,1) both; }
 	.hero-title-stack, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
 	@keyframes hero-support-in { from { opacity: 0; } to { opacity: 1; } }
-	@media (max-width: 760px) { .personal-home .home-hero { min-height: 100svh; padding: 28px 20px 38px; } .hero-title-stack { left: 20px; top: 17%; width: min(250px, 62vw); } .hero-wordmark { font-size: clamp(64px, 19vw, 96px); gap: 3px; } .hero-title-rule { margin-top: 14px; } .hero-person-layer { right: clamp(4px, 4vw, 24px); bottom: 64px; height: 57svh; width: min(70vw, 300px); } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 20px; bottom: 28px; gap: 8px; } .home-music-cover { width: 42px; height: 42px; } .home-music-track { font-size: 12px; } .home-music-equalizer { width: 19px; } .home-scroll-cue { right: 20px; bottom: 33px; } .hero-background img { object-position: 58% center; } }
+	@media (max-width: 760px) { .personal-home .home-hero { min-height: 100svh; padding: 28px 20px 38px; } .hero-title-stack { left: clamp(48px, 13vw, 68px); top: 20%; width: min(250px, 62vw); } .hero-wordmark { font-size: clamp(64px, 19vw, 96px); gap: 3px; } .hero-title-rule { margin-top: 14px; } .hero-person-layer { right: clamp(4px, 4vw, 24px); bottom: 64px; height: 57svh; width: min(70vw, 300px); } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 20px; bottom: 28px; gap: 8px; } .home-music-cover { width: 42px; height: 42px; } .home-music-track { font-size: 12px; } .home-music-equalizer { width: 19px; } .home-scroll-cue { right: 20px; bottom: 33px; } .hero-background img { object-position: 58% center; } }
 	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-title-stack, .home-music-player, .home-scroll-cue { animation: none; } .home-music-player.is-playing .home-music-equalizer i { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
 </style>
