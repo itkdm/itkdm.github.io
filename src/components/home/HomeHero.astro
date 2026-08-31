@@ -6,10 +6,10 @@ const isZh = lang === 'zh';
 ---
 
 <section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
-	<div class="hero-background" data-hero-background aria-hidden="true"><span></span><i></i></div>
+	<div class="hero-background" data-hero-background aria-hidden="true"><img src="/hero/hero-background.png" alt="" /></div>
 	<div class="hero-wordmark" aria-hidden="true" data-hero-wordmark>布吉岛</div>
-	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot aria-label={isZh ? '个人 IP 图片占位' : 'Personal IP image placeholder'}>
-		<span class="hero-person-slot-label">IP IMAGE SLOT</span>
+	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot>
+		<img src="/hero/hero-ip.png" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
 	</div>
 	<div class="hero-lockup">
 		<p class="hero-kicker">{isZh ? '个人官网 / 独立创作者' : 'Personal site / Independent creator'}</p>
@@ -85,18 +85,13 @@ const isZh = lang === 'zh';
 <style is:global>
 	.personal-home .home-hero { min-height: calc(100svh - 64px); position: relative; isolation: isolate; overflow: hidden; padding: 36px 0 42px; display: grid; place-items: center; }
 	.home-hero::after { content: ''; position: absolute; inset: auto 0 0; height: 22%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--background)); pointer-events: none; }
-	.hero-background { position: absolute; inset: -4%; z-index: -3; transition: transform .15s linear; pointer-events: none; }
-	.hero-background::before, .hero-background::after { content: ''; position: absolute; border-radius: 50%; border: 1px solid var(--divider); }
-	.hero-background::before { width: min(58vw, 720px); aspect-ratio: 1; left: 8%; top: 8%; }
-	.hero-background::after { width: min(34vw, 420px); aspect-ratio: 1; right: 10%; bottom: 2%; background: var(--accent-soft); opacity: .55; }
-	.hero-background span { position: absolute; width: 1px; height: 65%; left: 17%; top: 18%; background: var(--divider); transform: rotate(22deg); }
-	.hero-background i { position: absolute; width: 38%; height: 1px; right: 7%; top: 27%; background: var(--accent); opacity: .45; transform: rotate(-18deg); }
-	.hero-wordmark { position: absolute; z-index: 0; left: 50%; top: 49%; width: max-content; color: var(--text-primary); font: 700 clamp(108px, 25vw, 370px)/.78 var(--display); letter-spacing: -.13em; white-space: nowrap; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
-	.hero-person-layer { position: absolute; z-index: 1; left: 50%; top: 53%; height: min(78svh, 760px); width: min(52vw, 560px); transform: translate(-50%, -50%); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
-	.hero-person-layer { border-bottom: 1px solid var(--divider); }
-	.hero-person-slot-label { position: absolute; bottom: 14%; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; opacity: .7; }
-	.hero-lockup { position: relative; z-index: 2; width: 100%; align-self: start; padding-top: clamp(30px, 9vh, 100px); text-align: center; pointer-events: none; }
-	.hero-kicker { margin: 0; color: var(--accent); font: 600 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+	.hero-background { position: absolute; inset: -1px; z-index: -3; transition: transform .15s linear; pointer-events: none; }
+	.hero-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+	.hero-wordmark { position: absolute; z-index: 0; left: 19%; top: 54%; width: max-content; color: var(--text-primary); font: 700 clamp(104px, 17vw, 275px)/.78 var(--display); letter-spacing: .02em; writing-mode: vertical-rl; text-orientation: upright; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
+	.hero-person-layer { position: absolute; z-index: 1; left: 68%; top: 54%; height: min(81svh, 790px); width: min(45vw, 560px); transform: translate(-50%, -50%); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
+	.hero-person-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+	.hero-lockup { position: absolute; z-index: 2; left: 16%; bottom: 19%; width: 32%; text-align: left; pointer-events: none; }
+	.hero-kicker { display: none; }
 	.hero-lockup h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 	.hero-positioning { margin: 17px 0 0; color: var(--text-secondary); font: 12px/1.4 var(--mono); letter-spacing: .08em; }
 	.home-music-player { position: absolute; z-index: 3; left: 0; bottom: 42px; display: flex; align-items: center; gap: 10px; padding: 7px 0; color: var(--text-primary); background: transparent; border: 0; box-shadow: none; }
@@ -115,6 +110,6 @@ const isZh = lang === 'zh';
 	.hero-person-layer { animation: hero-person-in 1s .12s cubic-bezier(.2,.8,.2,1) both; }
 	.hero-lockup, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
 	@keyframes hero-support-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 0 38px; } .hero-wordmark { top: 47%; font-size: clamp(80px, 26vw, 160px); } .hero-person-layer { top: 52%; height: 61svh; width: min(88vw, 360px); } .hero-lockup { padding-top: 22px; } .hero-kicker { font-size: 10px; } .hero-positioning { max-width: 240px; margin-inline: auto; line-height: 1.55; } .home-music-player { left: 0; bottom: 26px; } .home-music-status { display: none; } .home-scroll-cue { right: 0; bottom: 32px; } .hero-background::before { width: 90vw; left: -20%; top: 14%; } .hero-background::after { width: 60vw; right: -15%; bottom: 10%; } }
+	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 0 38px; } .hero-wordmark { left: 17%; top: 47%; font-size: clamp(76px, 23vw, 150px); } .hero-person-layer { left: 65%; top: 53%; height: 64svh; width: min(64vw, 290px); } .hero-lockup { left: 10%; bottom: 18%; width: 52%; } .hero-positioning { max-width: 240px; line-height: 1.55; } .home-music-player { left: 0; bottom: 26px; } .home-music-status { display: none; } .home-scroll-cue { right: 0; bottom: 32px; } .hero-background img { object-position: 58% center; } }
 	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-lockup, .home-music-player, .home-scroll-cue { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
 </style>
