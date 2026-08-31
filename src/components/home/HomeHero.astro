@@ -1,20 +1,120 @@
 ---
 import yellowTrackUrl from '../../Yellow - Coldplay.mp3?url';
+
 const { lang } = Astro.props as { lang: 'zh' | 'en' };
 const isZh = lang === 'zh';
 ---
+
 <section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
-	<div class="home-hero-copy">
-		<p class="home-hero-kicker">{isZh ? '布吉岛 · 个人官网' : 'Bu Ji Dao · Personal site'}</p>
-		<h1 id="home-hero-title">{isZh ? '把经验，写成可以被理解的东西。' : 'Turning experience into something understandable.'}</h1>
-		<p class="home-hero-positioning">{isZh ? '服务端开发者、内容作者，也持续探索 AI 与工程实践。' : 'Backend developer, writer, and long-term explorer of AI in engineering.'}</p>
-		<div class="home-hero-actions"><a class="home-button home-button-primary" href={`/${lang}/blog/`}>{isZh ? '阅读内容' : 'Read the work'}</a><a class="home-button home-button-secondary" href="#profile">{isZh ? '了解我' : 'About me'}</a></div>
+	<div class="hero-background" data-hero-background aria-hidden="true"><span></span><i></i></div>
+	<div class="hero-wordmark" aria-hidden="true" data-hero-wordmark>布吉岛</div>
+	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot aria-label={isZh ? '个人 IP 图片占位' : 'Personal IP image placeholder'}>
+		<span class="hero-person-slot-label">IP IMAGE SLOT</span>
 	</div>
-	<div class="home-hero-media" data-hero-media aria-label={isZh ? '个人视觉占位' : 'Personal visual placeholder'}><div class="home-hero-mark" aria-hidden="true">BJD</div><span>{isZh ? '视觉区域 · 后续设计' : 'Visual area · to be designed'}</span></div>
-	<a class="home-scroll-cue" href="#now" data-scroll-hook><span>{isZh ? '向下探索' : 'Scroll to explore'}</span><span aria-hidden="true">↓</span></a>
-	<div class="home-music-player" data-home-player>
-		<div class="home-music-copy"><span>{isZh ? '正在听' : 'Listening to'}</span><strong>Yellow</strong><small>Coldplay</small></div>
+	<div class="hero-lockup">
+		<p class="hero-kicker">{isZh ? '个人官网 / 独立创作者' : 'Personal site / Independent creator'}</p>
+		<h1 id="home-hero-title">布吉岛</h1>
+		<p class="hero-positioning">Java Backend · AI Agent · Open Source · Writing</p>
+	</div>
+	<div class="home-music-player" data-home-player data-locale={lang}>
+		<div class="home-music-copy"><span>{isZh ? '正在听' : 'LISTENING TO'}</span><strong>Yellow</strong><small>Coldplay</small></div>
 		<div class="home-music-controls"><button type="button" class="home-music-button" data-player-toggle aria-label={isZh ? '播放或暂停音乐' : 'Play or pause music'}>▶</button><button type="button" class="home-music-button" data-player-mute aria-label={isZh ? '静音或取消静音' : 'Mute or unmute'}>⌁</button></div>
-		<label class="home-music-volume"><span class="sr-only">Volume</span><input type="range" min="0" max="100" value="45" data-player-volume /></label><span class="home-music-status" data-player-status>{isZh ? '准备播放' : 'Ready to play'}</span><audio preload="metadata" src={yellowTrackUrl}></audio>
+		<label class="home-music-volume"><span class="sr-only">{isZh ? '音量' : 'Volume'}</span><input type="range" min="0" max="100" value="45" data-player-volume /></label>
+		<span class="home-music-status" data-player-status>{isZh ? '准备播放' : 'Ready to play'}</span>
+		<audio preload="metadata" src={yellowTrackUrl}></audio>
 	</div>
+	<a class="home-scroll-cue" href="#now" data-scroll-hook><span>SCROLL</span><span aria-hidden="true">↓</span></a>
 </section>
+
+<script>
+	const setupHeroMotion = () => {
+		const hero = document.querySelector('[data-home-hero]');
+		if (!(hero instanceof HTMLElement) || hero.dataset.motionBound === 'true') return;
+		const wordmark = hero.querySelector('[data-hero-wordmark]');
+		const person = hero.querySelector('[data-hero-person-layer]');
+		const background = hero.querySelector('[data-hero-background]');
+		const player = hero.querySelector('[data-home-player]');
+		const audio = player?.querySelector('audio');
+		const playButton = player?.querySelector('[data-player-toggle]');
+		const muteButton = player?.querySelector('[data-player-mute]');
+		const volume = player?.querySelector('[data-player-volume]');
+		const status = player?.querySelector('[data-player-status]');
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let frame = 0;
+
+		const updateScroll = () => {
+			frame = 0;
+			const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, hero.offsetHeight * 0.82)));
+			hero.style.setProperty('--hero-progress', String(progress));
+			if (!reduceMotion) {
+				wordmark?.setAttribute('style', `transform: translate3d(0, ${progress * -9}vh, 0) scale(${1 - progress * .08})`);
+				person?.setAttribute('style', `transform: translate3d(0, ${progress * 12}vh, 0) scale(${1 - progress * .035})`);
+				background?.setAttribute('style', `transform: translate3d(0, ${progress * -4}vh, 0)`);
+			}
+		};
+		const onScroll = () => { if (!frame) frame = requestAnimationFrame(updateScroll); };
+		const onPointerMove = (event: PointerEvent) => {
+			if (reduceMotion || event.pointerType === 'touch') return;
+			const rect = hero.getBoundingClientRect();
+			const x = (event.clientX - rect.left) / rect.width - .5;
+			const y = (event.clientY - rect.top) / rect.height - .5;
+			person?.setAttribute('style', `transform: translate3d(${x * 8}px, ${y * 6}px, 0)`);
+			background?.setAttribute('style', `transform: translate3d(${x * -4}px, ${y * -3}px, 0)`);
+		};
+		hero.addEventListener('pointermove', onPointerMove);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		updateScroll();
+
+		if (audio instanceof HTMLAudioElement && playButton instanceof HTMLButtonElement && muteButton instanceof HTMLButtonElement && volume instanceof HTMLInputElement && status instanceof HTMLElement) {
+			const locale = player instanceof HTMLElement && player.dataset.locale === 'zh';
+			const copy = { ready: locale ? '准备播放' : 'Ready to play', playing: locale ? '正在播放' : 'Now playing', blocked: locale ? '播放被阻止' : 'Playback blocked' };
+			const sync = () => { playButton.textContent = audio.paused ? '▶' : 'Ⅱ'; status.textContent = audio.paused ? copy.ready : copy.playing; volume.value = String(Math.round(audio.volume * 100)); };
+			playButton.addEventListener('click', async () => { if (audio.paused) { try { await audio.play(); } catch { status.textContent = copy.blocked; } } else audio.pause(); sync(); });
+			muteButton.addEventListener('click', () => { audio.muted = !audio.muted; });
+			volume.addEventListener('input', () => { audio.volume = Number(volume.value) / 100; audio.muted = audio.volume === 0; });
+			['play', 'pause', 'volumechange', 'ended'].forEach((event) => audio.addEventListener(event, sync));
+			audio.volume = .45;
+			sync();
+		}
+		hero.dataset.motionBound = 'true';
+	};
+	setupHeroMotion();
+	document.addEventListener('astro:page-load', setupHeroMotion);
+</script>
+
+<style is:global>
+	.personal-home .home-hero { min-height: calc(100svh - 64px); position: relative; isolation: isolate; overflow: hidden; padding: 36px 0 42px; display: grid; place-items: center; }
+	.home-hero::after { content: ''; position: absolute; inset: auto 0 0; height: 22%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--background)); pointer-events: none; }
+	.hero-background { position: absolute; inset: -4%; z-index: -3; transition: transform .15s linear; pointer-events: none; }
+	.hero-background::before, .hero-background::after { content: ''; position: absolute; border-radius: 50%; border: 1px solid var(--divider); }
+	.hero-background::before { width: min(58vw, 720px); aspect-ratio: 1; left: 8%; top: 8%; }
+	.hero-background::after { width: min(34vw, 420px); aspect-ratio: 1; right: 10%; bottom: 2%; background: var(--accent-soft); opacity: .55; }
+	.hero-background span { position: absolute; width: 1px; height: 65%; left: 17%; top: 18%; background: var(--divider); transform: rotate(22deg); }
+	.hero-background i { position: absolute; width: 38%; height: 1px; right: 7%; top: 27%; background: var(--accent); opacity: .45; transform: rotate(-18deg); }
+	.hero-wordmark { position: absolute; z-index: 0; left: 50%; top: 49%; width: max-content; color: var(--text-primary); font: 700 clamp(108px, 25vw, 370px)/.78 var(--display); letter-spacing: -.13em; white-space: nowrap; transform: translate(-50%, -50%); user-select: none; pointer-events: none; }
+	.hero-person-layer { position: absolute; z-index: 1; left: 50%; top: 53%; height: min(78svh, 760px); width: min(52vw, 560px); transform: translate(-50%, -50%); transition: transform .18s ease-out; pointer-events: none; display: flex; justify-content: center; align-items: flex-end; }
+	.hero-person-layer { border-bottom: 1px solid var(--divider); }
+	.hero-person-slot-label { position: absolute; bottom: 14%; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; opacity: .7; }
+	.hero-lockup { position: relative; z-index: 2; width: 100%; align-self: start; padding-top: clamp(30px, 9vh, 100px); text-align: center; pointer-events: none; }
+	.hero-kicker { margin: 0; color: var(--accent); font: 600 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
+	.hero-lockup h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+	.hero-positioning { margin: 17px 0 0; color: var(--text-secondary); font: 12px/1.4 var(--mono); letter-spacing: .08em; }
+	.home-music-player { position: absolute; z-index: 3; left: 0; bottom: 42px; display: flex; align-items: center; gap: 10px; padding: 7px 0; color: var(--text-primary); background: transparent; border: 0; box-shadow: none; }
+	.home-music-copy { display: grid; gap: 2px; min-width: 76px; }
+	.home-music-copy span, .home-music-copy small, .home-music-status { color: var(--text-muted); font: 9px/1 var(--mono); letter-spacing: .05em; }
+	.home-music-copy strong { font-size: 12px; line-height: 1.1; }
+	.home-music-controls { display: flex; gap: 4px; }
+	.home-music-button { width: 25px; height: 25px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text-primary); font-size: 10px; cursor: pointer; }
+	.home-music-volume { display: none; }
+	.home-music-status { white-space: nowrap; }
+	.home-scroll-cue { position: absolute; z-index: 3; right: 0; bottom: 47px; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .16em; }
+	.home-scroll-cue span:last-child { color: var(--accent); font-size: 18px; }
+	@keyframes hero-wordmark-in { from { opacity: 0; letter-spacing: -.02em; transform: translate(-50%, -45%) scale(.94); } to { opacity: 1; letter-spacing: -.13em; transform: translate(-50%, -50%) scale(1); } }
+	@keyframes hero-person-in { from { opacity: 0; transform: translate(-50%, -43%) scale(.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+	.hero-wordmark { animation: hero-wordmark-in .9s cubic-bezier(.2,.8,.2,1) both; }
+	.hero-person-layer { animation: hero-person-in 1s .12s cubic-bezier(.2,.8,.2,1) both; }
+	.hero-lockup, .home-music-player, .home-scroll-cue { animation: hero-support-in .6s .5s ease both; }
+	@keyframes hero-support-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+	@media (max-width: 760px) { .personal-home .home-hero { min-height: calc(100svh - 58px); padding: 28px 0 38px; } .hero-wordmark { top: 47%; font-size: clamp(80px, 26vw, 160px); } .hero-person-layer { top: 52%; height: 61svh; width: min(88vw, 360px); } .hero-lockup { padding-top: 22px; } .hero-kicker { font-size: 10px; } .hero-positioning { max-width: 240px; margin-inline: auto; line-height: 1.55; } .home-music-player { left: 0; bottom: 26px; } .home-music-status { display: none; } .home-scroll-cue { right: 0; bottom: 32px; } .hero-background::before { width: 90vw; left: -20%; top: 14%; } .hero-background::after { width: 60vw; right: -15%; bottom: 10%; } }
+	@media (prefers-reduced-motion: reduce) { .hero-wordmark, .hero-person-layer, .hero-lockup, .home-music-player, .home-scroll-cue { animation: none; } .hero-person-layer, .hero-background { transition: none; } }
+</style>

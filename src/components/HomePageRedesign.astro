@@ -27,56 +27,13 @@ const { lang, posts, projects } = Astro.props as {
 	<HomeContact lang={lang} />
 </div>
 
-<script>
-	const setupHomePlayer = () => {
-		const player = document.querySelector('[data-home-player]');
-		if (!(player instanceof HTMLElement) || player.dataset.bound === 'true') return;
-		const audio = player.querySelector('audio');
-		const playButton = player.querySelector('[data-player-toggle]');
-		const muteButton = player.querySelector('[data-player-mute]');
-		const volume = player.querySelector('[data-player-volume]');
-		const status = player.querySelector('[data-player-status]');
-		if (!(audio instanceof HTMLAudioElement) || !(playButton instanceof HTMLButtonElement) || !(muteButton instanceof HTMLButtonElement) || !(volume instanceof HTMLInputElement) || !(status instanceof HTMLElement)) return;
-		const sync = () => { playButton.textContent = audio.paused ? '▶' : 'Ⅱ'; status.textContent = audio.paused ? 'Ready to play' : 'Now playing'; volume.value = String(Math.round(audio.volume * 100)); };
-		playButton.addEventListener('click', async () => { if (audio.paused) { try { await audio.play(); } catch { status.textContent = 'Playback blocked'; } } else audio.pause(); sync(); });
-		muteButton.addEventListener('click', () => { audio.muted = !audio.muted; });
-		volume.addEventListener('input', () => { audio.volume = Number(volume.value) / 100; audio.muted = audio.volume === 0; });
-		['play', 'pause', 'volumechange', 'ended'].forEach((event) => audio.addEventListener(event, sync));
-		audio.volume = 0.45;
-		player.dataset.bound = 'true';
-		sync();
-	};
-	setupHomePlayer();
-	document.addEventListener('astro:page-load', setupHomePlayer);
-</script>
-
 <style is:global>
 	.personal-home { --home-content: min(100%, 1120px); }
-	.personal-home .home-hero { min-height: calc(100vh - 64px); padding: clamp(64px, 11vw, 150px) 0 48px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr); gap: clamp(32px, 8vw, 120px); align-items: center; position: relative; }
-	.home-hero-copy { max-width: 680px; }
-	.home-hero-kicker, .home-section-label { margin: 0 0 16px; color: var(--accent); font: 600 12px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
-	.home-hero h1 { max-width: 11ch; margin: 0; color: var(--text-primary); font: 650 clamp(42px, 7vw, 88px)/.98 var(--display); letter-spacing: -.065em; }
-	.home-hero-positioning { max-width: 32em; margin: 28px 0 0; color: var(--text-secondary); font-size: clamp(17px, 2vw, 21px); }
-	.home-hero-actions, .home-contact-layout { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 36px; }
+	.home-contact-layout { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 36px; }
 	.home-button { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--border); border-radius: 999px; font-size: 14px; font-weight: 650; transition: transform .2s ease, background .2s ease, color .2s ease; }
 	.home-button:hover { transform: translateY(-2px); }
 	.home-button-primary { border-color: var(--accent); background: var(--accent); color: var(--interactive-on-accent); }
 	.home-button-secondary { color: var(--text-primary); background: var(--surface); }
-	.home-hero-media { min-height: min(48vw, 500px); display: grid; place-items: center; position: relative; background: var(--surface-secondary); color: var(--text-muted); overflow: hidden; }
-	.home-hero-media::before { content: ''; position: absolute; inset: 12%; border: 1px solid var(--divider); border-radius: 50%; transform: rotate(-18deg) scaleX(.72); }
-	.home-hero-media::after { content: ''; width: 54%; aspect-ratio: 1; border-radius: 50%; background: var(--accent-soft); }
-	.home-hero-mark { position: absolute; z-index: 1; color: var(--text-primary); font: 700 clamp(38px, 6vw, 76px)/1 var(--display); letter-spacing: -.08em; }
-	.home-hero-media > span { position: absolute; left: 18px; bottom: 16px; z-index: 2; font: 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-	.home-scroll-cue { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font: 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-	.home-scroll-cue span:last-child { color: var(--accent); font-size: 20px; }
-	.home-music-player { position: absolute; right: 0; bottom: 46px; display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); }
-	.home-music-copy { display: grid; gap: 2px; min-width: 90px; }
-	.home-music-copy span, .home-music-copy small, .home-music-status { color: var(--text-muted); font: 10px var(--mono); }
-	.home-music-copy strong { font-size: 13px; }
-	.home-music-controls { display: flex; gap: 4px; }
-	.home-music-button { width: 28px; height: 28px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-secondary); color: var(--text-primary); cursor: pointer; }
-	.home-music-volume { width: 70px; }
-	.home-music-volume input { width: 100%; accent-color: var(--accent); }
 	.home-section { width: var(--home-content); margin: 0 auto; padding: clamp(72px, 10vw, 144px) 0; border-top: 1px solid var(--divider); scroll-margin-top: 80px; }
 	.home-section-heading { display: grid; grid-template-columns: minmax(160px, .34fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
 	.home-section-label { margin-top: 10px; }
@@ -106,6 +63,6 @@ const { lang, posts, projects } = Astro.props as {
 	.home-contact-layout { grid-template-columns: 1fr auto; align-items: center; }
 	.home-empty { margin: 0; padding: 24px; background: var(--surface-secondary); color: var(--text-secondary); }
 	.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-	@media (max-width: 760px) { .personal-home .home-hero { min-height: auto; grid-template-columns: 1fr; padding: 64px 0 110px; } .home-hero h1 { max-width: 12ch; } .home-hero-media { min-height: 58vw; order: -1; } .home-music-player { left: 0; right: auto; bottom: 24px; max-width: 100%; } .home-section { padding: 72px 0; } .home-section-heading { display: block; } .home-section-label { margin-bottom: 18px; } .home-section-intro { margin-top: 16px; } .home-section-content { margin-top: 28px; } .home-list-grid, .home-project-list, .home-profile-layout, .home-contact-layout { grid-template-columns: 1fr; } .home-list-item { min-height: 0; } .home-profile-notes { margin-top: 14px; } .home-contact-layout { gap: 24px; } }
+	@media (max-width: 760px) { .home-section { padding: 72px 0; } .home-section-heading { display: block; } .home-section-label { margin-bottom: 18px; } .home-section-intro { margin-top: 16px; } .home-section-content { margin-top: 28px; } .home-list-grid, .home-project-list, .home-profile-layout, .home-contact-layout { grid-template-columns: 1fr; } .home-list-item { min-height: 0; } .home-profile-notes { margin-top: 14px; } .home-contact-layout { gap: 24px; } }
 	@media (prefers-reduced-motion: reduce) { .home-button, .home-list-item, .home-project-item { transition: none; } }
 </style>
