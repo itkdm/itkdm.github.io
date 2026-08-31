@@ -1,0 +1,6 @@
+---
+import HomeSection from './HomeSection.astro';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<HomeSection id="profile" label="03 · PROFILE" title={isZh ? '个人档案' : 'Profile'}><div class="home-profile-layout"><p class="home-profile-lead">{isZh ? '我主要做服务端开发，也关注前端体验、AI 编程与工程效率。这个网站记录我对技术、工作方式和持续学习的长期观察。' : 'I work primarily on backend systems, while staying close to frontend craft, AI-assisted development, and engineering efficiency. This site is a record of that ongoing practice.'}</p><div class="home-profile-notes"><div><span>Focus</span><strong>{isZh ? '工程实践' : 'Engineering'}</strong></div><div><span>Approach</span><strong>{isZh ? '持续记录' : 'Keep writing'}</strong></div></div></div></HomeSection>

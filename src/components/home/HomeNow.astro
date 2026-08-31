@@ -1,0 +1,9 @@
+---
+import HomeSection from './HomeSection.astro';
+import type { CollectionEntry } from 'astro:content';
+const { lang, posts } = Astro.props as { lang: 'zh' | 'en'; posts: CollectionEntry<'blog'>[] };
+const isZh = lang === 'zh';
+---
+<HomeSection id="now" label="02 · NOW" title={isZh ? '近期动态' : 'Recent updates'} intro={isZh ? '正在写、正在做，也正在慢慢整理成可复用的经验。' : 'What is being written, built, and shaped into reusable experience.'}>
+	<div class="home-list-grid">{posts.length > 0 ? posts.map((post) => <a class="home-list-item" href={`/${lang}/blog/${post.data.slug ?? post.slug.split('/').pop() ?? post.slug}/`}><span class="home-item-meta">{post.data.date.toLocaleDateString(isZh ? 'zh-CN' : 'en-US')}</span><strong>{post.data.title}</strong><span>{post.data.summary}</span></a>) : <p class="home-empty">{isZh ? '近期内容正在整理中。' : 'Recent updates are being prepared.'}</p>}</div>
+</HomeSection>

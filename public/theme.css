@@ -47,23 +47,33 @@
   --s-800: #065F46;
   --s-900: #064E3B;
 
-  /* Semantic usage (Blue-White Tech Theme) */
-  --bg: #FFFFFF;
-  --bg-elev: #FFFFFF;
-  --bg-soft: var(--n-50);
-  --text: #0F172A;
-  --text-muted: #475569;
-  --text-faint: #94A3B8;
-  --border: rgba(59, 130, 246, 0.12);
-  --border-strong: rgba(59, 130, 246, 0.24);
+  /* Semantic tokens: Warm Editorial. Components should use these names. */
+  --background: #F3EFE6;
+  --surface: #FBF9F3;
+  --surface-secondary: #EAE4D8;
+  --text-primary: #171717;
+  --text-secondary: #625F59;
+  --text-muted: #8A857C;
+  --border: rgba(23, 23, 23, 0.14);
+  --divider: rgba(23, 23, 23, 0.1);
+  --accent: #315CF5;
+  --accent-hover: #2449D1;
+  --accent-soft: rgba(49, 92, 245, 0.14);
+  --interactive-on-accent: #FFFFFF;
+  --shadow: 0 14px 34px rgba(23, 23, 23, 0.1);
+  --display: Georgia, 'Times New Roman', 'Songti SC', serif;
 
-  --primary: var(--p-700);
-  --primary-hover: var(--p-800);
-  --primary-soft: rgba(59, 130, 246, 0.12);
-
-  --accent: var(--a-600);
-  --accent-hover: var(--a-700);
-  --accent-soft: rgba(6, 182, 212, 0.14);
+  /* Legacy aliases keep existing non-home pages stable while they migrate. */
+  --bg: var(--background);
+  --bg-elev: var(--surface);
+  --bg-soft: var(--surface-secondary);
+  --text: var(--text-primary);
+  --text-muted: #8A857C;
+  --text-faint: var(--text-muted);
+  --border-strong: rgba(23, 23, 23, 0.28);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-soft: var(--accent-soft);
 
   --success: var(--s-600);
   --success-soft: rgba(5, 150, 105, 0.14);
@@ -110,6 +120,37 @@
   --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei",
     Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Existing theme hooks remain available for future theme controls. */
+html[data-theme='dark'] {
+  --background: #171717;
+  --surface: #242424;
+  --surface-secondary: #2F2F2F;
+  --text-primary: #F3EFE6;
+  --text-secondary: #C8C3BA;
+  --text-muted: #9D978D;
+  --border: rgba(243, 239, 230, 0.18);
+  --divider: rgba(243, 239, 230, 0.12);
+  --accent: #7D96FF;
+  --accent-hover: #9CAFEE;
+  --accent-soft: rgba(125, 150, 255, 0.2);
+  --interactive-on-accent: #171717;
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme='paper'] {
+  --background: #EFE7D7;
+  --surface: #F8F1E4;
+  --surface-secondary: #E4D7C4;
+  --text-primary: #332A22;
+  --text-secondary: #6F5D4D;
+  --text-muted: #9A8772;
+  --border: rgba(51, 42, 34, 0.16);
+  --divider: rgba(51, 42, 34, 0.11);
+  --accent: #315CF5;
+  --accent-hover: #2449D1;
+  --accent-soft: rgba(49, 92, 245, 0.14);
 }
 
 * {

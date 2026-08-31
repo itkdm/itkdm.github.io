@@ -1,0 +1,6 @@
+---
+import HomeSection from './HomeSection.astro';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<HomeSection id="contact" label="08 · CONTACT" title={isZh ? '联系与合作' : 'Contact & collaboration'}><div class="home-contact-layout"><p>{isZh ? '如果你想交流技术、企业培训或合作方向，欢迎通过 GitHub 联系我。' : 'For technical exchange, company training, or collaboration, GitHub is the best way to reach me.'}</p><a class="home-button home-button-primary" href="https://github.com/itkdm" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></HomeSection>

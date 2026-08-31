@@ -1,0 +1,11 @@
+---
+const { id, label, title, intro = '' } = Astro.props as { id: string; label: string; title: string; intro?: string };
+---
+<section id={id} class="home-section" aria-labelledby={`${id}-title`}>
+	<div class="home-section-heading">
+		<p class="home-section-label">{label}</p>
+		<h2 id={`${id}-title`}>{title}</h2>
+		{intro && <p class="home-section-intro">{intro}</p>}
+	</div>
+	<div class="home-section-content"><slot /></div>
+</section>

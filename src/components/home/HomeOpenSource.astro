@@ -1,0 +1,7 @@
+---
+import HomeSection from './HomeSection.astro';
+import type { CollectionEntry } from 'astro:content';
+const { lang, projects } = Astro.props as { lang: 'zh' | 'en'; projects: CollectionEntry<'projects'>[] };
+const isZh = lang === 'zh';
+---
+<HomeSection id="open-source" label="04 · OPEN SOURCE" title={isZh ? '开源实践' : 'Open source'} intro={isZh ? '保留真实项目与实验的入口，细节留待后续逐项展开。' : 'A focused entry point for practical projects and experiments, to be developed further.'}><div class="home-project-list">{projects.length > 0 ? projects.map((project) => <a class="home-project-item" href={`/${lang}/projects/${project.data.slug ?? project.slug.split('/').pop() ?? project.slug}/`}><span>↗</span><div><strong>{project.data.title}</strong><p>{project.data.summary}</p></div></a>) : <p class="home-empty">{isZh ? '开源项目正在整理中。' : 'Open source work is being prepared.'}</p>}</div></HomeSection>

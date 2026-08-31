@@ -1,0 +1,6 @@
+---
+import HomeSection from './HomeSection.astro';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<HomeSection id="guestbook" label="07 · GUESTBOOK" title={isZh ? '访客留言' : 'Guestbook'}><div class="home-guestbook-placeholder"><p>{isZh ? '留言功能将在后续接入。现在可以通过下方方式与我联系。' : 'The guestbook will arrive later. For now, you can reach me through the contact options below.'}</p></div></HomeSection>

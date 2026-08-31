@@ -1,0 +1,6 @@
+---
+import HomeSection from './HomeSection.astro';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<HomeSection id="beyond-work" label="06 · BEYOND WORK" title={isZh ? '工作之外' : 'Beyond work'}><div class="home-beyond-placeholder"><span aria-hidden="true">○</span><p>{isZh ? '这里会放下工作之外的阅读、观察和一些不急着归类的想法。' : 'A place for reading, observing, and thoughts that do not need a category yet.'}</p></div></HomeSection>

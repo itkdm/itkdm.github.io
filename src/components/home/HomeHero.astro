@@ -1,0 +1,20 @@
+---
+import yellowTrackUrl from '../../Yellow - Coldplay.mp3?url';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
+	<div class="home-hero-copy">
+		<p class="home-hero-kicker">{isZh ? '布吉岛 · 个人官网' : 'Bu Ji Dao · Personal site'}</p>
+		<h1 id="home-hero-title">{isZh ? '把经验，写成可以被理解的东西。' : 'Turning experience into something understandable.'}</h1>
+		<p class="home-hero-positioning">{isZh ? '服务端开发者、内容作者，也持续探索 AI 与工程实践。' : 'Backend developer, writer, and long-term explorer of AI in engineering.'}</p>
+		<div class="home-hero-actions"><a class="home-button home-button-primary" href={`/${lang}/blog/`}>{isZh ? '阅读内容' : 'Read the work'}</a><a class="home-button home-button-secondary" href="#profile">{isZh ? '了解我' : 'About me'}</a></div>
+	</div>
+	<div class="home-hero-media" data-hero-media aria-label={isZh ? '个人视觉占位' : 'Personal visual placeholder'}><div class="home-hero-mark" aria-hidden="true">BJD</div><span>{isZh ? '视觉区域 · 后续设计' : 'Visual area · to be designed'}</span></div>
+	<a class="home-scroll-cue" href="#now" data-scroll-hook><span>{isZh ? '向下探索' : 'Scroll to explore'}</span><span aria-hidden="true">↓</span></a>
+	<div class="home-music-player" data-home-player>
+		<div class="home-music-copy"><span>{isZh ? '正在听' : 'Listening to'}</span><strong>Yellow</strong><small>Coldplay</small></div>
+		<div class="home-music-controls"><button type="button" class="home-music-button" data-player-toggle aria-label={isZh ? '播放或暂停音乐' : 'Play or pause music'}>▶</button><button type="button" class="home-music-button" data-player-mute aria-label={isZh ? '静音或取消静音' : 'Mute or unmute'}>⌁</button></div>
+		<label class="home-music-volume"><span class="sr-only">Volume</span><input type="range" min="0" max="100" value="45" data-player-volume /></label><span class="home-music-status" data-player-status>{isZh ? '准备播放' : 'Ready to play'}</span><audio preload="metadata" src={yellowTrackUrl}></audio>
+	</div>
+</section>

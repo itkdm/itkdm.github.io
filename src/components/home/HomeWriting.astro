@@ -1,0 +1,6 @@
+---
+import HomeSection from './HomeSection.astro';
+const { lang } = Astro.props as { lang: 'zh' | 'en' };
+const isZh = lang === 'zh';
+---
+<HomeSection id="writing" label="05 · WRITING" title={isZh ? '内容与观点' : 'Writing'}><div class="home-writing-callout"><p>{isZh ? '从代码、工具和工作现场出发，写下那些值得反复思考的问题。' : 'Writing from code, tools, and the work itself—especially the questions worth revisiting.'}</p><a class="home-text-link" href={`/${lang}/blog/`}>{isZh ? '浏览全部文章 →' : 'Browse all writing →'}</a></div></HomeSection>
