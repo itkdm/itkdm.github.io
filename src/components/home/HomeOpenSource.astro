@@ -30,7 +30,7 @@ const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 
 		<nav class="open-source-project-nav" aria-label={isZh ? '精选开源项目' : 'Selected open-source projects'} data-open-source-reveal>
 			<ol>
-				{featuredProjects.map((project, index) => <li><button type="button" class:list={{ 'is-active': index === 0 }} data-project-trigger data-project-index={index} aria-current={index === 0 ? 'true' : undefined} aria-controls={`project-stage-${project.key}`}><span class="project-nav-node" aria-hidden="true"></span><span class="project-nav-copy"><small>{project.order}</small><strong>{project.name}</strong>{project.displayName && <em>{project.displayName}</em>}<span>{project.subtitle || (isZh ? '企业 AI Agent 能力治理与 MCP' : 'Enterprise AI Agent governance & MCP')}</span></span></button></li>)}
+				{featuredProjects.map((project, index) => <li><button type="button" class:list={{ 'is-active': index === 0 }} data-project-trigger data-project-index={index} aria-current={index === 0 ? 'true' : undefined} aria-controls={`project-stage-${project.key}`}><span class="project-nav-node" aria-hidden="true"></span><span class="project-nav-copy"><small>{project.order}</small><strong>{project.name}</strong>{project.displayName && <em>{project.displayName}</em>}{project.subtitle && <span>{project.subtitle}</span>}</span></button></li>)}
 			</ol>
 		</nav>
 
@@ -41,7 +41,7 @@ const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 				<p class="project-stage-count"><strong>{project.order}</strong><span> / {featuredProjects.length.toString().padStart(2, '0')}</span></p>
 				<h3>{project.name}</h3>
 				<p class="project-stage-name">{project.displayName}</p>
-				<p class="project-stage-subtitle">{project.subtitle || (isZh ? '企业 AI Agent 能力治理与 MCP' : 'Enterprise AI Agent governance & MCP')}</p>
+				{project.subtitle && <p class="project-stage-subtitle">{project.subtitle}</p>}
 				<span class="project-stage-rule" aria-hidden="true"></span>
 				<p class="project-stage-tags">{project.tags.join('  ·  ')}</p>
 				<a class="project-stage-link" href={project.href} target="_blank" rel="noopener noreferrer">github.com/itkdm/{project.key === 'paperduck' ? 'DocuShuttle' : project.key === 'cloudcrane' ? 'CloudCrane' : project.key}<span aria-hidden="true">↗</span></a>
