@@ -6,17 +6,17 @@ const isZh = lang === 'zh';
 ---
 
 <section class="home-hero" data-home-hero aria-labelledby="home-hero-title">
-	<div class="hero-background" data-hero-background aria-hidden="true"><img src="/hero/hero-background.png" alt="" /></div>
+	<div class="hero-background" data-hero-background aria-hidden="true"><img src="/hero/hero-background.webp" alt="" /></div>
 	<div class="hero-title-stack" data-hero-title-stack>
 		<div class="hero-wordmark" aria-hidden="true"><span>布</span><span>吉</span><span class="hero-wordmark-last">岛<i class="hero-wordmark-dot"></i></span></div>
 		<div class="hero-title-rule" aria-hidden="true"><span></span></div>
 		<div class="hero-lockup"><h1 id="home-hero-title" class="sr-only">布吉岛</h1><p class="hero-positioning">{isZh ? 'AI Agent · AI 全栈 · 开源' : 'Java Backend · AI Agent · Open Source'}</p></div>
 	</div>
 	<div class="hero-person-layer" data-hero-person-layer data-hero-person-slot>
-		<img src="/hero/hero-ip.png" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
+		<img src="/hero/hero-ip.webp" alt={isZh ? '布吉岛个人 IP 形象' : 'Bu Ji Dao personal IP'} data-hero-person />
 	</div>
 	<div class="home-music-player" data-home-player data-locale={lang}>
-		<button type="button" class="home-music-cover" data-player-toggle aria-pressed="false" aria-label={isZh ? '播放或暂停 Yellow' : 'Play or pause Yellow'}><span class="home-music-record" aria-hidden="true"><img src="/hero/yellow-cover.png" alt="" /></span></button>
+		<button type="button" class="home-music-cover" data-player-toggle aria-pressed="false" aria-label={isZh ? '播放或暂停 Yellow' : 'Play or pause Yellow'}><span class="home-music-record" aria-hidden="true"><img src="/hero/yellow-cover.webp" alt="" /></span></button>
 		<span class="home-music-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
 		<span class="home-music-track"><strong>Yellow</strong><span> — Coldplay</span></span>
 		<audio preload="metadata" src={yellowTrackUrl}></audio>
