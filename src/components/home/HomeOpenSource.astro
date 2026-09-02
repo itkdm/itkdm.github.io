@@ -130,8 +130,8 @@ const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 	.open-source-stage { position: absolute; top: 18%; right: var(--open-source-gutter); left: 45%; height: 68%; overflow: hidden; }
 	.open-source-watermark { position: absolute; top: -12%; right: -3%; color: color-mix(in srgb, var(--accent) 5%, transparent); font: 800 clamp(220px, 25vw, 420px)/1 var(--display); letter-spacing: -.12em; pointer-events: none; }
 	.open-source-progress { position: absolute; top: 36%; right: 1%; width: 1px; height: 35%; background: var(--divider); }
-	.open-source-progress::before { content: ''; position: absolute; top: var(--project-progress-top, 0%); left: -3px; width: 7px; height: 7px; border: 2px solid var(--accent); border-radius: 50%; background: var(--background); box-shadow: 0 0 0 4px var(--accent-soft); transition: top .35s ease; transform: translateY(-50%); }
-	.open-source-progress i, .open-source-progress b { position: absolute; left: -3px; width: 7px; height: 7px; border: 1px solid var(--divider); border-radius: 50%; background: var(--background); }
+	.open-source-progress::before { content: ''; position: absolute; top: var(--project-progress-top, 0%); left: 50%; width: 7px; height: 7px; border: 2px solid var(--accent); border-radius: 50%; background: var(--background); box-shadow: 0 0 0 4px var(--accent-soft); transition: top .35s ease; transform: translate(-50%, -50%); }
+	.open-source-progress i, .open-source-progress b { position: absolute; left: 50%; width: 7px; height: 7px; border: 1px solid var(--divider); border-radius: 50%; background: var(--background); transform: translateX(-50%); }
 	.open-source-progress i { top: 0; }
 	.open-source-progress b:nth-of-type(1) { top: 33%; }.open-source-progress b:nth-of-type(2) { top: 66%; }.open-source-progress b:nth-of-type(3) { top: 100%; }
 	.open-source-project { position: absolute; inset: 0; display: flex; width: min(100%, 780px); padding-left: clamp(18px, 2.2vw, 42px); flex-direction: column; align-items: flex-start; justify-content: center; opacity: 0; transform: translateY(28px); pointer-events: none; transition: opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
