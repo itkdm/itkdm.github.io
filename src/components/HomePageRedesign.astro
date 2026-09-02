@@ -10,9 +10,10 @@ import HomeGuestbook from './home/HomeGuestbook.astro';
 import HomeContact from './home/HomeContact.astro';
 
 
-const { lang, now } = Astro.props as {
+const { lang, now, posts } = Astro.props as {
 	lang: 'zh' | 'en';
 	now: CollectionEntry<'now'>[];
+	posts: CollectionEntry<'blog'>[];
 };
 ---
 
@@ -21,7 +22,7 @@ const { lang, now } = Astro.props as {
 	<HomeNow lang={lang} events={now} />
 	<HomeProfile lang={lang} />
 	<HomeOpenSource lang={lang} />
-	<HomeWriting lang={lang} />
+	<HomeWriting lang={lang} posts={posts} />
 	<HomeBeyondWork lang={lang} />
 	<HomeGuestbook lang={lang} />
 	<HomeContact lang={lang} />
@@ -44,7 +45,7 @@ const { lang, now } = Astro.props as {
 	.home-project-item { display: grid; align-content: start; gap: 12px; min-height: 190px; padding: 22px; background: var(--background); transition: background .2s ease; }
 	.home-project-item:hover { background: var(--surface-secondary); }
 	.home-project-item strong { font-size: 19px; line-height: 1.25; }
-	.home-project-item p, .home-profile-lead, .home-writing-callout p, .home-beyond-placeholder p, .home-guestbook-placeholder p, .home-contact-layout p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
+	.home-project-item p, .home-profile-lead, .home-beyond-placeholder p, .home-guestbook-placeholder p, .home-contact-layout p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
 	.home-profile-notes span { color: var(--text-muted); font: 11px var(--mono); }
 	.home-profile-layout, .home-contact-layout { display: grid; grid-template-columns: 1fr .55fr; gap: 48px; align-items: start; }
 	.home-profile-lead { max-width: 34em; font-size: clamp(20px, 3vw, 30px); line-height: 1.35; color: var(--text-primary); }
@@ -54,9 +55,6 @@ const { lang, now } = Astro.props as {
 	.home-project-item { grid-template-columns: auto 1fr; min-height: 150px; }
 	.home-project-item > span { color: var(--accent); font-size: 22px; }
 	.home-project-item p { margin-top: 8px; font-size: 14px; }
-	.home-writing-callout { max-width: 720px; padding-left: 24px; border-left: 3px solid var(--accent); }
-	.home-writing-callout p { color: var(--text-primary); font-size: clamp(24px, 4vw, 42px); line-height: 1.2; letter-spacing: -.03em; }
-	.home-text-link { display: inline-block; margin-top: 26px; color: var(--accent); font-weight: 650; }
 	.home-beyond-placeholder, .home-guestbook-placeholder { min-height: 180px; display: flex; gap: 24px; align-items: center; padding: 28px; background: var(--surface-secondary); }
 	.home-beyond-placeholder > span { color: var(--accent); font-size: 58px; }
 	.home-beyond-placeholder p, .home-guestbook-placeholder p { max-width: 34em; }

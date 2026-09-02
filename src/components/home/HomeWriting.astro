@@ -1,6 +1,132 @@
 ---
-import HomeSection from './HomeSection.astro';
-const { lang } = Astro.props as { lang: 'zh' | 'en' };
+import type { CollectionEntry } from 'astro:content';
+import { homeWritingTopics, type HomeWritingFallback } from '../../data/home-writing';
+
+const { lang, posts } = Astro.props as { lang: 'zh' | 'en'; posts: CollectionEntry<'blog'>[] };
 const isZh = lang === 'zh';
+
+const getPostSlug = (post: CollectionEntry<'blog'>) => post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
+const postsBySlug = new Map(posts.map((post) => [getPostSlug(post), post]));
+const getSelectedWriting = (topic: (typeof homeWritingTopics)[number]) => {
+	const selected = topic.selectedSlugs[lang]
+		.map((slug) => postsBySlug.get(slug))
+		.filter((post): post is CollectionEntry<'blog'> => Boolean(post))
+		.map((post) => ({ title: post.data.title, href: `/${lang}/blog/${getPostSlug(post)}/` }));
+	const missing = Math.max(0, 2 - selected.length);
+	const fallbacks: HomeWritingFallback[] = topic.fallback[lang].slice(0, missing);
+	return [...selected, ...fallbacks];
+};
+
+const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: getSelectedWriting(topic) }));
 ---
-<HomeSection id="writing" label="05 · WRITING" title={isZh ? '内容与观点' : 'Writing'}><div class="home-writing-callout"><p>{isZh ? '从代码、工具和工作现场出发，写下那些值得反复思考的问题。' : 'Writing from code, tools, and the work itself—especially the questions worth revisiting.'}</p><a class="home-text-link" href={`/${lang}/blog/`}>{isZh ? '浏览全部文章 →' : 'Browse all writing →'}</a></div></HomeSection>
+
+<section id="writing" class="home-writing-index" data-home-writing aria-labelledby="writing-title">
+	<div class="home-writing-frame">
+		<header class="writing-heading" data-writing-reveal>
+			<p class="writing-label"><span aria-hidden="true">●</span> 05 · WRITING</p>
+			<h2 id="writing-title">{isZh ? '内容与观点' : 'Writing & Perspectives'}</h2>
+		</header>
+		<p class="writing-index-label" data-writing-reveal>EDITORIAL INDEX <span aria-hidden="true">●</span></p>
+
+		<nav class="writing-topic-nav" aria-label={isZh ? '内容方向' : 'Writing topics'} data-writing-reveal>
+			<ol>
+				{topics.map((topic, index) => (
+					<li>
+						<button type="button" data-writing-topic data-writing-index={index} aria-controls={`writing-topic-${topic.key}`} aria-current={index === 0 ? 'true' : undefined}>
+							<span class="writing-topic-number">{topic.order}</span>
+							<span class="writing-topic-node" aria-hidden="true"></span>
+							<strong>{topic.label}</strong>
+						</button>
+					</li>
+				))}
+			</ol>
+		</nav>
+
+		<div class="writing-detail-region" data-writing-details>
+			{topics.map((topic, index) => (
+				<article id={`writing-topic-${topic.key}`} class:list={{ 'is-active': index === 0 }} class="writing-topic-detail" data-writing-detail data-writing-index={index} aria-hidden={index === 0 ? undefined : 'true'} inert={index === 0 ? undefined : true}>
+					<p class="writing-detail-number" aria-hidden="true">{topic.order}</p>
+					<h3>{topic.label}</h3>
+					<span class="writing-detail-rule" aria-hidden="true"></span>
+					<p class="writing-statement">{topic.statement[lang]}</p>
+					<p class="writing-description">{topic.description[lang]}</p>
+					<div class="writing-selected">
+						<p class="writing-selected-label">SELECTED WRITING</p>
+						<ol>
+							{topic.selectedWriting.map((writing, writingIndex) => (
+								<li>
+									{writing.href ? <a href={writing.href}><span>{String(writingIndex + 1).padStart(2, '0')}</span><strong>{writing.title}</strong><i aria-hidden="true">↗</i></a> : <span class="writing-fallback"><span>{String(writingIndex + 1).padStart(2, '0')}</span><strong>{writing.title}</strong></span>}
+								</li>
+							))}
+						</ol>
+					</div>
+				</article>
+			))}
+		</div>
+
+		<p class="writing-scroll-hint" data-writing-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span></p>
+	</div>
+</section>
+
+<script>
+	const initWritingIndex = () => {
+		const section = document.querySelector('[data-home-writing]');
+		const details = [...(section?.querySelectorAll('[data-writing-detail]') ?? [])];
+		const topics = [...(section?.querySelectorAll('[data-writing-topic]') ?? [])];
+		if (!(section instanceof HTMLElement) || details.length === 0 || topics.length === 0 || section.dataset.motionBound === 'true') return;
+		section.dataset.motionBound = 'true';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const reveal = () => section.classList.add('is-visible');
+		if (reducedMotion || !('IntersectionObserver' in window)) reveal();
+		else new IntersectionObserver((entries, observer) => { if (entries.some((entry) => entry.isIntersecting)) { reveal(); observer.disconnect(); } }, { threshold: .2 }).observe(section);
+
+		let activeIndex = 0;
+		const setActive = (nextIndex) => {
+			activeIndex = Math.max(0, Math.min(details.length - 1, nextIndex));
+			topics.forEach((topic, index) => { topic.classList.toggle('is-active', index === activeIndex); if (index === activeIndex) topic.setAttribute('aria-current', 'true'); else topic.removeAttribute('aria-current'); });
+			details.forEach((detail, index) => { detail.classList.toggle('is-active', index === activeIndex); detail.setAttribute('aria-hidden', index === activeIndex ? 'false' : 'true'); detail.toggleAttribute('inert', index !== activeIndex); });
+		};
+		topics.forEach((topic, index) => {
+			topic.addEventListener('click', () => setActive(index));
+			topic.addEventListener('keydown', (event) => {
+				if (!['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+				event.preventDefault();
+				const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? topics.length - 1 : (index + (event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1) + topics.length) % topics.length;
+				setActive(nextIndex);
+				topics[nextIndex].focus();
+			});
+		});
+		setActive(0);
+	};
+
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWritingIndex, { once: true });
+	else initWritingIndex();
+</script>
+
+<style>
+	.home-writing-index { width: 100vw; min-height: 100svh; margin-left: calc(50% - 50vw); background: var(--background); color: var(--text-primary); overflow: hidden; }
+	.home-writing-frame { position: relative; min-height: 100svh; height: max(720px, 100svh); padding: clamp(76px, 9vh, 108px) clamp(28px, 5vw, 88px) 40px; }
+	.writing-heading { position: absolute; top: clamp(76px, 9vh, 108px); left: clamp(28px, 5vw, 88px); z-index: 2; }
+	.writing-label { margin: 0 0 18px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }.writing-label span { margin-right: 12px; font-size: 11px; }
+	.writing-heading h2 { margin: 0; font: 650 clamp(46px, 5.3vw, 76px)/1 var(--display); letter-spacing: -.07em; }
+	.writing-index-label { position: absolute; top: clamp(80px, 9.2vh, 112px); right: clamp(28px, 5vw, 88px); margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }.writing-index-label span { margin-left: 12px; color: var(--accent); font-size: 9px; }
+	.writing-topic-nav { position: absolute; top: 30%; left: clamp(28px, 5vw, 88px); width: min(330px, 25vw); height: 47%; border-left: 1px solid var(--divider); }
+	.writing-topic-nav ol { display: flex; flex-direction: column; justify-content: space-between; height: 100%; margin: 0; padding: 0 0 0 28px; list-style: none; }
+	.writing-topic-nav li { position: relative; }.writing-topic-nav button { position: relative; display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; padding: 0; border: 0; background: transparent; color: var(--text-muted); text-align: left; cursor: pointer; transition: color .3s ease; }
+	.writing-topic-number { font: 13px var(--mono); }.writing-topic-nav strong { font: 650 15px/1.2 var(--mono); letter-spacing: .12em; }.writing-topic-node { position: absolute; top: 5px; left: -33px; width: 9px; height: 9px; border: 1px solid var(--text-muted); border-radius: 50%; background: var(--background); transform: translateX(-50%); transition: border-color .3s ease, background .3s ease, box-shadow .3s ease; }
+	.writing-topic-nav button::after { content: ''; position: absolute; top: 50%; right: 0; width: 0; height: 1px; background: var(--accent); transition: width .35s ease; }.writing-topic-nav button.is-active { color: var(--text-primary); }.writing-topic-nav button.is-active .writing-topic-node { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }.writing-topic-nav button.is-active::after { width: 42%; }.writing-topic-nav button:hover { color: var(--accent); }
+	.writing-detail-region { position: absolute; top: 24%; right: clamp(28px, 8vw, 150px); width: min(52vw, 760px); height: 62%; }.writing-topic-detail { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; opacity: 0; transform: translateY(24px); pointer-events: none; transition: opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1); }.writing-topic-detail.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+	.writing-detail-number { margin: 0 0 8px; color: color-mix(in srgb, var(--accent) 18%, transparent); font: 800 clamp(130px, 15vw, 250px)/.75 var(--display); letter-spacing: -.12em; }.writing-topic-detail h3 { position: absolute; top: 17%; margin: 0; color: var(--accent); font: 650 clamp(18px, 1.5vw, 24px)/1 var(--mono); letter-spacing: .14em; }.writing-detail-rule { display: block; width: 46px; height: 2px; margin: 16px 0 22px; background: var(--accent); }
+	.writing-statement { max-width: 650px; margin: 0; font: 650 clamp(30px, 3.2vw, 52px)/1.18 var(--display); letter-spacing: -.04em; }.writing-description { max-width: 520px; margin: 18px 0 0; color: var(--text-secondary); font: 17px/1.7 var(--display); }.writing-selected { width: min(100%, 650px); margin-top: 38px; }.writing-selected-label { margin: 0 0 12px; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }.writing-selected ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--divider); }.writing-selected li { border-bottom: 1px solid var(--divider); }.writing-selected a, .writing-fallback { display: grid; grid-template-columns: 34px 1fr auto; gap: 14px; align-items: center; min-height: 48px; color: var(--text-primary); text-decoration: none; }.writing-selected a > span, .writing-fallback > span { color: var(--accent); font: 11px var(--mono); }.writing-selected strong { font: 16px/1.35 var(--display); }.writing-selected i { color: var(--accent); font: normal 17px var(--sans); transition: transform .2s ease; }.writing-selected a:hover { color: var(--accent); }.writing-selected a:hover i { transform: translate(3px, -3px); }
+	.writing-scroll-hint { position: absolute; left: 50%; bottom: 28px; margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; transform: translateX(-50%); white-space: nowrap; }.writing-scroll-hint span { margin: 0 12px; color: var(--accent); }
+	.home-writing-index [data-writing-reveal] { opacity: 0; }.home-writing-index.is-visible [data-writing-reveal] { opacity: 1; transition: opacity .65s ease; }.home-writing-index.is-visible .writing-topic-nav { animation: writing-nav-in .8s .2s both cubic-bezier(.2,.8,.2,1); }.home-writing-index.is-visible .writing-detail-region { animation: writing-detail-in .8s .35s both cubic-bezier(.2,.8,.2,1); }.writing-topic-nav { opacity: 0; }.home-writing-index.is-visible .writing-topic-nav { opacity: 1; }
+	@keyframes writing-nav-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } } @keyframes writing-detail-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+	@media (max-width: 760px) {
+		.home-writing-frame { min-height: 820px; height: 100svh; padding: 58px 20px 32px; }.writing-heading { top: 58px; left: 20px; }.writing-label { margin-bottom: 14px; font-size: 10px; }.writing-heading h2 { font-size: 46px; }.writing-index-label { top: 62px; right: 20px; font-size: 8px; letter-spacing: .12em; }
+		.writing-topic-nav { top: 28%; left: 20px; width: calc(100% - 40px); height: 18%; border-left: 0; }.writing-topic-nav ol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; padding: 0; }.writing-topic-nav button { grid-template-columns: 24px 1fr; gap: 8px; }.writing-topic-number { font-size: 10px; }.writing-topic-nav strong { font-size: 10px; letter-spacing: .06em; }.writing-topic-node { top: 3px; left: 2px; width: 7px; height: 7px; transform: translateX(-50%); }.writing-topic-nav button::after { display: none; }
+		.writing-detail-region { top: 47%; left: 20px; right: 20px; width: auto; height: 38%; }.writing-detail-number { font-size: 130px; }.writing-topic-detail h3 { top: 5%; font-size: 14px; }.writing-detail-rule { margin: 12px 0 16px; }.writing-statement { font-size: clamp(26px, 8vw, 38px); }.writing-description { margin-top: 14px; font-size: 14px; line-height: 1.6; }.writing-selected { margin-top: 24px; }.writing-selected a, .writing-fallback { grid-template-columns: 26px 1fr auto; gap: 8px; min-height: 42px; }.writing-selected strong { font-size: 13px; }.writing-selected i { font-size: 15px; }.writing-scroll-hint { bottom: 28px; font-size: 8px; letter-spacing: .14em; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.writing-topic-detail, .writing-topic-nav button, .writing-topic-node, .writing-selected i { transition: none; }.home-writing-index [data-writing-reveal] { opacity: 1; }.home-writing-index.is-visible .writing-topic-nav, .home-writing-index.is-visible .writing-detail-region { animation: none; }.writing-topic-detail, .writing-topic-detail.is-active { transform: none; }
+	}
+</style>
