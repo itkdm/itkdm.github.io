@@ -4,10 +4,10 @@ const isZh = lang === 'zh';
 
 const featuredProjects = isZh
 	? [
-			{ order: '01', key: 'cloudcrane', name: 'CLOUDCRANE', displayName: '筑云鹤', subtitle: 'Website Coding Agent', tags: ['AI Full-Stack', 'Coding Agent', 'TypeScript'], href: 'https://github.com/itkdm/CloudCrane' },
-			{ order: '02', key: 'bujidao-ai', name: 'BUJIDAO-AI', displayName: '企业 AI Agent 能力治理与 MCP', subtitle: '', tags: ['Java', 'Agent', 'MCP', 'Enterprise'], href: 'https://github.com/itkdm/bujidao-ai' },
-			{ order: '03', key: 'paperduck', name: 'PAPERDUCK', displayName: '纸上鸭', subtitle: 'Word Document Agent', tags: ['Agent', 'DOCX', 'OOXML', 'Next.js'], href: 'https://github.com/itkdm/DocuShuttle' },
-			{ order: '04', key: 'open-lab-components', name: 'OPEN LAB COMPONENTS', displayName: '', subtitle: 'AI-friendly STEM component infrastructure', tags: ['Components', 'Registry', 'JS API', 'MCP'], href: 'https://github.com/itkdm/open-lab-components' },
+			{ order: '01', key: 'cloudcrane', name: 'CLOUDCRANE', displayName: '筑云鹤', subtitle: '网站 Coding Agent', tags: ['AI 全栈', 'Coding Agent', 'TypeScript'], href: 'https://github.com/itkdm/CloudCrane' },
+			{ order: '02', key: 'bujidao-ai', name: 'BUJIDAO-AI', displayName: '企业 AI Agent 能力治理与 MCP', subtitle: '', tags: ['Java', 'Agent', 'MCP', '企业级'], href: 'https://github.com/itkdm/bujidao-ai' },
+			{ order: '03', key: 'paperduck', name: 'PAPERDUCK', displayName: '纸上鸭', subtitle: 'Word 文档 Agent', tags: ['Agent', 'DOCX', 'OOXML', 'Next.js'], href: 'https://github.com/itkdm/DocuShuttle' },
+			{ order: '04', key: 'open-lab-components', name: 'OPEN LAB COMPONENTS', displayName: '', subtitle: '面向 AI 的 STEM 组件基础设施', tags: ['组件', 'Registry', 'JS API', 'MCP'], href: 'https://github.com/itkdm/open-lab-components' },
 		]
 	: [
 			{ order: '01', key: 'cloudcrane', name: 'CLOUDCRANE', displayName: 'CloudCrane', subtitle: 'Website Coding Agent', tags: ['AI Full-Stack', 'Coding Agent', 'TypeScript'], href: 'https://github.com/itkdm/CloudCrane' },
@@ -21,12 +21,12 @@ const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 <section id="open-source" class="home-open-source" data-home-open-source aria-labelledby="open-source-title" style={`--open-source-scroll-height: ${scrollHeight}svh;`}>
 	<div class="home-open-source-sticky" data-open-source-sticky>
 		<header class="open-source-heading" data-open-source-reveal>
-			<p class="open-source-label"><span aria-hidden="true">●</span> 04 · OPEN SOURCE</p>
+			<p class="open-source-label"><span aria-hidden="true">●</span> 04 · {isZh ? '开源' : 'OPEN SOURCE'}</p>
 			<h2 id="open-source-title">{isZh ? '开源实践' : 'Open source'}</h2>
 			<span class="open-source-rule" aria-hidden="true"></span>
 			<p class="open-source-intro">{isZh ? '通过开源项目，探索 AI 与工程化的边界，构建可复用、可持续进化的技术基础设施。' : 'Exploring the edge between AI and engineering through open source projects, and building reusable infrastructure that can keep evolving.'}</p>
 		</header>
-		<p class="open-source-selected" data-open-source-reveal>SELECTED PROJECTS <span aria-hidden="true">●</span></p>
+		<p class="open-source-selected" data-open-source-reveal>{isZh ? '精选项目' : 'SELECTED PROJECTS'} <span aria-hidden="true">●</span></p>
 
 		<nav class="open-source-project-nav" aria-label={isZh ? '精选开源项目' : 'Selected open-source projects'} data-open-source-reveal>
 			<ol>
@@ -44,16 +44,16 @@ const scrollHeight = Math.max(320, featuredProjects.length * 72 + 40);
 				{project.subtitle && <p class="project-stage-subtitle">{project.subtitle}</p>}
 				<span class="project-stage-rule" aria-hidden="true"></span>
 				<p class="project-stage-tags">{project.tags.join('  ·  ')}</p>
-				<a class="project-stage-link" href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} on GitHub`}>VIEW ON GITHUB <span aria-hidden="true">↗</span></a>
+				<a class="project-stage-link" href={project.href} target="_blank" rel="noopener noreferrer" aria-label={isZh ? `在 GitHub 查看 ${project.name}` : `View ${project.name} on GitHub`}>{isZh ? '在 GitHub 查看' : 'VIEW ON GITHUB'} <span aria-hidden="true">↗</span></a>
 			</article>)}
 		</div>
 
 		<aside class="open-source-note" data-open-source-reveal>
-			<header><span aria-hidden="true">●</span> OPEN SOURCE <i aria-hidden="true"></i></header>
+			<header><span aria-hidden="true">●</span> {isZh ? '开源' : 'OPEN SOURCE'} <i aria-hidden="true"></i></header>
 			<strong>{isZh ? '技术共享' : 'Share the work'}</strong>
 			<p>{isZh ? '让创新持续发生' : 'Keep innovation moving'}</p>
 		</aside>
-		<p class="open-source-scroll-hint" data-open-source-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span></p>
+		<p class="open-source-scroll-hint" data-open-source-reveal><span aria-hidden="true">•</span> {isZh ? '滚动浏览' : 'SCROLL TO EXPLORE'} <span aria-hidden="true">•</span></p>
 	</div>
 </section>
 

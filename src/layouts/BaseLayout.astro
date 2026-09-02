@@ -31,6 +31,7 @@ const {
 };
 
 const brandName = LANG_LABELS[lang].brandName;
+const isZh = lang === 'zh';
 
 const otherLang = lang === 'zh' ? 'en' : 'zh';
 const site = Astro.site?.href ?? 'https://itkdm.com';
@@ -42,12 +43,12 @@ const altPath =
 		? currentPath.replace(/^\/zh/, '/en').replace(/^\/en/, '/zh')
 		: `/${otherLang}/`;
 const navItems = [
-	{ href: `/${lang}/`, label: lang === 'zh' ? '首页' : 'Home' },
-	{ href: `/${lang}/blog/`, label: 'Blog' },
-	{ href: `/${lang}/docs/`, label: lang === 'zh' ? '文档' : 'Docs' },
-	{ href: `/${lang}/projects/`, label: lang === 'zh' ? '项目' : 'Projects' },
-	{ href: `/${lang}/tools/`, label: lang === 'zh' ? '工具' : 'Tools' },
-	{ href: `/${lang}/search/`, label: lang === 'zh' ? '搜索' : 'Search' },
+	{ href: `/${lang}/`, label: isZh ? '首页' : 'Home' },
+	{ href: `/${lang}/blog/`, label: isZh ? '博客' : 'Blog' },
+	{ href: `/${lang}/docs/`, label: isZh ? '文档' : 'Docs' },
+	{ href: `/${lang}/projects/`, label: isZh ? '项目' : 'Projects' },
+	{ href: `/${lang}/tools/`, label: isZh ? '工具' : 'Tools' },
+	{ href: `/${lang}/search/`, label: isZh ? '搜索' : 'Search' },
 ];
 ---
 
@@ -114,12 +115,12 @@ const navItems = [
 		<div class="page-root">
 			<header class={`topbar${overlayHeader ? ' topbar-overlay' : ''}`} data-overlay-header={overlayHeader ? 'true' : undefined}>
 				<div class="container topbar-inner">
-				<a href={`/${lang}/`} class="brand" aria-label="Site brand">
+				<a href={`/${lang}/`} class="brand" aria-label={isZh ? '网站首页' : 'Site brand'}>
 					<img src="/logo.jpg" alt={brandName} class="logo" />
 					<div style="font-size:14px;">{brandName}</div>
 				</a>
 
-					<nav class="nav" aria-label="Primary">
+					<nav class="nav" aria-label={isZh ? '主导航' : 'Primary'}>
 						{navItems.map((item) => (
 							<a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
 								{item.label}
@@ -147,7 +148,7 @@ const navItems = [
 			<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 			
 			<!-- Mobile Menu Sidebar -->
-			<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+			<nav class="mobile-menu" id="mobileMenu" aria-label={isZh ? '移动端导航' : 'Mobile navigation'}>
 				<div class="mobile-menu-header">
 					<a href={`/${lang}/`} class="mobile-menu-brand">
 						<img src="/logo.jpg" alt={brandName} class="logo" />
@@ -175,7 +176,7 @@ const navItems = [
 			<main class="container">
 				<slot />
 			</main>
-			<footer class:list={{ 'footer-closing': footerVariant === 'closing' }} aria-label="Footer">
+			<footer class:list={{ 'footer-closing': footerVariant === 'closing' }} aria-label={isZh ? '页脚' : 'Footer'}>
 				<div class="container footer-inner">
 					<div>
 						© <span id="year"></span> {brandName}
@@ -195,9 +196,9 @@ const navItems = [
 						</div>
 					</div>
 						{footerVariant === 'closing' && (
-							<nav class="footer-closing-links" aria-label="Footer links">
+							<nav class="footer-closing-links" aria-label={isZh ? '页脚链接' : 'Footer links'}>
 								<a href="https://github.com/itkdm" target="_blank" rel="noopener noreferrer">GitHub</a>
-								<a href={`/${lang}/blog/`}>Blog</a>
+								<a href={`/${lang}/blog/`}>{isZh ? '博客' : 'Blog'}</a>
 								<a href={`/${lang}/rss.xml`}>RSS</a>
 							</nav>
 						)}

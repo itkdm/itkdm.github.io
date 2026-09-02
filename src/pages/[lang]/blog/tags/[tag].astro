@@ -114,7 +114,7 @@ const relatedTagsList = Array.from(relatedTags.entries())
 						aria-label={post.data.title}
 						style="cursor: pointer;"
 					>
-						<div class="badge">Blog</div>
+						<div class="badge">{lang === 'zh' ? '博客' : 'Blog'}</div>
 						<h3>{post.data.title}</h3>
 						<p class="meta">
 							<time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>

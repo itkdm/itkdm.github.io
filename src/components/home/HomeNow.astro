@@ -18,12 +18,12 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 	<div class="home-now-sticky" data-home-now-sticky>
 		<header class="home-now-heading">
 			<div>
-				<p class="home-now-label"><span aria-hidden="true">●</span> 02 · NOW</p>
+				<p class="home-now-label"><span aria-hidden="true">●</span> 02 · {isZh ? '动态' : 'NOW'}</p>
 				<h2 id="now-title">{isZh ? '近期动态' : 'Recent updates'}</h2>
 			</div>
-			<p class="home-now-latest"><span aria-hidden="true">＋</span> LATEST EVENTS <i aria-hidden="true"></i></p>
+			<p class="home-now-latest"><span aria-hidden="true">＋</span> {isZh ? '最新动态' : 'LATEST EVENTS'} <i aria-hidden="true"></i></p>
 		</header>
-		<p class="home-now-changelog">PERSONAL CHANGELOG</p>
+		<p class="home-now-changelog">{isZh ? '个人更新记录' : 'PERSONAL CHANGELOG'}</p>
 
 		<div class="home-now-timeline" data-home-now-viewport>
 			<span class="home-now-focus-guide" aria-hidden="true"></span>
@@ -47,7 +47,7 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 			</ol>
 		</div>
 
-		<p class="home-now-scroll-hint"><span aria-hidden="true">◂</span> SCROLL TO EXPLORE <span aria-hidden="true">▸</span></p>
+		<p class="home-now-scroll-hint"><span aria-hidden="true">◂</span> {isZh ? '滚动浏览' : 'SCROLL TO EXPLORE'} <span aria-hidden="true">▸</span></p>
 	</div>
 </section>
 

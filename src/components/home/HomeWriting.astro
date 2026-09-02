@@ -23,10 +23,10 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 <section id="writing" class="home-writing-index" data-home-writing aria-labelledby="writing-title">
 	<div class="home-writing-frame">
 		<header class="writing-heading" data-writing-reveal>
-			<p class="writing-label"><span aria-hidden="true">●</span> 05 · WRITING</p>
+			<p class="writing-label"><span aria-hidden="true">●</span> 05 · {isZh ? '写作' : 'WRITING'}</p>
 			<h2 id="writing-title">{isZh ? '内容与观点' : 'Writing & Perspectives'}</h2>
 		</header>
-		<p class="writing-index-label" data-writing-reveal>EDITORIAL INDEX <span aria-hidden="true">●</span></p>
+		<p class="writing-index-label" data-writing-reveal>{isZh ? '内容索引' : 'EDITORIAL INDEX'} <span aria-hidden="true">●</span></p>
 
 		<nav class="writing-topic-nav" aria-label={isZh ? '内容方向' : 'Writing topics'} data-writing-reveal>
 			<ol>
@@ -35,7 +35,7 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 						<button type="button" data-writing-topic data-writing-index={index} aria-controls={`writing-topic-${topic.key}`} aria-current={index === 0 ? 'true' : undefined}>
 							<span class="writing-topic-number">{topic.order}</span>
 							<span class="writing-topic-node" aria-hidden="true"></span>
-							<strong>{topic.label}</strong>
+							<strong>{topic.label[lang]}</strong>
 						</button>
 					</li>
 				))}
@@ -46,12 +46,12 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 			{topics.map((topic, index) => (
 				<article id={`writing-topic-${topic.key}`} class:list={{ 'is-active': index === 0 }} class="writing-topic-detail" data-writing-detail data-writing-index={index} aria-hidden={index === 0 ? undefined : 'true'} inert={index === 0 ? undefined : true}>
 					<p class="writing-detail-number" aria-hidden="true">{topic.order}</p>
-					<h3>{topic.label}</h3>
+					<h3>{topic.label[lang]}</h3>
 					<span class="writing-detail-rule" aria-hidden="true"></span>
 					<p class="writing-statement">{topic.statement[lang]}</p>
 					<p class="writing-description">{topic.description[lang]}</p>
 					<div class="writing-selected">
-						<p class="writing-selected-label">SELECTED WRITING</p>
+						<p class="writing-selected-label">{isZh ? '精选文章' : 'SELECTED WRITING'}</p>
 						<ol>
 							{topic.selectedWriting.map((writing, writingIndex) => (
 								<li>
@@ -64,7 +64,7 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 			))}
 		</div>
 
-		<p class="writing-scroll-hint" data-writing-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span></p>
+		<p class="writing-scroll-hint" data-writing-reveal><span aria-hidden="true">•</span> {isZh ? '继续浏览' : 'SCROLL TO EXPLORE'} <span aria-hidden="true">•</span></p>
 	</div>
 </section>
 

@@ -18,9 +18,9 @@ const rawTools = sortTools(
 // 根据工具的 tags 或 name 自动归类
 const CATEGORIES = {
 	zh: {
-		'dev': { label: '开发 & 转换', keywords: ['json', 'xml', 'base64', 'url', 'hash', '编码', '解码', '格式化', '转换', 'html', 'csv'] },
+		'dev': { label: '开发与转换', keywords: ['json', 'xml', 'base64', 'url', 'hash', '编码', '解码', '格式化', '转换', 'html', 'csv'] },
 		'text': { label: '文本处理', keywords: ['text', 'regex', 'diff', 'dedupe', 'sort', 'replace', '文本', '正则', '去重', '对比', '统计'] },
-		'media': { label: '图片 & 媒体', keywords: ['image', 'qr', 'color', 'media', '图片', '二维码', '颜色', '表情'] },
+		'media': { label: '图片与媒体', keywords: ['image', 'qr', 'color', 'media', '图片', '二维码', '颜色', '表情'] },
 		'generator': { label: '生成器', keywords: ['password', 'uuid', 'random', 'timestamp', 'generator', '生成', '随机', '密码'] },
 		'other': { label: '其他工具', keywords: [] } // Fallback
 	},
@@ -119,11 +119,11 @@ const allCategories = Object.keys(currentCats).filter(cat => {
 										<div class="tool-info">
 											<div class="tool-header">
 												<h3>{tool.data.name}</h3>
-												{tool.data.featured && <span class="badge-mini">HOT</span>}
+							{tool.data.featured && <span class="badge-mini">{lang === 'zh' ? '热门' : 'HOT'}</span>}
 											</div>
 											<p class="tool-desc">{tool.data.summary}</p>
 											<div class="tool-meta">
-												<span class="tool-pill">RUN</span>
+								<span class="tool-pill">{lang === 'zh' ? '打开' : 'RUN'}</span>
 												{tool.data.tags && tool.data.tags.slice(0, 2).map((tag) => (
 													<span class="tool-tag">{tag}</span>
 												))}
@@ -140,8 +140,7 @@ const allCategories = Object.keys(currentCats).filter(cat => {
 			
 			<div id="no-results" class="no-results" style="display: none;">
 				<div class="console-msg">
-					<span class="error">ERROR:</span> No matching tools found. <br/>
-					<span class="suggestion">Try different keywords or check spelling.</span>
+					{lang === 'zh' ? <><span class="suggestion">未找到匹配的工具。</span><br/><span class="suggestion">请尝试其他关键词或检查输入内容。</span></> : <><span class="error">ERROR:</span> No matching tools found. <br/><span class="suggestion">Try different keywords or check spelling.</span></>}
 				</div>
 			</div>
 		</>

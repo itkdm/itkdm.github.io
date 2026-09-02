@@ -9,6 +9,7 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Lang };
+const isZh = lang === 'zh';
 const projects = (await getCollection('projects', (entry) => entry.data.lang === lang)).sort((a, b) => {
 	if (a.data.order !== b.data.order) return a.data.order - b.data.order;
 	return a.data.title.localeCompare(b.data.title);
@@ -39,7 +40,7 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 						<div class="card-header">
 							<div class="status-indicator">
 								<span class="status-dot"></span>
-								<span class="status-text">{isFeatured ? 'PRIORITY' : 'ACTIVE'}</span>
+								<span class="status-text">{isZh ? (isFeatured ? '精选' : '项目') : (isFeatured ? 'PRIORITY' : 'ACTIVE')}</span>
 							</div>
 							<div class="tech-id">#{projectSlug.substring(0, 6).toUpperCase()}</div>
 						</div>
@@ -55,7 +56,7 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 							{project.data.tags.length > 0 && (
 								<div class="tech-stack">
 									<div class="tags">
-										<span class="stack-prefix">&gt; STACK:</span>
+										<span class="stack-prefix">&gt; {isZh ? '技术栈：' : 'STACK:'}</span>
 										{project.data.tags.map(tag => <span class="tech-tag">{tag}</span>)}
 									</div>
 								</div>
@@ -66,20 +67,20 @@ const projects = (await getCollection('projects', (entry) => entry.data.lang ===
 							<button 
 								class="action-btn primary"
 								data-repo={project.data.repo}
-								title="View Source Code"
+								title={isZh ? '查看源代码' : 'View Source Code'}
 							>
 								<span class="btn-icon">GH</span>
-								<span class="btn-text">SOURCE</span>
+								<span class="btn-text">{isZh ? '源码' : 'SOURCE'}</span>
 							</button>
 							
 							{project.data.demo && (
 								<button 
 									class="action-btn secondary"
 									data-demo={project.data.demo}
-									title="Launch Demo"
+									title={isZh ? '打开演示' : 'Launch Demo'}
 								>
-									<span class="btn-icon">RUN</span>
-									<span class="btn-text">DEPLOY</span>
+									<span class="btn-icon">{isZh ? '↗' : 'RUN'}</span>
+									<span class="btn-text">{isZh ? '在线演示' : 'DEPLOY'}</span>
 								</button>
 							)}
 						</div>

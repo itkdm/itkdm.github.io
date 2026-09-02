@@ -4,23 +4,23 @@ import { CONTACT_EMAIL_HREF, CONTACT_GITHUB_URL, homeContactChannels } from '../
 const { lang } = Astro.props as { lang: 'zh' | 'en' };
 const isZh = lang === 'zh';
 const collaborationRows = [
-	{ order: '01', title: 'AI & ENGINEERING', copy: isZh ? 'AI 全栈、Agent、RAG、工程化实践、产品落地' : 'AI Full-Stack · Agents · RAG · Engineering · Products', href: CONTACT_EMAIL_HREF },
-	{ order: '02', title: 'OPEN SOURCE', copy: isZh ? '开源项目、技术协作、社区共建、技术交流' : 'Open-source projects · Collaboration · Community · Exchange', href: CONTACT_GITHUB_URL },
-	{ order: '03', title: 'TRAINING & CONTENT', copy: isZh ? '企业技术培训、技术分享、内容合作' : 'Technical training · Talks · Content collaboration', href: CONTACT_EMAIL_HREF },
+	{ order: '01', title: isZh ? 'AI 与工程' : 'AI & ENGINEERING', copy: isZh ? 'AI 全栈、Agent、RAG、工程化实践、产品落地' : 'AI Full-Stack · Agents · RAG · Engineering · Products', href: CONTACT_EMAIL_HREF },
+	{ order: '02', title: isZh ? '开源协作' : 'OPEN SOURCE', copy: isZh ? '开源项目、技术协作、社区共建、技术交流' : 'Open-source projects · Collaboration · Community · Exchange', href: CONTACT_GITHUB_URL },
+	{ order: '03', title: isZh ? '培训与内容' : 'TRAINING & CONTENT', copy: isZh ? '企业技术培训、技术分享、内容合作' : 'Technical training · Talks · Content collaboration', href: CONTACT_EMAIL_HREF },
 ];
 ---
 
 <section id="contact" class="home-contact-closing" data-contact-closing aria-labelledby="contact-title">
 	<div class="home-contact-frame">
 		<header class="home-contact-header" data-contact-reveal>
-			<p class="home-contact-label"><span aria-hidden="true">●</span>06 · CONTACT</p>
+			<p class="home-contact-label"><span aria-hidden="true">●</span>06 · {isZh ? '联系' : 'CONTACT'}</p>
 			<h2 id="contact-title">
 				{isZh ? <span>合作联系</span> : <span>GET IN TOUCH</span>}
 			</h2>
 			<p class="home-contact-intro">{isZh ? 'AI、开源与技术合作。' : 'AI, open source, and collaboration.'}</p>
 		</header>
 
-		<div class="home-contact-channel-mark" data-contact-reveal><span>OPEN CHANNEL</span><i aria-hidden="true"></i></div>
+		<div class="home-contact-channel-mark" data-contact-reveal><span>{isZh ? '联系渠道' : 'OPEN CHANNEL'}</span><i aria-hidden="true"></i></div>
 
 		<div class="home-contact-directions" aria-label={isZh ? '合作方向' : 'Collaboration areas'}>
 			{collaborationRows.map((row, index) => (
@@ -35,14 +35,14 @@ const collaborationRows = [
 		<div class="home-contact-channels" aria-label={isZh ? '联系渠道' : 'Contact channels'} data-contact-reveal>
 			{homeContactChannels.filter((channel) => channel.enabled).map((channel) => (
 				<div class="home-contact-channel">
-					<p><span aria-hidden="true">•</span>{channel.label}</p>
+					<p><span aria-hidden="true">•</span>{channel.label[lang]}</p>
 					{channel.type === 'qr' ? (
 						<button class="home-contact-channel-link" type="button" aria-haspopup="dialog" aria-controls="wechat-dialog" aria-expanded="false" data-wechat-trigger>
-							{channel.display}<span aria-hidden="true">↗</span>
+							{channel.display[lang]}<span aria-hidden="true">↗</span>
 						</button>
 					) : (
-						<a class="home-contact-channel-link" href={channel.href} target={channel.key === 'github' ? '_blank' : undefined} rel={channel.key === 'github' ? 'noopener noreferrer' : undefined} aria-label={`${channel.label} ${channel.display}`}>
-							{channel.display}<span aria-hidden="true">↗</span>
+						<a class="home-contact-channel-link" href={channel.href} target={channel.key === 'github' ? '_blank' : undefined} rel={channel.key === 'github' ? 'noopener noreferrer' : undefined} aria-label={`${channel.label[lang]} ${channel.display[lang]}`}>
+							{channel.display[lang]}<span aria-hidden="true">↗</span>
 						</a>
 					)}
 				</div>
@@ -53,7 +53,7 @@ const collaborationRows = [
 	<dialog class="home-contact-dialog" id="wechat-dialog" data-wechat-dialog aria-labelledby="wechat-dialog-title">
 		<div class="home-contact-dialog-inner">
 			<button class="home-contact-dialog-close" type="button" aria-label={isZh ? '关闭微信二维码' : 'Close WeChat QR'} data-wechat-close>×</button>
-			<p class="home-contact-dialog-label">WECHAT</p>
+			<p class="home-contact-dialog-label">{isZh ? '微信' : 'WECHAT'}</p>
 			<h3 id="wechat-dialog-title">{isZh ? '扫一扫添加微信' : 'Scan to connect'}</h3>
 			<img src={homeContactChannels.find((channel) => channel.key === 'wechat')?.qrImage} alt={isZh ? '微信二维码' : 'WeChat QR code'} />
 			<p>{isZh ? '合作沟通请简单备注来意' : 'Please include a short note about your inquiry.'}</p>

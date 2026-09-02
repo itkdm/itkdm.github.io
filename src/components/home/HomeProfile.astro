@@ -6,10 +6,10 @@ const isZh = lang === 'zh';
 <section id="profile" class="home-profile-map" data-home-profile aria-labelledby="profile-title">
 	<div class="home-profile-frame">
 		<header class="profile-heading" data-profile-reveal>
-			<p class="profile-label"><span aria-hidden="true">●</span> 03 · PROFILE</p>
+			<p class="profile-label"><span aria-hidden="true">●</span> 03 · {isZh ? '档案' : 'PROFILE'}</p>
 			<h2 id="profile-title">{isZh ? '个人档案' : 'Profile'}</h2>
 		</header>
-		<p class="profile-map-label" data-profile-reveal><span>IDENTITY MAP</span><i aria-hidden="true"></i><b aria-hidden="true">＋</b></p>
+		<p class="profile-map-label" data-profile-reveal><span>{isZh ? '身份图谱' : 'IDENTITY MAP'}</span><i aria-hidden="true"></i><b aria-hidden="true">＋</b></p>
 
 		<div class="profile-map-canvas" data-profile-map>
 			<span class="profile-axis profile-axis-vertical" data-profile-axis aria-hidden="true"></span>
@@ -23,43 +23,43 @@ const isZh = lang === 'zh';
 
 			<div class="profile-center" data-profile-reveal>
 				<h3>布吉岛</h3>
-				<p>ENGINEER · BUILDER · CREATOR</p>
+				<p>{isZh ? '工程师 · 构建者 · 创作者' : 'ENGINEER · BUILDER · CREATOR'}</p>
 			</div>
 
 			<article class="profile-identity profile-identity-north" data-profile-reveal data-profile-identity>
 				<span class="profile-direction" aria-hidden="true">⌃</span>
-				<h3>AI FULL-STACK</h3>
-				<p>Product · Frontend · Backend · AI</p>
+				<h3>{isZh ? 'AI 全栈' : 'AI FULL-STACK'}</h3>
+				<p>{isZh ? '产品 · 前端 · 后端 · AI' : 'Product · Frontend · Backend · AI'}</p>
 			</article>
 			<article class="profile-identity profile-identity-west" data-profile-reveal data-profile-identity>
 				<span class="profile-direction" aria-hidden="true">‹</span>
-				<h3>OPEN SOURCE</h3>
-				<p>Build · Maintain · Contribute</p>
+				<h3>{isZh ? '开源' : 'OPEN SOURCE'}</h3>
+				<p>{isZh ? '构建 · 维护 · 贡献' : 'Build · Maintain · Contribute'}</p>
 			</article>
 			<article class="profile-identity profile-identity-east" data-profile-reveal data-profile-identity>
 				<span class="profile-direction" aria-hidden="true">›</span>
-				<h3>AGENT ENGINEERING</h3>
-				<p>Agent · RAG · Context · Tool Use</p>
+				<h3>{isZh ? 'Agent 工程' : 'AGENT ENGINEERING'}</h3>
+				<p>{isZh ? 'Agent · RAG · 上下文 · 工具调用' : 'Agent · RAG · Context · Tool Use'}</p>
 			</article>
 			<article class="profile-identity profile-identity-south" data-profile-reveal data-profile-identity>
 				<span class="profile-direction" aria-hidden="true">⌄</span>
-				<h3>TECHNICAL CREATOR</h3>
-				<p>Writing · Tutorial · Training</p>
+				<h3>{isZh ? '技术创作者' : 'TECHNICAL CREATOR'}</h3>
+				<p>{isZh ? '写作 · 教程 · 培训' : 'Writing · Tutorial · Training'}</p>
 			</article>
 		</div>
 
 		<aside class="profile-personality" data-profile-reveal>
-			<header><span>●</span><span>PERSONALITY</span><i aria-hidden="true"></i></header>
+			<header><span>●</span><span>{isZh ? '个性特征' : 'PERSONALITY'}</span><i aria-hidden="true"></i></header>
 			<strong>ENTP</strong>
-			<ul><li>Curious</li><li>Builder</li><li>Systems Thinker</li><li>Independent</li></ul>
+			<ul>{(isZh ? ['好奇', '构建者', '系统思考', '独立'] : ['Curious', 'Builder', 'Systems Thinker', 'Independent']).map((item) => <li>{item}</li>)}</ul>
 		</aside>
 
 		<aside class="profile-principles" data-profile-reveal>
-			<header><span>●</span><span>PRINCIPLES</span><i aria-hidden="true"></i></header>
-			<ol><li><b>01</b><span>Build real things.</span></li><li><b>02</b><span>Make complexity understandable.</span></li><li><b>03</b><span>Engineer for the long run.</span></li></ol>
+			<header><span>●</span><span>{isZh ? '做事原则' : 'PRINCIPLES'}</span><i aria-hidden="true"></i></header>
+			<ol>{(isZh ? ['做真实可用的东西。', '让复杂变得易懂。', '为长期演进而设计。'] : ['Build real things.', 'Make complexity understandable.', 'Engineer for the long run.']).map((item, index) => <li><b>{String(index + 1).padStart(2, '0')}</b><span>{item}</span></li>)}</ol>
 		</aside>
 
-		<p class="profile-scroll-hint" data-profile-reveal><span aria-hidden="true">•</span> SCROLL TO EXPLORE <span aria-hidden="true">•</span><i aria-hidden="true"></i></p>
+		<p class="profile-scroll-hint" data-profile-reveal><span aria-hidden="true">•</span> {isZh ? '继续探索' : 'SCROLL TO EXPLORE'} <span aria-hidden="true">•</span><i aria-hidden="true"></i></p>
 	</div>
 </section>
 
