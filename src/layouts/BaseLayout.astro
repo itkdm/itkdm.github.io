@@ -14,6 +14,7 @@ const {
 	author,
 	robots = 'index, follow',
 	overlayHeader = false,
+	footerVariant = 'default',
 } = Astro.props as {
 	lang?: Lang;
 	title?: string;
@@ -26,6 +27,7 @@ const {
 	author?: string;
 	robots?: string;
 	overlayHeader?: boolean;
+	footerVariant?: 'default' | 'closing';
 };
 
 const brandName = LANG_LABELS[lang].brandName;
@@ -173,7 +175,7 @@ const navItems = [
 			<main class="container">
 				<slot />
 			</main>
-			<footer aria-label="Footer">
+			<footer class:list={{ 'footer-closing': footerVariant === 'closing' }} aria-label="Footer">
 				<div class="container footer-inner">
 					<div>
 						© <span id="year"></span> {brandName}
@@ -192,6 +194,13 @@ const navItems = [
 								)}
 						</div>
 					</div>
+						{footerVariant === 'closing' && (
+							<nav class="footer-closing-links" aria-label="Footer links">
+								<a href="https://github.com/itkdm" target="_blank" rel="noopener noreferrer">GitHub</a>
+								<a href={`/${lang}/blog/`}>Blog</a>
+								<a href={`/${lang}/rss.xml`}>RSS</a>
+							</nav>
+						)}
 				</div>
 			</footer>
 		</div>
