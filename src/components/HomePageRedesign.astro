@@ -26,11 +26,6 @@ const { lang, now, posts } = Astro.props as {
 
 <style is:global>
 	.personal-home { --home-content: min(100%, 1120px); overflow-x: clip; }
-	.home-contact-layout { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 36px; }
-	.home-button { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--border); border-radius: 999px; font-size: 14px; font-weight: 650; transition: transform .2s ease, background .2s ease, color .2s ease; }
-	.home-button:hover { transform: translateY(-2px); }
-	.home-button-primary { border-color: var(--accent); background: var(--accent); color: var(--interactive-on-accent); }
-	.home-button-secondary { color: var(--text-primary); background: var(--surface); }
 	.home-section { width: var(--home-content); margin: 0 auto; padding: clamp(72px, 10vw, 144px) 0; border-top: 1px solid var(--divider); scroll-margin-top: 80px; }
 	.home-section-heading { display: grid; grid-template-columns: minmax(160px, .34fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
 	.home-section-label { margin-top: 10px; }
@@ -41,9 +36,9 @@ const { lang, now, posts } = Astro.props as {
 	.home-project-item { display: grid; align-content: start; gap: 12px; min-height: 190px; padding: 22px; background: var(--background); transition: background .2s ease; }
 	.home-project-item:hover { background: var(--surface-secondary); }
 	.home-project-item strong { font-size: 19px; line-height: 1.25; }
-	.home-project-item p, .home-profile-lead, .home-contact-layout p { margin: 0; color: var(--text-secondary); line-height: 1.75; }
+	.home-project-item p, .home-profile-lead { margin: 0; color: var(--text-secondary); line-height: 1.75; }
 	.home-profile-notes span { color: var(--text-muted); font: 11px var(--mono); }
-	.home-profile-layout, .home-contact-layout { display: grid; grid-template-columns: 1fr .55fr; gap: 48px; align-items: start; }
+	.home-profile-layout { display: grid; grid-template-columns: 1fr .55fr; gap: 48px; align-items: start; }
 	.home-profile-lead { max-width: 34em; font-size: clamp(20px, 3vw, 30px); line-height: 1.35; color: var(--text-primary); }
 	.home-profile-notes { display: grid; gap: 22px; border-top: 1px solid var(--divider); }
 	.home-profile-notes div { display: flex; justify-content: space-between; gap: 20px; padding-top: 12px; border-top: 1px solid var(--divider); }
@@ -51,9 +46,8 @@ const { lang, now, posts } = Astro.props as {
 	.home-project-item { grid-template-columns: auto 1fr; min-height: 150px; }
 	.home-project-item > span { color: var(--accent); font-size: 22px; }
 	.home-project-item p { margin-top: 8px; font-size: 14px; }
-	.home-contact-layout { grid-template-columns: 1fr auto; align-items: center; }
 	.home-empty { margin: 0; padding: 24px; background: var(--surface-secondary); color: var(--text-secondary); }
 	.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-	@media (max-width: 760px) { .home-section { padding: 72px 0; } .home-section-heading { display: block; } .home-section-label { margin-bottom: 18px; } .home-section-intro { margin-top: 16px; } .home-section-content { margin-top: 28px; } .home-project-list, .home-profile-layout, .home-contact-layout { grid-template-columns: 1fr; } .home-profile-notes { margin-top: 14px; } .home-contact-layout { gap: 24px; } }
-	@media (prefers-reduced-motion: reduce) { .home-button, .home-project-item { transition: none; } }
+	@media (max-width: 760px) { .home-section { padding: 72px 0; } .home-section-heading { display: block; } .home-section-label { margin-bottom: 18px; } .home-section-intro { margin-top: 16px; } .home-section-content { margin-top: 28px; } .home-project-list, .home-profile-layout { grid-template-columns: 1fr; } .home-profile-notes { margin-top: 14px; } }
+	@media (prefers-reduced-motion: reduce) { .home-project-item { transition: none; } }
 </style>

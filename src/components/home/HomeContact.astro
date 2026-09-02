@@ -4,9 +4,9 @@ import { homeContactChannels } from '../../data/home-contact';
 const { lang } = Astro.props as { lang: 'zh' | 'en' };
 const isZh = lang === 'zh';
 const collaborationRows = [
-	{ order: '01', title: 'AI & ENGINEERING', copy: isZh ? 'AI 全栈、Agent、RAG、工程化实践、产品落地' : 'AI Full-Stack · Agents · RAG · Engineering · Products' },
-	{ order: '02', title: 'OPEN SOURCE', copy: isZh ? '开源项目、技术协作、社区共建、技术交流' : 'Open-source projects · Collaboration · Community · Exchange' },
-	{ order: '03', title: 'TRAINING & CONTENT', copy: isZh ? '企业技术培训、技术分享、内容合作' : 'Technical training · Talks · Content collaboration' },
+	{ order: '01', title: 'AI & ENGINEERING', copy: isZh ? 'AI 全栈、Agent、RAG、工程化实践、产品落地' : 'AI Full-Stack · Agents · RAG · Engineering · Products', href: 'mailto:contact@itkdm.com' },
+	{ order: '02', title: 'OPEN SOURCE', copy: isZh ? '开源项目、技术协作、社区共建、技术交流' : 'Open-source projects · Collaboration · Community · Exchange', href: 'https://github.com/itkdm' },
+	{ order: '03', title: 'TRAINING & CONTENT', copy: isZh ? '企业技术培训、技术分享、内容合作' : 'Technical training · Talks · Content collaboration', href: 'mailto:contact@itkdm.com' },
 ];
 ---
 
@@ -24,11 +24,11 @@ const collaborationRows = [
 
 		<div class="home-contact-directions" aria-label={isZh ? '合作方向' : 'Collaboration areas'}>
 			{collaborationRows.map((row, index) => (
-				<div class="home-contact-direction" data-contact-reveal style={`--contact-delay: ${index * 90 + 180}ms`}>
+				<a class="home-contact-direction" data-contact-reveal style={`--contact-delay: ${index * 90 + 180}ms`} href={row.href} target={row.href.startsWith('https://') ? '_blank' : undefined} rel={row.href.startsWith('https://') ? 'noopener noreferrer' : undefined}>
 					<div class="home-contact-direction-title"><span>{row.order}</span><b aria-hidden="true">•</b><strong>{row.title}</strong></div>
 					<p>{row.copy}</p>
 					<span class="home-contact-arrow" aria-hidden="true">→</span>
-				</div>
+				</a>
 			))}
 		</div>
 
@@ -36,13 +36,29 @@ const collaborationRows = [
 			{homeContactChannels.filter((channel) => channel.enabled).map((channel) => (
 				<div class="home-contact-channel">
 					<p><span aria-hidden="true">•</span>{channel.label}</p>
-					<a href={channel.href} target="_blank" rel="noopener noreferrer" aria-label={`${channel.label} ${channel.display}`}>
-						{channel.display}<span aria-hidden="true">↗</span>
-					</a>
+					{channel.type === 'qr' ? (
+						<button class="home-contact-channel-link" type="button" aria-haspopup="dialog" aria-controls="wechat-dialog" aria-expanded="false" data-wechat-trigger>
+							{channel.display}<span aria-hidden="true">↗</span>
+						</button>
+					) : (
+						<a class="home-contact-channel-link" href={channel.href} target={channel.key === 'github' ? '_blank' : undefined} rel={channel.key === 'github' ? 'noopener noreferrer' : undefined} aria-label={`${channel.label} ${channel.display}`}>
+							{channel.display}<span aria-hidden="true">↗</span>
+						</a>
+					)}
 				</div>
 			))}
 		</div>
 	</div>
+
+	<dialog class="home-contact-dialog" id="wechat-dialog" data-wechat-dialog aria-labelledby="wechat-dialog-title">
+		<div class="home-contact-dialog-inner">
+			<button class="home-contact-dialog-close" type="button" aria-label={isZh ? '关闭微信二维码' : 'Close WeChat QR'} data-wechat-close>×</button>
+			<p class="home-contact-dialog-label">WECHAT</p>
+			<h3 id="wechat-dialog-title">{isZh ? '扫一扫添加微信' : 'Scan to connect'}</h3>
+			<img src={homeContactChannels.find((channel) => channel.key === 'wechat')?.qrImage} alt={isZh ? '微信二维码' : 'WeChat QR code'} />
+			<p>{isZh ? '合作沟通请简单备注来意' : 'Please include a short note about your inquiry.'}</p>
+		</div>
+	</dialog>
 </section>
 
 <style>
@@ -74,10 +90,19 @@ const collaborationRows = [
 	.home-contact-channel { min-width: 310px; }
 	.home-contact-channels p { margin: 0 0 18px; color: var(--closing-text-secondary); }
 	.home-contact-channels p span { margin-right: 12px; }
-	.home-contact-channel a { display: inline-flex; gap: 12px; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--closing-divider); color: var(--closing-text); font: clamp(24px, 2.4vw, 38px) var(--display); text-decoration: none; }
-	.home-contact-channel a span { color: var(--closing-accent); font-family: var(--sans); transition: transform .2s ease; }
-	.home-contact-channel a:hover { border-color: var(--closing-accent); color: var(--closing-accent); }
-	.home-contact-channel a:hover span { transform: translate(3px, -3px); }
+	.home-contact-channel-link { display: inline-flex; gap: 12px; align-items: center; padding: 0 0 8px; border: 0; border-bottom: 1px solid var(--closing-divider); background: transparent; color: var(--closing-text); font: clamp(24px, 2.4vw, 38px) var(--display); text-decoration: none; cursor: pointer; }
+	.home-contact-channel-link span { color: var(--closing-accent); font-family: var(--sans); transition: transform .2s ease; }
+	.home-contact-channel-link:hover { border-color: var(--closing-accent); color: var(--closing-accent); }
+	.home-contact-channel-link:hover span { transform: translate(3px, -3px); }
+	.home-contact-dialog { width: min(330px, calc(100% - 32px)); padding: 0; border: 1px solid var(--closing-divider); background: var(--closing-surface); color: var(--closing-text); box-shadow: var(--shadow-2); }
+	.home-contact-dialog::backdrop { background: color-mix(in srgb, var(--text-primary) 36%, transparent); }
+	.home-contact-dialog-inner { position: relative; padding: 28px; text-align: center; }
+	.home-contact-dialog-close { position: absolute; top: 8px; right: 12px; border: 0; background: transparent; color: var(--closing-text-muted); font-size: 24px; cursor: pointer; }
+	.home-contact-dialog-label { margin: 0 0 8px; color: var(--closing-accent); font: 10px var(--mono); letter-spacing: .2em; }
+	.home-contact-dialog h3 { margin: 0 0 18px; font: 650 24px var(--display); }
+	.home-contact-dialog img { display: block; width: 220px; height: 220px; margin: 0 auto 16px; object-fit: contain; background: var(--surface); }
+	.home-contact-dialog-inner > p:last-child { margin: 0; color: var(--closing-text-secondary); font: 12px/1.6 var(--display); }
+	.home-contact-dialog-close:focus-visible, .home-contact-direction:focus-visible, .home-contact-channel-link:focus-visible { outline: 2px solid var(--closing-accent); outline-offset: 4px; }
 	.home-contact-closing [data-contact-reveal] { opacity: 0; transform: translateY(16px); }
 	.home-contact-closing.is-visible [data-contact-reveal] { opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
 	.home-contact-closing.is-visible .home-contact-direction { transition-delay: var(--contact-delay); }
@@ -97,12 +122,12 @@ const collaborationRows = [
 		.home-contact-arrow { grid-column: 2; grid-row: 1 / span 2; }
 		.home-contact-channels { display: block; margin-top: 54px; }
 		.home-contact-channel { min-width: 0; margin-bottom: 30px; }
-		.home-contact-channel a { max-width: 100%; font-size: clamp(22px, 7vw, 30px); white-space: nowrap; }
+		.home-contact-channel-link { max-width: 100%; font-size: clamp(22px, 7vw, 30px); white-space: nowrap; }
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.home-contact-closing [data-contact-reveal] { opacity: 1; transform: none; transition: none; }
 		.home-contact-direction::after { transition: none; }
-		.home-contact-direction, .home-contact-channel a span, .home-contact-arrow { transition: none; }
+		.home-contact-direction, .home-contact-channel-link span { transition: none; }
 	}
 </style>
 
@@ -121,4 +146,22 @@ const collaborationRows = [
 			observer.observe(contactSection);
 		}
 	}
+
+	const wechatDialog = document.querySelector<HTMLDialogElement>('[data-wechat-dialog]');
+	const wechatTrigger = document.querySelector<HTMLButtonElement>('[data-wechat-trigger]');
+	const wechatClose = document.querySelector<HTMLButtonElement>('[data-wechat-close]');
+	const closeWechat = () => {
+		wechatDialog?.close();
+		wechatTrigger?.setAttribute('aria-expanded', 'false');
+	};
+	wechatTrigger?.addEventListener('click', () => {
+		wechatDialog?.showModal();
+		wechatTrigger.setAttribute('aria-expanded', 'true');
+		wechatClose?.focus();
+	});
+	wechatClose?.addEventListener('click', closeWechat);
+	wechatDialog?.addEventListener('click', (event) => {
+		if (event.target === wechatDialog) closeWechat();
+	});
+	wechatDialog?.addEventListener('cancel', closeWechat);
 </script>
