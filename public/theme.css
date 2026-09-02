@@ -293,10 +293,8 @@ a {
 .logo {
   width: 34px;
   height: 34px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  object-fit: contain;
   display: block;
 }
 
