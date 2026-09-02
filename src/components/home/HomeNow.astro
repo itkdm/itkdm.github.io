@@ -3,7 +3,10 @@ import type { CollectionEntry } from 'astro:content';
 
 const { lang, events } = Astro.props as { lang: 'zh' | 'en'; events: CollectionEntry<'now'>[] };
 const isZh = lang === 'zh';
-const scrollHeight = Math.max(270, events.length * 50 + 20);
+// The page narrative introduces at most five events. More history remains
+// available when the user deliberately scrolls while pointing at the timeline.
+const narrativeEventCount = Math.min(events.length, 5);
+const scrollHeight = Math.max(270, narrativeEventCount * 50 + 20);
 
 const formatDate = (date: Date) => ({
 	month: String(date.getMonth() + 1).padStart(2, '0'),
@@ -62,21 +65,46 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 		section.dataset.motionBound = 'true';
 
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		let travel = 0;
+		let totalTravel = 0;
+		let narrativeTravel = 0;
 		let scrollDistance = 1;
 		let frame = 0;
+		const narrativeEventLimit = 5;
+		let interactiveTravel = null;
+		const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+		const getFocusX = () => {
+			const focusRatio = Number.parseFloat(getComputedStyle(section).getPropertyValue('--now-focus')) / 100 || 0.5;
+			return viewport.clientWidth * focusRatio;
+		};
+		const getPageProgress = () => clamp(-section.getBoundingClientRect().top / scrollDistance, 0, 1);
+		const onWheel = (event) => {
+			if (reducedMotion) return;
+			const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * window.innerHeight : event.deltaY;
+			if (!delta || !totalTravel) return;
+			const currentTravel = interactiveTravel ?? narrativeTravel * getPageProgress();
+			const nextTravel = clamp(currentTravel + delta, 0, totalTravel);
+			const atStart = delta < 0 && currentTravel <= 0;
+			const atEnd = delta > 0 && currentTravel >= totalTravel;
+			if (atStart || atEnd) {
+				interactiveTravel = null;
+				return;
+			}
+			event.preventDefault();
+			interactiveTravel = nextTravel;
+			render();
+		};
 
 		const render = () => {
 			frame = 0;
-			const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / scrollDistance));
-			if (!reducedMotion) track.style.transform = `translate3d(${-travel * progress}px, 0, 0)`;
+			const progress = getPageProgress();
+			const currentTravel = interactiveTravel ?? narrativeTravel * progress;
+			if (!reducedMotion) track.style.transform = `translate3d(${-currentTravel}px, 0, 0)`;
 
-			const focusRatio = Number.parseFloat(getComputedStyle(section).getPropertyValue('--now-focus')) / 100 || 0.5;
-			const focusX = viewport.clientWidth * focusRatio;
+			const focusX = getFocusX();
 			let activeIndex = 0;
 			let closest = Number.POSITIVE_INFINITY;
 			events.forEach((event, index) => {
-				const eventCenter = event.offsetLeft + event.offsetWidth / 2 - travel * progress;
+				const eventCenter = event.offsetLeft + event.offsetWidth / 2 - currentTravel;
 				const distance = Math.abs(eventCenter - focusX);
 				const proximity = Math.max(0.25, Math.min(1, 1 - distance / (event.offsetWidth * 2.5)));
 				event.style.setProperty('--now-opacity', String(0.34 + proximity * 0.34));
@@ -86,12 +114,17 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 		};
 
 		const measure = () => {
-			travel = Math.max(0, track.scrollWidth - viewport.clientWidth);
+			totalTravel = Math.max(0, track.scrollWidth - viewport.clientWidth);
+			const narrativeIndex = Math.min(events.length - 1, narrativeEventLimit - 1);
+			const narrativeEvent = events[narrativeIndex];
+			narrativeTravel = narrativeEvent ? clamp(narrativeEvent.offsetLeft + narrativeEvent.offsetWidth / 2 - getFocusX(), 0, totalTravel) : totalTravel;
+			interactiveTravel = interactiveTravel === null ? null : clamp(interactiveTravel, 0, totalTravel);
 			scrollDistance = Math.max(1, section.offsetHeight - sticky.offsetHeight);
 			render();
 		};
 		const onScroll = () => { if (!reducedMotion && !frame) frame = requestAnimationFrame(render); };
 		if (!reducedMotion) window.addEventListener('scroll', onScroll, { passive: true });
+		if (!reducedMotion) viewport.addEventListener('wheel', onWheel, { passive: false });
 		window.addEventListener('resize', measure, { passive: true });
 		if ('ResizeObserver' in window) new ResizeObserver(measure).observe(viewport);
 		measure();
@@ -111,7 +144,7 @@ const isExternal = (href: string) => /^https?:\/\//i.test(href);
 	.home-now-latest { display: flex; align-items: center; gap: 12px; margin: 8px 0 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .18em; white-space: nowrap; }
 	.home-now-latest i { display: block; width: clamp(56px, 8vw, 120px); height: 1px; background: var(--divider); }
 	.home-now-changelog { position: absolute; left: 24px; top: 50%; margin: 0; color: var(--text-muted); font: 9px var(--mono); letter-spacing: .2em; writing-mode: vertical-rl; transform: translateY(-50%); opacity: .7; }
-	.home-now-timeline { position: absolute; top: 55%; left: calc(0px - var(--now-gutter)); width: calc(100% + var(--now-gutter) + var(--now-gutter)); transform: translateY(-50%); overflow: hidden; }
+	.home-now-timeline { position: absolute; top: 55%; left: calc(0px - var(--now-gutter)); width: calc(100% + var(--now-gutter) + var(--now-gutter)); transform: translateY(-50%); overflow: visible; }
 	.home-now-focus-guide { position: absolute; z-index: 2; top: -42px; bottom: -42px; left: calc(var(--now-focus) * 1%); border-left: 1px dashed var(--divider); opacity: .8; pointer-events: none; }
 	.home-now-track { position: relative; display: flex; align-items: stretch; width: max-content; min-width: 100%; margin: 0; padding: 0 calc((100vw - var(--now-event-width)) / 2); list-style: none; transform: translate3d(0, 0, 0); }
 	.home-now-track::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--divider); }
