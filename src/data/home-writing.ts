@@ -24,14 +24,11 @@ export const homeWritingTopics: HomeWritingTopic[] = [
 		description: { zh: '真正困难的是工程、上下文、工具、状态和长期演进。', en: 'The hard part is engineering, context, tools, state, and long-term evolution.' },
 		selectedSlugs: {
 			zh: ['agent-s-human-computer-interaction', 'ai-workflow-minimal-cost'],
-			en: [],
+			en: ['agent-s-human-computer-interaction', 'ai-workflow-minimal-cost'],
 		},
 		fallback: {
 			zh: [],
-			en: [
-				{ title: 'What Is an Agent Harness?' },
-				{ title: 'How to Build an AI Agent That Lasts' },
-			],
+			en: [],
 		},
 	},
 	{

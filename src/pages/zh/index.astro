@@ -4,6 +4,6 @@ import HomePage from '../../components/HomePageRedesign.astro';
 import { getCollection } from 'astro:content';
 const lang = 'zh';
 const now = (await getCollection('now', (entry) => entry.data.lang === lang && !entry.data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 8);
-const posts = await getCollection('blog', (entry) => entry.data.lang === lang && !entry.data.draft);
+const posts = await getCollection('blog', (entry) => !entry.data.draft);
 ---
 <BaseLayout lang={lang} title="布吉岛 · 首页" description="布吉岛的个人官网，记录技术实践、内容与观点。" currentPath="/zh/" overlayHeader><HomePage lang={lang} now={now} posts={posts} /></BaseLayout>

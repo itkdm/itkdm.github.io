@@ -6,12 +6,12 @@ const { lang, posts } = Astro.props as { lang: 'zh' | 'en'; posts: CollectionEnt
 const isZh = lang === 'zh';
 
 const getPostSlug = (post: CollectionEntry<'blog'>) => post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
-const postsBySlug = new Map(posts.map((post) => [getPostSlug(post), post]));
+const findPost = (slug: string) => posts.find((post) => post.data.lang === lang && getPostSlug(post) === slug) ?? posts.find((post) => getPostSlug(post) === slug);
 const getSelectedWriting = (topic: (typeof homeWritingTopics)[number]) => {
 	const selected = topic.selectedSlugs[lang]
-		.map((slug) => postsBySlug.get(slug))
+		.map((slug) => findPost(slug))
 		.filter((post): post is CollectionEntry<'blog'> => Boolean(post))
-		.map((post) => ({ title: post.data.title, href: `/${lang}/blog/${getPostSlug(post)}/` }));
+		.map((post) => ({ title: post.data.title, href: `/${post.data.lang}/blog/${getPostSlug(post)}/` }));
 	const missing = Math.max(0, 2 - selected.length);
 	const fallbacks: HomeWritingFallback[] = topic.fallback[lang].slice(0, missing);
 	return [...selected, ...fallbacks];
@@ -110,10 +110,11 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 	.writing-label { margin: 0 0 18px; color: var(--accent); font: 12px/1 var(--mono); letter-spacing: .16em; }.writing-label span { margin-right: 12px; font-size: 11px; }
 	.writing-heading h2 { margin: 0; font: 650 clamp(46px, 5.3vw, 76px)/1 var(--display); letter-spacing: -.07em; }
 	.writing-index-label { position: absolute; top: clamp(80px, 9.2vh, 112px); right: clamp(28px, 5vw, 88px); margin: 0; color: var(--text-muted); font: 10px var(--mono); letter-spacing: .2em; }.writing-index-label span { margin-left: 12px; color: var(--accent); font-size: 9px; }
-	.writing-topic-nav { position: absolute; top: 30%; left: clamp(28px, 5vw, 88px); width: min(330px, 25vw); height: 47%; border-left: 1px solid var(--divider); }
-	.writing-topic-nav ol { display: flex; flex-direction: column; justify-content: space-between; height: 100%; margin: 0; padding: 0 0 0 28px; list-style: none; }
+	.writing-topic-nav { --writing-nav-indent: 28px; position: absolute; top: 30%; left: clamp(28px, 5vw, 88px); width: min(330px, 25vw); height: 47%; }
+	.writing-topic-nav::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--divider); transform: translateX(-50%); }
+	.writing-topic-nav ol { display: flex; flex-direction: column; justify-content: space-between; height: 100%; margin: 0; padding: 0 0 0 var(--writing-nav-indent); list-style: none; }
 	.writing-topic-nav li { position: relative; }.writing-topic-nav button { position: relative; display: grid; grid-template-columns: 30px 1fr; gap: 14px; width: 100%; padding: 0; border: 0; background: transparent; color: var(--text-muted); text-align: left; cursor: pointer; transition: color .3s ease; }
-	.writing-topic-number { font: 13px var(--mono); }.writing-topic-nav strong { font: 650 15px/1.2 var(--mono); letter-spacing: .12em; }.writing-topic-node { position: absolute; top: 5px; left: -33px; width: 9px; height: 9px; border: 1px solid var(--text-muted); border-radius: 50%; background: var(--background); transform: translateX(-50%); transition: border-color .3s ease, background .3s ease, box-shadow .3s ease; }
+	.writing-topic-number { font: 13px var(--mono); }.writing-topic-nav strong { font: 650 15px/1.2 var(--mono); letter-spacing: .12em; }.writing-topic-node { position: absolute; top: 5px; left: calc(-1 * var(--writing-nav-indent)); width: 9px; height: 9px; border: 1px solid var(--text-muted); border-radius: 50%; background: var(--background); transform: translateX(-50%); transition: border-color .3s ease, background .3s ease, box-shadow .3s ease; }
 	.writing-topic-nav button::after { content: ''; position: absolute; top: 50%; right: 0; width: 0; height: 1px; background: var(--accent); transition: width .35s ease; }.writing-topic-nav button.is-active { color: var(--text-primary); }.writing-topic-nav button.is-active .writing-topic-node { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }.writing-topic-nav button.is-active::after { width: 42%; }.writing-topic-nav button:hover { color: var(--accent); }
 	.writing-detail-region { position: absolute; top: 24%; right: clamp(28px, 8vw, 150px); width: min(52vw, 760px); height: 62%; }.writing-topic-detail { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; opacity: 0; transform: translateY(24px); pointer-events: none; transition: opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1); }.writing-topic-detail.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; }
 	.writing-detail-number { margin: 0 0 8px; color: color-mix(in srgb, var(--accent) 18%, transparent); font: 800 clamp(130px, 15vw, 250px)/.75 var(--display); letter-spacing: -.12em; }.writing-topic-detail h3 { position: absolute; top: 17%; margin: 0; color: var(--accent); font: 650 clamp(18px, 1.5vw, 24px)/1 var(--mono); letter-spacing: .14em; }.writing-detail-rule { display: block; width: 46px; height: 2px; margin: 16px 0 22px; background: var(--accent); }
@@ -123,7 +124,7 @@ const topics = homeWritingTopics.map((topic) => ({ ...topic, selectedWriting: ge
 	@keyframes writing-nav-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } } @keyframes writing-detail-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 	@media (max-width: 760px) {
 		.home-writing-frame { min-height: 820px; height: 100svh; padding: 58px 20px 32px; }.writing-heading { top: 58px; left: 20px; }.writing-label { margin-bottom: 14px; font-size: 10px; }.writing-heading h2 { font-size: 46px; }.writing-index-label { top: 62px; right: 20px; font-size: 8px; letter-spacing: .12em; }
-		.writing-topic-nav { top: 28%; left: 20px; width: calc(100% - 40px); height: 18%; border-left: 0; }.writing-topic-nav ol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; padding: 0; }.writing-topic-nav button { grid-template-columns: 24px 1fr; gap: 8px; }.writing-topic-number { font-size: 10px; }.writing-topic-nav strong { font-size: 10px; letter-spacing: .06em; }.writing-topic-node { top: 3px; left: 2px; width: 7px; height: 7px; transform: translateX(-50%); }.writing-topic-nav button::after { display: none; }
+		.writing-topic-nav { --writing-nav-indent: 0px; top: 28%; left: 20px; width: calc(100% - 40px); height: 18%; }.writing-topic-nav::before { display: none; }.writing-topic-nav ol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; padding: 0; }.writing-topic-nav button { grid-template-columns: 24px 1fr; gap: 8px; }.writing-topic-number { font-size: 10px; }.writing-topic-nav strong { font-size: 10px; letter-spacing: .06em; }.writing-topic-node { top: 3px; left: 0; width: 7px; height: 7px; transform: translateX(-50%); }.writing-topic-nav button::after { display: none; }
 		.writing-detail-region { top: 47%; left: 20px; right: 20px; width: auto; height: 38%; }.writing-detail-number { font-size: 130px; }.writing-topic-detail h3 { top: 5%; font-size: 14px; }.writing-detail-rule { margin: 12px 0 16px; }.writing-statement { font-size: clamp(26px, 8vw, 38px); }.writing-description { margin-top: 14px; font-size: 14px; line-height: 1.6; }.writing-selected { margin-top: 24px; }.writing-selected a, .writing-fallback { grid-template-columns: 26px 1fr auto; gap: 8px; min-height: 42px; }.writing-selected strong { font-size: 13px; }.writing-selected i { font-size: 15px; }.writing-scroll-hint { bottom: 28px; font-size: 8px; letter-spacing: .14em; }
 	}
 	@media (prefers-reduced-motion: reduce) {
