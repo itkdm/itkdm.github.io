@@ -6,7 +6,7 @@ import Giscus from '../../../components/Giscus.astro';
 import { sortBlogPosts } from '../../../lib/blog-sort';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', (post) => !post.data.draft);
 	return posts.map((post) => {
 		// Use frontmatter slug if available, otherwise extract filename from entry.slug
 		const slug = post.data.slug ?? post.slug.split('/').pop() ?? post.slug;
