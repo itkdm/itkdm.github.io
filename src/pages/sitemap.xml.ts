@@ -7,7 +7,6 @@ const site = 'https://itkdm.com';
 
 export const GET: APIRoute = async () => {
 	const staticPaths = [
-		'/',
 		'/zh/',
 		'/en/',
 		'/zh/blog/',

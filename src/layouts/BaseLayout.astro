@@ -35,13 +35,16 @@ const isZh = lang === 'zh';
 
 const otherLang = lang === 'zh' ? 'en' : 'zh';
 const site = Astro.site?.href ?? 'https://itkdm.com';
-const canonical = new URL(currentPath || '/', site).href;
+const isRootHome = currentPath === '/';
+const canonical = new URL(isRootHome ? '/zh/' : currentPath || '/', site).href;
 const resolvedOgType = ogType ?? 'website';
 const resolvedOgImage = new URL(ogImage || '/logo.jpg', site).href;
 const altPath =
 	currentPath?.startsWith(`/${lang}/`) && currentPath !== '/'
 		? currentPath.replace(/^\/zh/, '/en').replace(/^\/en/, '/zh')
 		: `/${otherLang}/`;
+const alternateEn = new URL(isRootHome ? '/en/' : lang === 'zh' ? altPath : currentPath, site).href;
+const alternateZh = new URL(isRootHome ? '/zh/' : lang === 'en' ? altPath : currentPath, site).href;
 const navItems = [
 	{ href: `/${lang}/`, label: isZh ? '首页' : 'Home' },
 	{ href: `/${lang}/blog/`, label: isZh ? '博客' : 'Blog' },
@@ -67,9 +70,9 @@ const navItems = [
 		{author && <meta name="author" content={author} />}
 		<meta name="robots" content={robots} />
 		<link rel="canonical" href={canonical} />
-		<link rel="alternate" href={new URL(altPath, site).href} hrefLang={otherLang} />
-		<link rel="alternate" href={canonical} hrefLang={lang} />
-		<link rel="alternate" href={canonical} hrefLang="x-default" />
+		<link rel="alternate" href={alternateEn} hrefLang="en" />
+		<link rel="alternate" href={alternateZh} hrefLang="zh" />
+		<link rel="alternate" href={new URL('/zh/', site).href} hrefLang="x-default" />
 		<meta property="og:type" content={resolvedOgType} />
 		<meta property="og:site_name" content={brandName} />
 		<meta property="og:title" content={title} />
