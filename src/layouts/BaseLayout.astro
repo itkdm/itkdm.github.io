@@ -41,7 +41,9 @@ const resolvedOgType = ogType ?? 'website';
 const resolvedOgImage = new URL(ogImage || '/logo.jpg', site).href;
 const altPath =
 	currentPath?.startsWith(`/${lang}/`) && currentPath !== '/'
-		? currentPath.replace(/^\/zh/, '/en').replace(/^\/en/, '/zh')
+		? lang === 'zh'
+			? currentPath.replace(/^\/zh/, '/en')
+			: currentPath.replace(/^\/en/, '/zh')
 		: `/${otherLang}/`;
 const alternateEn = new URL(isRootHome ? '/en/' : lang === 'zh' ? altPath : currentPath, site).href;
 const alternateZh = new URL(isRootHome ? '/zh/' : lang === 'en' ? altPath : currentPath, site).href;
