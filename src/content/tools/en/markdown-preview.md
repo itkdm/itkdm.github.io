@@ -3,7 +3,7 @@ name: "Markdown Preview Tool"
 summary: "Preview Markdown rendering in real-time, supporting common Markdown syntax for easy writing and debugging."
 tags: ["Markdown", "Preview", "Tool"]
 lang: "en"
-homepage: "/tools/markdown-preview.html"
+homepage: "/zh/tools/markdown-preview/"
 icon: "📝"
 order: 5
 featured: true

@@ -3,7 +3,7 @@ name: "JSON 格式化工具"
 summary: "快速格式化、压缩和验证 JSON 数据，支持语法高亮和错误提示。"
 tags: ["JSON", "格式化", "工具"]
 lang: "zh"
-homepage: "/tools/json-formatter.html"
+homepage: "/zh/tools/json-formatter/"
 icon: "📝"
 order: 1
 priority: 9999

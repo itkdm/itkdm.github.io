@@ -3,7 +3,7 @@ name: "文本对比工具"
 summary: "对比两段文本的差异，高亮显示新增、删除和未变化的内容，支持行级对比。"
 tags: ["文本", "对比", "差异", "工具"]
 lang: "zh"
-homepage: "/tools/text-diff.html"
+homepage: "/zh/tools/text-diff/"
 icon: "📊"
 order: 10
 featured: true

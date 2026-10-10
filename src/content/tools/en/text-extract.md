@@ -3,7 +3,7 @@ name: "Text Extract Tool"
 summary: "Extract email addresses, URLs, phone numbers, numbers, IP addresses, hashtags and more from text."
 tags: ["Text", "Extract", "Tool"]
 lang: "en"
-homepage: "/tools/text-extract.html"
+homepage: "/zh/tools/text-extract/"
 icon: "🔍"
 order: 25
 featured: true

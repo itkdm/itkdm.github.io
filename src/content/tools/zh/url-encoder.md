@@ -3,7 +3,7 @@ name: "URL 编码/解码工具"
 summary: "快速进行 URL 编码和解码，支持中文和特殊字符，适用于 URL 参数处理。"
 tags: ["URL", "编码", "解码", "工具"]
 lang: "zh"
-homepage: "/tools/url-encoder.html"
+homepage: "/zh/tools/url-encoder/"
 icon: "🔗"
 order: 3
 featured: true

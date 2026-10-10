@@ -3,7 +3,7 @@ name: "文本统计工具"
 summary: "统计文本的字数、字符数、行数等信息，并分析词频，支持中英文混合文本。"
 tags: ["文本", "统计", "词频", "工具"]
 lang: "zh"
-homepage: "/tools/text-stats.html"
+homepage: "/zh/tools/text-stats/"
 icon: "📈"
 order: 11
 featured: true

@@ -3,7 +3,7 @@ name: "Unit Converter"
 summary: "Quickly convert between different units, supporting length, weight, temperature, area, volume and more unit types."
 tags: ["Unit", "Converter", "Tool"]
 lang: "en"
-homepage: "/tools/unit-converter.html"
+homepage: "/zh/tools/unit-converter/"
 icon: "📏"
 order: 18
 featured: true

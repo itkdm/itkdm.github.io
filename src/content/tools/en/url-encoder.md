@@ -3,7 +3,7 @@ name: "URL Encoder/Decoder"
 summary: "Quickly encode and decode URLs, supporting Chinese and special characters, perfect for URL parameter handling."
 tags: ["URL", "Encode", "Decode", "Tool"]
 lang: "en"
-homepage: "/tools/url-encoder.html"
+homepage: "/zh/tools/url-encoder/"
 icon: "🔗"
 order: 3
 featured: true

@@ -3,7 +3,7 @@ name: "Random Number Generator"
 summary: "Generate random numbers within a specified range, supporting integers and floats, with batch generation and statistics."
 tags: ["Random", "Number", "Generator", "Tool"]
 lang: "en"
-homepage: "/tools/random-number.html"
+homepage: "/zh/tools/random-number/"
 icon: "🎲"
 order: 16
 featured: true

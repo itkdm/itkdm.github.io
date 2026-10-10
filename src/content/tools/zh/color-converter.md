@@ -3,7 +3,7 @@ name: "颜色转换工具"
 summary: "在不同颜色格式之间快速转换（HEX、RGB、HSL），支持颜色选择器和多种格式输出。"
 tags: ["颜色", "转换", "HEX", "RGB", "HSL", "工具"]
 lang: "zh"
-homepage: "/tools/color-converter.html"
+homepage: "/zh/tools/color-converter/"
 icon: "🎨"
 order: 6
 featured: true

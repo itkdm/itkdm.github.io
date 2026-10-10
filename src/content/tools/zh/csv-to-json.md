@@ -3,7 +3,7 @@ name: "CSV 转 JSON 工具"
 summary: "将 CSV 格式数据转换为 JSON 格式，支持自定义分隔符和转换选项。"
 tags: ["CSV", "JSON", "转换", "工具"]
 lang: "zh"
-homepage: "/tools/csv-to-json.html"
+homepage: "/zh/tools/csv-to-json/"
 icon: "📊"
 order: 15
 featured: true

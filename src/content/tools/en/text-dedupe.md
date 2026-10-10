@@ -3,7 +3,7 @@ name: "Text Deduplication Tool"
 summary: "Remove duplicate lines or content from text, supporting multiple deduplication modes and option configurations."
 tags: ["Text", "Dedupe", "Tool"]
 lang: "en"
-homepage: "/tools/text-dedupe.html"
+homepage: "/zh/tools/text-dedupe/"
 icon: "✂️"
 order: 20
 featured: true

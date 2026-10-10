@@ -3,7 +3,7 @@ name: "文本反转工具"
 summary: "反转文本内容，支持字符反转、行顺序反转、单词反转等多种模式。"
 tags: ["文本", "反转", "工具"]
 lang: "zh"
-homepage: "/tools/text-reverse.html"
+homepage: "/zh/tools/text-reverse/"
 icon: "🔄"
 order: 24
 featured: true

@@ -3,7 +3,7 @@ name: "Color Converter"
 summary: "Quickly convert between different color formats (HEX, RGB, HSL) with color picker and multiple format outputs."
 tags: ["Color", "Converter", "HEX", "RGB", "HSL", "Tool"]
 lang: "en"
-homepage: "/tools/color-converter.html"
+homepage: "/zh/tools/color-converter/"
 icon: "🎨"
 order: 6
 featured: true

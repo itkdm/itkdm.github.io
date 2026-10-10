@@ -3,7 +3,7 @@ name: "JSON Formatter"
 summary: "Quickly format, minify and validate JSON data with syntax highlighting and error detection."
 tags: ["JSON", "Formatter", "Tool"]
 lang: "en"
-homepage: "/tools/json-formatter.html"
+homepage: "/zh/tools/json-formatter/"
 icon: "📝"
 order: 1
 priority: 9999

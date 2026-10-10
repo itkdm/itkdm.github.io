@@ -3,7 +3,7 @@ name: "Password Generator"
 summary: "Generate secure, random passwords with customizable length and character types, including password strength detection."
 tags: ["Password", "Generator", "Security", "Tool"]
 lang: "en"
-homepage: "/tools/password-generator.html"
+homepage: "/zh/tools/password-generator/"
 icon: "🔒"
 order: 9
 featured: true

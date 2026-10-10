@@ -3,7 +3,7 @@ name: "大小写转换工具"
 summary: "快速转换文本的大小写格式，支持全部大写、全部小写、首字母大写、标题格式等多种模式。"
 tags: ["大小写", "转换", "工具"]
 lang: "zh"
-homepage: "/tools/case-converter.html"
+homepage: "/zh/tools/case-converter/"
 icon: "🔤"
 order: 21
 featured: true

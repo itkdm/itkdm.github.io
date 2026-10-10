@@ -3,7 +3,7 @@ name: "Case Converter"
 summary: "Quickly convert text case formats, supporting uppercase, lowercase, capitalize, title case, sentence case, and toggle case."
 tags: ["Case", "Converter", "Tool"]
 lang: "en"
-homepage: "/tools/case-converter.html"
+homepage: "/zh/tools/case-converter/"
 icon: "🔤"
 order: 21
 featured: true

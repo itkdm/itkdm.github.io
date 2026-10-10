@@ -3,7 +3,7 @@ name: "密码生成器"
 summary: "生成安全、随机的密码，支持自定义长度和字符类型，包含密码强度检测。"
 tags: ["密码", "生成器", "安全", "工具"]
 lang: "zh"
-homepage: "/tools/password-generator.html"
+homepage: "/zh/tools/password-generator/"
 icon: "🔒"
 order: 9
 featured: true

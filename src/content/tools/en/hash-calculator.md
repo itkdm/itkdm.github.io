@@ -3,7 +3,7 @@ name: "Hash Calculator"
 summary: "Calculate multiple hash values for text, supporting MD5, SHA1, SHA256, SHA512, SHA3, and more algorithms."
 tags: ["Hash", "MD5", "SHA", "Encryption", "Tool"]
 lang: "en"
-homepage: "/tools/hash-calculator.html"
+homepage: "/zh/tools/hash-calculator/"
 icon: "🔐"
 order: 13
 featured: true

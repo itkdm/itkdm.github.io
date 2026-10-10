@@ -3,7 +3,7 @@ name: "正则表达式测试工具"
 summary: "测试和调试正则表达式，实时查看匹配结果，支持多种标志和预设模式。"
 tags: ["正则表达式", "Regex", "测试", "工具"]
 lang: "zh"
-homepage: "/tools/regex-tester.html"
+homepage: "/zh/tools/regex-tester/"
 icon: "🔍"
 order: 7
 featured: true

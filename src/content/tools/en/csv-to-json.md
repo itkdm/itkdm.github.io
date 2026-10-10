@@ -3,7 +3,7 @@ name: "CSV to JSON Converter"
 summary: "Convert CSV format data to JSON format with customizable delimiters and conversion options."
 tags: ["CSV", "JSON", "Converter", "Tool"]
 lang: "en"
-homepage: "/tools/csv-to-json.html"
+homepage: "/zh/tools/csv-to-json/"
 icon: "📊"
 order: 15
 featured: true

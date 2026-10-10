@@ -3,7 +3,7 @@ name: "Timestamp Converter"
 summary: "Quickly convert between Unix timestamps and date/time, supporting both seconds and milliseconds."
 tags: ["Timestamp", "Date", "Converter", "Tool"]
 lang: "en"
-homepage: "/tools/timestamp.html"
+homepage: "/zh/tools/timestamp/"
 icon: "⏰"
 order: 4
 featured: true

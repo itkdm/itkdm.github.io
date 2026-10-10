@@ -3,7 +3,7 @@ name: "Base64 Encoder/Decoder"
 summary: "Quickly encode and decode Base64 strings, supporting Chinese, English, numbers and special characters."
 tags: ["Base64", "Encode", "Decode", "Tool"]
 lang: "en"
-homepage: "/tools/base64.html"
+homepage: "/zh/tools/base64/"
 icon: "🔐"
 order: 2
 featured: true

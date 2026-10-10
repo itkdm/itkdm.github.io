@@ -3,7 +3,7 @@ name: "UUID 生成器"
 summary: "快速生成 UUID（通用唯一标识符），支持 UUID v4 格式，可自定义格式和批量生成。"
 tags: ["UUID", "生成器", "工具"]
 lang: "zh"
-homepage: "/tools/uuid-generator.html"
+homepage: "/zh/tools/uuid-generator/"
 icon: "🆔"
 order: 8
 featured: true

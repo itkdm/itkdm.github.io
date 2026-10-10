@@ -3,7 +3,7 @@ name: "时间戳转换工具"
 summary: "在 Unix 时间戳和日期时间之间快速转换，支持秒级和毫秒级时间戳。"
 tags: ["时间戳", "日期", "转换", "工具"]
 lang: "zh"
-homepage: "/tools/timestamp.html"
+homepage: "/zh/tools/timestamp/"
 icon: "⏰"
 order: 4
 featured: true

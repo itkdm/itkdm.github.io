@@ -3,7 +3,7 @@ name: "单位转换器"
 summary: "在不同单位之间快速转换，支持长度、重量、温度、面积、体积等多种单位类型。"
 tags: ["单位", "转换", "工具"]
 lang: "zh"
-homepage: "/tools/unit-converter.html"
+homepage: "/zh/tools/unit-converter/"
 icon: "📏"
 order: 18
 featured: true

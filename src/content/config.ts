@@ -47,7 +47,7 @@ const tools = defineCollection({
 			tags: z.array(z.string()).default([]),
 			lang: z.enum(['zh', 'en']),
 			repo: z.string().url().optional(),
-			homepage: z.string(), // 支持相对路径（如 /tools/xxx.html）或完整 URL
+			homepage: z.string(), // 支持相对路径（如 /zh/tools/slug/）或完整 URL
 			downloadsRef: z.string().optional(),
 			badges: z.array(z.string()).optional(),
 			icon: z.string().optional(),

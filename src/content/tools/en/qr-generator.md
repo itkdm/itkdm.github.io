@@ -3,7 +3,7 @@ name: "QR Code Generator"
 summary: "Quickly generate QR codes for text, URLs, WiFi info, and more, with customizable size and error correction levels."
 tags: ["QR Code", "QR", "Generator", "Tool"]
 lang: "en"
-homepage: "/tools/qr-generator.html"
+homepage: "/zh/tools/qr-generator/"
 icon: "📱"
 order: 12
 featured: true

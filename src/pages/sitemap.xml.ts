@@ -24,14 +24,14 @@ export const GET: APIRoute = async () => {
 	const blog = await getCollection('blog', (entry) => !entry.data.draft);
 	const docs = await getCollection('docs');
 
-	// 从 public/tools 目录中收集所有工具页（静态 HTML）
-	const toolsDir = path.join(process.cwd(), 'public', 'tools');
+	// 从 public/zh/tools 下收集迁移后的工具页（静态 HTML）
+	const toolsDir = path.join(process.cwd(), 'public', 'zh', 'tools');
 	let toolUrls: { loc: string; lastmod?: string }[] = [];
 	if (fs.existsSync(toolsDir)) {
-		const files = fs.readdirSync(toolsDir).filter((f) => f.endsWith('.html'));
-		toolUrls = files.map((file) => ({
-			loc: new URL(`/tools/${file}`, site).href,
-		}));
+		const toolDirs = fs.readdirSync(toolsDir, { withFileTypes: true }).filter((entry) => entry.isDirectory());
+		toolUrls = toolDirs
+			.filter((entry) => fs.existsSync(path.join(toolsDir, entry.name, 'index.html')))
+			.map((entry) => ({ loc: new URL(`/zh/tools/${entry.name}/`, site).href }));
 	}
 
 	const urls: { loc: string; lastmod?: string }[] = [

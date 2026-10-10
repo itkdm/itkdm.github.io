@@ -3,7 +3,7 @@ name: "Base Converter"
 summary: "Quickly convert between binary, octal, decimal, and hexadecimal, with real-time conversion and negative number support."
 tags: ["Base", "Binary", "Hexadecimal", "Converter", "Tool"]
 lang: "en"
-homepage: "/tools/base-converter.html"
+homepage: "/zh/tools/base-converter/"
 icon: "🔢"
 order: 19
 priority: 9999

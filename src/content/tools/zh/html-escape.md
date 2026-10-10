@@ -3,7 +3,7 @@ name: "HTML 转义工具"
 summary: "HTML 转义和反转义，安全处理 HTML 特殊字符，防止 XSS 攻击。"
 tags: ["HTML", "转义", "安全", "工具"]
 lang: "zh"
-homepage: "/tools/html-escape.html"
+homepage: "/zh/tools/html-escape/"
 icon: "🔒"
 order: 14
 featured: true

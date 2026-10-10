@@ -3,7 +3,7 @@ name: "图片 Base64 编码工具"
 summary: "将图片转换为 Base64 编码，或从 Base64 编码还原图片，支持拖拽上传和多种图片格式。"
 tags: ["图片", "Base64", "编码", "工具"]
 lang: "zh"
-homepage: "/tools/image-base64.html"
+homepage: "/zh/tools/image-base64/"
 icon: "🖼️"
 order: 17
 priority: 9999

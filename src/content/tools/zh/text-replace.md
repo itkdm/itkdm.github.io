@@ -3,7 +3,7 @@ name: "文本替换工具"
 summary: "批量查找和替换文本内容，支持正则表达式和多种替换选项。"
 tags: ["文本", "替换", "工具"]
 lang: "zh"
-homepage: "/tools/text-replace.html"
+homepage: "/zh/tools/text-replace/"
 icon: "🔄"
 order: 26
 featured: true

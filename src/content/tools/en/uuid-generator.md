@@ -3,7 +3,7 @@ name: "UUID Generator"
 summary: "Quickly generate UUIDs (Universally Unique Identifiers) in UUID v4 format with customizable format and batch generation."
 tags: ["UUID", "Generator", "Tool"]
 lang: "en"
-homepage: "/tools/uuid-generator.html"
+homepage: "/zh/tools/uuid-generator/"
 icon: "🆔"
 order: 8
 featured: true

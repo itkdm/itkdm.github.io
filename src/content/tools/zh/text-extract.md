@@ -3,7 +3,7 @@ name: "文本提取工具"
 summary: "从文本中提取邮箱、URL、电话号码、数字、IP 地址、话题标签等信息。"
 tags: ["文本", "提取", "工具"]
 lang: "zh"
-homepage: "/tools/text-extract.html"
+homepage: "/zh/tools/text-extract/"
 icon: "🔍"
 order: 25
 featured: true

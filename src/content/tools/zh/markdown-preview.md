@@ -3,7 +3,7 @@ name: "Markdown 预览工具"
 summary: "实时预览 Markdown 渲染效果，支持常见的 Markdown 语法，方便编写和调试。"
 tags: ["Markdown", "预览", "工具"]
 lang: "zh"
-homepage: "/tools/markdown-preview.html"
+homepage: "/zh/tools/markdown-preview/"
 icon: "📝"
 order: 5
 featured: true

@@ -3,7 +3,7 @@ name: "进制转换工具"
 summary: "在二进制、八进制、十进制、十六进制之间快速转换，支持实时转换和负数处理。"
 tags: ["进制", "二进制", "十六进制", "转换", "工具"]
 lang: "zh"
-homepage: "/tools/base-converter.html"
+homepage: "/zh/tools/base-converter/"
 icon: "🔢"
 order: 19
 priority: 9999

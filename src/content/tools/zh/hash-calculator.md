@@ -3,7 +3,7 @@ name: "Hash 计算器"
 summary: "计算文本的多种 Hash 值，支持 MD5、SHA1、SHA256、SHA512、SHA3 等算法。"
 tags: ["Hash", "MD5", "SHA", "加密", "工具"]
 lang: "zh"
-homepage: "/tools/hash-calculator.html"
+homepage: "/zh/tools/hash-calculator/"
 icon: "🔐"
 order: 13
 featured: true

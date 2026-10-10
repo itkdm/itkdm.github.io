@@ -3,7 +3,7 @@ name: "Text Statistics Tool"
 summary: "Count words, characters, lines, and analyze word frequency, supporting mixed Chinese and English text."
 tags: ["Text", "Statistics", "Word Frequency", "Tool"]
 lang: "en"
-homepage: "/tools/text-stats.html"
+homepage: "/zh/tools/text-stats/"
 icon: "📈"
 order: 11
 featured: true

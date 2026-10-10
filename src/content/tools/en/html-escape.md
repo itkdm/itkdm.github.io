@@ -3,7 +3,7 @@ name: "HTML Escape Tool"
 summary: "Escape and unescape HTML, safely handle HTML special characters to prevent XSS attacks."
 tags: ["HTML", "Escape", "Security", "Tool"]
 lang: "en"
-homepage: "/tools/html-escape.html"
+homepage: "/zh/tools/html-escape/"
 icon: "🔒"
 order: 14
 featured: true

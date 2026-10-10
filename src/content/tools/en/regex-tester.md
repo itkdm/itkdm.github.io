@@ -3,7 +3,7 @@ name: "Regex Tester"
 summary: "Test and debug regular expressions with real-time match results, supporting multiple flags and preset patterns."
 tags: ["Regex", "Regular Expression", "Test", "Tool"]
 lang: "en"
-homepage: "/tools/regex-tester.html"
+homepage: "/zh/tools/regex-tester/"
 icon: "🔍"
 order: 7
 featured: true

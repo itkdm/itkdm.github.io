@@ -3,7 +3,7 @@ name: "反应速度测试"
 summary: "通过鼠标点击测试您的反应速度，测量反应时间，统计测试结果，帮助您了解自己的反应能力。"
 tags: ["反应速度", "反应测试", "鼠标测试", "游戏", "工具"]
 lang: "zh"
-homepage: "/tools/reaction-tester.html"
+homepage: "/zh/tools/reaction-tester/"
 icon: "⚡"
 order: 27
 featured: true

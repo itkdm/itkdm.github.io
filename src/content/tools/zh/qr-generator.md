@@ -3,7 +3,7 @@ name: "QR 码生成器"
 summary: "快速生成二维码，支持文本、URL、WiFi 信息等多种内容，可自定义尺寸和纠错级别。"
 tags: ["二维码", "QR码", "生成器", "工具"]
 lang: "zh"
-homepage: "/tools/qr-generator.html"
+homepage: "/zh/tools/qr-generator/"
 icon: "📱"
 order: 12
 featured: true

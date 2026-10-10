@@ -3,7 +3,7 @@ name: "问卷二维码梗图生成器"
 summary: "支持问卷星、腾讯问卷等平台的免费在线问卷二维码梗图生成器，上传二维码、选择模板即可一键生成适合发朋友圈 / 群聊的问卷邀请海报。"
 tags: ["二维码", "问卷", "问卷星", "腾讯问卷", "问卷海报", "梗图", "图片合成", "工具"]
 lang: "zh"
-homepage: "/tools/qr-meme-maker.html"
+homepage: "/zh/tools/qr-meme-maker/"
 icon: "🐧"
 order: 40
 featured: false

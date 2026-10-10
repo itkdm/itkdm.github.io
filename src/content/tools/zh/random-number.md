@@ -3,7 +3,7 @@ name: "随机数生成器"
 summary: "生成指定范围内的随机数，支持整数和浮点数，可批量生成并显示统计信息。"
 tags: ["随机数", "生成器", "工具"]
 lang: "zh"
-homepage: "/tools/random-number.html"
+homepage: "/zh/tools/random-number/"
 icon: "🎲"
 order: 16
 featured: true

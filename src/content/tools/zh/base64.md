@@ -3,7 +3,7 @@ name: "Base64 编码/解码工具"
 summary: "快速进行 Base64 编码和解码，支持中文、英文、数字和特殊字符。"
 tags: ["Base64", "编码", "解码", "工具"]
 lang: "zh"
-homepage: "/tools/base64.html"
+homepage: "/zh/tools/base64/"
 icon: "🔐"
 order: 2
 featured: true

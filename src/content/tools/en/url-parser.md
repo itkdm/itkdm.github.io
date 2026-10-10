@@ -3,7 +3,7 @@ name: "URL Parser"
 summary: "Parse URL components, extract protocol, domain, path, parameters and more, with query parameter table display."
 tags: ["URL", "Parser", "Tool"]
 lang: "en"
-homepage: "/tools/url-parser.html"
+homepage: "/zh/tools/url-parser/"
 icon: "🔗"
 order: 22
 featured: true

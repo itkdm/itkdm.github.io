@@ -3,7 +3,7 @@ name: "文本去重工具"
 summary: "去除文本中的重复行或重复内容，支持多种去重模式和选项配置。"
 tags: ["文本", "去重", "工具"]
 lang: "zh"
-homepage: "/tools/text-dedupe.html"
+homepage: "/zh/tools/text-dedupe/"
 icon: "✂️"
 order: 20
 featured: true

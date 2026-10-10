@@ -3,7 +3,7 @@ name: "Text Sort Tool"
 summary: "Sort text lines with multiple sorting methods including alphabetical, length, numeric, and more."
 tags: ["Text", "Sort", "Tool"]
 lang: "en"
-homepage: "/tools/text-sort.html"
+homepage: "/zh/tools/text-sort/"
 icon: "📊"
 order: 23
 featured: true

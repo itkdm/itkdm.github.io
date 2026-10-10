@@ -3,7 +3,7 @@ name: "Image Base64 Encoder"
 summary: "Convert images to Base64 encoding or restore images from Base64, supporting drag-and-drop upload and multiple image formats."
 tags: ["Image", "Base64", "Encode", "Tool"]
 lang: "en"
-homepage: "/tools/image-base64.html"
+homepage: "/zh/tools/image-base64/"
 icon: "🖼️"
 order: 17
 priority: 9999

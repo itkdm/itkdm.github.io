@@ -3,7 +3,7 @@ name: "Text Reverse Tool"
 summary: "Reverse text content with multiple modes including character reverse, line order reverse, word reverse, and more."
 tags: ["Text", "Reverse", "Tool"]
 lang: "en"
-homepage: "/tools/text-reverse.html"
+homepage: "/zh/tools/text-reverse/"
 icon: "🔄"
 order: 24
 featured: true

@@ -3,7 +3,7 @@ name: "文本排序工具"
 summary: "对文本行进行排序，支持按字母顺序、长度、数字等多种排序方式。"
 tags: ["文本", "排序", "工具"]
 lang: "zh"
-homepage: "/tools/text-sort.html"
+homepage: "/zh/tools/text-sort/"
 icon: "📊"
 order: 23
 featured: true

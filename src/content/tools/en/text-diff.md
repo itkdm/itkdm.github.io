@@ -3,7 +3,7 @@ name: "Text Diff Tool"
 summary: "Compare two texts and highlight additions, deletions, and unchanged content with line-level comparison."
 tags: ["Text", "Diff", "Compare", "Tool"]
 lang: "en"
-homepage: "/tools/text-diff.html"
+homepage: "/zh/tools/text-diff/"
 icon: "📊"
 order: 10
 featured: true

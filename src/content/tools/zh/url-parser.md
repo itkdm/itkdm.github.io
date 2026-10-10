@@ -3,7 +3,7 @@ name: "URL 解析工具"
 summary: "解析 URL 的各个组成部分，提取协议、域名、路径、参数等信息，支持查询参数表格展示。"
 tags: ["URL", "解析", "工具"]
 lang: "zh"
-homepage: "/tools/url-parser.html"
+homepage: "/zh/tools/url-parser/"
 icon: "🔗"
 order: 22
 featured: true
